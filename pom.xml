@@ -10,7 +10,7 @@
     <module>Oops-ear</module>
     <module>Oops-web</module>
     <module>Oops-ejb</module>
-    <module>o/Oops-entities-library</module>
+    <module>Oops-entities-library</module>
     <module>Oops-interfaces-library</module>
   </modules>
 </project>
