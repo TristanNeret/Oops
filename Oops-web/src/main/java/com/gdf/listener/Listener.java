@@ -14,7 +14,10 @@ import com.gdf.persistence.Address;
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
+import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
+import com.gdf.persistence.Tenderer;
+import java.sql.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -56,6 +59,7 @@ public class Listener implements ServletContextListener {
         category.setImage("src/cat1");
         category.setKeywords(null);
         category.setName("computer science");
+        cm.addCategory(category);
         
         Service service = new Service();
         service.setDescription("On produit des logiciel sur contre d'argent! ");
@@ -67,6 +71,7 @@ public class Listener implements ServletContextListener {
         category2.setImage("src/cat1");
         category2.setKeywords(null);
         category2.setName("Selling products");
+        cm.addCategory(category2);
         
         Service service2 = new Service();
         service2.setDescription("We sell tech products");
@@ -86,7 +91,20 @@ public class Listener implements ServletContextListener {
         contractor.addService(service);
         contractor.addService(service2);
         
+        Review review = new Review();
+        review.setAppreciation("Très professionel");
+        review.setContent("Travail super !");
+        review.setRating(1);
+        review.setContractorAnswer("Je suis très content !");
+        review.setDate(new Date(10));
+        
+       
+        Tenderer tenderer = new Tenderer();
+        tenderer.setLogin("Julie Johson");
+        
+        cm.register(tenderer); 
         cm.register(contractor);
+        cm.addReview(review,tenderer,contractor);
       
     }
 
