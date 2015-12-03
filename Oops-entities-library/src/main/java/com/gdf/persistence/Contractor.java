@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,19 +31,19 @@ public class Contractor implements Serializable {
     private String password, socialReason, legalForm, phone, email, logo, representatorFirstname, representatorLastname;
     private int turnover, nbEmployees, rating;  
    
-    @OneToMany(mappedBy = "contractor")
+    @OneToMany(mappedBy = "contractor",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Service> services = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Address> addresses = new ArrayList<>();
     
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private LegalInformation legalInformation;
         
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Notification> notifications = new ArrayList<>();
   
-    @OneToMany(mappedBy = "contractor")
+    @OneToMany(mappedBy = "contractor",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Review> reviews = new ArrayList<>();
     
     public Long getId() {
@@ -52,7 +53,7 @@ public class Contractor implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public String getPassword() {
         return password;
     }
@@ -179,6 +180,14 @@ public class Contractor implements Serializable {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+    
+    public void addService(Service service){
+       this.services.add(service);
+    }
+    
+    public void addAddress(Address adr){
+        this.addresses.add(adr);
     }
 
     @Override

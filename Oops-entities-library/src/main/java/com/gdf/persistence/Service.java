@@ -7,6 +7,7 @@ package com.gdf.persistence;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +31,7 @@ public class Service implements Serializable {
     @ManyToOne
     private Contractor contractor;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private Category category;
     
     public Long getId() {
