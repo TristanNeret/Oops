@@ -31,7 +31,7 @@ public class Service implements Serializable {
     @ManyToOne
     private Contractor contractor;
     
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @ManyToOne
     private Category category;
     
     public Long getId() {

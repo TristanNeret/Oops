@@ -33,13 +33,15 @@ and open the template in the editor.
         <h:outputText value="#{service.title}"/> <br/>
         <h:outputText value="#{service.description}"/> <br/>
         <h:outputText value="#{service.price}"/> <br/>
+        <br/>
     </c:forEach > 
     <h1>Avis:</h1>
-<!--    <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
+    <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
         <h:outputText value="#{review.appreciation}"/>
         par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/><br/>
         <h:outputText value="#{review.content}"/> <br/>
         <h:outputText value="#{review.rating}"/> <br/>
         <h:outputText value="#{review.contractorAnswer}"/> <br/>
-    </c:forEach> -->
+        <br/>
+    </c:forEach> 
 </html>

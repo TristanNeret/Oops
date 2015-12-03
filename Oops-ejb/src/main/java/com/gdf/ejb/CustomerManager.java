@@ -5,7 +5,10 @@
  */
 package com.gdf.ejb;
 
+import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Review;
+import com.gdf.persistence.Tenderer;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,10 +27,36 @@ public class CustomerManager implements CustomerManagerBean {
     public void register(Contractor c) {
         em.persist(c);
     }
+    
 
     @Override
     public Contractor searchContractorById(long id) {
-        return em.find(Contractor.class, id);
+        
+        Contractor contractor =  em.find(Contractor.class, id);
+        contractor.getServices().size(); //The lazy relationships must be traversed before exiting the scope of the JPA Session to avoid the Exception.
+        contractor.getReviews().size(); //
+        
+        return contractor;
+    }
+
+    @Override
+    public void register(Tenderer t) {
+        em.persist(t);
+    }
+
+    @Override
+    public void addReview(Review review, Tenderer tenderer,Contractor contractor) {
+        
+        Tenderer attachedTenderer = em.merge(tenderer);
+        Contractor attachedContractor = em.merge(contractor);
+        
+        attachedTenderer.getReviews().add(review);
+        attachedContractor.addReview(review);
+    }
+
+    @Override
+    public void addCategory(Category category) {
+        em.persist(category);
     }
 
 }

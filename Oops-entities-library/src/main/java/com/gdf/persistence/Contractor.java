@@ -186,6 +186,11 @@ public class Contractor implements Serializable {
        service.setContractor(this);
        this.services.add(service);
     }
+    
+    public void addReview(Review review){
+        review.setContractor(this);
+        this.reviews.add(review);
+    }
 
     public String getDescription() {
         return description;
