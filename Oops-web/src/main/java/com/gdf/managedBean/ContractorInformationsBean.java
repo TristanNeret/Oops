@@ -10,7 +10,6 @@ import com.gdf.persistence.Contractor;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedProperty;
 
 /**
  *
@@ -20,41 +19,32 @@ import javax.faces.bean.ManagedProperty;
 @RequestScoped
 public class ContractorInformationsBean {
 
-    /**
-     * Creates a new instance of ContractorInformationsBean
-     */
-    
-    
-    @ManagedProperty(value="#{param.id}") 
-    private long id;
+    private Long id;
     
     @EJB
-    CustomerManagerBean cm;
+    private CustomerManagerBean cm;
     
     private Contractor contractor;
     
     public ContractorInformationsBean() {
+        
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public Contractor getContractor() {
-        return cm.searchContractorById(id);
+        if(contractor == null)
+            contractor = cm.searchContractorById(id);
+        return contractor;
     }
 
     public void setContractor(Contractor contractor) {
         this.contractor = contractor;
-    }
-    
-    
-    
-    
-    
-    
+    }    
 }

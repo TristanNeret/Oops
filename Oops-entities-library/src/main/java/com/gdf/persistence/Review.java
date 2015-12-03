@@ -29,7 +29,7 @@ public class Review implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String content, contractorAnswer;
+    private String appreciation,content, contractorAnswer;
     private int rating;
     @Column(name = "REVIEW_DATE")
     private Date date;
@@ -50,6 +50,14 @@ public class Review implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getAppreciation() {
+        return appreciation;
+    }
+
+    public void setAppreciation(String appreciation) {
+        this.appreciation = appreciation;
     }
 
     public String getContent() {

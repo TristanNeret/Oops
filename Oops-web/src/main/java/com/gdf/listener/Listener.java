@@ -44,6 +44,7 @@ public class Listener implements ServletContextListener {
         contractor.setRepresentatorLastname("Cook");
         contractor.setSocialReason("Appel");
         contractor.setTurnover(500000000);
+        contractor.setDescription("Nous somme apple, des petits chinois fabriquent nos produits");
         
         LegalInformation legalInformation = new LegalInformation();
         legalInformation.setInsurrance("Axa");
@@ -62,6 +63,17 @@ public class Listener implements ServletContextListener {
         service.setPrice(100);
         service.setCategory(category);
         
+        Category category2 = new Category();
+        category2.setImage("src/cat1");
+        category2.setKeywords(null);
+        category2.setName("Selling products");
+        
+        Service service2 = new Service();
+        service2.setDescription("We sell tech products");
+        service2.setTitle("Selling");
+        service2.setPrice(1000);
+        service2.setCategory(category2);
+        
         Address adress = new Address();
         adress.setCountry("USA");
         adress.setStreet("Apple Street");
@@ -69,9 +81,10 @@ public class Listener implements ServletContextListener {
         adress.setZipCode(408);
         adress.setStreetNumber(1);
         
-        contractor.addAddress(adress);
+        contractor.setAddress(adress);
         contractor.setLegalInformation(legalInformation);
         contractor.addService(service);
+        contractor.addService(service2);
         
         cm.register(contractor);
       
@@ -79,5 +92,6 @@ public class Listener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
+        
     }
 }

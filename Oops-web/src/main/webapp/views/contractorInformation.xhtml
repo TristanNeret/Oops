@@ -7,15 +7,39 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     
-        <div>TODO write content</div>
-        <h:outputText value="#{param.id}"/>
-        <h:outputText value="#{contractorInformationsBean.contractor.representatorFirstname}"/>
-        
-    
+    <f:metadata>
+        <f:viewParam name ="id" value="#{contractorInformationsBean.id}" />
+    </f:metadata>
+    <h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/> <br/>
+    <h:outputText value="#{contractorInformationsBean.contractor.email}"/> <br/>
+    <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
+    <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
+    (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) <br/>
+    <h:outputText value="#{contractorInformationsBean.contractor.rating}"/> <br/>
+    <br/>
+    <h1>Description:</h1>
+    <h:outputText value="#{contractorInformationsBean.contractor.description}"/> <br/>
+    <br/>
+    <h1>Prestations:</h1>
+    <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
+        <h:outputText value="#{service.category.name}"/> <br/> 
+        <h:outputText value="#{service.title}"/> <br/>
+        <h:outputText value="#{service.description}"/> <br/>
+        <h:outputText value="#{service.price}"/> <br/>
+    </c:forEach > 
+    <h1>Avis:</h1>
+<!--    <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
+        <h:outputText value="#{review.appreciation}"/>
+        par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/><br/>
+        <h:outputText value="#{review.content}"/> <br/>
+        <h:outputText value="#{review.rating}"/> <br/>
+        <h:outputText value="#{review.contractorAnswer}"/> <br/>
+    </c:forEach> -->
 </html>

@@ -18,8 +18,7 @@ import javax.persistence.PersistenceContext;
 public class CustomerManager implements CustomerManagerBean {
 
     @PersistenceContext(unitName = "OopsPU")
-    private EntityManager em;
-    
+    private EntityManager em;  
     
     @Override
     public void register(Contractor c) {
@@ -28,7 +27,6 @@ public class CustomerManager implements CustomerManagerBean {
 
     @Override
     public Contractor searchContractorById(long id) {
-        System.out.println("id = " + id);
         return em.find(Contractor.class, id);
     }
 

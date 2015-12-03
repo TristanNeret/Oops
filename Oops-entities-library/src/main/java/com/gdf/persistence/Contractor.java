@@ -28,14 +28,14 @@ public class Contractor implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String password, socialReason, legalForm, phone, email, logo, representatorFirstname, representatorLastname;
+    private String password, socialReason, legalForm, description, phone, email, logo, representatorFirstname, representatorLastname;
     private int turnover, nbEmployees, rating;  
    
-    @OneToMany(mappedBy = "contractor",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Service> services = new ArrayList<>();
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<Address> addresses = new ArrayList<>();
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Address address;
     
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private LegalInformation legalInformation;
@@ -150,12 +150,12 @@ public class Contractor implements Serializable {
         this.services = services;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public LegalInformation getLegalInformation() {
@@ -183,13 +183,18 @@ public class Contractor implements Serializable {
     }
     
     public void addService(Service service){
+       service.setContractor(this);
        this.services.add(service);
     }
-    
-    public void addAddress(Address adr){
-        this.addresses.add(adr);
+
+    public String getDescription() {
+        return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
