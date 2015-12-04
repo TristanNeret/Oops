@@ -25,10 +25,8 @@ import javax.persistence.OneToOne;
 public class Contractor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    
-    private String password, socialReason, legalForm, description, phone, email, logo, representatorFirstname, representatorLastname;
+    private String email;
+    private String password, socialReason, legalForm, description, phone, logo, representatorFirstname, representatorLastname;
     private int turnover, nbEmployees, rating;  
    
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -43,16 +41,8 @@ public class Contractor implements Serializable {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Notification> notifications = new ArrayList<>();
   
-    @OneToMany(mappedBy = "contractor",cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "contractor",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private List<Review> reviews = new ArrayList<>();
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
     
     public String getPassword() {
         return password;

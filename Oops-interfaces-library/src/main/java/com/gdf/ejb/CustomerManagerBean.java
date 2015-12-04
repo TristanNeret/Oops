@@ -22,7 +22,7 @@ public interface CustomerManagerBean {
     
     public void register(Tenderer t);
 
-    public Contractor searchContractorById(long id);
+    public Contractor searchContractorById(String id);
 
     public void addReview(Review review, Tenderer tenderer, Contractor contractor);
     

@@ -11,6 +11,7 @@ import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.FlushModeType;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -26,11 +27,12 @@ public class CustomerManager implements CustomerManagerBean {
     @Override
     public void register(Contractor c) {
         em.persist(c);
+        em.flush();
     }
     
 
     @Override
-    public Contractor searchContractorById(long id) {
+    public Contractor searchContractorById(String id) {
         
         Contractor contractor =  em.find(Contractor.class, id);
         contractor.getServices().size(); //The lazy relationships must be traversed before exiting the scope of the JPA Session to avoid the Exception.
@@ -50,7 +52,7 @@ public class CustomerManager implements CustomerManagerBean {
         Tenderer attachedTenderer = em.merge(tenderer);
         Contractor attachedContractor = em.merge(contractor);
         
-        attachedTenderer.getReviews().add(review);
+        attachedTenderer.addReview(review);
         attachedContractor.addReview(review);
     }
 

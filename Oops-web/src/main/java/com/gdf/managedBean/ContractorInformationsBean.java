@@ -19,7 +19,7 @@ import javax.enterprise.context.RequestScoped;
 @RequestScoped
 public class ContractorInformationsBean {
 
-    private Long id;
+    private String id;
     
     @EJB
     private CustomerManagerBean cm;
@@ -30,11 +30,11 @@ public class ContractorInformationsBean {
         
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
