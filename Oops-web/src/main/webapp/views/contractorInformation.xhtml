@@ -17,22 +17,28 @@ and open the template in the editor.
     <f:metadata>
         <f:viewParam name ="id" value="#{contractorInformationsBean.id}" />
     </f:metadata>
-    <h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/> <br/>
-    <h:outputText value="#{contractorInformationsBean.contractor.email}"/> <br/>
-    <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
-    <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
-    (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) <br/>
-    <h:outputText value="#{contractorInformationsBean.contractor.rating}"/> <br/>
+    
+    <fieldset>
+    <h1><h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/></h1>
+    Email : <h:outputText value="#{contractorInformationsBean.contractor.email}"/>
+    Téléphone : <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
+    </fieldset>
+    
+    Localisation : <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
+    (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) 
+    note :<h:outputText value="#{contractorInformationsBean.contractor.rating}"/> <br/>
     <br/>
     <h1>Description:</h1>
     <h:outputText value="#{contractorInformationsBean.contractor.description}"/> <br/>
     <br/>
     <h1>Prestations:</h1>
     <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
-        <h:outputText value="#{service.category.name}"/> <br/> 
-        <h:outputText value="#{service.title}"/> <br/>
+        <fieldset>
+            <h:outputText value="#{service.title}"/>
+            (<h:outputText value="#{service.category.name}"/>) <br/>
+        </fieldset>
         <h:outputText value="#{service.description}"/> <br/>
-        <h:outputText value="#{service.price}"/> <br/>
+        Tarrif horraire : <h:outputText value="#{service.price}"/> £ <br/>
         <br/>
     </c:forEach > 
     <h1>Avis:</h1>
@@ -40,8 +46,8 @@ and open the template in the editor.
         <h:outputText value="#{review.appreciation}"/>
         par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/><br/>
         <h:outputText value="#{review.content}"/> <br/>
-        <h:outputText value="#{review.rating}"/> <br/>
-        <h:outputText value="#{review.contractorAnswer}"/> <br/>
+        note : <h:outputText value="#{review.rating}"/> <br/>
+        reponse : <h:outputText value="#{review.contractorAnswer}"/> <br/>
         <br/>
     </c:forEach> 
 </html>

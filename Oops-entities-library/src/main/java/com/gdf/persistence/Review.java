@@ -33,7 +33,7 @@ public class Review implements Serializable {
     private String appreciation,content, contractorAnswer;
     private int rating;
     @Column(name = "REVIEW_DATE")
-    private Date date;
+    private String date;
     private ReviewState reviewState;
     
     @ManyToOne
@@ -85,11 +85,11 @@ public class Review implements Serializable {
         this.rating = rating;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

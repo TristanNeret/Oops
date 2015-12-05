@@ -30,8 +30,10 @@ public class Tenderer implements Serializable {
     @Column(unique=true)
     private String login;
     @Id
-    private String email;
-    private String password, firstname, lastname, avatar, phone;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    private String email,password, firstname, lastname, avatar, phone;
     private Date registrationDate;
   
     @OneToMany(mappedBy = "tenderer", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
@@ -118,6 +120,14 @@ public class Tenderer implements Serializable {
 
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
+    }
+        
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void addReview(Review r){

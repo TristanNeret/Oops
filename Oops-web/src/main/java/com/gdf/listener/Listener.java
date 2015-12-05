@@ -17,7 +17,6 @@ import com.gdf.persistence.LegalInformation;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
-import java.sql.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -48,6 +47,7 @@ public class Listener implements ServletContextListener {
         contractor.setSocialReason("Appel");
         contractor.setTurnover(500000000);
         contractor.setDescription("Nous somme apple, des petits chinois fabriquent nos produits");
+        contractor.setId((long)1);
         
         LegalInformation legalInformation = new LegalInformation();
         legalInformation.setInsurrance("Axa");
@@ -59,25 +59,27 @@ public class Listener implements ServletContextListener {
         category.setImage("src/cat1");
         category.setKeywords(null);
         category.setName("computer science");
+        category.setId((long)1);
         cm.addCategory(category);
         
         Service service = new Service();
         service.setDescription("On produit des logiciel sur contre d'argent! ");
         service.setTitle("Réalisation et maintenance de logiciel");
         service.setPrice(100);
-        //service.setCategory(category);
+        service.setCategory(category);
         
         Category category2 = new Category();
         category2.setImage("src/cat1");
         category2.setKeywords(null);
         category2.setName("Selling products");
+        category2.setId((long)2);
         cm.addCategory(category2);
         
         Service service2 = new Service();
         service2.setDescription("We sell tech products");
         service2.setTitle("Selling");
         service2.setPrice(1000);
-      //  service2.setCategory(category2);
+        service2.setCategory(category2);
         
         Address adress = new Address();
         adress.setCountry("USA");
@@ -96,11 +98,16 @@ public class Listener implements ServletContextListener {
         review.setContent("Travail super !");
         review.setRating(1);
         review.setContractorAnswer("Je suis très content !");
-        review.setDate(new Date(10));
+        
+        String format = "dd/MM/yy H:mm:ss";
+        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat( format );
+        java.util.Date date = new java.util.Date();
+        review.setDate(formater.format(date));
                
         Tenderer tenderer = new Tenderer();
         tenderer.setEmail("oo@oo.om");
         tenderer.setLogin("Julie Johson");
+        tenderer.setId((long)1);
 
                 
         cm.register(tenderer); 

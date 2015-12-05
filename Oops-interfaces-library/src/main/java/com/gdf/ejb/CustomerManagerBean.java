@@ -18,14 +18,10 @@ import javax.ejb.Remote;
 @Remote
 public interface CustomerManagerBean {
     
-    public void register(Contractor c);
-    
+    public void register(Contractor c); 
     public void register(Tenderer t);
-
-    public Contractor searchContractorById(String id);
-
+    public Contractor searchContractorById(long id);
     public void addReview(Review review, Tenderer tenderer, Contractor contractor);
-    
     public void addCategory(Category category);
     
 }

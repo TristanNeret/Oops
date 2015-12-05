@@ -24,9 +24,11 @@ import javax.persistence.OneToOne;
 @Entity
 public class Contractor implements Serializable {
     private static final long serialVersionUID = 1L;
+   
     @Id
-    private String email;
-    private String password, socialReason, legalForm, description, phone, logo, representatorFirstname, representatorLastname;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    private String email, password, socialReason, legalForm, description, phone, logo, representatorFirstname, representatorLastname;
     private int turnover, nbEmployees, rating;  
    
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -186,6 +188,14 @@ public class Contractor implements Serializable {
         return description;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
     public void setDescription(String description) {
         this.description = description;
     }

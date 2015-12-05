@@ -3,6 +3,7 @@
   <persistence-unit name="com.gdf_Oops-entities-library_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.gdf.oops.entities.library.Test</class>
+    <class>com.gdf.persistence.NewEntity</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/OopsDB"/>
       <property name="javax.persistence.jdbc.user" value="gdf"/>
