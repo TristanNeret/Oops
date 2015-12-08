@@ -38,15 +38,16 @@ public class Listener implements ServletContextListener {
         Contractor contractor = new Contractor();
         contractor.setEmail("tim.cook@apple.com");
         contractor.setLegalForm("legal form");
-        contractor.setLogo("src/logo");
+        contractor.setLogo("http://1.bp.blogspot.com/-aMu3ZJ7WRo4/VdQUN1U6QvI/AAAAAAAACdk/zpRa_ayf4-4/s1600/aapl-logo.png");
         contractor.setNbEmployees(50);
         contractor.setPassword("appelForEver");
         contractor.setPhone("07 70 28 21 99");
         contractor.setRepresentatorFirstname("Tim");
         contractor.setRepresentatorLastname("Cook");
-        contractor.setSocialReason("Appel");
+        contractor.setSocialReason("Apple");
         contractor.setTurnover(500000000);
         contractor.setDescription("Nous somme apple, des petits chinois fabriquent nos produits");
+        contractor.setRating(3);
         contractor.setId((long)1);
         
         LegalInformation legalInformation = new LegalInformation();
@@ -69,7 +70,7 @@ public class Listener implements ServletContextListener {
         service.setCategory(category);
         
         Category category2 = new Category();
-        category2.setImage("src/cat1");
+        category2.setImage("img");
         category2.setKeywords(null);
         category2.setName("Selling products");
         category2.setId((long)2);
@@ -96,7 +97,7 @@ public class Listener implements ServletContextListener {
         Review review = new Review();
         review.setAppreciation("Très professionel");
         review.setContent("Travail super !");
-        review.setRating(1);
+        review.setRating(4);
         review.setContractorAnswer("Je suis très content !");
         
         String format = "dd/MM/yy H:mm:ss";

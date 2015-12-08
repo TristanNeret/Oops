@@ -23,13 +23,14 @@ and open the template in the editor.
 
         <fieldset>
             <h1><h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/></h1>
+            <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" height="200px"/>
             <b>Email :</b> <h:outputText value="#{contractorInformationsBean.contractor.email}"/>
             <b>Téléphone :</b> <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
         </fieldset>
 
         Localisation : <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
                       (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) 
-                note :<h:outputText value="#{contractorInformationsBean.contractor.rating}"/> <br/>
+                      note : <h:graphicImage library="images" name="#{contractorInformationsBean.contractor.rating}.png" height="30px"/>
         <br/>
 
         <h2>Description:</h2>
@@ -55,7 +56,7 @@ and open the template in the editor.
             <h:outputText value="#{review.appreciation}"/>
             par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/><br/>
             <h:outputText value="#{review.content}"/> <br/>
-            note : <h:outputText value="#{review.rating}"/> <br/>
+            note : <h:graphicImage library="images" name="#{review.rating}.png" height="20px"/> <br/>
             reponse : <h:outputText value="#{review.contractorAnswer}"/> <br/>
             <br/>
         </c:forEach>
