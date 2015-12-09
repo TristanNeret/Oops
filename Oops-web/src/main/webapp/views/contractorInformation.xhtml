@@ -81,7 +81,7 @@ and open the template in the editor.
                     <p:rating value="#{reviewBean.reviewRating}" required="true" />
 
                     <f:facet name="footer">
-                        <p:commandButton value="Soumettre l'avis" update="growl" actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
+                        <p:commandButton value="Soumettre l'avis" update="growl, @form"  actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
                                          oncomplete="handleReviewRequest(xhr, status, args)" />
                     </f:facet>  
                 </h:panelGrid>

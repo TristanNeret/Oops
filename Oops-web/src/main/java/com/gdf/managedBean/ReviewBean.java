@@ -48,9 +48,11 @@ public class ReviewBean {
             // Add the new Review
             String userID = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
             eb.addReview(new Long(userID), contractorID, reviewAppreciation, reviewContent, reviewRating);
-
+            // Reset fields
+            reviewAppreciation = "";
+            reviewContent = "";
+            reviewRating = 0;
         }
-        
     }
     
     /**
