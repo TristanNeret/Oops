@@ -27,12 +27,6 @@ public class EvaluationBeanImpl implements EvaluationBean {
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;
     
-    /**
-     * Add a review given by a Tenderer to a Contractor
-     * @param tenderer the Tenderer who wrote the Review
-     * @param contractor the Contractor who receives the Review
-     * @param review the Review to add
-     */
     @Override
     public void addReview(Tenderer tenderer, Contractor contractor, Review review) {
         

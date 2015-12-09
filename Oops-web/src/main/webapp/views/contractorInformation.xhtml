@@ -65,9 +65,14 @@ and open the template in the editor.
         </c:forEach > 
         
         <!-- DIALOG BOX FOR RATING -->
-        <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
-        <p:commandButton value="Donner votre avis" onclick="if(#{reviewBean.isTendererConnected()}){PF('reviewDialog').show();} else {PF('growlError').renderMessage({summary:'Vous devez vous connecter !', detail: 'Coonectez-vous en tant que soumissionnaire pour évaluer un prestataire.', severity: 0});}" type="button" />
-        <o:form includeViewParams="true">
+        <o:form id="reviewForm" includeViewParams="true">
+            <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
+            <p:commandButton value="Donner votre avis" onclick="if(#{reviewBean.isTendererConnected()}){PF('reviewDialog').show();} else {PF('growlError').renderMessage({summary:'Vous devez vous connecter !', detail: 'Coonectez-vous en tant que soumissionnaire pour évaluer un prestataire.', severity: 0});}" type="button">
+                <!-- Reset fields on opening -->
+                <p:ajax update="reviewAppreciation" resetValues="true" />
+                <p:ajax update="reviewContent" resetValues="true" />
+                <p:ajax update="reviewRate" resetValues="true" />
+            </p:commandButton>
             <p:growl id="growl" sticky="false" showDetail="false" life="3000" />
             <p:dialog header="Donner votre avis :" widgetVar="reviewDialog" resizable="false">
                 <h:panelGrid columns="2" cellpadding="5">
@@ -78,10 +83,10 @@ and open the template in the editor.
                     <p:inputTextarea id="reviewContent" rows="6" cols="33" value="#{reviewBean.reviewContent}" required="true" label="Description" />
 
                     <h:outputLabel value="Note moyenne :" />
-                    <p:rating value="#{reviewBean.reviewRating}" required="true" />
+                    <p:rating id="reviewRate" value="#{reviewBean.reviewRating}" required="true" />
 
                     <f:facet name="footer">
-                        <p:commandButton value="Soumettre l'avis" update="growl, @form"  actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
+                        <p:commandButton value="Soumettre l'avis" update="growl"  actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
                                          oncomplete="handleReviewRequest(xhr, status, args)" />
                     </f:facet>  
                 </h:panelGrid>

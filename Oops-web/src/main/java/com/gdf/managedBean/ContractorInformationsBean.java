@@ -7,17 +7,18 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
+import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 
 /**
  * ManagedBean allowing to search a Contractor
  * @author nicolas
  */
 @Named(value = "contractorInformationsBean")
-@RequestScoped
-public class ContractorInformationsBean {
+@ViewScoped
+public class ContractorInformationsBean implements Serializable {
 
     /**
      * Id of the searched Contractor 
@@ -53,4 +54,5 @@ public class ContractorInformationsBean {
     public Contractor getContractor() {
         return searchBean.searchContractorById(id);
     }
+    
 }

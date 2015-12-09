@@ -5,7 +5,6 @@
  */
 package com.gdf.ejb;
 
-import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.NotificationType;
 import com.gdf.persistence.Review;
@@ -20,11 +19,11 @@ import javax.ejb.Remote;
 public interface EvaluationBean {
     
     /**
-    * Add a review given by a Tenderer to a Contractor
-    * @param tenderer the Tenderer who wrote the Review
-    * @param contractor the Contractor who receives the Review
-    * @param review the Review to add
-    */
+     * Add a review given by a Tenderer to a Contractor
+     * @param tenderer the Tenderer who wrote the Review
+     * @param contractor the Contractor who receives the Review
+     * @param review the Review to add
+     */
     public void addReview(Tenderer tenderer, Contractor contractor, Review review);
     /**
      * Add a new Review
@@ -43,4 +42,5 @@ public interface EvaluationBean {
      * @param notificationType type of the Notification
      */
     public void sendNotification(Review review, Tenderer tenderer, Contractor contractor, NotificationType notificationType);
+    
 }
