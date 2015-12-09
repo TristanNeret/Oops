@@ -5,7 +5,6 @@
  */
 package com.gdf.managedBean;
 
-import com.gdf.ejb.CustomerManagerBean;
 import com.gdf.ejb.EvaluationBean;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.EJB;

@@ -5,45 +5,52 @@
  */
 package com.gdf.managedBean;
 
-import com.gdf.ejb.CustomerManagerBean;
+import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 
 /**
- *
+ * ManagedBean allowing to search a Contractor
  * @author nicolas
  */
-@ManagedBean
-@ViewScoped
+@Named(value = "contractorInformationsBean")
+@RequestScoped
 public class ContractorInformationsBean {
 
-    @EJB
-    private CustomerManagerBean cm;
-    
+    /**
+     * Id of the searched Contractor 
+     */
     private long id;
-    private Contractor contractor;
     
-    public ContractorInformationsBean() {
-        
+    /**
+     * Injected EJB giving the search method
+     */
+    @EJB
+    private SearchBean searchBean;
+    
+    /**
+     * Set the id of the Contrator to search
+     * @param id the id of the Contractor
+     */
+    public void setId(long id) {
+        this.id = id;
     }
     
+    /**
+     * Get the id of the Contrator to search
+     * @return the id of the Contractor
+     */
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
+    /**
+     * Get the searched Contractor
+     * @return the Contractor identified by the id
+     */
     public Contractor getContractor() {
-        if(contractor == null)
-            contractor = cm.searchContractorById(id);
-        return contractor;
+        return searchBean.searchContractorById(id);
     }
-
-    public void setContractor(Contractor contractor) {
-        this.contractor = contractor;
-    }    
 }

@@ -17,7 +17,7 @@ public interface AdministratorBean {
     
     /**
      * Add a Category of Service given by the Contractor
-     * @param category to add
+     * @param category the Category to add
      */
     public void addCategory(Category category);
 }
