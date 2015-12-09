@@ -41,7 +41,7 @@ public class Listener implements ServletContextListener {
         Contractor contractor = new Contractor();
         contractor.setEmail("tim.cook@apple.com");
         contractor.setLegalForm("legal form");
-        contractor.setLogo("http://1.bp.blogspot.com/-aMu3ZJ7WRo4/VdQUN1U6QvI/AAAAAAAACdk/zpRa_ayf4-4/s1600/aapl-logo.png");
+        contractor.setLogo("http://logok.org/wp-content/uploads/2014/04/Apple-logo-grey-880x625.png");
         contractor.setNbEmployees(50);
         contractor.setPassword("appelForEver");
         contractor.setPhone("07 70 28 21 99");
