@@ -6,6 +6,7 @@
 package com.gdf.managedBean;
 
 import com.gdf.ejb.CustomerManagerBean;
+import com.gdf.ejb.EvaluationBean;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -21,7 +22,7 @@ import javax.faces.context.FacesContext;
 public class ReviewBean {
 
     @EJB
-    private CustomerManagerBean cm;
+    private EvaluationBean eb;
     
     private String reviewAppreciation;
     private String reviewContent;
@@ -46,7 +47,7 @@ public class ReviewBean {
 
             // Add the new Review
             String userID = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
-            cm.addReview(new Long(userID), contractorID, reviewAppreciation, reviewContent, reviewRating);
+            eb.addReview(new Long(userID), contractorID, reviewAppreciation, reviewContent, reviewRating);
 
         }
         
