@@ -40,7 +40,7 @@ public class Contractor implements Serializable {
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private LegalInformation legalInformation;
         
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany
     private List<Notification> notifications = new ArrayList<>();
   
     @OneToMany(mappedBy = "contractor",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
@@ -182,6 +182,11 @@ public class Contractor implements Serializable {
     public void addReview(Review review){
         review.setContractor(this);
         this.reviews.add(review);
+    }
+    
+    public void addNotification(Notification n){
+        this.notifications.add(n);
+        n.setContractor(this);
     }
 
     public String getDescription() {

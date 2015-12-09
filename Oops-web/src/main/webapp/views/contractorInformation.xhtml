@@ -8,17 +8,30 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui">
     <h:head>
         <title>Contractor informations</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="style.css" />
+        <script type="text/javascript">
+            function handleReviewRequest(xhr, status, args) {
+                if(args.validationFailed) {
+                    PF('reviewDialog').jq.effect("shake", {times:5}, 100);
+                }
+                else {
+                    PF('reviewDialog').hide();
+                    PF('growlError').renderMessage({summary:'Avis soumis !', detail: 'Un modérateur va se charger de vérifier sa validité', severity: 'info'});
+                }
+            }
+        </script>
     </h:head>
     
     <h:body>
     
         <f:metadata>
-            <f:viewParam name ="id" value="#{contractorInformationsBean.id}" />
+            <o:viewParam name ="id" value="#{contractorInformationsBean.id}" />
         </f:metadata>
 
         <fieldset>
@@ -50,6 +63,30 @@ and open the template in the editor.
             Tarrif horraire : <h:outputText value="#{service.price}"/> £ <br/>
             <br/>
         </c:forEach > 
+        
+        <!-- DIALOG BOX FOR RATING -->
+        <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
+        <p:commandButton value="Donner votre avis" onclick="if(#{reviewBean.isTendererConnected()}){PF('reviewDialog').show();} else {PF('growlError').renderMessage({summary:'Vous devez vous connecter !', detail: 'Coonectez-vous en tant que soumissionnaire pour évaluer un prestataire.', severity: 0});}" type="button" />
+        <o:form includeViewParams="true">
+            <p:growl id="growl" sticky="false" showDetail="false" life="3000" />
+            <p:dialog header="Donner votre avis :" widgetVar="reviewDialog" resizable="false">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Titre :" />
+                    <p:inputText id="reviewAppreciation" value="#{reviewBean.reviewAppreciation}" required="true" label="Titre" />
+
+                    <h:outputLabel value="Description :" />
+                    <p:inputTextarea id="reviewContent" rows="6" cols="33" value="#{reviewBean.reviewContent}" required="true" label="Description" />
+
+                    <h:outputLabel value="Note moyenne :" />
+                    <p:rating value="#{reviewBean.reviewRating}" required="true" />
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Soumettre l'avis" update="growl" actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
+                                         oncomplete="handleReviewRequest(xhr, status, args)" />
+                    </f:facet>  
+                </h:panelGrid>
+            </p:dialog>
+        </o:form>
 
         <h2>Avis:</h2>
         <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >

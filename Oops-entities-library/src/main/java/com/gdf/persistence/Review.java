@@ -7,7 +7,9 @@ package com.gdf.persistence;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -44,6 +46,36 @@ public class Review implements Serializable {
     
     @OneToMany(mappedBy = "review")
     private List<ModeratorReview> moderatorReviews = new ArrayList<>();
+    
+    @OneToMany
+    private List<Notification> notifications = new ArrayList<>();
+    
+    /**
+     * Empty constructor for Review
+     */
+    public Review() {
+        
+    }
+    
+    /**
+     * Initialize a new Review (DELIVERED state)
+     * @param reviewAppreciation appreciation of the Review
+     * @param reviewContent content of the Review
+     * @param reviewRate ratting for the Review
+     */
+    public Review(String reviewAppreciation, String reviewContent, int reviewRate) {
+        
+        this.appreciation = reviewAppreciation;
+        this.content = reviewContent;
+        this.rating = reviewRate;
+        
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        this.date = dateFormat.format(cal.getTime());
+        
+        this.reviewState = ReviewState.DELIVERED;
+        
+    }
 
     public Long getId() {
         return id;
@@ -123,6 +155,19 @@ public class Review implements Serializable {
 
     public void setModeratorReviews(List<ModeratorReview> moderatorReviews) {
         this.moderatorReviews = moderatorReviews;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+    
+    public void addNotification(Notification n){
+        this.notifications.add(n);
+        n.setReview(this);
     }
 
     @Override

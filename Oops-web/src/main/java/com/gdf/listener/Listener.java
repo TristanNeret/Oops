@@ -18,6 +18,7 @@ import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 

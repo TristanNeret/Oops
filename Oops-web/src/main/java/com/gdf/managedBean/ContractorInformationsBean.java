@@ -8,28 +8,27 @@ package com.gdf.managedBean;
 import com.gdf.ejb.CustomerManagerBean;
 import com.gdf.persistence.Contractor;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author nicolas
  */
-@Named(value = "contractorInformationsBean")
-@RequestScoped
+@ManagedBean
+@ViewScoped
 public class ContractorInformationsBean {
 
-    private long id;
-    
     @EJB
     private CustomerManagerBean cm;
     
+    private long id;
     private Contractor contractor;
     
     public ContractorInformationsBean() {
         
     }
-
+    
     public long getId() {
         return id;
     }
