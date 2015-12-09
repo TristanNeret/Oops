@@ -5,10 +5,6 @@
  */
 package com.gdf.listener;
 
-
-
-
-
 import com.gdf.ejb.AdministratorBean;
 import com.gdf.ejb.EvaluationBean;
 import com.gdf.ejb.RegistrationBean;
@@ -17,6 +13,7 @@ import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
 import com.gdf.persistence.Review;
+import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.EJB;
@@ -41,7 +38,6 @@ public class Listener implements ServletContextListener {
     
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-    
         Contractor contractor = new Contractor();
         contractor.setEmail("tim.cook@apple.com");
         contractor.setLegalForm("legal form");
@@ -106,12 +102,28 @@ public class Listener implements ServletContextListener {
         review.setContent("Travail super !");
         review.setRating(4);
         review.setContractorAnswer("Je suis très content !");
+        review.setReviewState(ReviewState.ACCEPTED);
+        
+        Review review2 = new Review();
+        review2.setAppreciation("pas Très professionel");
+        review2.setContent("pas 1 Travail super !");
+        review2.setRating(2);
+        review2.setContractorAnswer("Je suis pas très content !");
+        review2.setReviewState(ReviewState.ACCEPTED);
+        
+        Review review1 = new Review();
+        review1.setAppreciation("Ras le bol");
+        review1.setContent("merde alors!");
+        review1.setRating(1);
+        review1.setReviewState(ReviewState.NOT_ACCEPTED);
         
         String format = "dd/MM/yy H:mm:ss";
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat( format );
+        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
         java.util.Date date = new java.util.Date();
         review.setDate(formater.format(date));
-               
+        review1.setDate(formater.format(date));
+        review2.setDate(formater.format(date));
+        
         Tenderer tenderer = new Tenderer();
         tenderer.setEmail("oo@oo.om");
         tenderer.setLogin("Julie Johson");
@@ -122,8 +134,8 @@ public class Listener implements ServletContextListener {
         registrationBean.register(contractor);
         
         evalBean.addReview(tenderer, contractor, review);
-        
-        
+        evalBean.addReview(tenderer, contractor, review1);
+        evalBean.addReview(tenderer, contractor, review2);
     }
     
   
