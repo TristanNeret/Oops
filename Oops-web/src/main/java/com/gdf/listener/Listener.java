@@ -9,7 +9,9 @@ package com.gdf.listener;
 
 
 
-import com.gdf.ejb.CustomerManagerBean;
+import com.gdf.ejb.AdministratorBean;
+import com.gdf.ejb.EvaluationBean;
+import com.gdf.ejb.RegistrationBean;
 import com.gdf.persistence.Address;
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
@@ -29,7 +31,11 @@ import javax.servlet.ServletContextListener;
 public class Listener implements ServletContextListener {
 
     @EJB
-    CustomerManagerBean cm;
+    private RegistrationBean registrationBean;
+    @EJB
+    private EvaluationBean evalBean;
+    @EJB
+    private AdministratorBean adminBean;
     
     
     @Override
@@ -61,7 +67,7 @@ public class Listener implements ServletContextListener {
         category.setKeywords(null);
         category.setName("computer science");
         category.setId((long)1);
-        cm.addCategory(category);
+        adminBean.addCategory(category);
         
         Service service = new Service();
         service.setDescription("On produit des logiciel sur contre d'argent! ");
@@ -74,7 +80,7 @@ public class Listener implements ServletContextListener {
         category2.setKeywords(null);
         category2.setName("Selling products");
         category2.setId((long)2);
-        cm.addCategory(category2);
+        adminBean.addCategory(category2);
         
         Service service2 = new Service();
         service2.setDescription("We sell tech products");
@@ -111,10 +117,10 @@ public class Listener implements ServletContextListener {
         tenderer.setId((long)1);
 
                 
-        cm.register(tenderer); 
-        cm.register(contractor);
+        registrationBean.register(tenderer); 
+        registrationBean.register(contractor);
         
-        cm.addReview(review, tenderer, contractor);
+        evalBean.addReview(tenderer, contractor, review);
         
         
     }

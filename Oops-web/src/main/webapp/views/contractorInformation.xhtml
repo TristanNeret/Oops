@@ -20,46 +20,54 @@ and open the template in the editor.
         <f:metadata>
             <f:viewParam name ="id" value="#{contractorInformationsBean.id}" />
         </f:metadata>
-
-        <fieldset>
-            <h1><h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/></h1>
-            <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" height="200px"/>
-            <b>Email :</b> <h:outputText value="#{contractorInformationsBean.contractor.email}"/>
-            <b>Téléphone :</b> <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
-        </fieldset>
-
-        Localisation : <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
-                      (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) 
-                      note : <h:graphicImage library="images" name="#{contractorInformationsBean.contractor.rating}.png" height="30px"/>
-        <br/>
-
-        <h2>Description:</h2>
-
-        <h:outputText value="#{contractorInformationsBean.contractor.description}"/> <br/>
-        <br/>
-        <h2>Prestations:</h2>
-
-        <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
+        
+        <c:if test="#{contractorInformationsBean.contractor == null}" >
+            <h2>Prestataire introuvable !</h2> 
+        </c:if>
+        
+        <c:if test="#{contractorInformationsBean.contractor != null}" >
 
             <fieldset>
-                <h:outputText value="#{service.title}"/>
-                (<h:outputText value="#{service.category.name}"/>) <br/>
+                <h1><h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/></h1>
+                <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" height="200px"/>
+                <b>Email :</b> <h:outputText value="#{contractorInformationsBean.contractor.email}"/>
+                <b>Téléphone :</b> <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
             </fieldset>
-            <h:outputText value="#{service.description}"/> <br/>
 
-            Tarrif horraire : <h:outputText value="#{service.price}"/> £ <br/>
+            Localisation : <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
+                          (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) 
+                          note : <h:graphicImage library="images" name="#{contractorInformationsBean.contractor.rating}.png" height="30px"/>
             <br/>
-        </c:forEach > 
 
-        <h2>Avis:</h2>
-        <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
-            <h:outputText value="#{review.appreciation}"/>
-            par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/><br/>
-            <h:outputText value="#{review.content}"/> <br/>
-            note : <h:graphicImage library="images" name="#{review.rating}.png" height="20px"/> <br/>
-            reponse : <h:outputText value="#{review.contractorAnswer}"/> <br/>
+            <h2>Description:</h2>
+
+            <h:outputText value="#{contractorInformationsBean.contractor.description}"/> <br/>
             <br/>
-        </c:forEach>
+            <h2>Prestations:</h2>
+
+            <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
+
+                <fieldset>
+                    <h:outputText value="#{service.title}"/>
+                    (<h:outputText value="#{service.category.name}"/>) <br/>
+                </fieldset>
+                <h:outputText value="#{service.description}"/> <br/>
+
+                Tarrif horraire : <h:outputText value="#{service.price}"/> £ <br/>
+                <br/>
+            </c:forEach > 
+
+            <h2>Avis:</h2>
+            <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
+                <h:outputText value="#{review.appreciation}"/>
+                par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/><br/>
+                <h:outputText value="#{review.content}"/> <br/>
+                note : <h:graphicImage library="images" name="#{review.rating}.png" height="20px"/> <br/>
+                reponse : <h:outputText value="#{review.contractorAnswer}"/> <br/>
+                <br/>
+            </c:forEach>
+            
+       </c:if>
     
     </h:body> 
       
