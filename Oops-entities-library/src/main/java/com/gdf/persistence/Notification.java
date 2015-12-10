@@ -7,6 +7,7 @@ package com.gdf.persistence;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +34,41 @@ public class Notification implements Serializable {
     private NotificationType category;
     
     @ManyToOne
+    private Contractor contractor;
+    
+    @ManyToOne
+    private Tenderer tenderer;
+    
+    @ManyToOne
+    private Moderator moderator;
+    
+    @ManyToOne
     private Review review;
+
+    /**
+     * Empty constructor of Notification
+     */
+    public Notification() {
+    }
+    
+    /**
+     * Create a new Notification with parameters
+     * @param review the Review concerned by the Notification
+     * @param tenderer the Tenderer concerned by the Notification
+     * @param contractor the Contractor concerned by the Notification
+     * @param notificationType type of the new Notification
+     */
+    public Notification(Review review, Tenderer tenderer, Contractor contractor, NotificationType notificationType) {
+        
+        this.review = review;
+        this.tenderer = tenderer;
+        this.contractor = contractor;
+        this.category = notificationType;
+        this.state = NotificationState.NOT_READ;
+        
+        this.date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        
+    }
     
     public Long getId() {
         return id;
@@ -82,4 +117,29 @@ public class Notification implements Serializable {
     public void setReview(Review review) {
         this.review = review;
     }
+
+    public Contractor getContractor() {
+        return contractor;
+    }
+
+    public void setContractor(Contractor contractor) {
+        this.contractor = contractor;
+    }
+
+    public Tenderer getTenderer() {
+        return tenderer;
+    }
+
+    public void setTenderer(Tenderer tenderer) {
+        this.tenderer = tenderer;
+    }
+
+    public Moderator getModerator() {
+        return moderator;
+    }
+
+    public void setModerator(Moderator moderator) {
+        this.moderator = moderator;
+    }
+    
 }

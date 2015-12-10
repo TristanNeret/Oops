@@ -8,59 +8,119 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Contractor informations</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="style.css" />
+        <f:metadata>
+            <o:viewParam name ="id" value="#{contractorInformationsBean.id}" />
+        </f:metadata>
+        <script type="text/javascript">
+            function handleReviewRequest(xhr, status, args) {
+                if(args.validationFailed) {
+                    PF('reviewDialog').jq.effect("shake", {times:5}, 100);
+                }
+                else {
+                    PF('reviewDialog').hide();
+                    PF('growlError').renderMessage({summary:'Avis soumis !', detail: 'Un modérateur va se charger de vérifier sa validité', severity: 'info'});
+                }
+            }
+        </script>
     </h:head>
     
     <h:body>
+        
+        <!-- HEADER -->
+        <ui:include src="/views/subviews/header.xhtml" />
     
-        <f:metadata>
-            <f:viewParam name ="id" value="#{contractorInformationsBean.id}" />
-        </f:metadata>
+        <div class="divContent">
+            <c:if test="#{contractorInformationsBean.contractor == null}" >
+                <h2>Prestataire introuvable !</h2> 
+            </c:if>
 
-        <fieldset>
-            <h1><h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/></h1>
-            <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" height="200px"/>
-            <b>Email :</b> <h:outputText value="#{contractorInformationsBean.contractor.email}"/>
-            <b>Téléphone :</b> <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
-        </fieldset>
+            <c:if test="#{contractorInformationsBean.contractor != null}" >
 
-        Localisation : <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
-                      (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) 
-                      note : <h:graphicImage library="images" name="#{contractorInformationsBean.contractor.rating}.png" height="30px"/>
-        <br/>
+                <fieldset>
+                    <h1><h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/></h1>
+                    <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" height="200px"/>
+                    <b>Email :</b> <h:outputText value="#{contractorInformationsBean.contractor.email}"/>
+                    <b>Téléphone :</b> <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
+                </fieldset>
 
-        <h2>Description:</h2>
+                Localisation : <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
+                              (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) 
+                              note : <h:graphicImage library="images" name="#{contractorInformationsBean.contractor.rating}.png" height="30px"/>
+                <br/>
 
-        <h:outputText value="#{contractorInformationsBean.contractor.description}"/> <br/>
-        <br/>
-        <h2>Prestations:</h2>
+                <h2>Description:</h2>
 
-        <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
+                <h:outputText value="#{contractorInformationsBean.contractor.description}"/> <br/>
+                <br/>
+                <h2>Prestations:</h2>
 
-            <fieldset>
-                <h:outputText value="#{service.title}"/>
-                (<h:outputText value="#{service.category.name}"/>) <br/>
-            </fieldset>
-            <h:outputText value="#{service.description}"/> <br/>
+                <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
 
-            Tarrif horraire : <h:outputText value="#{service.price}"/> £ <br/>
-            <br/>
-        </c:forEach > 
+                    <fieldset>
+                        <h:outputText value="#{service.title}"/>
+                        (<h:outputText value="#{service.category.name}"/>) <br/>
+                    </fieldset>
+                    <h:outputText value="#{service.description}"/> <br/>
 
-        <h2>Avis:</h2>
-        <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
-            <h:outputText value="#{review.appreciation}"/>
-            par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/><br/>
-            <h:outputText value="#{review.content}"/> <br/>
-            note : <h:graphicImage library="images" name="#{review.rating}.png" height="20px"/> <br/>
-            reponse : <h:outputText value="#{review.contractorAnswer}"/> <br/>
-            <br/>
-        </c:forEach>
-    
+                    Tarrif horraire : <h:outputText value="#{service.price}"/> £ <br/>
+                    <br/>
+                </c:forEach > 
+
+                <!-- DIALOG BOX FOR RATING -->
+                <o:form id="reviewForm" includeViewParams="true">
+                    <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
+                    <p:commandButton value="Donner votre avis" onclick="if(#{reviewBean.isTendererConnected()}){PF('reviewDialog').show();} else {PF('growlError').renderMessage({summary:'Vous devez vous connecter !', detail: 'Coonectez-vous en tant que soumissionnaire pour évaluer un prestataire.', severity: 0});}" type="button">
+                        <!-- Reset fields on opening -->
+                        <p:ajax update="reviewAppreciation" resetValues="true" />
+                        <p:ajax update="reviewContent" resetValues="true" />
+                        <p:ajax update="reviewRate" resetValues="true" />
+                    </p:commandButton>
+                    <p:growl id="growl" sticky="false" showDetail="false" life="3000" />
+                    <p:dialog header="Donner votre avis :" widgetVar="reviewDialog" resizable="false">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel value="Titre :" />
+                            <p:inputText id="reviewAppreciation" value="#{reviewBean.reviewAppreciation}" required="true" label="Titre" />
+
+                            <h:outputLabel value="Description :" />
+                            <p:inputTextarea id="reviewContent" rows="6" cols="33" value="#{reviewBean.reviewContent}" required="true" label="Description" />
+
+                            <h:outputLabel value="Note moyenne :" />
+                            <p:rating id="reviewRate" value="#{reviewBean.reviewRating}" required="true" />
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Soumettre l'avis" update="growl"  actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
+                                                 oncomplete="handleReviewRequest(xhr, status, args)" />
+                            </f:facet>  
+                        </h:panelGrid>
+                    </p:dialog>
+                </o:form>
+
+                <h2>Avis:</h2>
+                <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
+               <!--     <c:if test="#{review.reviewState == 'ACCEPTED'}"> -->
+                        <h:outputText value="#{review.appreciation}"/>
+                        par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/><br/>
+                        <h:outputText value="#{review.content}"/> <br/>
+                        note : <h:graphicImage library="images" name="#{review.rating}.png" height="20px"/> <br/>
+                        reponse : <h:outputText value="#{review.contractorAnswer}"/> <br/>
+                        <br/>
+              <!--      </c:if> -->
+                </c:forEach>
+
+            </c:if>
+        </div>
+        
+        <!-- FOOTER -->
+        <ui:include src="/views/subviews/footer.xhtml" />
+        
     </h:body> 
       
 </html>

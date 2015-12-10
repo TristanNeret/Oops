@@ -52,6 +52,8 @@ public class Tenderer implements Serializable {
     
     @OneToMany
     private List<Notification> notifications = new ArrayList<>();
+    
+    public static final String userCategory = "TENDERER";
 
     public String getLogin() {
         return login;
@@ -144,6 +146,11 @@ public class Tenderer implements Serializable {
     public void addReview(Review r){
         this.reviews.add(r);
         r.setTenderer(this);
+    }
+    
+    public void addNotification(Notification n){
+        this.notifications.add(n);
+        n.setTenderer(this);
     }
     
     @Override

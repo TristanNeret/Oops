@@ -5,23 +5,26 @@
  */
 package com.gdf.ejb;
 
-import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
-import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.Remote;
 
 /**
- *
- * @author nicolas
+ * Interface supplying methods for the registation of contractors and tenderers  
+ * @author aziz
  */
 @Remote
-public interface CustomerManagerBean {
+public interface RegistrationBean {
     
+    /**
+     * Register a Contractor 
+     * @param c the Contractor to register
+     */
     public void register(Contractor c); 
-    public void register(Tenderer t);
-    public Contractor searchContractorById(long id);
-    public void addReview(Review review, Tenderer tenderer, Contractor contractor);
-    public void addCategory(Category category);
     
+    /**
+     * Register a Tenderer
+     * @param t the Tenderer to register
+     */
+    public void register(Tenderer t);
 }

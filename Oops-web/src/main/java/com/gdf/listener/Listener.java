@@ -5,19 +5,19 @@
  */
 package com.gdf.listener;
 
-
-
-
-
-import com.gdf.ejb.CustomerManagerBean;
+import com.gdf.ejb.AdministratorBean;
+import com.gdf.ejb.EvaluationBean;
+import com.gdf.ejb.RegistrationBean;
 import com.gdf.persistence.Address;
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
 import com.gdf.persistence.Review;
+import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -29,16 +29,19 @@ import javax.servlet.ServletContextListener;
 public class Listener implements ServletContextListener {
 
     @EJB
-    CustomerManagerBean cm;
+    private RegistrationBean registrationBean;
+    @EJB
+    private EvaluationBean evalBean;
+    @EJB
+    private AdministratorBean adminBean;
     
     
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-    
         Contractor contractor = new Contractor();
         contractor.setEmail("tim.cook@apple.com");
         contractor.setLegalForm("legal form");
-        contractor.setLogo("http://1.bp.blogspot.com/-aMu3ZJ7WRo4/VdQUN1U6QvI/AAAAAAAACdk/zpRa_ayf4-4/s1600/aapl-logo.png");
+        contractor.setLogo("http://logok.org/wp-content/uploads/2014/04/Apple-logo-grey-880x625.png");
         contractor.setNbEmployees(50);
         contractor.setPassword("appelForEver");
         contractor.setPhone("07 70 28 21 99");
@@ -61,7 +64,7 @@ public class Listener implements ServletContextListener {
         category.setKeywords(null);
         category.setName("computer science");
         category.setId((long)1);
-        cm.addCategory(category);
+        adminBean.addCategory(category);
         
         Service service = new Service();
         service.setDescription("On produit des logiciel sur contre d'argent! ");
@@ -74,7 +77,7 @@ public class Listener implements ServletContextListener {
         category2.setKeywords(null);
         category2.setName("Selling products");
         category2.setId((long)2);
-        cm.addCategory(category2);
+        adminBean.addCategory(category2);
         
         Service service2 = new Service();
         service2.setDescription("We sell tech products");
@@ -99,24 +102,40 @@ public class Listener implements ServletContextListener {
         review.setContent("Travail super !");
         review.setRating(4);
         review.setContractorAnswer("Je suis très content !");
+        review.setReviewState(ReviewState.ACCEPTED);
+        
+        Review review2 = new Review();
+        review2.setAppreciation("pas Très professionel");
+        review2.setContent("pas 1 Travail super !");
+        review2.setRating(2);
+        review2.setContractorAnswer("Je suis pas très content !");
+        review2.setReviewState(ReviewState.ACCEPTED);
+        
+        Review review1 = new Review();
+        review1.setAppreciation("Ras le bol");
+        review1.setContent("merde alors!");
+        review1.setRating(1);
+        review1.setReviewState(ReviewState.NOT_ACCEPTED);
         
         String format = "dd/MM/yy H:mm:ss";
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat( format );
+        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
         java.util.Date date = new java.util.Date();
         review.setDate(formater.format(date));
-               
+        review1.setDate(formater.format(date));
+        review2.setDate(formater.format(date));
+        
         Tenderer tenderer = new Tenderer();
         tenderer.setEmail("oo@oo.om");
         tenderer.setLogin("Julie Johson");
         tenderer.setId((long)1);
 
                 
-        cm.register(tenderer); 
-        cm.register(contractor);
+        registrationBean.register(tenderer); 
+        registrationBean.register(contractor);
         
-        cm.addReview(review, tenderer, contractor);
-        
-        
+        evalBean.addReview(tenderer, contractor, review);
+        evalBean.addReview(tenderer, contractor, review1);
+        evalBean.addReview(tenderer, contractor, review2);
     }
     
   
