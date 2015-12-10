@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -22,6 +24,15 @@ import javax.persistence.OneToOne;
  * @author aziz
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Contractor.findAll",
+            query = "select c from Contractor c order by c.login ASC"),
+    @NamedQuery(name = "Contractor.findByLogin",
+            query = "select c from Contractor c where c.login=?1"),
+    @NamedQuery(name = "Contractor.findByEmail",
+            query = "select c from Contractor c where c.email=?1"),
+})
+
 public class Contractor implements Serializable {
     private static final long serialVersionUID = 1L;
    
