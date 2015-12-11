@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,6 +40,10 @@ public class Contractor implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    
+    @Column(unique=true)
+    private String login;
+    
     private String email, password, socialReason, legalForm, description, phone, logo, representatorFirstname, representatorLastname;
     private int turnover, nbEmployees, rating;  
    
@@ -214,6 +219,14 @@ public class Contractor implements Serializable {
     
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
     
     @Override

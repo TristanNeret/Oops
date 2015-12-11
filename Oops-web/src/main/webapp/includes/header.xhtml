@@ -7,30 +7,40 @@ and open the template in the editor.
 <!DOCTYPE html>
 <ui:composition 
     xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:o="http://omnifaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
     <script type="text/javascript">
         function handleRegisterRequest(xhr, status, args) {
-            if(args.validationFailed) {
-                PF('registerDialog').jq.effect("shake", {times:5}, 100);
+            if (args.validationFailed) {
+                PF('registerDialog').jq.effect("shake", {times: 5}, 100);
             }
             else {
                 PF('registerDialog').hide();
-                PF('registerGrowlError').renderMessage({summary:'Inscription réussie !', detail: 'Bienvenue sur Oops !', severity: 'info'});
+                PF('registerGrowlError').renderMessage({summary: 'Inscription réussie !', detail: 'Bienvenue sur Oops !', severity: 'info'});
+            }
+        }
+
+        function handleContractorRegisterRequest(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('contractorRegisterDialog').jq.effect("shake", {times: 5}, 100);
+            }
+            else {
+                PF('contractorRegisterDialog').hide();
+                PF('contractorRegisterGrowlError').renderMessage({summary: 'Inscription réussie !', detail: 'Bienvenue sur Oops !', severity: 'info'});
             }
         }
     </script>
-    
+
     <div id="divHeader">
         <h:link id="headerTitle" value="Oops" outcome="index"/>
         <h:link id="headerSubtitle" value="Opinion on providers of services" outcome="index"/>
         <h:button class="headerCommandButton" value="Connexion" />
-        
+
         <!-- DIALOG BOX FOR INSCRIPTION -->
         <o:form id="registerForm" includeViewParams="true">
             <p:growl widgetVar="registerGrowlError" sticky="false" showDetail="true" life="3000" />
@@ -49,28 +59,28 @@ and open the template in the editor.
             <p:dialog header="Inscription" widgetVar="registerDialog" resizable="false">
                 <h:panelGrid columns="2" cellpadding="5">
                     <h:outputLabel value="Inscrivez-vous sur le plus grand annuaire de prestataires du web !" /><h:outputLabel value=""></h:outputLabel>
-                    
+
                     <h:outputLabel value="Login :" />
                     <p:inputText id="registerLogin" value="#{tendererRegisterBean.login}" required="true" label="Login" />
-                    
+
                     <h:outputLabel value="Mot de passe :" />
                     <p:password id="registerMDP" value="#{tendererRegisterBean.password}" feedback="true" required="true" label="Mot de passe" />
-                    
+
                     <h:outputLabel value="Confirmer le mote de passe :" />
                     <p:password id="registerConfirmMDP" value="#{tendererRegisterBean.passwordConfirm}" feedback="true" required="true" label="Confirmation du mot de passe" />
-                    
+
                     <h:outputLabel value="Adresse mail :" />
                     <p:inputText id="registerMail" value="#{tendererRegisterBean.email}" required="true" label="Mail" />
-                    
+
                     <h:outputLabel value="Nom :" />
                     <p:inputText id="registerName" value="#{tendererRegisterBean.lastname}" required="true" label="Nom" />
-                    
+
                     <h:outputLabel value="Prénom :" />
                     <p:inputText id="registerFirstName" value="#{tendererRegisterBean.firstname}" required="true" label="Prénom" />
-                    
+
                     <h:outputLabel value="Téléphone :" />
                     <p:inputText id="registerPhoneNumber" value="#{tendererRegisterBean.phone}" required="false" label="Téléphone" />
-                    
+
                     <h:outputLabel value="Avatar :" />
                     <p:inputText id="registerAvatar" value="#{tendererRegisterBean.avatar}" required="false" label="Avatar" />
 
@@ -81,8 +91,73 @@ and open the template in the editor.
                 </h:panelGrid>
             </p:dialog>
         </o:form>
-        
-        <h:button class="headerCommandButton" style="margin-top: -35px;" value="Prestatire ? Inscrivez-vous ici !" />
+
+        <o:form id="contractorRegisterForm" includeViewParams="true">
+            <p:growl widgetVar="contractorRegisterGrowlError" sticky="false" showDetail="true" life="3000" />
+            <p:commandButton class="headerCommandButton" style="margin-top: -35px;" value="Prestatire ? Inscrivez-vous ici !" onclick="PF('contractorRegisterDialog').show();"  type="button">
+                <!-- Reset fields on opening -->
+                <p:ajax update="contractorRegisterLogin" resetValues="true" />
+                <p:ajax update="contractorRegisterPassword" resetValues="true" />
+                <p:ajax update="contractorRegisterFirstName" resetValues="true" />
+                <p:ajax update="contractorRegisterName" resetValues="true" />
+                <p:ajax update="contractorRegisterEmail" resetValues="true" />
+                <p:ajax update="contractorRegisterPhoneNumber" resetValues="true" />
+                <p:ajax update="contractorRegisterSocialReason" resetValues="true" />
+                <p:ajax update="contractorRegisterLegalForm" resetValues="true" />
+                <p:ajax update="contractorRegisterTurnover" resetValues="true" />
+                <p:ajax update="contractorRegisterNbEmployees" resetValues="true" />
+                <p:ajax update="contractorRegisterSiren" resetValues="true" />
+                <p:ajax update="contractorRegisterSiret" resetValues="true" />
+            </p:commandButton>
+            <p:growl id="contractorRegisterGrowl" sticky="false" showDetail="false" life="3000" />
+            <p:dialog header="Prestataire Incription" widgetVar="contractorRegisterDialog" resizable="false">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel value="Enregistrez-vous et donnez à vos prestations une dimension internationnale !" /><h:outputLabel value=""></h:outputLabel>
+
+                    <h:outputLabel value="Login :" />
+                    <p:inputText id="contractorRegisterLogin" value="#{contractorRegistrationBean.login}" required="true" label="Login" />
+
+                    <h:outputLabel value="Mot de passe :" />
+                    <p:password id="contractorRegisterPassword" value="#{contractorRegistrationBean.password}" feedback="true" required="true" label="Mot de passe" />
+
+                    <h:outputLabel value="Prénom :" />
+                    <p:inputText id="contractorRegisterFirstName" value="#{contractorRegistrationBean.firstname}" required="true" label="Prénom" />
+
+                    <h:outputLabel value="Nom :" />
+                    <p:inputText id="contractorRegisterName" value="#{contractorRegistrationBean.lastname}" required="true" label="Nom" />
+
+                    <h:outputLabel value="Adresse mail :" />
+                    <p:inputText id="contractorRegisterEmail" value="#{contractorRegistrationBean.email}" required="true" label="Email" />
+
+                    <h:outputLabel value="Téléphone :" />
+                    <p:inputText id="contractorRegisterPhoneNumber" value="#{contractorRegistrationBean.phone}" required="false" label="Téléphone" />
+
+                    <h:outputLabel value="Raison sociale :" />
+                    <p:inputText id="contractorRegisterSocialReason" value="#{contractorRegistrationBean.socialReason}" required="false" label="Raison sociale" />
+
+                    <h:outputLabel value="Forme juridique :" />
+                    <p:inputText id="contractorRegisterLegalForm" value="#{contractorRegistrationBean.legalForm}" required="true" label="Forme juridique" />
+
+                    <h:outputLabel value="Chiffre d'affaire :" />
+                    <p:inputText id="contractorRegisterTurnover" value="#{contractorRegistrationBean.turnover}" required="true" label="Chiffre d'affaire" />
+
+                    <h:outputLabel value="Nombre d'employés :" />
+                    <p:inputText id="contractorRegisterNbEmployees" value="#{contractorRegistrationBean.nbEmployees}" required="true" label="Nombre d'employés" />
+
+                    <h:outputLabel value="SIREN :" />
+                    <p:inputText id="contractorRegisterSiren" value="#{contractorRegistrationBean.siren}" required="false" label="Siren" />
+
+                    <h:outputLabel value="SIRET :" />
+                    <p:inputText id="contractorRegisterSiret" value="#{contractorRegistrationBean.siret}" required="false" label="Siret" />
+
+                    <f:facet name="footer">
+                        <p:commandButton value="S'inscrire" update="contractorRegisterGrowl"  actionListener="#{contractorRegistrationBean.submit}" 
+                                         oncomplete="handleContractorRegisterRequest(xhr, status, args)" />
+                    </f:facet>  
+                </h:panelGrid>
+            </p:dialog>
+        </o:form>
+
     </div>
-    
+
 </ui:composition>
