@@ -11,6 +11,7 @@ import com.gdf.persistence.LegalInformation;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
  *
@@ -20,6 +21,8 @@ import javax.enterprise.context.RequestScoped;
 @RequestScoped
 public class ContractorRegistrationBean {
 
+    private static final String ENCRYPTION_ALGORITHM = "SHA-256";
+    
     private String login;
     private String password;
     private String lastname;
@@ -148,7 +151,7 @@ public class ContractorRegistrationBean {
         
         Contractor c = new Contractor();
         c.setLogin(login);
-        c.setPassword(password);
+        c.setPassword(encryptPassword());
         c.setRepresentatorFirstname(firstname);
         c.setRepresentatorLastname(lastname);
         c.setEmail(email);
@@ -161,6 +164,13 @@ public class ContractorRegistrationBean {
         
         rb.register(c);
         
+    }
+    
+    private String encryptPassword(){
+        ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
+        passwordEncryptor.setAlgorithm( ENCRYPTION_ALGORITHM );
+        passwordEncryptor.setPlainDigest( true );
+        return passwordEncryptor.encryptPassword(this.password);
     }
     
 }
