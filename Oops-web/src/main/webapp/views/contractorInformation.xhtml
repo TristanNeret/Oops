@@ -44,23 +44,30 @@ and open the template in the editor.
 
             <c:if test="#{contractorInformationsBean.contractor != null}" >
 
-                <fieldset>
-                    <h1><h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/></h1>
-                    <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" height="200px"/>
-                    <b>Email :</b> <h:outputText value="#{contractorInformationsBean.contractor.email}"/>
-                    <b>Téléphone :</b> <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
+                <fieldset style="margin-left: -35px; margin-right: -30px"> 
+                    <table>
+                        <tr>
+                            <td>
+                                <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" height="200px"/>
+                            </td>
+                            <td>
+                                <h1><h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/></h1>  
+                                <b>Email : </b> <h:outputText value="#{contractorInformationsBean.contractor.email}"/> <br/>
+                                <b>Téléphone : </b> <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
+                                <b>Localisation : </b> <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
+                                (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) <br/>
+                                <h:graphicImage library="images" name="#{contractorInformationsBean.contractor.rating}.png" height="30px"/>
+                            </td>
+                        </tr>
+                    </table>
+                  
                 </fieldset>
 
-                Localisation : <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
-                              (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) 
-                              note : <h:graphicImage library="images" name="#{contractorInformationsBean.contractor.rating}.png" height="30px"/>
-                <br/>
-
-                <h2>Description:</h2>
+                <h2>Description :</h2>
 
                 <h:outputText value="#{contractorInformationsBean.contractor.description}"/> <br/>
                 <br/>
-                <h2>Prestations:</h2>
+                <h2>Prestations :</h2>
 
                 <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
 
@@ -70,7 +77,7 @@ and open the template in the editor.
                     </fieldset>
                     <h:outputText value="#{service.description}"/> <br/>
 
-                    Tarrif horraire : <h:outputText value="#{service.price}"/> £ <br/>
+                    Tarrif horraire : <h:outputText value="#{service.price}"/> € <br/>
                     <br/>
                 </c:forEach > 
 
@@ -103,16 +110,16 @@ and open the template in the editor.
                     </p:dialog>
                 </o:form>
 
-                <h2>Avis:</h2>
+                <h2>Avis :</h2>
                 <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
-               <!--     <c:if test="#{review.reviewState == 'ACCEPTED'}"> -->
+                     <c:if test="#{review.reviewState == 'ACCEPTED'}"> 
                         <h:outputText value="#{review.appreciation}"/>
                         par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/><br/>
                         <h:outputText value="#{review.content}"/> <br/>
                         note : <h:graphicImage library="images" name="#{review.rating}.png" height="20px"/> <br/>
                         reponse : <h:outputText value="#{review.contractorAnswer}"/> <br/>
                         <br/>
-              <!--      </c:if> -->
+                    </c:if> 
                 </c:forEach>
 
             </c:if>

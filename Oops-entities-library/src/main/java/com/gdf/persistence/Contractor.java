@@ -143,7 +143,7 @@ public class Contractor implements Serializable {
     }
 
     public int getRating() {
-        return rating;
+        return this.calculRate();
     }
 
     public void setRating(int rating) {
@@ -215,6 +215,22 @@ public class Contractor implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+    
+    public int calculRate(){
+        
+        int res = 0;
+        int nb = 0 ;
+        
+        for(Review r : reviews){
+            if(r.getReviewState() == ReviewState.ACCEPTED)
+               res =+ r.getRating(); nb++;
+        }
+        
+        if(nb == 0 )
+            return 0;
+        else            
+            return (int)(res/nb);
     }
     
     public void setDescription(String description) {

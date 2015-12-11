@@ -9,6 +9,7 @@ import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Notification;
 import com.gdf.persistence.NotificationType;
 import com.gdf.persistence.Review;
+import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,6 +36,7 @@ public class EvaluationBeanImpl implements EvaluationBean {
         
         attachedTenderer.addReview(review);
         attachedContractor.addReview(review);
+    
     }
     
     @Override

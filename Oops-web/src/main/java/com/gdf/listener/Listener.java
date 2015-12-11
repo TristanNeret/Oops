@@ -17,7 +17,6 @@ import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -49,8 +48,7 @@ public class Listener implements ServletContextListener {
         contractor.setRepresentatorLastname("Cook");
         contractor.setSocialReason("Apple");
         contractor.setTurnover(500000000);
-        contractor.setDescription("Nous somme apple, des petits chinois fabriquent nos produits");
-        contractor.setRating(3);
+        contractor.setDescription(" Apple Inc. est une entreprise multinationale américaine qui conçoit et commercialise des produits électroniques grand public");
         contractor.setId((long)1);
         
         LegalInformation legalInformation = new LegalInformation();
