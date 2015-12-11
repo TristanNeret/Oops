@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
  *
@@ -22,6 +23,9 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Moderator implements Serializable {
+    
+    private static final String ENCRYPTION_ALGORITHM = "SHA-256";
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,7 +62,7 @@ public class Moderator implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = encryptPassword(password);
     }
 
     public List<ModeratorReview> getReviews() {
@@ -76,6 +80,15 @@ public class Moderator implements Serializable {
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
+    
+    
+    private String encryptPassword(String password){
+        ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
+        passwordEncryptor.setAlgorithm( ENCRYPTION_ALGORITHM );
+        passwordEncryptor.setPlainDigest( true );
+        return passwordEncryptor.encryptPassword(password);
+    }
+    
     
     @Override
     public int hashCode() {

@@ -20,5 +20,6 @@ public interface TendererManagerBean {
     public List<Tenderer> findAll();
     public List<Tenderer> findByLogin(String login);
     public List<Tenderer> findByEmail(String email);
-        
+    public void update(Tenderer t);
+    public void delete(Tenderer t); 
 }

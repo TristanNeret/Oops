@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
  *
@@ -35,6 +36,9 @@ import javax.persistence.OneToOne;
 })
 
 public class Contractor implements Serializable {
+    
+    private static final String ENCRYPTION_ALGORITHM = "SHA-256";
+    
     private static final long serialVersionUID = 1L;
    
     @Id
@@ -67,7 +71,7 @@ public class Contractor implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = encryptPassword(password);
     }
 
     public String getSocialReason() {
@@ -244,6 +248,15 @@ public class Contractor implements Serializable {
     public void setLogin(String login) {
         this.login = login;
     }
+    
+    private String encryptPassword(String password){
+        ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
+        passwordEncryptor.setAlgorithm( ENCRYPTION_ALGORITHM );
+        passwordEncryptor.setPlainDigest( true );
+        return passwordEncryptor.encryptPassword(password);
+    }
+    
+    
     
     @Override
     public int hashCode() {
