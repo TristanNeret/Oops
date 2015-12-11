@@ -91,7 +91,7 @@ and open the template in the editor.
                         <p:ajax update="reviewRate" resetValues="true" />
                     </p:commandButton>
                     <p:growl id="growl" sticky="false" showDetail="false" life="3000" />
-                    <p:dialog header="Donner votre avis :" widgetVar="reviewDialog" resizable="false">
+                    <p:dialog header="Donner votre avis :" modal="true" widgetVar="reviewDialog" resizable="false">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel value="Titre :" />
                             <p:inputText id="reviewAppreciation" value="#{reviewBean.reviewAppreciation}" required="true" label="Titre" />

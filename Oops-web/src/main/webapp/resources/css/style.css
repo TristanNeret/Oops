@@ -130,3 +130,16 @@ h2
     background-color: #f6f6f6;
     color: #333333;
 }
+
+/* Dialog */
+
+.dialogTitle {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.dialogFooter {
+    text-align: center;
+    padding: 10px;
+}
