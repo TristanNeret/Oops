@@ -12,6 +12,7 @@ import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -31,21 +32,48 @@ public class TendererBean implements TendererManagerBean{
 
     @Override
     public List<Tenderer> findAll() {
-        Query query = em.createNamedQuery("Tenderer.findAll");
-        return query.getResultList();    }
+        
+        TypedQuery<Tenderer> query = em.createNamedQuery("Tenderer.findAll", Tenderer.class);
+        return query.getResultList();    
+    
+    }
 
     @Override
     public List<Tenderer> findByLogin(String login) {
-        Query query = em.createNamedQuery("Tenderer.findByLogin");
+        
+        TypedQuery<Tenderer> query = em.createNamedQuery("Tenderer.findByLogin", Tenderer.class);
         query.setParameter(1, login);
-        return query.getResultList();
+        
+        List results = query.getResultList();
+        if(results.isEmpty()) {
+            
+            return null;
+            
+        } else {
+            
+            return query.getResultList();
+                    
+        }
+        
     }
 
     @Override
     public List<Tenderer> findByEmail(String email) {
-        Query query = em.createNamedQuery("Tenderer.findByEmail");
+        
+        TypedQuery<Tenderer> query = em.createNamedQuery("Tenderer.findByEmail", Tenderer.class);
         query.setParameter(1, email.toLowerCase());
-        return query.getResultList();
+        
+        List results = query.getResultList();
+        if(results.isEmpty()) {
+            
+            return null;
+            
+        } else {
+            
+            return query.getResultList();
+                    
+        }
+        
     }
 
     // Add business logic below. (Right-click in editor and choose

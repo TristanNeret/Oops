@@ -49,14 +49,14 @@ public class TendererRegisterBean {
        
             // Check login taken        
             List<Tenderer> res = tb.findByLogin(login);
-            if (res.size() > 0) {
+            if (res != null && res.size() > 0) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("", "Ce pseudonyme est déjà utilisé par un autre soumissionnaire"));
                 return "register";
             }
 
             // Check mail taken    
             res = tb.findByEmail(email);
-            if (res.size() > 0) {
+            if (res != null && res.size() > 0) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("", "Ce mail est déjà utilisé par un autre soumissionnaire"));
                 return "register";
             }
@@ -72,8 +72,8 @@ public class TendererRegisterBean {
             t.setAvatar(avatar);
             
             tb.register(t);
+            
             return "register";
-        
         
     }
 

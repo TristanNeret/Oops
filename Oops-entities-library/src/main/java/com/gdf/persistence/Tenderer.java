@@ -24,16 +24,13 @@ import javax.persistence.OneToMany;
  *
  * @author aziz
  */
+
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Tenderer.findAll",
-            query = "select t from Tenderer t order by t.login ASC"),
-    @NamedQuery(name = "Member.findByLogin",
-            query = "select t from Tenderer t where t.login=?1"),
-    @NamedQuery(name = "Member.findByEmail",
-            query = "select t from Tenderer t where t.email=?1"),
+    @NamedQuery(name = "Tenderer.findAll", query = "SELECT t FROM Tenderer t ORDER BY t.login ASC"),
+    @NamedQuery(name = "Tenderer.findByLogin", query = "SELECT t FROM Tenderer t WHERE t.login=?1"),
+    @NamedQuery(name = "Tenderer.findByEmail", query = "SELECT t FROM Tenderer t WHERE t.email=?1")
 })
-
 public class Tenderer implements Serializable {
     private static final long serialVersionUID = 1L;
   

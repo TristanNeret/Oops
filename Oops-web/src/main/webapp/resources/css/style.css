@@ -104,3 +104,30 @@ h2
     font-size: 12px;
 }
 
+/* Primefaces redifinition */
+
+.ui-corner-all {
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: 1px solid #ffffff;
+    background: none;
+    font-weight: inherit;
+    text-shadow: none;
+    background-color: #666666;
+    color: #ffffff;
+}
+
+.ui-state-default {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield {
+    background-color: #f6f6f6;
+    color: #333333;
+}
