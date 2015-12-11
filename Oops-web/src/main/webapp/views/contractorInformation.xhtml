@@ -21,22 +21,22 @@ and open the template in the editor.
         </f:metadata>
         <script type="text/javascript">
             function handleReviewRequest(xhr, status, args) {
-                if(args.validationFailed) {
-                    PF('reviewDialog').jq.effect("shake", {times:5}, 100);
+                if (args.validationFailed) {
+                    PF('reviewDialog').jq.effect("shake", {times: 5}, 100);
                 }
                 else {
                     PF('reviewDialog').hide();
-                    PF('growlError').renderMessage({summary:'Avis soumis !', detail: 'Un modérateur va se charger de vérifier sa validité', severity: 'info'});
+                    PF('growlError').renderMessage({summary: 'Avis soumis !', detail: 'Un modérateur va se charger de vérifier sa validité', severity: 'info'});
                 }
             }
         </script>
     </h:head>
-    
+
     <h:body>
-        
+
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
-    
+
         <div class="divContent">
             <c:if test="#{contractorInformationsBean.contractor == null}" >
                 <h2>Prestataire introuvable !</h2> 
@@ -44,7 +44,7 @@ and open the template in the editor.
 
             <c:if test="#{contractorInformationsBean.contractor != null}" >
 
-                <fieldset style="margin-left: -35px; margin-right: -30px"> 
+                <fieldset> 
                     <table>
                         <tr>
                             <td>
@@ -56,78 +56,100 @@ and open the template in the editor.
                                 <b>Téléphone : </b> <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
                                 <b>Localisation : </b> <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
                                 (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) <br/>
-                                <h:graphicImage library="images" name="#{contractorInformationsBean.contractor.rating}.png" height="30px"/>
+                                <b id="starsTxt1">Note moyenne : </b>
+                                <p:rating id="stars1" value="#{contractorInformationsBean.contractor.rating}" stars="5" readonly="true"/>
                             </td>
                         </tr>
                     </table>
-                  
+
                 </fieldset>
 
-                <h2>Description :</h2>
+                <div id="description">
+                    <h2>Description</h2>
+                    <h:outputText value="#{contractorInformationsBean.contractor.description}"/>
+                </div>
 
-                <h:outputText value="#{contractorInformationsBean.contractor.description}"/> <br/>
-                <br/>
-                <h2>Prestations :</h2>
+                <div id="prestations">
+                    <h2>Prestations</h2>
+                    <table>
+                        <tr>
+                            <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
+                                <td style="padding-right: 30px">
+                                    <fieldset>
+                                        <h:outputText value="#{service.title}"/> (<h:outputText value="#{service.category.name}"/>)
+                                    </fieldset>
+                                    <h:outputText value="#{service.description}"/> <br/>
+                                    <b>Tarif horraire : <span style="color: #1E90FF;">
+                                            <h:outputText value="#{service.price}"/> €
+                                        </span></b>
+                                </td>
+                            </c:forEach > 
+                        </tr>
+                    </table>
+                </div>
 
-                <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
+                <div id="rating">   
 
-                    <fieldset>
-                        <h:outputText value="#{service.title}"/>
-                        (<h:outputText value="#{service.category.name}"/>) <br/>
-                    </fieldset>
-                    <h:outputText value="#{service.description}"/> <br/>
+                    <h2 id="ratingH2">Avis</h2>
 
-                    Tarrif horraire : <h:outputText value="#{service.price}"/> € <br/>
+                    <!-- DIALOG BOX FOR RATING -->
+                    <o:form id="reviewForm" includeViewParams="true">
+                        <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
+                        <p:commandButton id="reviewBtn" value="Donner votre avis" onclick="if (#{reviewBean.isTendererConnected()}) {
+                                PF('reviewDialog').show();
+                            } else {
+                                PF('growlError').renderMessage({summary: 'Vous devez vous connecter !', detail: 'Coonectez-vous en tant que soumissionnaire pour évaluer un prestataire.', severity: 0});
+                            }" type="button">
+                            <!-- Reset fields on opening -->
+                            <p:ajax update="reviewAppreciation" resetValues="true" />
+                            <p:ajax update="reviewContent" resetValues="true" />
+                            <p:ajax update="reviewRate" resetValues="true" />
+                        </p:commandButton>
+                        <p:growl id="growl" sticky="false" showDetail="false" life="3000" />
+                        <p:dialog header="Donner votre avis :" modal="true" widgetVar="reviewDialog" resizable="false">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel value="Titre :" />
+                                <p:inputText id="reviewAppreciation" value="#{reviewBean.reviewAppreciation}" required="true" label="Titre" />
+
+                                <h:outputLabel value="Description :" />
+                                <p:inputTextarea id="reviewContent" rows="6" cols="33" value="#{reviewBean.reviewContent}" required="true" label="Description" />
+
+                                <h:outputLabel value="Note moyenne :" />
+                                <p:rating id="reviewRate" value="#{reviewBean.reviewRating}" required="true" />
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Soumettre l'avis" update="growl"  actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
+                                                     oncomplete="handleReviewRequest(xhr, status, args)" />
+                                </f:facet>  
+                            </h:panelGrid>
+                        </p:dialog>
+                    </o:form>
+
                     <br/>
-                </c:forEach > 
 
-                <!-- DIALOG BOX FOR RATING -->
-                <o:form id="reviewForm" includeViewParams="true">
-                    <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
-                    <p:commandButton value="Donner votre avis" onclick="if(#{reviewBean.isTendererConnected()}){PF('reviewDialog').show();} else {PF('growlError').renderMessage({summary:'Vous devez vous connecter !', detail: 'Coonectez-vous en tant que soumissionnaire pour évaluer un prestataire.', severity: 0});}" type="button">
-                        <!-- Reset fields on opening -->
-                        <p:ajax update="reviewAppreciation" resetValues="true" />
-                        <p:ajax update="reviewContent" resetValues="true" />
-                        <p:ajax update="reviewRate" resetValues="true" />
-                    </p:commandButton>
-                    <p:growl id="growl" sticky="false" showDetail="false" life="3000" />
-                    <p:dialog header="Donner votre avis :" modal="true" widgetVar="reviewDialog" resizable="false">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputLabel value="Titre :" />
-                            <p:inputText id="reviewAppreciation" value="#{reviewBean.reviewAppreciation}" required="true" label="Titre" />
-
-                            <h:outputLabel value="Description :" />
-                            <p:inputTextarea id="reviewContent" rows="6" cols="33" value="#{reviewBean.reviewContent}" required="true" label="Description" />
-
-                            <h:outputLabel value="Note moyenne :" />
-                            <p:rating id="reviewRate" value="#{reviewBean.reviewRating}" required="true" />
-
-                            <f:facet name="footer">
-                                <p:commandButton value="Soumettre l'avis" update="growl"  actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
-                                                 oncomplete="handleReviewRequest(xhr, status, args)" />
-                            </f:facet>  
-                        </h:panelGrid>
-                    </p:dialog>
-                </o:form>
-
-                <h2>Avis :</h2>
-                <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
-                     <c:if test="#{review.reviewState == 'ACCEPTED'}"> 
-                        <h:outputText value="#{review.appreciation}"/>
-                        par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/><br/>
-                        <h:outputText value="#{review.content}"/> <br/>
-                        note : <h:graphicImage library="images" name="#{review.rating}.png" height="20px"/> <br/>
-                        reponse : <h:outputText value="#{review.contractorAnswer}"/> <br/>
-                        <br/>
-                    </c:if> 
-                </c:forEach>
-
+                    <table>
+                        <tr>
+                            <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
+                                <c:if test="#{review.reviewState == 'ACCEPTED'}"> 
+                                    <td style="padding-right: 30px">
+                                        <h:outputText value="#{review.appreciation}"/>
+                                        <span style="color: gray;">par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/></span><br/>
+                                        <h:outputText value="#{review.content}"/> <br/>
+                                        <b id="starsTxt2">Note : </b>
+                                        <p:rating id="stars2" value="#{review.rating}" stars="5" readonly="true"/> <br/>
+                                        <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}"/>
+                                    </td>
+                                </c:if> 
+                            </c:forEach>
+                        </tr>
+                    </table>
+                </div>
             </c:if>
         </div>
-        
+
         <!-- FOOTER -->
         <ui:include src="/includes/footer.xhtml" />
-        
+
     </h:body> 
-      
+
 </html>

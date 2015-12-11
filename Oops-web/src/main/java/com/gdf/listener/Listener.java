@@ -60,26 +60,26 @@ public class Listener implements ServletContextListener {
         Category category = new Category();
         category.setImage("src/cat1");
         category.setKeywords(null);
-        category.setName("computer science");
+        category.setName("Informatique");
         category.setId((long)1);
         adminBean.addCategory(category);
         
         Service service = new Service();
-        service.setDescription("On produit des logiciel sur contre d'argent! ");
-        service.setTitle("Réalisation et maintenance de logiciel");
+        service.setDescription("Nous developpons pour nos clients des projets informatiques multi-plateformes.");
+        service.setTitle("Developpement");
         service.setPrice(100);
         service.setCategory(category);
         
         Category category2 = new Category();
         category2.setImage("img");
         category2.setKeywords(null);
-        category2.setName("Selling products");
+        category2.setName("Télécomunication");
         category2.setId((long)2);
         adminBean.addCategory(category2);
         
         Service service2 = new Service();
-        service2.setDescription("We sell tech products");
-        service2.setTitle("Selling");
+        service2.setDescription("Nous installons et maintenons des infrastructures réseaux d'entreprise.");
+        service2.setTitle("Administration réseaux");
         service2.setPrice(1000);
         service2.setCategory(category2);
         
@@ -97,34 +97,19 @@ public class Listener implements ServletContextListener {
         
         Review review = new Review();
         review.setAppreciation("Très professionel");
-        review.setContent("Travail super !");
+        review.setContent("Travail réalisé dans les temps et de qualité !");
         review.setRating(4);
-        review.setContractorAnswer("Je suis très content !");
+        review.setContractorAnswer("Merci et à bientôt !");
         review.setReviewState(ReviewState.ACCEPTED);
-        
-        Review review2 = new Review();
-        review2.setAppreciation("pas Très professionel");
-        review2.setContent("pas 1 Travail super !");
-        review2.setRating(2);
-        review2.setContractorAnswer("Je suis pas très content !");
-        review2.setReviewState(ReviewState.ACCEPTED);
-        
-        Review review1 = new Review();
-        review1.setAppreciation("Ras le bol");
-        review1.setContent("merde alors!");
-        review1.setRating(1);
-        review1.setReviewState(ReviewState.NOT_ACCEPTED);
         
         String format = "dd/MM/yy H:mm:ss";
         java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
         java.util.Date date = new java.util.Date();
         review.setDate(formater.format(date));
-        review1.setDate(formater.format(date));
-        review2.setDate(formater.format(date));
         
         Tenderer tenderer = new Tenderer();
         tenderer.setEmail("oo@oo.om");
-        tenderer.setLogin("Julie Johson");
+        tenderer.setLogin("Julie Johnson");
         tenderer.setId((long)1);
 
                 
@@ -132,8 +117,6 @@ public class Listener implements ServletContextListener {
         registrationBean.register(contractor);
         
         evalBean.addReview(tenderer, contractor, review);
-        evalBean.addReview(tenderer, contractor, review1);
-        evalBean.addReview(tenderer, contractor, review2);
     }
     
   

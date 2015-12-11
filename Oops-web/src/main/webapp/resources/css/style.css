@@ -143,3 +143,12 @@ h2
     text-align: center;
     padding: 10px;
 }
+
+#starsTxt1, #stars1 {
+    display: inline-block
+}
+
+#starsTxt2, #stars2 {
+    display: inline-block
+}
+
