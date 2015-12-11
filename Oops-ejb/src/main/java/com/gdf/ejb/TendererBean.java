@@ -23,6 +23,20 @@ public class TendererBean implements TendererManagerBean{
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;
     
+    public void setEntityManager(EntityManager em) {
+        this.em = em;
+    }
+    
+    @Override
+    public void update(Tenderer t) {
+        em.merge(t);
+    }
+
+    @Override
+    public void delete(Tenderer t) {
+        t = em.find(Tenderer.class, t.getId());
+        em.remove(t);
+    }
     
     @Override
     public void register(Tenderer t) {
@@ -77,4 +91,6 @@ public class TendererBean implements TendererManagerBean{
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    
 }

@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
  *
@@ -33,7 +34,7 @@ import javax.persistence.OneToMany;
 })
 public class Tenderer implements Serializable {
     private static final long serialVersionUID = 1L;
-  
+    private static final String ENCRYPTION_ALGORITHM = "SHA-256";
 
     @Column(unique=true)
     private String login;
@@ -65,7 +66,7 @@ public class Tenderer implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = encryptPassword(password);
     }
 
     public String getFirstname() {
@@ -149,6 +150,15 @@ public class Tenderer implements Serializable {
         this.notifications.add(n);
         n.setTenderer(this);
     }
+    
+    
+    private String encryptPassword(String password){
+        ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
+        passwordEncryptor.setAlgorithm( ENCRYPTION_ALGORITHM );
+        passwordEncryptor.setPlainDigest( true );
+        return passwordEncryptor.encryptPassword(password);
+    }
+    
     
     @Override
     public int hashCode() {
