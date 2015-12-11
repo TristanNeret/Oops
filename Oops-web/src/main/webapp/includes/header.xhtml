@@ -37,24 +37,48 @@ and open the template in the editor.
     </script>
 
     <div id="divHeader">
-        <h:link id="headerTitle" value="Oops" outcome="/index.xhtml"/>
-        <h:link id="headerSubtitle" value="Opinion on providers of services" outcome="/index.xhtml"/>
-        <h:button class="headerCommandButton" value="Connexion" />
-
-        <!-- DIALOG BOX FOR INSCRIPTION -->
+        
         <o:form id="registerForm" includeViewParams="true">
+        
             <p:growl widgetVar="registerGrowlError" sticky="false" showDetail="true" life="3000" />
-            <p:commandButton class="headerCommandButton" style="margin-top: -35px;" value="Inscription" onclick="PF('registerDialog').show();"  type="button">
-                <!-- Reset fields on opening -->
-                <p:ajax update="registerLogin" resetValues="true" />
-                <p:ajax update="registerMDP" resetValues="true" />
-                <p:ajax update="registerConfirmMDP" resetValues="true" />
-                <p:ajax update="registerMail" resetValues="true" />
-                <p:ajax update="registerName" resetValues="true" />
-                <p:ajax update="registerFirstName" resetValues="true" />
-                <p:ajax update="registerPhoneNumber" resetValues="true" />
-                <p:ajax update="registerAvatar" resetValues="true" />
-            </p:commandButton>
+            <p:growl widgetVar="contractorRegisterGrowlError" sticky="false" showDetail="true" life="3000" />
+            
+            <p:panelGrid styleClass="panelHeader" columns="3">
+                <h:link styleClass="headerTitle" value="Oops" outcome="/index.xhtml"/>
+                <h:link styleClass="headerSubtitle" value="Opinion on providers of services" outcome="/index.xhtml"/>
+
+                <p:panelGrid styleClass="panelHeaderButton" columns="3">
+                    <h:button class="headerCommandButton" value="Connexion" />
+                    <p:commandButton class="headerCommandButton" value="Inscription" onclick="PF('registerDialog').show();"  type="button">
+                        <!-- Reset fields on opening -->
+                        <p:ajax update="registerLogin" resetValues="true" />
+                        <p:ajax update="registerMDP" resetValues="true" />
+                        <p:ajax update="registerConfirmMDP" resetValues="true" />
+                        <p:ajax update="registerMail" resetValues="true" />
+                        <p:ajax update="registerName" resetValues="true" />
+                        <p:ajax update="registerFirstName" resetValues="true" />
+                        <p:ajax update="registerPhoneNumber" resetValues="true" />
+                        <p:ajax update="registerAvatar" resetValues="true" />
+                    </p:commandButton>
+                    <p:commandButton class="headerCommandButton" value="Prestatire ? Inscrivez-vous ici !" onclick="PF('contractorRegisterDialog').show();"  type="button">
+                        <!-- Reset fields on opening -->
+                        <p:ajax update="contractorRegisterLogin" resetValues="true" />
+                        <p:ajax update="contractorRegisterPassword" resetValues="true" />
+                        <p:ajax update="contractorRegisterFirstName" resetValues="true" />
+                        <p:ajax update="contractorRegisterName" resetValues="true" />
+                        <p:ajax update="contractorRegisterEmail" resetValues="true" />
+                        <p:ajax update="contractorRegisterPhoneNumber" resetValues="true" />
+                        <p:ajax update="contractorRegisterSocialReason" resetValues="true" />
+                        <p:ajax update="contractorRegisterLegalForm" resetValues="true" />
+                        <p:ajax update="contractorRegisterTurnover" resetValues="true" />
+                        <p:ajax update="contractorRegisterNbEmployees" resetValues="true" />
+                        <p:ajax update="contractorRegisterSiren" resetValues="true" />
+                        <p:ajax update="contractorRegisterSiret" resetValues="true" />
+                    </p:commandButton>
+                </p:panelGrid>
+            </p:panelGrid>
+            
+            <!-- DIALOG BOX FOR TENDERER REGISTRATION -->
             <p:growl id="registerGrowl" sticky="false" showDetail="false" life="3000" />
             <p:dialog header="Inscription" modal="true" widgetVar="registerDialog" resizable="false">
                 <div class="dialogTitle">Inscrivez-vous sur le plus grand annuaire de<br/> prestataires du web !</div>
@@ -90,30 +114,13 @@ and open the template in the editor.
                                          oncomplete="handleRegisterRequest(xhr, status, args)" />
                 </div>
             </p:dialog>
-        </o:form>
 
-        <o:form id="contractorRegisterForm" includeViewParams="true">
-            <p:growl widgetVar="contractorRegisterGrowlError" sticky="false" showDetail="true" life="3000" />
-            <p:commandButton class="headerCommandButton" style="margin-top: -35px;" value="Prestatire ? Inscrivez-vous ici !" onclick="PF('contractorRegisterDialog').show();"  type="button">
-                <!-- Reset fields on opening -->
-                <p:ajax update="contractorRegisterLogin" resetValues="true" />
-                <p:ajax update="contractorRegisterPassword" resetValues="true" />
-                <p:ajax update="contractorRegisterFirstName" resetValues="true" />
-                <p:ajax update="contractorRegisterName" resetValues="true" />
-                <p:ajax update="contractorRegisterEmail" resetValues="true" />
-                <p:ajax update="contractorRegisterPhoneNumber" resetValues="true" />
-                <p:ajax update="contractorRegisterSocialReason" resetValues="true" />
-                <p:ajax update="contractorRegisterLegalForm" resetValues="true" />
-                <p:ajax update="contractorRegisterTurnover" resetValues="true" />
-                <p:ajax update="contractorRegisterNbEmployees" resetValues="true" />
-                <p:ajax update="contractorRegisterSiren" resetValues="true" />
-                <p:ajax update="contractorRegisterSiret" resetValues="true" />
-            </p:commandButton>
+            <!-- DIALOG BOX FOR CONTRACTOR REGISTRATION -->
             <p:growl id="contractorRegisterGrowl" sticky="false" showDetail="false" life="3000" />
             <p:dialog header="Prestataire Incription" modal="true" widgetVar="contractorRegisterDialog" resizable="false">
                 <div class="dialogTitle">Enregistrez-vous et donnez à vos prestations<br/> une dimansion Internationale !</div>
                 <h:panelGrid columns="2" cellpadding="5">
-                    
+
                     <h:outputLabel value="Login :" />
                     <p:inputText id="contractorRegisterLogin" value="#{contractorRegistrationBean.login}" required="true" label="Login" />
 
@@ -156,8 +163,9 @@ and open the template in the editor.
                                          oncomplete="handleContractorRegisterRequest(xhr, status, args)" />
                 </div>
             </p:dialog>
-        </o:form>
 
+        </o:form>    
+            
     </div>
 
 </ui:composition>

@@ -36,21 +36,6 @@ h2
     padding: 10px;
 }
 
-#headerTitle {
-    font-size: 38px;
-    margin-left: 50px;
-    color: #ffffff;
-    text-decoration:none;
-}
-
-#headerSubtitle {
-    font-size: 24px;
-    font-weight: 100;
-    margin-left: 20px;
-    color: #ffffff;
-    text-decoration:none;
-}
-
 .headerCommandButton {
     border: 1px #ffffff solid;
     height: 35px;
@@ -58,7 +43,38 @@ h2
     margin: 10px;
     background-color: #666666;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 12px !important;
+}
+
+table.panelHeaderButton {
+    float: right !important;
+}
+
+table.panelHeader {
+    width: 100% !important;
+}
+
+table.panelHeader td.ui-panelgrid-cell {
+    background-color: #666666;
+    border-style: none;
+}
+
+table.panelHeader td.ui-panelgrid-cell a.headerTitle {
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: bold;
+    margin-left: 50px;
+    color: #ffffff;
+    text-decoration:none;
+    margin-right: -60px;
+}
+
+table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
+    font-size: 20px;
+    font-weight: 100;
+    margin-left: 18px;
+    color: #ffffff;
+    text-decoration:none;
 }
 
 /* FOOTER */
@@ -142,4 +158,12 @@ h2
 .dialogFooter {
     text-align: center;
     padding: 10px;
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+    padding: 0px !important;
+}
+
+.ui-widget-content {
+    border: none;
 }
