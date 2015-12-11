@@ -160,6 +160,14 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     padding: 10px;
 }
 
+#starsTxt1, #stars1 {
+    display: inline-block
+}
+
+#starsTxt2, #stars2 {
+    display: inline-block
+}
+
 .ui-panelgrid .ui-panelgrid-cell {
     padding: 0px !important;
 }
