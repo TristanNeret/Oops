@@ -11,6 +11,8 @@ import com.gdf.persistence.LegalInformation;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -22,17 +24,24 @@ public class ContractorRegistrationBean {
 
     
     
+    @Size(min = 5, max = 20, message = "Login size shold between 5 and 20")
     private String login;
     private String password;
+    @Size(min = 1, max = 30)
     private String lastname;
+    @Size(min = 1, max = 30)
     private String firstname;
+    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
+    @Size(min = 10, max = 15, message = "Phone number isn't in good format")
     private String phone;
     private String socialReason;
     private String legalForm;
     private int turnover;
     private int nbEmployees;
+    @Size(min = 9, max = 9, message = "Siren length shold be 9")
     private String siren;
+    @Size(min = 14, max = 14, message = "Siret length should be 14")
     private String siret;
     
     @EJB
