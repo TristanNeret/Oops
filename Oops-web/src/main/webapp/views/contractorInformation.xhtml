@@ -48,7 +48,7 @@ and open the template in the editor.
                     <table>
                         <tr>
                             <td>
-                                <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" height="200px"/>
+                                <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" height="150px"/>
                             </td>
                             <td>
                                 <h1><h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/></h1>  
@@ -71,10 +71,10 @@ and open the template in the editor.
 
                 <div id="prestations">
                     <h2>Prestations</h2>
-                    <table>
+                    <table style="width: 100%;">
                         <tr>
                             <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
-                                <td style="padding-right: 30px">
+                                <td style="padding-right: 30px; width: 50%;">
                                     <fieldset>
                                         <h:outputText value="#{service.title}"/> (<h:outputText value="#{service.category.name}"/>)
                                     </fieldset>
@@ -90,21 +90,22 @@ and open the template in the editor.
 
                 <div id="rating">   
 
-                    <h2 id="ratingH2">Avis</h2>
-
                     <!-- DIALOG BOX FOR RATING -->
                     <o:form id="reviewForm" includeViewParams="true">
                         <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
-                        <p:commandButton id="reviewBtn" value="Donner votre avis" onclick="if (#{reviewBean.isTendererConnected()}) {
-                                PF('reviewDialog').show();
-                            } else {
-                                PF('growlError').renderMessage({summary: 'Vous devez vous connecter !', detail: 'Coonectez-vous en tant que soumissionnaire pour évaluer un prestataire.', severity: 0});
-                            }" type="button">
-                            <!-- Reset fields on opening -->
-                            <p:ajax update="reviewAppreciation" resetValues="true" />
-                            <p:ajax update="reviewContent" resetValues="true" />
-                            <p:ajax update="reviewRate" resetValues="true" />
-                        </p:commandButton>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel styleClass="ratingH2" value="Avis"></h:outputLabel>
+                            <p:commandButton id="reviewBtn" value="Donner votre avis" onclick="if (#{reviewBean.isTendererConnected()}) {
+                                    PF('reviewDialog').show();
+                                } else {
+                                    PF('growlError').renderMessage({summary: 'Vous devez vous connecter !', detail: 'Coonectez-vous en tant que soumissionnaire pour évaluer un prestataire.', severity: 0});
+                                }" type="button">
+                                <!-- Reset fields on opening -->
+                                <p:ajax update="reviewAppreciation" resetValues="true" />
+                                <p:ajax update="reviewContent" resetValues="true" />
+                                <p:ajax update="reviewRate" resetValues="true" />
+                            </p:commandButton>
+                        </h:panelGrid>
                         <p:growl id="growl" sticky="false" showDetail="false" life="3000" />
                         <p:dialog header="Donner votre avis :" modal="true" widgetVar="reviewDialog" resizable="false">
                             <h:panelGrid columns="2" cellpadding="5">

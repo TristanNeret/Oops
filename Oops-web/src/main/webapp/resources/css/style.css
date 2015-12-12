@@ -119,6 +119,27 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     font-size: 12px;
 }
 
+/* Contractor Information */
+
+#rating {
+    margin-bottom: 30px;
+}
+
+label.ratingH2 {
+    color: #1E90FF;
+    display: block;
+    font-size: 1.5em;
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}
+
+form#reviewForm {
+    height: 60px;
+}
+
 /* Primefaces redifinition */
 
 .ui-corner-all {
@@ -161,11 +182,13 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 }
 
 #starsTxt1, #stars1 {
-    display: inline-block
+    display: inline-block;
+    margin-right: 10px;
 }
 
 #starsTxt2, #stars2 {
-    display: inline-block
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .ui-panelgrid .ui-panelgrid-cell {

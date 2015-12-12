@@ -13,4 +13,11 @@
     <module>Oops-entities-library</module>
     <module>Oops-interfaces-library</module>
   </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+    </dependencies>
 </project>
