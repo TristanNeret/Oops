@@ -41,18 +41,12 @@
         </dependency>
     </dependencies>
     
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-    </build>
-    
     <profiles>
         <profile>
             <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <properties>
                 <jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
                 <jdbc.name>>OopsDB_Dev</jdbc.name>

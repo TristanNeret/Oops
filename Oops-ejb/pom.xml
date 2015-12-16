@@ -111,6 +111,60 @@
                 </executions>
             </plugin>
         </plugins>
+        
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/setup</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        
     </build>
+    
+    <profiles>
+        <profile>
+            <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
+                <jdbc.name>>OopsDB_Dev</jdbc.name>
+                <jdbc.username>root</jdbc.username>
+                <jdbc.password>C5T-m2003l-K89</jdbc.password>
+                <jdbc.datasource>jdbc/OopsMySqlDatasource</jdbc.datasource>
+                <jdbc.pool>OopsMySqlPool</jdbc.pool>
+                <jdbc.connectionURL>jdbc:mysql://51.254.96.204:3306/OopsDB_Dev?zeroDateTimeBehavior=convertToNull</jdbc.connectionURL>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
+                <jdbc.name>>OopsDB_Test</jdbc.name>
+                <jdbc.username>root</jdbc.username>
+                <jdbc.password>C5T-m2003l-K89</jdbc.password>
+                <jdbc.datasource>jdbc/OopsTestMySqlDatasource</jdbc.datasource>
+                <jdbc.pool>OopsTestMySqlPool</jdbc.pool>
+                <jdbc.connectionURL>jdbc:mysql://51.254.96.204:3306/OopsDB_Test?zeroDateTimeBehavior=convertToNull</jdbc.connectionURL>
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
+                <jdbc.name>>OopsDB</jdbc.name>
+                <jdbc.username>root</jdbc.username>
+                <jdbc.password>C5T-m2003l-K89</jdbc.password>
+                <jdbc.datasource>jdbc/OopsMySqlDatasource</jdbc.datasource>
+                <jdbc.pool>OopsMySqlPool</jdbc.pool>
+                <jdbc.connectionURL>jdbc:mysql://51.254.96.204:3306/OopsDB?zeroDateTimeBehavior=convertToNull</jdbc.connectionURL>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>
