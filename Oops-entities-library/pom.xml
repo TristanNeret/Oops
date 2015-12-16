@@ -47,7 +47,10 @@
         <profile>
             <id>development</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>profile</name>
+                    <value>development</value>
+                </property>
             </activation>
             <properties>
                 <jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
@@ -61,6 +64,12 @@
         </profile>
         <profile>
             <id>test</id>
+            <activation>
+                <property>
+                    <name>profile</name>
+                    <value>test</value>
+                </property>
+            </activation>
             <properties>
                 <jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
                 <jdbc.name>>OopsDB_Test</jdbc.name>
@@ -73,6 +82,12 @@
         </profile>
         <profile>
             <id>production</id>
+            <activation>
+                <property>
+                    <name>profile</name>
+                    <value>production</value>
+                </property>
+            </activation>
             <properties>
                 <jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
                 <jdbc.name>>OopsDB</jdbc.name>
