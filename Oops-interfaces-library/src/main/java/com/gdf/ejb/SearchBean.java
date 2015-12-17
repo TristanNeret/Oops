@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -22,4 +23,5 @@ public interface SearchBean {
      */
     public Contractor searchContractorById(long id);
     
+    public List<Contractor> searchContractorByEmail(String email);
 }

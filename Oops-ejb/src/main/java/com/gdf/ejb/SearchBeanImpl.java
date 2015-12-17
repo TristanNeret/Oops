@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -40,5 +41,10 @@ public class SearchBeanImpl implements SearchBean {
         }
         
         return contractor;
+    }
+
+    @Override
+    public List<Contractor> searchContractorByEmail(String email) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
