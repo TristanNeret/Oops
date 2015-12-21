@@ -50,23 +50,23 @@ public class ContractorInformationTest {
     /*
      Search without parameters in the url
     */
-    @Test
-    public void testNoId() {
-        driver.get(baseUrl);        
-        driver.findElement(By.xpath("//h2[contains(text(), 'Prestataire introuvable !')]"));      
-    }
-    
-    @Test
-    public void testBadid(){
-        driver.get(baseUrl+"?id=50");        
-        driver.findElement(By.xpath("//h2[contains(text(), 'Prestataire introuvable !')]"));      
-    }
-    
-    @Test
-    public void testGoodid(){
-        driver.get(baseUrl+"?id=1");        
-        driver.findElement(By.xpath("//h2[1][contains(text(), 'Description')]"));      
-
-    }
+//    @Test
+//    public void testNoId() {
+//        driver.get(baseUrl);        
+//        driver.findElement(By.xpath("//h2[contains(text(), 'Prestataire introuvable !')]"));      
+//    }
+//    
+//    @Test
+//    public void testBadid(){
+//        driver.get(baseUrl+"?id=50");        
+//        driver.findElement(By.xpath("//h2[contains(text(), 'Prestataire introuvable !')]"));      
+//    }
+//    
+//    @Test
+//    public void testGoodid(){
+//        driver.get(baseUrl+"?id=1");        
+//        driver.findElement(By.xpath("//h2[1][contains(text(), 'Description')]"));      
+//
+//    }
     
 }
