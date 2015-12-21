@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package utils;
+package com.gdf.validators;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.ManagedBean;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -18,16 +20,32 @@ import javax.faces.validator.ValidatorException;
  *
  * @author bibo
  */
-@FacesValidator("utils.MailFormatValidator")
-public class MailFormatValidator implements Validator{
+@ManagedBean
+@RequestScoped
+@FacesValidator("com.gdf.mailFormatValidator")
+public class MailFormatValidator implements Validator {
+    
+    private static final String BAD_MAIL_FORMAT = "Le format de l'addresse mail est incorrect.";
+
+    /**
+     * Creates a new instance of MailFormatValidator
+     */
+    public MailFormatValidator() {
+        
+    }
+    
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        String emailRegEx = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}$";
+        
+        String emailRegEx = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(emailRegEx); 
         Matcher matcher = pattern.matcher(value.toString().toUpperCase());
+        
         if(!matcher.matches()) {
-            FacesMessage msg = new FacesMessage("","Format du mail invalide");
-            throw new ValidatorException(msg);
+            
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, BAD_MAIL_FORMAT, null));
         }
+        
     }
+    
 }

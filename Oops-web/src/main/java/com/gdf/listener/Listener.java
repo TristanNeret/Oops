@@ -22,7 +22,6 @@ import javax.servlet.ServletContextListener;
 
 /**
  * Web application lifecycle listener.
- *
  * @author nicolas
  */
 public class Listener implements ServletContextListener {
@@ -37,7 +36,8 @@ public class Listener implements ServletContextListener {
     
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        /*Contractor contractor = new Contractor();
+        
+        Contractor contractor = new Contractor();
         contractor.setEmail("tim.cook@apple.com");
         contractor.setLegalForm("legal form");
         contractor.setLogo("http://logok.org/wp-content/uploads/2014/04/Apple-logo-grey-880x625.png");
@@ -116,13 +116,13 @@ public class Listener implements ServletContextListener {
         registrationBean.register(tenderer); 
         registrationBean.register(contractor);
         
-        evalBean.addReview(tenderer, contractor, review);*/
+        evalBean.addReview(tenderer, contractor, review);
+        
     }
     
-  
-
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         
     }
+    
 }

@@ -11,37 +11,35 @@ import com.gdf.persistence.LegalInformation;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
- *
+ * Manage Contrator registration
  * @author borui
  */
 @Named(value = "contractorRegistrationBean")
 @RequestScoped
 public class ContractorRegistrationBean {
 
-    
-    
-    @Size(min = 5, max = 20, message = "Login size shold between 5 and 20")
+    @Size(min = 4, max = 20, message = "Votre login doit contenir entre 5 et 20 caractères.")
     private String login;
+    @Size(min = 8, max = 20, message = "Le mot de passe doit contenir entre 8 et 20 caractères.")
     private String password;
+    private String passwordConfirm;
     @Size(min = 1, max = 30)
     private String lastname;
     @Size(min = 1, max = 30)
     private String firstname;
-    @Pattern(regexp="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
-    @Size(min = 10, max = 15, message = "Phone number isn't in good format")
+    @Size(min = 10, max = 15, message = "Le format du numéro de téléphone est incorect.")
     private String phone;
     private String socialReason;
     private String legalForm;
     private int turnover;
     private int nbEmployees;
-    @Size(min = 9, max = 9, message = "Siren length shold be 9")
+    @Size(min = 9, max = 9, message = "Le numéro SIREN doit contenir 9 caractères.")
     private String siren;
-    @Size(min = 14, max = 14, message = "Siret length should be 14")
+    @Size(min = 14, max = 14, message = "Le numéro SIRET doit contenir 14.")
     private String siret;
     
     @EJB
@@ -51,8 +49,35 @@ public class ContractorRegistrationBean {
      * Creates a new instance of ContractorRegistrationBean
      */
     public ContractorRegistrationBean() {
+        
     }
-
+    
+    /**
+     * Register a new Contractor into DataBase
+     */
+    public void submit(){
+        
+        LegalInformation li = new LegalInformation();
+        li.setSiren(this.siren);
+        li.setSiret(this.siret);
+        
+        Contractor c = new Contractor();
+        c.setLogin(this.login);
+        c.setPassword(this.password);
+        c.setRepresentatorFirstname(this.firstname);
+        c.setRepresentatorLastname(this.lastname);
+        c.setEmail(this.email);
+        c.setPhone(this.phone);
+        c.setSocialReason(this.socialReason);
+        c.setLegalForm(this.legalForm);
+        c.setTurnover(this.turnover);
+        c.setNbEmployees(this.nbEmployees);
+        c.setLegalInformation(li);
+        
+        this.rb.register(c);
+        
+    }
+    
     public String getLogin() {
         return login;
     }
@@ -67,6 +92,14 @@ public class ContractorRegistrationBean {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     public String getLastname() {
@@ -148,32 +181,5 @@ public class ContractorRegistrationBean {
     public void setSiret(String siret) {
         this.siret = siret;
     }
-    
-    public void submit(){
-        
-        //validator not implemented yet
-        
-        LegalInformation li = new LegalInformation();
-        li.setSiren(siren);
-        li.setSiret(siret);
-        
-        Contractor c = new Contractor();
-        c.setLogin(login);
-        c.setPassword(password);
-        c.setRepresentatorFirstname(firstname);
-        c.setRepresentatorLastname(lastname);
-        c.setEmail(email);
-        c.setPhone(phone);
-        c.setSocialReason(socialReason);
-        c.setLegalForm(legalForm);
-        c.setTurnover(turnover);
-        c.setNbEmployees(nbEmployees);
-        c.setLegalInformation(li);
-        
-        rb.register(c);
-        
-    }
-    
-   
-    
+
 }

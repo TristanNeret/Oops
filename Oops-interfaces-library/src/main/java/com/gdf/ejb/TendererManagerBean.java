@@ -6,20 +6,25 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Tenderer; 
-import java.util.List;
 import javax.ejb.Remote;
 
 /**
- *
+ * Manage Tenderers
  * @author bibo
  */
 @Remote
 public interface TendererManagerBean {
     
-    public void register(Tenderer t);
-    public List<Tenderer> findAll();
-    public List<Tenderer> findByLogin(String login);
-    public List<Tenderer> findByEmail(String email);
+    /**
+     * Update Tenderer informations
+     * @param t the Tenderer to update
+     */
     public void update(Tenderer t);
+    
+    /**
+     * Delete a Tenderer
+     * @param t the Tenderer to delete
+     */
     public void delete(Tenderer t); 
+    
 }

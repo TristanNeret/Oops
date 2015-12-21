@@ -6,43 +6,45 @@
 package com.gdf.validators;
 
 import com.gdf.ejb.SearchBean;
+import javax.annotation.ManagedBean;
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import javax.inject.Inject;
 
 /**
- *
- * @author borui
+ * Test if a String is only composed by whitespace
+ * @author Tristan
  */
+@ManagedBean
+@RequestScoped
+@FacesValidator("com.gdf.noBlankSpaceValidator")
+public class NoBlankSpaceValidator implements Validator {
 
-@FacesValidator("existenceEmailValidator")
-public class ExistenceEmailValidator implements Validator {
+    private static final String NO_BLANK_SPACE = "Les champs de saisie ne peuvent contenir que des espaces.";
 
-    private static final String EMAIL_ALREADY_USED = "Cette adresse email est déjà utilisée";
-
-    @Inject
+    @EJB
     SearchBean sb;
     
     /**
-     * Creates a new instance of ExistenceEmailValidator
+     * Creates a new instance of NoBlankSpaceValidator
      */
-    public ExistenceEmailValidator() {
+    public NoBlankSpaceValidator() {
     }
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        //To change body of generated methods, choose Tools | Templates.
-        String email = (String) value;
 
-        
-        if (sb.searchContractorByEmail(email).get(0) != null) {
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, EMAIL_ALREADY_USED, null));
+        if (((String) value).trim().isEmpty()) {
+            
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, NO_BLANK_SPACE, null));
 
         }
 
     }
+    
 }

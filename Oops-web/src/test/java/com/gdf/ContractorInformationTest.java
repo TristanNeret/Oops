@@ -68,4 +68,5 @@ public class ContractorInformationTest {
         driver.findElement(By.xpath("//h2[1][contains(text(), 'Description')]"));      
 
     }
+    
 }

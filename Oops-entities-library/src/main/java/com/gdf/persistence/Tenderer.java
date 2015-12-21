@@ -6,8 +6,8 @@
 package com.gdf.persistence;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -43,7 +43,7 @@ public class Tenderer implements Serializable {
     private long id;
 
     private String email,password, firstname, lastname, avatar, phone;
-    private Date registrationDate;
+    private Calendar registrationDate, updateDate;
   
     @OneToMany(mappedBy = "tenderer", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private List<Review> reviews = new ArrayList<>();
@@ -109,14 +109,22 @@ public class Tenderer implements Serializable {
         this.email = email;
     }
 
-    public Date getRegistrationDate() {
+    public Calendar getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(Calendar registrationDate) {
         this.registrationDate = registrationDate;
-    }    
+    }  
 
+    public Calendar getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Calendar updateDate) {
+        this.updateDate = updateDate;
+    }
+    
     public List<Review> getReviews() {
         return reviews;
     }
@@ -151,14 +159,12 @@ public class Tenderer implements Serializable {
         n.setTenderer(this);
     }
     
-    
     private String encryptPassword(String password){
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
         passwordEncryptor.setAlgorithm( ENCRYPTION_ALGORITHM );
         passwordEncryptor.setPlainDigest( true );
         return passwordEncryptor.encryptPassword(password);
     }
-    
     
     @Override
     public int hashCode() {
@@ -181,4 +187,5 @@ public class Tenderer implements Serializable {
         }
         return true;
     }
+    
 }
