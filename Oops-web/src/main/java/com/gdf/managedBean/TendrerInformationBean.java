@@ -7,21 +7,19 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.TendererManagerBean;
 import com.gdf.persistence.Tenderer;
-import java.util.List;
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author hamou
  */
-@Named(value = "tendrerInformationBean")
-@SessionScoped
-public class TendrerInformationBean {
+@Named(value="tendrerInformationBean")
+@ViewScoped
+public class TendrerInformationBean implements Serializable {
 
     @EJB
     TendererManagerBean tb;
