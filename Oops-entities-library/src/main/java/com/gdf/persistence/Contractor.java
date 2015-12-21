@@ -7,7 +7,6 @@ package com.gdf.persistence;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -48,7 +47,7 @@ public class Contractor implements Serializable {
     
     private String email, password, socialReason, legalForm, description, phone, logo, representatorFirstname, representatorLastname;
     private int turnover, nbEmployees, rating;  
-    private Calendar registrationDate, updateDate;
+    private String registrationDate, updateDate;
    
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Service> services = new ArrayList<>();
@@ -248,22 +247,22 @@ public class Contractor implements Serializable {
         this.login = login;
     }
 
-    public Calendar getRegistrationDate() {
+    public String getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Calendar registrationDate) {
+    public void setRegistrationDate(String registrationDate) {
         this.registrationDate = registrationDate;
     }
 
-    public Calendar getUpdateDate() {
+    public String getUpdateDate() {
         return updateDate;
     }
 
-    public void setUpdateDate(Calendar updateDate) {
+    public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
     }
-    
+
     private String encryptPassword(String password){
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
         passwordEncryptor.setAlgorithm( ENCRYPTION_ALGORITHM );

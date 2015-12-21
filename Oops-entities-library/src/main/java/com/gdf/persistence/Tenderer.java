@@ -7,7 +7,6 @@ package com.gdf.persistence;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -42,8 +41,8 @@ public class Tenderer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String email,password, firstname, lastname, avatar, phone;
-    private Calendar registrationDate, updateDate;
+    private String email, password, firstname, lastname, avatar, phone;
+    private String registrationDate, updateDate;
   
     @OneToMany(mappedBy = "tenderer", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private List<Review> reviews = new ArrayList<>();
@@ -109,22 +108,6 @@ public class Tenderer implements Serializable {
         this.email = email;
     }
 
-    public Calendar getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(Calendar registrationDate) {
-        this.registrationDate = registrationDate;
-    }  
-
-    public Calendar getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Calendar updateDate) {
-        this.updateDate = updateDate;
-    }
-    
     public List<Review> getReviews() {
         return reviews;
     }
@@ -149,6 +132,22 @@ public class Tenderer implements Serializable {
         this.id = id;
     }
 
+    public String getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
+    }
+    
     public void addReview(Review r){
         this.reviews.add(r);
         r.setTenderer(this);
