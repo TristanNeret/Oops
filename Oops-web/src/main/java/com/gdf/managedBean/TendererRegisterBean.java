@@ -5,31 +5,27 @@
  */
 package com.gdf.managedBean;
 
-import com.gdf.ejb.TendererManagerBean;
+import com.gdf.ejb.RegistrationBean;
 import com.gdf.persistence.Tenderer;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import javax.validation.constraints.Size;
 
 /**
- *
+ * Manage Tenderer registration
  * @author bibo
  */
 @Named(value="tendererRegisterBean")
 @RequestScoped
 public class TendererRegisterBean {
 
-    /**
-     * Creates a new instance of TendererRegisterBean
-     */
     @EJB
-    TendererManagerBean tb;
+    RegistrationBean rb;
     
-    
+    @Size(min = 4, max = 20, message = "Votre login doit contenir entre 5 et 20 caractères.")
     private String login;
+    @Size(min = 8, max = 20, message = "Le mot de passe doit contenir entre 8 et 20 caractères.")
     private String password; 
     private String passwordConfirm;
     private String email;
@@ -37,47 +33,34 @@ public class TendererRegisterBean {
     private String lastname;
     private String avatar;
     private String phone;
-    
-    
+        
+    /**
+     * Creates a new instance of TendererRegisterBean
+     */
     public TendererRegisterBean() {
     }
 
-    
-    
-    
+    /**
+     * Register a new Tenderer
+     * @return 
+     */
     public String submit(){
        
-            // Check login taken        
-            List<Tenderer> res = tb.findByLogin(login);
-            if (res != null && res.size() > 0) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("", "Ce pseudonyme est déjà utilisé par un autre soumissionnaire"));
-                return "register";
-            }
+        Tenderer t = new Tenderer();
+        t.setLogin(this.login);
+        t.setPassword(this.password);
+        t.setEmail(this.email);
+        t.setFirstname(this.firstname);
+        t.setLastname(this.lastname);
+        t.setPhone(this.phone);
+        t.setAvatar(this.avatar);
 
-            // Check mail taken    
-            res = tb.findByEmail(email);
-            if (res != null && res.size() > 0) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("", "Ce mail est déjà utilisé par un autre soumissionnaire"));
-                return "register";
-            }
+        this.rb.register(t);
 
-            // else : add Tenderer to db
-            Tenderer t = new Tenderer();
-            t.setLogin(login);
-            t.setPassword(password);
-            t.setEmail(email);
-            t.setFirstname(firstname);
-            t.setLastname(lastname);
-            t.setPhone(phone);
-            t.setAvatar(avatar);
-            
-            tb.register(t);
-            
-            return "register";
+        return "register";
         
     }
 
-   
     public String getLogin() {
         return login;
     }
@@ -141,6 +124,5 @@ public class TendererRegisterBean {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
 
 }

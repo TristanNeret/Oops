@@ -7,6 +7,7 @@ package com.gdf.persistence;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -27,14 +28,11 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Contractor.findAll",
-            query = "select c from Contractor c order by c.login ASC"),
-    @NamedQuery(name = "Contractor.findByLogin",
-            query = "select c from Contractor c where c.login=?1"),
-    @NamedQuery(name = "Contractor.findByEmail",
-            query = "select c from Contractor c where c.email=?1"),
+    @NamedQuery(name = "Contractor.findAll", query = "SELECT c FROM Contractor c ORDER BY c.login ASC"),
+    @NamedQuery(name = "Contractor.findByLogin", query = "SELECT c FROM Contractor c WHERE c.login=?1"),
+    @NamedQuery(name = "Contractor.findBySiren", query = "SELECT c FROM Contractor c WHERE c.legalInformation.siren=?1"),
+    @NamedQuery(name = "Contractor.findByEmail", query = "SELECT c FROM Contractor c WHERE c.email=?1")
 })
-
 public class Contractor implements Serializable {
     
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";
@@ -50,6 +48,7 @@ public class Contractor implements Serializable {
     
     private String email, password, socialReason, legalForm, description, phone, logo, representatorFirstname, representatorLastname;
     private int turnover, nbEmployees, rating;  
+    private Calendar registrationDate, updateDate;
    
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Service> services = new ArrayList<>();
@@ -248,6 +247,22 @@ public class Contractor implements Serializable {
     public void setLogin(String login) {
         this.login = login;
     }
+
+    public Calendar getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Calendar registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public Calendar getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Calendar updateDate) {
+        this.updateDate = updateDate;
+    }
     
     private String encryptPassword(String password){
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
@@ -255,8 +270,6 @@ public class Contractor implements Serializable {
         passwordEncryptor.setPlainDigest( true );
         return passwordEncryptor.encryptPassword(password);
     }
-    
-    
     
     @Override
     public int hashCode() {

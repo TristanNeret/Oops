@@ -6,10 +6,12 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Tenderer;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  * Class supplying searching methods 
@@ -23,6 +25,8 @@ public class SearchBeanImpl implements SearchBean {
      */
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;  
+    
+    // CONTRACTOR
     
     /**
      * SearchBean a Contractor by his id
@@ -42,9 +46,63 @@ public class SearchBeanImpl implements SearchBean {
         
         return contractor;
     }
+    
+    @Override
+    public Contractor searchContractorByLogin(String login) {
+        
+        Query query = em.createNamedQuery("Contractor.findByLogin");
+        query.setParameter(1, login);
+        if (query.getResultList().isEmpty()) {
+            
+            return null;
+            
+        } else {
+            
+            return (Contractor) query.getSingleResult();
+            
+        }
+        
+    }
+    
+    @Override
+    public Contractor searchContractorBySiren(String siren) {
+       
+        Query query = em.createNamedQuery("Contractor.findBySiren");
+        query.setParameter(1, siren);
+        if (query.getResultList().isEmpty()) {
+            
+            return null;
+            
+        } else {
+            
+            return (Contractor) query.getSingleResult();
+            
+        }
+        
+    }
 
     @Override
     public List<Contractor> searchContractorByEmail(String email) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    // TENDERER
+    
+    @Override
+    public Tenderer searchTendererByLogin(String login) {
+        
+        Query query = em.createNamedQuery("Tenderer.findByLogin");
+        query.setParameter(1, login);
+        if (query.getResultList().isEmpty()) {
+            
+            return null;
+            
+        } else {
+            
+            return (Tenderer) query.getSingleResult();
+            
+        }
+        
+    }
+    
 }
