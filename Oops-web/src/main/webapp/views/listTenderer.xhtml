@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <h:head>
+        <title>Tenderer list</title>
+         <h:outputStylesheet library="css" name="style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    
+    <h:body>
+        
+        
+        <!-- HEADER -->
+        <ui:include src="/includes/header.xhtml" />
+        
+        <h2>Soumissionnaires ! :</h2>
+
+          
+        <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
+          
+            <h:link outcome="/views/tendererSearch?faces-redirect=true" value="#{tend.email}">
+                <f:param name="id" value="#{tend.id}" />
+            </h:link>        
+      
+        </c:forEach>
+   
+    </h:body>
+    
+     <!-- FOOTER -->
+     <ui:include src="/includes/footer.xhtml" />
+    
+</html>
