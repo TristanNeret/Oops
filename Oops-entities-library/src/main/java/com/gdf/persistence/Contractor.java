@@ -27,11 +27,15 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Contractor.findAll", query = "SELECT c FROM Contractor c ORDER BY c.login ASC"),
-    @NamedQuery(name = "Contractor.findByLogin", query = "SELECT c FROM Contractor c WHERE c.login=?1"),
     @NamedQuery(name = "Contractor.findBySiren", query = "SELECT c FROM Contractor c WHERE c.legalInformation.siren=?1"),
-    @NamedQuery(name = "Contractor.findByEmail", query = "SELECT c FROM Contractor c WHERE c.email=?1")
+    @NamedQuery(name = "Contractor.findAll",
+            query = "select c from Contractor c order by c.email"),
+    @NamedQuery(name = "Contractor.findByLogin",
+            query = "select c from Contractor c where c.login=?1"),
+    @NamedQuery(name = "Contractor.findByEmail",
+            query = "select c from Contractor c where c.email=?1"),
 })
+
 public class Contractor implements Serializable {
     
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";

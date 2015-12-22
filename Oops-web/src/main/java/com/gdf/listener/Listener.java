@@ -37,7 +37,8 @@ public class Listener implements ServletContextListener {
     
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        
+
+        /*
         Contractor contractor = new Contractor();
         contractor.setEmail("tim.cook@apple.com");
         contractor.setLegalForm("legal form");
@@ -123,6 +124,7 @@ public class Listener implements ServletContextListener {
         
         evalBean.addReview(tenderer, contractor, review);
         
+     */           
     }
     
     @Override

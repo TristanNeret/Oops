@@ -6,7 +6,10 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+<<<<<<< Upstream, based on origin/develop
 import com.gdf.persistence.Review;
+=======
+>>>>>>> 7fe1550 search Tenderer and Contractor V1
 import com.gdf.persistence.Tenderer;
 import java.util.List;
 import javax.ejb.Remote;
@@ -51,6 +54,7 @@ public interface SearchBean {
      */
     public List<Contractor> searchContractorByEmail(String email);
     
+<<<<<<< Upstream, based on origin/develop
     // TENDERER
     
     /**
@@ -75,4 +79,14 @@ public interface SearchBean {
      */
     public List<Review> searchAcceptedReviews(long id);
     
+=======
+    public List<Contractor> searchContractorByKeyWord(String keyWord);
+    
+    public List<Tenderer> searchTendererByKeyWord(String keyWord);
+    
+    public List<Tenderer> findAllTenderer();
+    
+    public List<Contractor> findAllContractor();
+      
+>>>>>>> 7fe1550 search Tenderer and Contractor V1
 }
