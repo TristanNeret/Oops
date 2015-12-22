@@ -6,10 +6,13 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Tenderer;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  * Class supplying searching methods 
@@ -38,8 +41,7 @@ public class SearchBeanImpl implements SearchBean {
             //The lazy relationships must be traversed before exiting the scope of the JPA Session to avoid the Exception.
             contractor.getServices().size(); 
             contractor.getReviews().size(); 
-        }
-        
+        } 
         return contractor;
     }
 
@@ -47,4 +49,34 @@ public class SearchBeanImpl implements SearchBean {
     public List<Contractor> searchContractorByEmail(String email) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public List<Contractor> searchContractorByKeyWord(String keyWord) {
+        TypedQuery<Contractor> query;
+        query = em.createQuery("SELECT c FROM Contractor c WHERE c.login LIKE :word OR c.email LIKE :word Or c.representatorFirstname LIKE :word OR c.representatorLastname LIKE :word Or c.socialReason LIKE :word Or c.phone LIKE :word",Contractor.class);
+        query.setParameter("word", "%" + keyWord + "%");
+        return query.getResultList();    
+    }
+    
+    @Override
+    public List<Tenderer> searchTendererByKeyWord(String keyWord) {
+        TypedQuery<Tenderer> query;
+        query = em.createQuery("SELECT t FROM Tenderer t WHERE t.login LIKE :word OR t.email LIKE :word Or t.firstname LIKE :word Or t.lastname LIKE :word Or t.phone LIKE :word",Tenderer.class);
+        query.setParameter("word","%" + keyWord + "%");
+        return query.getResultList();   
+    }
+
+    @Override
+    public List<Tenderer> findAllTenderer() {
+        TypedQuery<Tenderer> query = em.createNamedQuery("Tenderer.findAll", Tenderer.class);
+        return query.getResultList(); 
+    }
+
+    @Override
+    public List<Contractor> findAllContractor() {
+        Query query = em.createNamedQuery("Contractor.findAll");
+        return query.getResultList(); 
+    }
+
+  
 }

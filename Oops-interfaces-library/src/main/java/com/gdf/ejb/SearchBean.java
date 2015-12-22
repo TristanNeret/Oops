@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Tenderer;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -24,4 +25,13 @@ public interface SearchBean {
     public Contractor searchContractorById(long id);
     
     public List<Contractor> searchContractorByEmail(String email);
+    
+    public List<Contractor> searchContractorByKeyWord(String keyWord);
+    
+    public List<Tenderer> searchTendererByKeyWord(String keyWord);
+    
+    public List<Tenderer> findAllTenderer();
+    
+    public List<Contractor> findAllContractor();
+      
 }

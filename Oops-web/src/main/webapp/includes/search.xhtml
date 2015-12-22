@@ -12,11 +12,35 @@ and open the template in the editor.
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
     <div id="divSearch">
-        <h:outputText value="Recherche : "/>
-        <h:inputText class="searchInputText" value="Apple"/>
-        <h:button class="searchCommandButton" value="Prestataire" />
-        <h:button class="searchCommandButton" value="Prestation" />
-        <h:button class="searchCommandButton" value="Rechercher" outcome="/views/contractorInformation.xhtml?id=1" />
-    </div>
+        <h:form>
+            <h:outputText value="Recherche : "/>
+            <h:inputText class="searchInputText" value="#{searchManagedBean.keyWord}"/>
+            <h:selectOneMenu id="listType" value="#{searchManagedBean.selectedItem}">
+                <f:selectItem itemLabel="Soumissionnaire" itemValue="tend"/>
+                <f:selectItem itemLabel="Prestataire" itemValue="cont"/>
+            </h:selectOneMenu>
+            
+            <h:selectOneMenu id="listRate" value="#{searchManagedBean.selectedItemRate}">
+                <f:selectItem itemLabel="" itemValue=""/>
+                <f:selectItem itemLabel=">=4" itemValue="4"/>
+                <f:selectItem itemLabel=">=3" itemValue="3"/>
+                <f:selectItem itemLabel=">=2" itemValue="2"/>
+                <f:selectItem itemLabel=">=1" itemValue="1"/>
+            </h:selectOneMenu>
+            
+            <h:selectOneMenu id="listCountry" value="#{searchManagedBean.selectedItemCountry}">
+                <f:selectItem itemLabel="" itemValue=""/>
+                <f:selectItem itemLabel="USA" itemValue="USA"/>
+            </h:selectOneMenu>
+            
+            <h:selectOneMenu id="listCategory" value="#{searchManagedBean.selectedItemCategory}">
+                <f:selectItem itemLabel="" itemValue=""/>
+                <f:selectItem itemLabel="Informatique" itemValue="Informatique"/>
+            </h:selectOneMenu>
+           
+            <h:commandButton class="searchCommandButton" value="Recherche" action="#{searchManagedBean.search()}"></h:commandButton>
+        </h:form> 
+   </div>
+    
     
 </ui:composition>

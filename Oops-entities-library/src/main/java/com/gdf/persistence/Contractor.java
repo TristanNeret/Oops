@@ -28,7 +28,7 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Contractor.findAll",
-            query = "select c from Contractor c order by c.login ASC"),
+            query = "select c from Contractor c order by c.email"),
     @NamedQuery(name = "Contractor.findByLogin",
             query = "select c from Contractor c where c.login=?1"),
     @NamedQuery(name = "Contractor.findByEmail",
