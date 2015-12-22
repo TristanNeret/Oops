@@ -87,6 +87,9 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     font-size: 18px;
     font-weight: 100;
     text-align: center;
+    position:absolute;
+    bottom:0;
+    width: 100%;
 }
 
 /* SEARCH */
@@ -138,6 +141,19 @@ label.ratingH2 {
 
 form#reviewForm {
     height: 60px;
+}
+
+.leftPanelAdmin {
+    width: 45%; 
+    float: left;
+    height: 100px;
+}
+
+.rightPanelAdmin {
+    width: 45%; 
+    float: left;
+    margin-left: 20px;
+    height: 100px;
 }
 
 /* Primefaces redifinition */

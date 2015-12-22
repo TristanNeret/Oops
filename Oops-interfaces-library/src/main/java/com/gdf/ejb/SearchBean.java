@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
 import java.util.List;
 import javax.ejb.Remote;
@@ -58,5 +59,13 @@ public interface SearchBean {
      * @return the Tenderer identified by the login if any or null if he doesn't exist
      */
     public Tenderer searchTendererByLogin(String login);
+    
+    // REVIEW
+    
+    /**
+     * Search waiting Reviews
+     * @return list of waiting reviews
+     */
+    public List<Review> getWaitingReviews();
     
 }

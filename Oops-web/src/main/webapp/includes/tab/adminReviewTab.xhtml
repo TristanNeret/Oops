@@ -9,10 +9,55 @@ and open the template in the editor.
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <div>
         <h:outputText value="Avis en attente de traitement :"/>
+        <p:panelGrid>
+            <c:forEach items="#{manageReviewBean.reviewList}" var="review" >
+                <p:panel>
+                    <!-- Review informations -->
+                    <p:panelGrid styleClass="leftPanelAdmin" columns="2">
+                        <p:panel style="width: 50px; text-align: center;">
+                            <h:graphicImage value="#{review.contractor.logo}" width="30px"/>
+                        </p:panel>
+                        <p:panel>
+                            <h:outputLabel value="#{review.appreciation}" style="width:100%;" />
+                            <h:outputLabel value="#{review.content}" style="width:100%;" />
+                            <p:panelGrid columns="2">
+                                <h:outputLabel value="Le #{review.date}" />
+                                <p:rating id="stars2" value="#{review.rating}" stars="5" readonly="true"/>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:panelGrid>
+                    <!-- Moderator actions -->
+                    <p:panelGrid styleClass="rightPanelAdmin" columns="3">
+                        <p:panel>
+                            <p:panel style="width: 100%;">
+                                <h:outputLabel value="Décision" />
+                            </p:panel>
+                            <p:panelGrid columns="2">
+                                <p:panel>
+                                    <h:button value="Valider" />
+                                    <h:button value="À préciser" />
+                                </p:panel>
+                                <p:panel>
+                                    <h:button value="Modifier" />
+                                    <h:button value="Rejeter" />
+                                </p:panel>
+                            </p:panelGrid>
+                        </p:panel>
+                        <p:panel>
+                            <h:outputLabel value="Description" />
+                            <p:inputTextarea id="reviewContent" rows="6" cols="20" required="false" label="Facultatif" />
+                        </p:panel>
+                        <h:button value="Envoyer" style="height: 100%;" />
+                    </p:panelGrid>
+                </p:panel>
+            </c:forEach>
+        </p:panelGrid>
     </div>
     
 </ui:composition>

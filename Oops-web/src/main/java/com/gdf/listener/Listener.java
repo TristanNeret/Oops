@@ -102,21 +102,36 @@ public class Listener implements ServletContextListener {
         review.setContractorAnswer("Merci et à bientôt !");
         review.setReviewState(ReviewState.ACCEPTED);
         
+        Review reviewWaiting1 = new Review();
+        reviewWaiting1.setAppreciation("Génial !");
+        reviewWaiting1.setContent("La meilleure entreprise du monde !");
+        reviewWaiting1.setRating(5);
+        reviewWaiting1.setReviewState(ReviewState.DELIVERED);
+        
+        Review reviewWaiting2 = new Review();
+        reviewWaiting2.setAppreciation("Null...");
+        reviewWaiting2.setContent("Vraiment pas génial...");
+        reviewWaiting2.setRating(1);
+        reviewWaiting2.setReviewState(ReviewState.DELIVERED);
+        
         String format = "dd/MM/yy H:mm:ss";
         java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
         java.util.Date date = new java.util.Date();
         review.setDate(formater.format(date));
+        reviewWaiting1.setDate(formater.format(date));
+        reviewWaiting2.setDate(formater.format(date));
         
         Tenderer tenderer = new Tenderer();
         tenderer.setEmail("oo@oo.om");
         tenderer.setLogin("Julie Johnson");
         tenderer.setId((long)1);
-
-                
+ 
         registrationBean.register(tenderer); 
         registrationBean.register(contractor);
         
         evalBean.addReview(tenderer, contractor, review);
+        evalBean.addReview(tenderer, contractor, reviewWaiting1);
+        evalBean.addReview(tenderer, contractor, reviewWaiting2);
         
     }
     

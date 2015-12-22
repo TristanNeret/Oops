@@ -48,6 +48,7 @@ public class EvaluationBeanImpl implements EvaluationBean {
         
         // Create and persist the new Review
         Review newReview = new Review(reviewAppreciation, reviewContent, reviewRate);
+        newReview.setReviewState(ReviewState.DELIVERED);
         em.persist(newReview);
         
         // Add the new Review to others entities
