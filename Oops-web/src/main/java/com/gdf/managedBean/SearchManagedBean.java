@@ -7,11 +7,9 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
-import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
