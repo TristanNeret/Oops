@@ -7,7 +7,9 @@ package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Review;
+import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -130,12 +132,60 @@ public class SearchBeanImpl implements SearchBean {
     
 
     @Override
-    public List<Contractor> searchContractorByKeyWord(String keyWord) {
+    public List<Contractor> findContractors(String keyWord, int rating, String country, String category ) {
+        
+        boolean first = true;        
+        String requete;
+        
+        if(keyWord == null){
+            requete = " SELECT c FROM Contractor c ";
+        }else {
+            requete = " SELECT c FROM Contractor c WHERE c.login LIKE :word OR c.email LIKE :word Or c.representatorFirstname LIKE :word OR c.representatorLastname LIKE :word Or c.socialReason LIKE :word Or c.phone LIKE :word " ; first = false;
+        }
+        
+        if(rating != 0){
+            if(first){
+                requete = requete + " WHERE c.rating >= :rating " ; first = false ;
+            }else{
+                requete = requete + " AND c.rating >= :rating " ;
+            }            
+        }    
+        
+        if(country != null){ 
+            if(first){
+                requete = requete + " WHERE " ;  first = false ;
+            }else{
+                requete = requete + " AND " ;
+            }    
+            requete = requete + " c.address.country = :country " ;
+        } 
+        
         TypedQuery<Contractor> query;
-        query = em.createQuery("SELECT c FROM Contractor c WHERE c.login LIKE :word OR c.email LIKE :word Or c.representatorFirstname LIKE :word OR c.representatorLastname LIKE :word Or c.socialReason LIKE :word Or c.phone LIKE :word",Contractor.class);
-        query.setParameter("word", "%" + keyWord + "%");
-        return query.getResultList();    
+        query = em.createQuery(requete,Contractor.class);
+        
+        if(rating != 0)
+            query.setParameter("rating", rating);
+        
+        if(country != null)
+            query.setParameter("country", country);
+        
+        if(keyWord != null)
+            query.setParameter("word","%" + keyWord + "%");
+        
+        if(category != null)
+            return this.searchByCategories(query.getResultList(),category);
+        else
+            return query.getResultList();
     }
+
+    @Override
+    public List<Tenderer> findTenderers(String keyWord) {
+        if(keyWord == null)
+            return this.findAllTenderer();
+        else
+            return this.searchTendererByKeyWord(keyWord);   
+    }
+    
     
     @Override
     public List<Tenderer> searchTendererByKeyWord(String keyWord) {
@@ -150,11 +200,45 @@ public class SearchBeanImpl implements SearchBean {
         TypedQuery<Tenderer> query = em.createNamedQuery("Tenderer.findAll", Tenderer.class);
         return query.getResultList(); 
     }
+    
+    @Override
+    public List<String> getAllCountry() {
+        TypedQuery<String> query;
+        query = em.createQuery("SELECT DISTINCT c.address.country FROM Contractor c ",String.class);
+        return query.getResultList();  
+    }
 
     @Override
-    public List<Contractor> findAllContractor() {
-        Query query = em.createNamedQuery("Contractor.findAll");
-        return query.getResultList(); 
+    public List<String> getAllCategory() {
+        TypedQuery<String> query;
+        query = em.createQuery("SELECT DISTINCT c.name FROM Category c ",String.class);
+        return query.getResultList();  
+    }
+    
+    
+    private List<Contractor> searchByCategories(List<Contractor> lc, String category){
+
+        Iterator<Contractor> iterator = lc.iterator();
+        
+        while ( iterator.hasNext() ) {
+
+            Contractor contractor = iterator.next();
+            List<Service> ls = contractor.getServices();
+            boolean found = false;
+
+            for(Service service : ls){
+                if(service.getCategory().getName().equals(category))
+                    found = true;
+            }
+            if(!found)
+                iterator.remove();
+        }  
+        return lc;   
+    }
+
+    @Override
+    public List<Contractor> searchContractorByKeyWord(String keyWord) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
  

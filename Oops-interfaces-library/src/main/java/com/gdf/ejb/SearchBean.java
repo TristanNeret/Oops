@@ -29,6 +29,7 @@ public interface SearchBean {
      * @return the Contractor identified by the id if any or null if he doesn't exist
      */
     public Contractor searchContractorById(long id);
+<<<<<<< HEAD
     
     
     /**
@@ -82,11 +83,15 @@ public interface SearchBean {
 =======
     public List<Contractor> searchContractorByKeyWord(String keyWord);
     
+=======
+    public List<Contractor> searchContractorByEmail(String email);
+    public List<Tenderer> findTenderers(String keyWord);
+>>>>>>> bdc548c... Search feature V2
     public List<Tenderer> searchTendererByKeyWord(String keyWord);
-    
     public List<Tenderer> findAllTenderer();
-    
-    public List<Contractor> findAllContractor();
+    public List<Contractor> findContractors(String keyWord,int rate, String country, String category);
+    public List<String> getAllCountry();
+    public List<String> getAllCategory();
       
 >>>>>>> 7fe1550 search Tenderer and Contractor V1
 }

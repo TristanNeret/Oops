@@ -12,15 +12,20 @@ and open the template in the editor.
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     
     <div id="divSearch">
+       
         <h:form>
+            
             <h:outputText value="Recherche : "/>
             <h:inputText class="searchInputText" value="#{searchManagedBean.keyWord}"/>
-            <h:selectOneMenu id="listType" value="#{searchManagedBean.selectedItem}">
+           
+            <h:outputText value="Type : "/>
+            <h:selectOneMenu id="listType" value="#{searchManagedBean.type}">
                 <f:selectItem itemLabel="Soumissionnaire" itemValue="tend"/>
                 <f:selectItem itemLabel="Prestataire" itemValue="cont"/>
             </h:selectOneMenu>
             
-            <h:selectOneMenu id="listRate" value="#{searchManagedBean.selectedItemRate}">
+            <h:outputText value="Note moyenne : "/>
+            <h:selectOneMenu id="listRating" value="#{searchManagedBean.rating}">
                 <f:selectItem itemLabel="" itemValue=""/>
                 <f:selectItem itemLabel=">=4" itemValue="4"/>
                 <f:selectItem itemLabel=">=3" itemValue="3"/>
@@ -28,19 +33,21 @@ and open the template in the editor.
                 <f:selectItem itemLabel=">=1" itemValue="1"/>
             </h:selectOneMenu>
             
-            <h:selectOneMenu id="listCountry" value="#{searchManagedBean.selectedItemCountry}">
-                <f:selectItem itemLabel="" itemValue=""/>
-                <f:selectItem itemLabel="USA" itemValue="USA"/>
+            <h:outputText value="Pays : "/>
+            <h:selectOneMenu id="listCountry" value="#{searchManagedBean.country}">
+                <f:selectItems value="#{searchManagedBean.allCountry}"/>
             </h:selectOneMenu>
             
-            <h:selectOneMenu id="listCategory" value="#{searchManagedBean.selectedItemCategory}">
-                <f:selectItem itemLabel="" itemValue=""/>
-                <f:selectItem itemLabel="Informatique" itemValue="Informatique"/>
+            <h:outputText value="Catégorie : "/>
+            <h:selectOneMenu id="listCategory" value="#{searchManagedBean.category}">
+                <f:selectItems value="#{searchManagedBean.allCategory}"/>
             </h:selectOneMenu>
            
             <h:commandButton class="searchCommandButton" value="Recherche" action="#{searchManagedBean.search()}"></h:commandButton>
+        
         </h:form> 
-   </div>
+  
+    </div>
     
     
 </ui:composition>
