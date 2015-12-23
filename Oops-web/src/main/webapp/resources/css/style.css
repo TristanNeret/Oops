@@ -123,6 +123,14 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     font-size: 12px;
 }
 
+.hidden {
+  display: none; 
+}
+
+.display {
+    display: inline;
+} 
+
 /* Contractor Information */
 
 #divPresentation {
