@@ -12,6 +12,7 @@ import com.gdf.persistence.Address;
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
+import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Service;
@@ -125,9 +126,14 @@ public class Listener implements ServletContextListener {
         tenderer.setEmail("oo@oo.om");
         tenderer.setLogin("Julie Johnson");
         tenderer.setId((long)1);
+        
+        Moderator moderator = new Moderator();
+        moderator.setLogin("SuperModerator");
+        moderator.setId((long)1);
  
         registrationBean.register(tenderer); 
         registrationBean.register(contractor);
+        registrationBean.register(moderator);
         
         evalBean.addReview(tenderer, contractor, review);
         evalBean.addReview(tenderer, contractor, reviewWaiting1);

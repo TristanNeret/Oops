@@ -56,7 +56,7 @@ public class Review implements Serializable {
     private List<Notification> notifications = new ArrayList<>();
     
     /**
-     * Empty constructor for Review
+     * Create an instance of a Review
      */
     public Review() {
         

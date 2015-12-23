@@ -34,26 +34,31 @@ and open the template in the editor.
                     </p:panelGrid>
                     <!-- Moderator actions -->
                     <p:panelGrid styleClass="rightPanelAdmin" columns="3">
-                        <p:panel>
-                            <p:panel style="width: 100%;">
-                                <h:outputLabel value="Décision" />
+                        <h:form id="formDecision">
+                            <p:panel>
+                                <p:panel style="width: 100%;">
+                                    <h:outputLabel value="Décision" />
+                                </p:panel>
+                                <p:panel>
+                                    <h:commandButton value="Valider" action="#{manageReviewBean.validateReview(review.id)}" >
+                                        <f:ajax execute="formDecision" render="@none" />
+                                    </h:commandButton>
+                                    <h:commandButton value="Modifier" action="#{manageReviewBean.modifyReview(review.id)}" >
+                                        <f:ajax execute="formDecision" render="@none" />
+                                    </h:commandButton>
+                                    <h:commandButton value="Rejeter" action="#{manageReviewBean.rejectReview(review.id)}" >
+                                        <f:ajax execute="formDecision" render="@none" />
+                                    </h:commandButton>
+                                </p:panel>
                             </p:panel>
-                            <p:panelGrid columns="2">
-                                <p:panel>
-                                    <h:button value="Valider" />
-                                    <h:button value="À préciser" />
-                                </p:panel>
-                                <p:panel>
-                                    <h:button value="Modifier" />
-                                    <h:button value="Rejeter" />
-                                </p:panel>
-                            </p:panelGrid>
-                        </p:panel>
-                        <p:panel>
-                            <h:outputLabel value="Description" />
-                            <p:inputTextarea id="reviewContent" rows="6" cols="20" required="false" label="Facultatif" />
-                        </p:panel>
-                        <h:button value="Envoyer" style="height: 100%;" />
+                        </h:form>
+                        <h:form>
+                            <p:panel>
+                                <h:outputLabel value="Description" />
+                                <p:inputTextarea id="reviewContent" rows="6" cols="20" value="#{manageReviewBean.contentReview[review.id]}" required="false" label="Facultatif" />
+                            </p:panel>
+                            <h:commandButton value="Envoyer" action="#{manageReviewBean.manageReview(review.id)}" />
+                        </h:form>
                     </p:panelGrid>
                 </p:panel>
             </c:forEach>

@@ -131,7 +131,7 @@ and open the template in the editor.
                     <table>
                         <tr>
                             <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
-                                <c:if test="#{review.reviewState == 'ACCEPTED'}"> 
+                                <c:if test="#{review.reviewState == 'ACCEPTED'}">
                                     <td style="padding-right: 30px">
                                         <h:outputText value="#{review.appreciation}"/>
                                         <span style="color: gray;">par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/></span><br/>

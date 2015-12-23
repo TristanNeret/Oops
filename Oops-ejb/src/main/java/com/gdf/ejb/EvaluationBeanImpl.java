@@ -60,7 +60,13 @@ public class EvaluationBeanImpl implements EvaluationBean {
         
     }
     
-    @Override
+    /**
+     * Send a new Notification
+     * @param review Review concerned by the Notification
+     * @param tenderer Tenderer concerned by the Notification
+     * @param contractor Contractor concerned by the Notification
+     * @param notificationType type of the Notification
+     */
     public void sendNotification(Review review, Tenderer tenderer, Contractor contractor, NotificationType notificationType) {
         
         // Get attached entities concerned
