@@ -7,12 +7,16 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -24,19 +28,20 @@ public class SearchManagedBean implements Serializable {
 
     /**
      * Creates a new instance of SearchBean
-     */
+    */
     
     private String keyWord;
-    private String selectedItem;
-    private String selectedItemRate;
-    private String selectedItemCountry;
-    private String selectedItemCategory;
+    private String type;
+    private int rating;
+    private String country;
+    private String category;
     private List<Contractor> lc;
     private List<Tenderer> ltd;
+    private  List<SelectItem> allCountry;
+    private  List<SelectItem> allCategory;
     
     @EJB
     SearchBean sb;
-    
     
     public SearchManagedBean() {
     }
@@ -49,36 +54,68 @@ public class SearchManagedBean implements Serializable {
         this.keyWord = keyWord;
     }
 
-    public String getSelectedItem() {
-        return selectedItem;
+    public int getRating() {
+        return rating;
     }
 
-    public void setSelectedItem(String selectedItem) {
-        this.selectedItem = selectedItem;
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+    
+    public String getType() {
+        return type;
     }
 
-    public String getSelectedItemRate() {
-        return selectedItemRate;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setSelectedItemRate(String selectedItemRate) {
-        this.selectedItemRate = selectedItemRate;
+    public String getCountry() {
+        return country;
     }
 
-    public String getSelectedItemCountry() {
-        return selectedItemCountry;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public void setSelectedItemCountry(String selectedItemCountry) {
-        this.selectedItemCountry = selectedItemCountry;
+    public String getCategory() {
+        return category;
     }
 
-    public String getSelectedItemCategory() {
-        return selectedItemCategory;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public void setSelectedItemCategory(String selectedItemCategory) {
-        this.selectedItemCategory = selectedItemCategory;
+    public List<SelectItem> getAllCountry() {
+        
+        List<String> listC = sb.getAllCountry();
+        List<SelectItem> li =new ArrayList<>();
+        li.add(new SelectItem(""));
+        
+        for(String country : listC)
+                li.add(new SelectItem(country)); 
+        
+        return li;
+    }
+
+    public void setAllCountry(List<SelectItem> allCountry) {
+        this.allCountry = allCountry;
+    }
+
+    public List<SelectItem> getAllCategory() {
+        
+        List<String> listC = sb.getAllCategory();   
+        List<SelectItem> li = new ArrayList<>();
+        li.add(new SelectItem(""));
+        
+        for(String category : listC)
+                li.add(new SelectItem(category)); 
+                 
+        return li;
+    }
+
+    public void setAllCategory(List<SelectItem> allCategory) {
+        this.allCategory = allCategory;
     }
     
     public List<Contractor> getLc() {
@@ -99,26 +136,18 @@ public class SearchManagedBean implements Serializable {
     
     public String search(){
         
-        if(selectedItem.equals("tend")){
-            
-            if(keyWord == null)
-                ltd = sb.findAllTenderer();
-            else
-                ltd =  sb.searchTendererByKeyWord(keyWord);
-                
-            System.out.println("SIZZE = " + ltd.size());
+        if(type.equals("tend"))
+        {
+            ltd =  sb.findTenderers(keyWord);
             return "/views/listTenderer.xhtml?faces-redirect=true";
         }
         else
         {
-            if(keyWord == null)
-                lc = sb.findAllContractor();
-            else
-                lc = sb.searchContractorByKeyWord(keyWord);    
-                
+            lc = sb.findContractors(keyWord,rating,country,category);            
             return "/views/listContractor.xhtml?faces-redirect=true";       
-        }     
+        }        
     }
     
-    
+
+  
 }

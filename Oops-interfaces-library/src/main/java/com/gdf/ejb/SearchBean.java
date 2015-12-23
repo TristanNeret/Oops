@@ -23,15 +23,12 @@ public interface SearchBean {
      * @return the Contractor identified by the id if any or null if he doesn't exist
      */
     public Contractor searchContractorById(long id);
-    
     public List<Contractor> searchContractorByEmail(String email);
-    
-    public List<Contractor> searchContractorByKeyWord(String keyWord);
-    
+    public List<Tenderer> findTenderers(String keyWord);
     public List<Tenderer> searchTendererByKeyWord(String keyWord);
-    
     public List<Tenderer> findAllTenderer();
-    
-    public List<Contractor> findAllContractor();
+    public List<Contractor> findContractors(String keyWord,int rate, String country, String category);
+    public List<String> getAllCountry();
+    public List<String> getAllCategory();
       
 }
