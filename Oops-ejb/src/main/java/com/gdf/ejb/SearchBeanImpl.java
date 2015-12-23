@@ -140,7 +140,7 @@ public class SearchBeanImpl implements SearchBean {
         if(keyWord == null){
             requete = " SELECT c FROM Contractor c ";
         }else {
-            requete = " SELECT c FROM Contractor c WHERE c.login LIKE :word OR c.email LIKE :word Or c.representatorFirstname LIKE :word OR c.representatorLastname LIKE :word Or c.socialReason LIKE :word Or c.phone LIKE :word " ; first = false;
+            requete = " SELECT c FROM Contractor c WHERE (c.login LIKE :word OR c.email LIKE :word Or c.representatorFirstname LIKE :word OR c.representatorLastname LIKE :word Or c.socialReason LIKE :word Or c.phone LIKE :word) " ; first = false;
         }
         
         if(rating != 0){
