@@ -45,6 +45,7 @@ public class AdministratorBeanImpl implements AdministratorBean {
         // Update the Review
         Review review =  em.find(Review.class, reviewId);
         review.setReviewState(reviewState);
+        em.merge(review);
         
         // Get the Moderator from his id and save the ModeratorReview
         Moderator moderator = em.find(Moderator.class, moderatorId);

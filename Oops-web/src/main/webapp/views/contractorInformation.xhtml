@@ -16,9 +16,6 @@ and open the template in the editor.
         <title>Contractor informations</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="style.css" />
-        <f:metadata>
-            <o:viewParam name ="id" value="#{contractorInformationsBean.id}" />
-        </f:metadata>
         <script type="text/javascript">
             function handleReviewRequest(xhr, status, args) {
                 if (args.validationFailed) {
@@ -33,6 +30,10 @@ and open the template in the editor.
     </h:head>
 
     <h:body>
+        
+        <f:metadata>
+            <o:viewParam name ="id" value="#{contractorInformationsBean.id}" />
+        </f:metadata>
 
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
@@ -140,7 +141,7 @@ and open the template in the editor.
                                         <p:rating id="stars2" value="#{review.rating}" stars="5" readonly="true"/> <br/>
                                         <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}"/>
                                     </td>
-                                </c:if> 
+                                </c:if>
                             </c:forEach>
                         </tr>
                     </table>
