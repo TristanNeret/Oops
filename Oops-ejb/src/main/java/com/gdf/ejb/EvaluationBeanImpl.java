@@ -79,4 +79,9 @@ public class EvaluationBeanImpl implements EvaluationBean {
         
     }
     
+    @Override
+    public void updateContractorsAnswer(Review review, String contractorsAnswer){
+        review.setContractorAnswer(contractorsAnswer);
+        em.merge(review);
+    }
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <div>
+        <h:outputText value="Avis des utilisateurs :"/>
+        <p:panelGrid>
+            <c:forEach items="#{contractorsReviewBean.reviews}" var="review" >
+                <p:panel>
+                    <!-- Review informations -->
+                    <p:panelGrid styleClass="leftPanelAdmin" columns="2">
+                        <p:panel>
+                            <h:outputLabel value="#{review.appreciation}" style="width:100%;" />
+                            <h:outputLabel value="#{review.content}" style="width:100%;" />
+                            <p:panelGrid columns="2">
+                                <h:outputLabel value="Le #{review.date}" />
+                                <p:rating id="stars2" value="#{review.rating}" stars="5" readonly="true"/>
+                            </p:panelGrid>
+                        </p:panel>
+                    </p:panelGrid>
+                    <!-- contractor's actions -->
+                    <p:panelGrid styleClass="rightPanelAdmin" columns="3">
+                        <h:form>
+                            <p:panel>
+                                <h:outputLabel value="Réponse" />
+                                <p:inputTextarea id="reviewContent" rows="6" cols="20" value="#{ contractorsReviewBean.answersReview[review.id]}"  required="true" />
+                            </p:panel>
+                            <c:if test="#{empty review.contractorAnswer}">
+                                <h:commandButton  value="Répondre" action="#{contractorsReviewBean.updateReviewsAnswer(review)}" />
+                            </c:if>
+                            <c:if test="#{ not empty review.contractorAnswer}">
+                                <h:commandButton  value="Modifier" action="#{contractorsReviewBean.updateReviewsAnswer(review)}" />
+                                <h:commandButton  value="Supprimer" action="#{contractorsReviewBean.deleteReviewsAnswer(review)}" />
+                            </c:if>
+                        </h:form>
+                    </p:panelGrid>
+                </p:panel>
+            </c:forEach>
+        </p:panelGrid>
+    </div>
+    
+</ui:composition>

@@ -43,4 +43,10 @@ public interface EvaluationBean {
      */
     public void sendNotification(Review review, Tenderer tenderer, Contractor contractor, NotificationType notificationType);
     
+    /**
+     * 
+     * @param review to update with contractor's answser
+     * @param contractorsAnswer the contractor's answer
+     */
+    public void updateContractorsAnswer(Review review, String contractorsAnswer); 
 }
