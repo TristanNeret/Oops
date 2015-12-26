@@ -95,17 +95,20 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 /* SEARCH */
 
 #divSearch {
-    background-color: #009999;
+    background-color: #66cccc;
     color: #333333;
     font-size:20px;
     font-weight: 200;
     height: 50px;
     padding: 10px;
     text-align: center;
+    border-color: #666666;
+    border-width: 1px;
+    border-style: solid;
 }
 
 .searchCommandButton {
-    border: 1px #ffffff solid;
+    border: 1px #333333 solid;
     height: 30px;
     margin: 10px;
     background-color: #cccccc;
@@ -143,17 +146,151 @@ form#reviewForm {
     height: 60px;
 }
 
+/* Moderator */
+
+.titlePanelReviewAdmin {
+    font-size: 22px;
+}
+
+.panelReviewAdmin {
+    width: 100%; 
+    float: left;
+}
+
+.starsReviewAdmin {
+    float: right; 
+    margin-left: 20px;
+}
+
+.labelTitleReviewAdmin {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.labelDateReviewAdmin {
+    font-size: 15px;
+    color: gray;
+}
+
+.divImageReviewAdmin {
+    width: 50px; 
+    height: 120px; 
+    text-align: center; 
+    float: left; 
+    background-color: #66cccc; 
+    padding-top: 20px;
+}
+
+.divDescriptionReviewAdmin {
+    float: left; 
+    margin-left: 20px; 
+    height: 100%;
+}
+
 .leftPanelAdmin {
     width: 45%; 
     float: left;
-    height: 100px;
+    height: 140px;
+    margin-top: 40px;
+    border-right-width: 3px;
+    border-right-color: darkgray;
+    border-right-style: ridge;
 }
 
 .rightPanelAdmin {
-    width: 45%; 
+    width: 50%; 
     float: left;
     margin-left: 20px;
-    height: 100px;
+    margin-bottom: 20px;
+    height: 150px;
+}
+
+.rightPanelTitleAdmin {
+    width: 50%; 
+    float: left;
+    margin-left: 20px;
+    margin-top: 10px;
+    height: 30px;
+}
+
+.rightPanelTitleLeftAdmin {
+    width: 35%; 
+    float: left;
+}
+
+.rightPanelTitleRightAdmin {
+    width: 60%; 
+    float: right;
+}
+
+.buttonsRightPanelAdmin {
+    float: left; 
+    width: 35%;
+}
+
+.divButtonsRightPanelAdmin {
+    width: 100%; 
+    text-align: center;
+}
+
+.divButtonsLeftRightPanelAdmin {
+    float: left; 
+    height: 140px; 
+    width: 48%;
+}
+
+.inputLeftPanelAdmin {
+    float: right; 
+    width: 60%;
+}
+
+.inputReviewAdmin {
+    float: left; 
+    height: 130px !important; 
+    width: 70%;
+}
+
+.commandButtonSaveAdmin {
+    float: right; 
+    height: 140px !important; 
+    width: 25%;
+    background-color: #336c6c;
+    color: #66cccc;
+    font-size: 15px !important;
+    font-weight: 100;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.commandButtonSaveAdmin:active {
+    background-color: #666666;
+}
+
+.commandButtonChoice {
+    background-color: #66cccc;
+    color: #336c6c;
+    font-size: 15px !important;
+    font-weight: 100;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.commandButtonChoiceSelected {
+    background-color: #336c6c;
+    color: #66cccc;
+    font-size: 15px !important;
+    font-weight: 100;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
 }
 
 /* Primefaces redifinition */
@@ -182,6 +319,59 @@ form#reviewForm {
 .ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield {
     background-color: #f6f6f6;
     color: #333333;
+}
+
+.ui-tabs {
+    padding: 0em !important;
+}
+
+.ui-tabs.ui-tabs-top > .ui-tabs-nav {
+    padding: 0em !important;
+}
+
+.ui-tabs .ui-tabs-nav {
+    background-color: #66cccc;
+    background: #66cccc;
+    border-bottom-color: #666666;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-top-color: #666666;
+    border-top-width: 2px;
+    border-top-style: solid;
+    border-left-width: 0px;
+    border-left-style: none;
+    border-right-width: 0px;
+    border-right-style: none;
+   
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a {
+    background-color: #336c6c;
+    color: #66cccc;
+    cursor: pointer !important;
+    text-shadow: none;
+    font-weight: 100;
+    font-size: 22px;
+    border-style: solid;
+    border-color: #666666;
+    border-width: 2px;
+}
+
+.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+    background-color: #66cccc;
+    color: #336c6c;
+    text-shadow: none;
+    font-weight: 100;
+    font-size: 22px;
+    border-style: solid;
+    border-color: #666666;
+    border-width: 2px;
+    margin: -2px;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    margin: 0em !important;
+    position: inherit !important;
 }
 
 /* Dialog */

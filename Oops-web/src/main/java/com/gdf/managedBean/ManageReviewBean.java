@@ -15,8 +15,10 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 
 /**
@@ -32,6 +34,7 @@ public class ManageReviewBean implements Serializable {
     @EJB
     private SearchBean sb;
     
+    private boolean areReviews;
     private List reviewList;
     private Map<Long,String> contentReview;
     private Map<Long,ReviewState> decisionReview;
@@ -65,6 +68,7 @@ public class ManageReviewBean implements Serializable {
         this.reviewList = this.sb.getWaitingReviews();
         this.contentReview = new HashMap<>();
         this.decisionReview = new HashMap<>();
+        this.areReviews = this.reviewList.isEmpty();
         
     }
     
@@ -110,11 +114,21 @@ public class ManageReviewBean implements Serializable {
         String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userCategory");
 
         if(userID != null && !userID.equals("") && userCategory.equals(Moderator.userCategory)) {
-        
-            this.ab.manageReview(id, Long.parseLong(userID), this.decisionReview.get(id), this.contentReview.get(id));
             
-            // Update the waiting Reviews list
-            this.updateWaitingReviews();
+            if(this.decisionReview.get(id) != null) {
+                
+                this.ab.manageReview(id, Long.parseLong(userID), this.decisionReview.get(id), this.contentReview.get(id));
+            
+                // Update the waiting Reviews list
+                this.updateWaitingReviews();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Avis traité avec succès !", ""));
+                
+            } else {
+                
+                // Moderator must take a decision
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Vous devez prendre une décision !", ""));
+                
+            } 
         
         }
         
@@ -136,6 +150,14 @@ public class ManageReviewBean implements Serializable {
 
     public void setContentReview(Map<Long, String> contentReview) {
         this.contentReview = contentReview;
+    }
+    
+    public boolean isAreReviews() {
+        return areReviews;
+    }
+
+    public void setAreReviews(boolean areReviews) {
+        this.areReviews = areReviews;
     }
     
 }
