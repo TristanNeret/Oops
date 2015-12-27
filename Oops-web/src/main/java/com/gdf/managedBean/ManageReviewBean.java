@@ -65,7 +65,7 @@ public class ManageReviewBean implements Serializable {
      */
     public void updateWaitingReviews() {
         
-        this.reviewList = this.sb.getWaitingReviews();
+        this.reviewList = this.sb.searchWaitingReviews();
         this.contentReview = new HashMap<>();
         this.decisionReview = new HashMap<>();
         this.areReviews = this.reviewList.isEmpty();

@@ -34,9 +34,11 @@ public class EvaluationBeanImpl implements EvaluationBean {
         Tenderer attachedTenderer = em.merge(tenderer);
         Contractor attachedContractor = em.merge(contractor);
         
+        em.persist(review);
+        
         attachedTenderer.addReview(review);
         attachedContractor.addReview(review);
-    
+        
     }
     
     @Override

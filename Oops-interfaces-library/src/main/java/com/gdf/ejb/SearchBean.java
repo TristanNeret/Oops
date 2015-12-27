@@ -66,6 +66,13 @@ public interface SearchBean {
      * Search waiting Reviews
      * @return list of waiting reviews
      */
-    public List<Review> getWaitingReviews();
+    public List<Review> searchWaitingReviews();
+    
+    /**
+     * Search accepted Reviews for a Contractor
+     * @param id id of the Contractor
+     * @return the accepted Reviews List of the Contractor
+     */
+    public List<Review> searchAcceptedReviews(long id);
     
 }

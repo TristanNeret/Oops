@@ -109,9 +109,19 @@ public class SearchBeanImpl implements SearchBean {
     // REVIEW
 
     @Override
-    public List<Review> getWaitingReviews() {
+    public List<Review> searchWaitingReviews() {
        
         Query query = em.createNamedQuery("Review.findWaitingReviews");
+        
+        return query.getResultList();
+        
+    }
+
+    @Override
+    public List<Review> searchAcceptedReviews(long id) {
+       
+        Query query = em.createNamedQuery("Review.findAcceptedReviews");
+        query.setParameter(1, id);
         
         return query.getResultList();
         

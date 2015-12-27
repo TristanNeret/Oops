@@ -59,12 +59,22 @@ public class Contractor implements Serializable {
     private LegalInformation legalInformation;
         
     @OneToMany
-    private List<Notification> notifications = new ArrayList<>();
+    private List<Notification> notifications;
   
     @OneToMany(mappedBy = "contractor",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
-    private List<Review> reviews = new ArrayList<>();
+    private List<Review> reviews;
     
     public static final String userCategory = "CONTRACTOR";
+    
+    /**
+     * Create an instance of a Contractor
+     */
+    public Contractor() {
+        
+        this.reviews = new ArrayList<>();
+        this.notifications = new ArrayList<>();
+        
+    }
     
     public String getPassword() {
         return password;
@@ -147,7 +157,8 @@ public class Contractor implements Serializable {
     }
 
     public int getRating() {
-        return this.calculRate();
+        this.rating = this.calculRate();
+        return this.rating;
     }
 
     public void setRating(int rating) {
@@ -226,15 +237,20 @@ public class Contractor implements Serializable {
         int res = 0;
         int nb = 0 ;
         
-        for(Review r : reviews){
-            if(r.getReviewState() == ReviewState.ACCEPTED)
-               res =+ r.getRating(); nb++;
+        for(Review r : this.reviews) {
+            if(r.getReviewState().equals(ReviewState.ACCEPTED)) {
+             
+                res = res + r.getRating(); 
+                nb++;
+               
+            }
         }
         
         if(nb == 0 )
             return 0;
         else            
             return (int)(res/nb);
+        
     }
     
     public void setDescription(String description) {
