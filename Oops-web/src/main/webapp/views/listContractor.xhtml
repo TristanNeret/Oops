@@ -25,17 +25,28 @@ and open the template in the editor.
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
         
-        <h2>Contractor ! :</h2>
+        
+            <h2>Recherche de prestataires</h2>
 
- 
-        <c:forEach items="#{searchManagedBean.lc}" var="contractor" rendered="#{not empty searchManagedBean.lc}">
-    
-            <h:link outcome="/views/contractorInformation?faces-redirect=true" value="#{contractor.email}">
-                <f:param name="id" value="#{contractor.id}" />
-            </h:link>        
-      
-        </c:forEach>
-   
+            <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de la recherche !" 
+                          rendered="#{empty searchManagedBean.lc}" />
+
+            <table>
+            <c:forEach items="#{searchManagedBean.lc}" var="contractor" rendered="#{not empty searchManagedBean.lc}">
+                <tr>
+                    <td><b><h:link outcome="/views/contractorInformation?faces-redirect=true" 
+                            style="color: #1E90FF; font-size: x-large; text-decoration:none; margin-right: 5px" 
+                            id="linkResult" value="#{contractor.socialReason}">
+                        <f:param name="id" value="#{contractor.id}" />
+                    </h:link></b></td>
+                    <td>Adresse : <h:outputText style="color: #1E90FF;" value="#{contractor.address.toString()}" /></td>
+                    <td>Email : <h:outputText style="color: #1E90FF;" value="#{contractor.email}" /></td>
+                    <td>Téléphone : <h:outputText style="color: #1E90FF;" value="#{contractor.phone}" /></td>
+                </tr>
+            </c:forEach>
+            </table>
+        
+        
     </h:body>
     
      <!-- FOOTER -->

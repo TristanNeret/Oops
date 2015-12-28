@@ -5,6 +5,7 @@
  */
 package com.gdf.ejb;
 
+import com.gdf.persistence.Address;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
@@ -29,7 +30,7 @@ public class SearchBeanImpl implements SearchBean {
     private EntityManager em;  
     
     /**
-     * SearchBean a Contractor by his id
+     * Search a Contractor by his id
      * @param id the id of the Contractor
      * @return the Contractor identified by the id if any or null if he doesn't exist
      */
@@ -41,16 +42,29 @@ public class SearchBeanImpl implements SearchBean {
         if(contractor != null) {  
             //The lazy relationships must be traversed before exiting the scope of the JPA Session to avoid the Exception.
             contractor.getServices().size(); 
-            contractor.getReviews().size(); 
+            contractor.getReviews().size();
         } 
         return contractor;
     }
 
+    /**
+     * Search contractors using an email
+     * @param email the email
+     * @return the list of contractors
+     */
     @Override
     public List<Contractor> searchContractorByEmail(String email) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Search contractors by several criteria 
+     * @param keyWord a keyword which could be present on the contractor informations
+     * @param rating the rating of the contractor 
+     * @param country the country of the contractor
+     * @param category the category of service given by the contractor
+     * @return the list of contractors
+     */
     @Override
     public List<Contractor> findContractors(String keyWord, int rating, String country, String category ) {
         
@@ -98,6 +112,11 @@ public class SearchBeanImpl implements SearchBean {
             return query.getResultList();
     }
 
+    /**
+     * Search tenderers by keyword
+     * @param keyWord a keyword which could be present on the tenderer informations
+     * @return the tenderer matching with the keyword or all tenderers if keyword is empty
+     */
     @Override
     public List<Tenderer> findTenderers(String keyWord) {
         if(keyWord == null)
@@ -106,7 +125,11 @@ public class SearchBeanImpl implements SearchBean {
             return this.searchTendererByKeyWord(keyWord);   
     }
     
-    
+    /**
+     * Search tenderers by keyword
+     * @param keyWord a keyword which could be present on the tenderer informations
+     * @return the list of tenderers
+     */
     @Override
     public List<Tenderer> searchTendererByKeyWord(String keyWord) {
         TypedQuery<Tenderer> query;
@@ -115,19 +138,31 @@ public class SearchBeanImpl implements SearchBean {
         return query.getResultList();   
     }
 
+    /**
+     * Get all the tenderers
+     * @return all the tenderers
+     */
     @Override
     public List<Tenderer> findAllTenderer() {
         TypedQuery<Tenderer> query = em.createNamedQuery("Tenderer.findAll", Tenderer.class);
         return query.getResultList(); 
     }
     
+    /**
+     * Get all countries
+     * @return all countries
+     */
     @Override
     public List<String> getAllCountry() {
         TypedQuery<String> query;
         query = em.createQuery("SELECT DISTINCT c.address.country FROM Contractor c ",String.class);
         return query.getResultList();  
     }
-
+    
+    /**
+     * Get all categories
+     * @return all categories
+     */
     @Override
     public List<String> getAllCategory() {
         TypedQuery<String> query;
@@ -135,7 +170,12 @@ public class SearchBeanImpl implements SearchBean {
         return query.getResultList();  
     }
     
-    
+    /**
+     * Get the contractors providing a category of service
+     * @param lc the list of contractors
+     * @param category the catgory of service
+     * @return the list of contractors providing the catgory of service
+     */
     private List<Contractor> searchByCategories(List<Contractor> lc, String category){
 
         Iterator<Contractor> iterator = lc.iterator();

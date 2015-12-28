@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.gdf;
+package com.gdf.managedBean;
 
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
@@ -50,7 +50,7 @@ public class ContractorInformationTest {
     /*
      Search without parameters in the url
     */
-    @Test
+/**    @Test
     public void testNoId() {
         driver.get(baseUrl);        
         driver.findElement(By.xpath("//h2[contains(text(), 'Prestataire introuvable !')]"));      
@@ -67,5 +67,5 @@ public class ContractorInformationTest {
         driver.get(baseUrl+"?id=1");        
         driver.findElement(By.xpath("//h2[1][contains(text(), 'Description')]"));      
 
-    }
+    }**/
 }
