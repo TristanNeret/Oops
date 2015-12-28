@@ -17,33 +17,65 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.model.SelectItem;
 
 /**
- *
+ * ManagedBean providing search functionalities 
  * @author nicolas
  */
 @Named(value = "searchManagedBean")
 @ApplicationScoped
 public class SearchManagedBean implements Serializable {
-
-    /**
-     * Creates a new instance of SearchBean
-    */
     
+    /**
+     * A keyword used to find a contractor or tenderer
+     */
     private String keyWord;
+    
+    /**
+     * The type of the user we are looking for : contractor or tenderer
+     */
     private String type;
+    
+    /**
+     * Minimum rating of the contractor
+     */
     private int rating;
+    
+    /**
+     * Country of the contractor
+     */
     private String country;
+    
+    /**
+     * Category of the services given by the contractor
+     */
     private String category;
+    
+    /**
+     * List of the contractors resulting of the search
+     */
     private List<Contractor> lc;
+    
+    /**
+     * List of the tenderers resulting of the search
+     */
     private List<Tenderer> ltd;
+    
+    /**
+     * All countries of the contractors
+     */
     private  List<SelectItem> allCountry;
+    
+    /*
+    * All categories of services given by the contractors 
+    */
     private  List<SelectItem> allCategory;
     
+    /**
+     * Injected EJB giving the search methods
+     */
     @EJB
-    SearchBean sb;
+    private SearchBean sb;
     
-    public SearchManagedBean() {
-    }
-
+    
     public String getKeyWord() {
         return keyWord;
     }
@@ -87,7 +119,7 @@ public class SearchManagedBean implements Serializable {
     public List<SelectItem> getAllCountry() {
         
         List<String> listC = sb.getAllCountry();
-        List<SelectItem> li =new ArrayList<>();
+        List<SelectItem> li = new ArrayList<>();
         li.add(new SelectItem(""));
         
         for(String country : listC)
@@ -132,6 +164,10 @@ public class SearchManagedBean implements Serializable {
         this.ltd = ltd;
     }
     
+    /**
+     * Starts the search given all the criterias
+     * @return the view where the results will be displayed
+     */
     public String search(){
         
         if(type.equals("tend"))
@@ -145,7 +181,4 @@ public class SearchManagedBean implements Serializable {
             return "/views/listContractor.xhtml?faces-redirect=true";       
         }        
     }
-    
-
-  
 }

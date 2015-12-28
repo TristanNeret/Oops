@@ -111,4 +111,9 @@ public class Address implements Serializable {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return streetNumber+" "+street+" "+zipCode+" "+town+" "+country;
+    } 
 }

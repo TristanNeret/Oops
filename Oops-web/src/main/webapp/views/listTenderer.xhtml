@@ -25,17 +25,28 @@ and open the template in the editor.
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
         
-        <h2>Soumissionnaires ! :</h2>
-
+        
+            <h2>Recherche de soumissionnaires</h2>
           
-        <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
-          
-            <h:link outcome="/views/tendererSearch?faces-redirect=true" value="#{tend.email}">
-                <f:param name="id" value="#{tend.id}" />
-            </h:link>        
-      
-        </c:forEach>
-   
+            <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de la recherche !" 
+                          rendered="#{empty searchManagedBean.ltd}" />
+            
+            <table>
+            <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
+                <tr>
+                    <td><b><h:link outcome="/views/tendererSearch?faces-redirect=true" 
+                            style="color: #1E90FF; font-size: x-large; text-decoration:none; margin-right: 5px" 
+                            id="linkResult" value="#{tend.login}">
+                        <f:param name="id" value="#{tend.id}" />
+                    </h:link></b></td>
+                    <td>Nom : <h:outputText style="color: #1E90FF;" value="#{tend.lastname}" /></td>
+                    <td>Prenom : <h:outputText style="color: #1E90FF;" value="#{tend.firstname}" /></td>
+                    <td>Email : <h:outputText style="color: #1E90FF;" value="#{tend.email}" /></td>      
+                    <td>Téléphone : <h:outputText style="color: #1E90FF;" value="#{tend.phone}" /></td>
+                </tr>
+            </c:forEach>
+            </table>
+       
     </h:body>
     
      <!-- FOOTER -->
