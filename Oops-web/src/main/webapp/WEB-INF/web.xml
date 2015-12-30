@@ -11,8 +11,7 @@
   <!-- <listener>
         <description>ServletContextListener</description>
         <listener-class>com.gdf.listener.Listener</listener-class>
-    </listener>
-    -->
+    </listener> -->
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

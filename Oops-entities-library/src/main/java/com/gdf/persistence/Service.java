@@ -33,6 +33,17 @@ public class Service implements Serializable {
     
     @ManyToOne
     private Category category;
+
+    public Service() {
+    }
+
+    public Service(String title, String description, double price, Contractor contractor, Category category) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.contractor = contractor;
+        this.category = category;
+    }
     
     public Long getId() {
         return id;

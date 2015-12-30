@@ -28,8 +28,8 @@ public class SearchManagedBeanTest {
                queryInputTextXpathExp = By.xpath("//input[contains(@id, 'queryInputText')]"),
             
                ratingListXpathExp = By.xpath("//select[contains(@id, 'listRating')]"),
-               countriesListXpathExp = By.xpath("//select[contains(@id, 'listCountries')]"),
-               categoriesListXpathExp = By.xpath("//select[contains(@id, 'listCategories')]");
+               countryListXpathExp = By.xpath("//select[contains(@id, 'listCountries')]"),
+               categoryListXpathExp = By.xpath("//select[contains(@id, 'listCategories')]");
     
     private WebDriver driver;
     private String baseUrl;
@@ -58,26 +58,23 @@ public class SearchManagedBeanTest {
     * TESTS FOR TENDERER SEARCH ---------------------------------------------------------------------------------------------
     */
     
-    /*
-    * Search without parameters 
-    */
+    private static final String TENDERER_QUERY = "mich", TENDERER_EXPECTED = "Michmich", TENDERER_EXPECTED_2 = "Dede";
+    /**
    @Test
-   public void testSearchTendererWithoutQuery() {
+   public void testTendererSearchWithoutQuery() {
         driver.get(baseUrl);
         
         driver.findElement(queryInputTextXpathExp).clear();
         Select select = new Select(driver.findElement(typeListXpathExp));
         select.selectByVisibleText("Soumissionnaire");    
         driver.findElement(searchButtonXpathExp).click();
-        
-        driver.findElement(By.id("linkResult"));      
+         
+        driver.findElement(By.xpath("//span[text() = \""+TENDERER_EXPECTED+"\"]"));
+        driver.findElement(By.xpath("//span[text() = \""+TENDERER_EXPECTED_2+"\"]")); 
     }
     
-     /**
-     * Search with a random parameter, no result expected
-     */
     @Test
-    public void testSearchTendererWithQueryWithoutResult(){
+    public void testTendererSearchWithQueryWithoutResult(){
        driver.get(baseUrl);
        
        driver.findElement(queryInputTextXpathExp).clear();
@@ -88,71 +85,435 @@ public class SearchManagedBeanTest {
        
        driver.findElement(By.id("noResultOutputText"));      
     }
-   
-    /**
-     * Search with parameters, at least one result expected
-     */
+    
     @Test
-    public void testSearchTendererWithQueryWithResult(){
+    public void testTendererSearchWithQueryWithResult(){
        driver.get(baseUrl);
        
        driver.findElement(queryInputTextXpathExp).clear();
-       driver.findElement(queryInputTextXpathExp).sendKeys("julie");
+       driver.findElement(queryInputTextXpathExp).sendKeys(TENDERER_QUERY);
        Select select = new Select(driver.findElement(typeListXpathExp));
        select.selectByVisibleText("Soumissionnaire");
        driver.findElement(searchButtonXpathExp).click();
        
-       driver.findElement(By.id("linkResult"));      
+       driver.findElement(By.xpath("//span[text() = \""+TENDERER_EXPECTED+"\"]"));
     }
     
     /*
     * TESTS FOR CONTRACTOR SEARCH ---------------------------------------------------------------------------------------------
     */
     
-    /*
-    * Search without parameters 
-    */
+    private static final String CONTRACTOR_QUERY = "IT Contractor", CONTRACTOR_EXPECTED = "IT Contractor Inc.",
+                                                                    CONTRACTOR_EXPECTED_2 = "FranceBTP Sarl",
+                                RATING_0 = ">=4", RATING_1 = ">=3", RATING_2 = ">=2",  // find 0, 1, and 2 contractor(s)
+                                COUNTRY_1 = "USA", COUNTRY_2 = "France", 
+                                CATEGORY_1 = "Informatique", CATEGORY_2 = "Batiment"; 
+            
    @Test
-   public void testContractorTendererWithoutQuery() {
+   public void testContractorSearchWithoutQuery() {
         driver.get(baseUrl);
         
         driver.findElement(queryInputTextXpathExp).clear();
-        Select select = new Select(driver.findElement(typeListXpathExp));
-        select.selectByVisibleText("Prestataire");
+        new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+        new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+        new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+        new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
         driver.findElement(searchButtonXpathExp).click();
      
-        driver.findElement(By.id("linkResult"));      
+        driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));
+        driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED_2+"\"]"));     
     }
     
-     /**
-     * Search with a random parameter, no result expected
-     */
-   @Test
-    public void testSearchContractorWithQueryWithoutResult(){
+    @Test
+    public void testContractorSearchWithQueryWithoutResult(){
        driver.get(baseUrl);
        
        driver.findElement(queryInputTextXpathExp).clear();
        driver.findElement(queryInputTextXpathExp).sendKeys(RandomStringUtils.randomAscii(10));
-       Select select = new Select(driver.findElement(typeListXpathExp));
-       select.selectByVisibleText("Prestataire");
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
        driver.findElement(searchButtonXpathExp).click();
        
-       driver.findElement(By.id("noResultOutputText"));      
+       driver.findElement(By.id("noResultOutputText"));
     }
    
-    /**
-     * Search with parameters, at least one result found
-     */
     @Test
-    public void testSearchContractorWithQueryWithResult(){
+    public void testContractorSearchWithQueryWithResult(){
        driver.get(baseUrl);
        
        driver.findElement(queryInputTextXpathExp).clear();
-       driver.findElement(queryInputTextXpathExp).sendKeys("apple");
-       Select select = new Select(driver.findElement(typeListXpathExp));
-       select.selectByVisibleText("Prestataire");
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
        driver.findElement(searchButtonXpathExp).click();
        
-       driver.findElement(By.id("linkResult"));      
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));       
+    }
+ 
+    @Test
+    public void testContractorSearchWithRatingSelected2Results(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_2);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED_2+"\"]"));  
+    }
+    
+    @Test
+    public void testContractorSearchWithRatingSelected0Result(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_0);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.id("noResultOutputText")); 
+    }
+    
+    @Test
+    public void testContractorSearchWithRatingSelected1Result(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_1);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));
+    }
+    
+    @Test
+    public void testContractorSearchWithCountrySelected1(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_1);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));   
+    }
+    
+    @Test
+    public void testContractorSearchWithCountrySelected2(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_2);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED_2+"\"]"));   
+    }
+    
+    @Test
+    public void testContractorSearchWithCategorySelected1(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_1);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));  
+    }
+    
+    @Test
+    public void testContractorSearchWithCategorySelected2(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_2);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED_2+"\"]"));  ; 
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedAndRatingSelected1(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_2);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));  
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedAndRatingSelected2(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_0);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.id("noResultOutputText")); 
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedAndCountrySelected1(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_1);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));  
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedAndCountrySelected2(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_2);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.id("noResultOutputText")); 
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedAndCategorySelected1(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_1);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));  
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedAndCategorySelected2(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_2);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.id("noResultOutputText")); 
+    }
+    
+    @Test
+    public void testContractorSearchWithRatingAndCountrySelected1(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_2);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_1);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));  
+    }
+    
+    @Test
+    public void testContractorSearchWithRatingAndCountrySelected2(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_2);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_2);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED_2+"\"]")); 
+    }
+    
+    @Test
+    public void testContractorSearchWithRatingAndCategorySelected1(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_2);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_1);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));  
+    }
+    
+    @Test
+    public void testContractorSearchWithRatingAndCategorySelected2(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_2);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_2);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED_2+"\"]"));  
+    }
+    
+    @Test
+    public void testContractorSearchWithCountryAndCategorySelected1(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_1);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_1);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));  
+    }
+    
+    @Test
+    public void testContractorSearchWithCountryAndCategorySelected2(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_2);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_2);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED_2+"\"]"));   
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedRatingAndCountrySelected1(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_2);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_1);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));  
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedRatingAndCountrySelected2(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_2);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_2);
+       new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.id("noResultOutputText"));
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedRatingAndCategorySelected1(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_2);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_1);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]")); 
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedRatingAndCategorySelected2(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByVisibleText(RATING_2);
+       new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_2);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.id("noResultOutputText"));
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedCountryAndCategorySelected1(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_1);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_1);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.xpath("//span[text() = \""+CONTRACTOR_EXPECTED+"\"]"));  
+    }
+    
+    @Test
+    public void testContractorSearchWithQueryTypedCountryAndCategorySelected2(){
+       driver.get(baseUrl);
+       
+       driver.findElement(queryInputTextXpathExp).clear();
+       driver.findElement(queryInputTextXpathExp).sendKeys(CONTRACTOR_QUERY);
+       new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+       new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+       new Select(driver.findElement(countryListXpathExp)).selectByVisibleText(COUNTRY_2);
+       new Select(driver.findElement(categoryListXpathExp)).selectByVisibleText(CATEGORY_2);
+       driver.findElement(searchButtonXpathExp).click();
+       
+       driver.findElement(By.id("noResultOutputText"));
     }
 }

@@ -12,44 +12,47 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:o="http://omnifaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    
+
     <h:head>
         <title>Tenderer list</title>
-         <h:outputStylesheet library="css" name="style.css" />
+        <h:outputStylesheet library="css" name="style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
-    
+
     <h:body>
-        
-        
+
+
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
+
+        <!-- SEARCH -->
+        <ui:include src="/includes/search.xhtml" />
+
+        <div style="width : 50%; margin : auto; ">
+        <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de recherche !" 
+                      rendered="#{empty searchManagedBean.ltd}" />
+        </div>
         
-        
-            <h2>Recherche de soumissionnaires</h2>
-          
-            <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de la recherche !" 
-                          rendered="#{empty searchManagedBean.ltd}" />
-            
-            <table>
+        <table style="width : 50%; margin : auto; ">
             <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
                 <tr>
-                    <td><b><h:link outcome="/views/tendererSearch?faces-redirect=true" 
-                            style="color: #1E90FF; font-size: x-large; text-decoration:none; margin-right: 5px" 
-                            id="linkResult" value="#{tend.login}">
-                        <f:param name="id" value="#{tend.id}" />
-                    </h:link></b></td>
-                    <td>Nom : <h:outputText style="color: #1E90FF;" value="#{tend.lastname}" /></td>
-                    <td>Prenom : <h:outputText style="color: #1E90FF;" value="#{tend.firstname}" /></td>
-                    <td>Email : <h:outputText style="color: #1E90FF;" value="#{tend.email}" /></td>      
-                    <td>Téléphone : <h:outputText style="color: #1E90FF;" value="#{tend.phone}" /></td>
+
+                    <fieldset>
+                        <h:outputText style="font-size: x-large; padding-right: 20px" 
+                                      value="#{tend.login}" />
+                        (<h:outputText value="#{tend.firstname}" style="padding-right: 5px"/>
+                        <h:outputText value="#{tend.lastname}" />)
+                        <h:button class="headerCommandButton" value="Voir #{tend.login}" 
+                                  outcome="/views/tendererSearch?id=#{tend.id}" />
+                    </fieldset>
+
                 </tr>
             </c:forEach>
-            </table>
-       
+        </table>
+
     </h:body>
-    
-     <!-- FOOTER -->
-     <ui:include src="/includes/footer.xhtml" />
-    
+
+    <!-- FOOTER -->
+    <ui:include src="/includes/footer.xhtml" />
+
 </html>

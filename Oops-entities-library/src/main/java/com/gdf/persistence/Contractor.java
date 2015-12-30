@@ -65,6 +65,27 @@ public class Contractor implements Serializable {
   
     @OneToMany(mappedBy = "contractor",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private List<Review> reviews = new ArrayList<>();
+
+    public Contractor(){
+    }
+    
+    public Contractor(String login, String email, String password, String socialReason, String legalForm, String description, String phone, String logo, String representatorFirstname, String representatorLastname, int turnover, int nbEmployees, int rating, Address address, LegalInformation legalInformation) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.socialReason = socialReason;
+        this.legalForm = legalForm;
+        this.description = description;
+        this.phone = phone;
+        this.logo = logo;
+        this.representatorFirstname = representatorFirstname;
+        this.representatorLastname = representatorLastname;
+        this.turnover = turnover;
+        this.nbEmployees = nbEmployees;
+        this.rating = rating;
+        this.address = address;
+        this.legalInformation = legalInformation;
+    }
     
     public String getPassword() {
         return password;
@@ -147,7 +168,7 @@ public class Contractor implements Serializable {
     }
 
     public int getRating() {
-        return this.calculRate();
+        return rating;//this.calculRate();
     }
 
     public void setRating(int rating) {

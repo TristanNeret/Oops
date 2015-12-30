@@ -52,7 +52,21 @@ public class Tenderer implements Serializable {
     private List<Notification> notifications = new ArrayList<>();
     
     public static final String userCategory = "TENDERER";
-
+    
+    public Tenderer() {
+    }
+    
+    public Tenderer(String login, String email, String password, String firstname, String lastname, String avatar, String phone, Date registrationDate) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.avatar = avatar;
+        this.phone = phone;
+        this.registrationDate = registrationDate;
+    }
+    
     public String getLogin() {
         return login;
     }
