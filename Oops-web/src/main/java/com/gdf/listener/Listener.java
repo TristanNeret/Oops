@@ -34,7 +34,6 @@ public class Listener implements ServletContextListener {
     @EJB
     private AdministratorBean adminBean;
     
-    
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 
@@ -124,16 +123,10 @@ public class Listener implements ServletContextListener {
         registrationBean.register(moderator);
         
         evalBean.addReview(tenderer, contractor, review);
-        
-        
-        Category c = new Category();
-        c.setId((long)33);
-        c.setName("Service");
-        adminBean.addCategory(c);
-       */ 
-        
+        */
+
     }
-    
+
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         
