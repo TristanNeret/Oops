@@ -99,6 +99,7 @@ public class EvaluationBeanImpl implements EvaluationBean {
             // Add the new Notification to others entities
             attachedTenderer.addNotification(newNotification);
             attachedReview.addNotification(newNotification);
+            em.merge(attachedReview);
             
         }
         em.merge(review);
