@@ -48,5 +48,5 @@ public interface EvaluationBean {
      * @param review to update with contractor's answser
      * @param contractorsAnswer the contractor's answer
      */
-    public void updateContractorsAnswer(Review review, String contractorsAnswer); 
+    public void updateContractorsAnswer(Review review, String contractorsAnswer);
 }
