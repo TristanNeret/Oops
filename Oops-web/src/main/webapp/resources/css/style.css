@@ -119,13 +119,17 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     font-size: 12px;
 }
 
-.hidden {
-  display: none; 
+.sortBar{
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px #1E90FF solid;
+    background-color: #1E90FF;
+    color: white;
+    /*arrondir les coins en haut à gauche et en bas à droite*/
+    -moz-border-radius:7px;
+    -webkit-border-radius:7px;
+    border-radius:7px;   
 }
-
-.display {
-    display: inline;
-} 
 
 /* Contractor Information */
 
