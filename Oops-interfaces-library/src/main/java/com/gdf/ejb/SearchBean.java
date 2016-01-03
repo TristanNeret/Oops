@@ -125,9 +125,10 @@ public interface SearchBean {
      * @param rating the rating of the contractor 
      * @param country the country of the contractor
      * @param category the category of service given by the contractor
+     * @param order the order used to display the results
      * @return the list of contractors
      */
-    public List<Contractor> findContractors(String keyWord,int rating, String country, String category);
+    public List<Contractor> findContractors(String keyWord,int rating, String country, String category, String order);
     
     /**
      * Get all countries
