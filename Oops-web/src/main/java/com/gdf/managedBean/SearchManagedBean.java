@@ -199,7 +199,7 @@ public class SearchManagedBean implements Serializable {
         }
         else
         {
-            lc = sb.findContractors(keyWord,rating,country,category, order);            
+            lc = sb.findContractors(keyWord,rating,country,category, order);  
             return "/views/listContractor.xhtml?faces-redirect=true";       
         }        
     }

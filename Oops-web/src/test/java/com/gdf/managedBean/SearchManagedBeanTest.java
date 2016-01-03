@@ -28,7 +28,9 @@ public class SearchManagedBeanTest {
             queryInputTextXpathExp = By.xpath("//input[contains(@id, 'queryInputText')]"),
             ratingListXpathExp = By.xpath("//select[contains(@id, 'listRating')]"),
             countryListXpathExp = By.xpath("//select[contains(@id, 'listCountries')]"),
-            categoryListXpathExp = By.xpath("//select[contains(@id, 'listCategories')]");
+            categoryListXpathExp = By.xpath("//select[contains(@id, 'listCategories')]"),
+            sortListXpathExp = By.xpath("//select[contains(@id, 'listOrder')]");
+           
 
     private WebDriver driver;
     private String baseUrl;
@@ -57,7 +59,7 @@ public class SearchManagedBeanTest {
      * TESTS FOR TENDERER SEARCH ---------------------------------------------------------------------------------------------
      */
     private static final String TENDERER_QUERY = "mich", TENDERER_EXPECTED = "Michmich", TENDERER_EXPECTED_2 = "Dede";
-
+/*
     @Test
     public void testTendererSearchWithoutQuery() {
         driver.get(baseUrl);
@@ -100,7 +102,7 @@ public class SearchManagedBeanTest {
     /*
      * TESTS FOR CONTRACTOR SEARCH ---------------------------------------------------------------------------------------------
      */
-    private static final String CONTRACTOR_QUERY = "IT Contractor", CONTRACTOR_EXPECTED = "IT Contractor Inc.",
+  /*  private static final String CONTRACTOR_QUERY = "IT Contractor", CONTRACTOR_EXPECTED = "IT Contractor Inc.",
             CONTRACTOR_EXPECTED_2 = "FranceBTP Sarl",
             RATING_0 = ">=4", RATING_1 = ">=3", RATING_2 = ">=2", // find 0, 1, and 2 contractor(s)
             COUNTRY_1 = "USA", COUNTRY_2 = "France",
@@ -513,4 +515,35 @@ public class SearchManagedBeanTest {
 
         driver.findElement(By.id("noResultOutputText"));
     }
+    */
+    
+    @Test 
+    public void testContractorSortByInAlphabeticalOrder(){
+        driver.get(baseUrl); 
+        driver.findElement(queryInputTextXpathExp).clear();
+        new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+        new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+        new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+        new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+        driver.findElement(searchButtonXpathExp).click();     
+        new Select(driver.findElement(sortListXpathExp)).selectByVisibleText("Nom");
+        driver.findElement(By.xpath("//fieldset[contains(@id,'listContractor')][1]/span[contains(text(), 'FranceBTP Sarl')]"));   
+    }
+    
+    @Test 
+    public void testContractorSortByRating(){
+        driver.get(baseUrl); 
+        driver.findElement(queryInputTextXpathExp).clear();
+        new Select(driver.findElement(typeListXpathExp)).selectByVisibleText("Prestataire");
+        new Select(driver.findElement(ratingListXpathExp)).selectByIndex(0);
+        new Select(driver.findElement(countryListXpathExp)).selectByIndex(0);
+        new Select(driver.findElement(categoryListXpathExp)).selectByIndex(0);
+        driver.findElement(searchButtonXpathExp).click();     
+        new Select(driver.findElement(sortListXpathExp)).selectByVisibleText("Note");
+        driver.findElement(By.xpath("//fieldset[contains(@id,'listContractor')][1]/span[contains(text(), 'IT Contractor Inc')]"));   
+    }
+    
+    
+    
+  
 }

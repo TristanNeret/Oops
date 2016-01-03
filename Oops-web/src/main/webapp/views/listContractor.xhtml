@@ -33,21 +33,22 @@ and open the template in the editor.
                       rendered="#{empty searchManagedBean.lc}"/>
         </div>
         
-        <fieldset rendered="#{not empty searchManagedBean.lc}">
+        
+        <h:panelGroup rendered ="#{searchManagedBean.lc.size() ge 2}">
             <h:form>
-            <h:outputText value="Trier par : " />
-            <h:selectOneMenu id ="listOrder" value="#{searchManagedBean.order}" onchange="submit()"
-                valueChangeListener="#{searchManagedBean.valueChangeMethod}">
-                <f:selectItems value="#{searchManagedBean.orders}" />
-            </h:selectOneMenu>
+                <h:outputText value="Trier par : " />
+                <h:selectOneMenu id ="listOrder" value="#{searchManagedBean.order}" onchange="submit()"
+                    valueChangeListener="#{searchManagedBean.valueChangeMethod}">
+                    <f:selectItems value="#{searchManagedBean.orders}" />
+                </h:selectOneMenu>
             </h:form>
-        </fieldset>
+        </h:panelGroup>
         
         <table style="margin:auto;">
             <c:forEach items="#{searchManagedBean.lc}" var="contractor" rendered="#{not empty searchManagedBean.lc}">
                 <tr>
 
-                    <fieldset> 
+                    <fieldset id="listContractor"> 
                         <h:graphicImage value="#{contractor.logo}" height="75px" style="float: left;"/>
                         <h:outputText style="font-size: x-large; padding-right: 25px;" 
                                       value="#{contractor.socialReason}"/> 
