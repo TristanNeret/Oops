@@ -15,23 +15,24 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
- *
+ * ContractorsReviewBean
  * @author chris
  */
 @Named(value = "contractorsReviewBean")
 @ViewScoped
-public class ContractorsReviewBean implements Serializable{
+public class ContractorsReviewBean implements Serializable {
     
     @EJB
     private EvaluationBean eb;
     @EJB
     private SearchBean searchBean;
     
-    private Contractor contractor;
     private List<Review> reviews;
     private Map<Long, String> answersReview;
 
@@ -44,30 +45,63 @@ public class ContractorsReviewBean implements Serializable{
     
     @PostConstruct
     public void initBean() {
-        //DELETE AND MODIFY WHEN WE WILL HAVE A CURRENT CONTRACTROR CONNECTED
-        this.contractor = searchBean.searchContractorById(1);
-        this.reviews = contractor.getReviews();
-        this.answersReview = new HashMap<>();
-        for(Review r : reviews){
-            answersReview.put(r.getId(), r.getContractorAnswer());
+        
+        // Temporary used to connect a Contractor
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", "1");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Contractor.userCategory);
+        
+        // Check if a user is connected
+        String userID = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
+      
+        if (userID != null && !userID.isEmpty()) {
+
+            // DELETE AND MODIFY WHEN WE WILL HAVE A CURRENT CONTRACTROR CONNECTED
+            this.reviews = this.searchBean.searchAcceptedReviews(Long.parseLong(userID));
+            this.answersReview = new HashMap<>();
+            for(Review r : this.reviews) {
+                this.answersReview.put(r.getId(), r.getContractorAnswer());
+            }
+        
         }
+        
     }
     
+    /**
+     * Add or update the Review comment
+     * @param review the Review on which the comment is added or updated
+     */
     public void updateReviewsAnswer(Review review){
-        //System.out.println(this.answersReview.get(review.getId()));
-        eb.updateContractorsAnswer(review, this.answersReview.get(review.getId()));
+        
+        this.eb.updateContractorsAnswer(review, this.answersReview.get(review.getId()));
+        
+        this.initBean();
+        
+        // Notify the Contractor that the Review comment is added or updated
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre réponse a été modifiée avec succès !", ""));
+    
     }
     
+    /**
+     * Remove the Review Contractor Comment
+     * @param review the Review on which the comment is deleted
+     */
     public void deleteReviewsAnswer(Review review){
-        eb.updateContractorsAnswer(review, null);
+        
+        this.eb.deleteContractorsAnswer(review);
+        
+        this.initBean();
+        
+        // Notify the Contractor that the Review comment is deleted
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre réponse a été supprimée avec succès !", ""));
+        
     }
-
-    public Contractor getContractor() {
-        return contractor;
-    }
-
-    public void setContractor(Contractor contractor) {
-        this.contractor = contractor;
+    
+    /**
+     * Test if exist reviews for the register Contractor
+     * @return True if reviews exit, or False
+     */
+    public boolean areReviews() {
+        return !this.reviews.isEmpty();
     }
 
     public List<Review> getReviews() {

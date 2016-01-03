@@ -18,7 +18,6 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 
 /**
@@ -121,12 +120,12 @@ public class ManageReviewBean implements Serializable {
             
                 // Update the waiting Reviews list
                 this.updateWaitingReviews();
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Avis traité avec succès !", ""));
+                FacesContext.getCurrentInstance().addMessage("growlReviewContractor", new FacesMessage("Avis traité avec succès !", ""));
                 
             } else {
                 
                 // Moderator must take a decision
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Vous devez prendre une décision !", ""));
+                FacesContext.getCurrentInstance().addMessage("growlReviewContractor", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Vous devez prendre une décision !", ""));
                 
             } 
         

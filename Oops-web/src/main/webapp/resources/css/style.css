@@ -209,6 +209,85 @@ form#reviewForm {
     margin-top: 20px;
 }
 
+/* Contractor manager */
+
+.panelReviewContractor {
+    width: 100%; 
+    float: left;
+    margin-bottom: 15px;
+}
+
+.starsReviewContractor {
+    float: left; 
+    margin-left: 20px;
+}
+
+.leftPanelContractor {
+    width: 45%; 
+    float: left;
+    height: 140px;
+    margin-top: 40px;
+    border-bottom-width: 3px;
+    border-bottom-color: darkgray;
+    border-bottom-style: ridge;
+}
+
+.rightPanelContractor {
+    width: 50%; 
+    float: left;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    height: 180px;
+}
+
+.divContractorReviewComment {
+    width: 18%; 
+    height: 100%; 
+    float: right;
+}
+
+form .textAreaContractorReviewComment {
+    width: 80%; 
+    height: 135px; 
+    float: left;
+}
+
+.divTitleReviewComment {
+    height: 40px; 
+    font-size: 22px;
+}
+
+.divRatingContractorReview {
+    width:100%; 
+    height: 30px;
+}
+
+.divTendererContractorReview {
+    margin-top: 10px; 
+    float: bottom;
+}
+
+.labelPresentationContractorReview {
+    font-size: 20px; 
+    color: #336c6c; 
+    float: left;
+}
+
+form .deleteButtonContractorReview {
+    width: 100%; 
+    height: 50px; 
+    background-color: red !important; 
+    color: #f6f6f6 !important;
+}
+
+form .updateButtonContractorReview {
+    width: 100%; 
+    height: 95px; 
+    float: top; 
+    background-color: #336c6c !important; 
+    color: #66cccc !important;
+}
+
 /* Moderator */
 
 .titlePanelReviewAdmin {
