@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <script type="text/javascript">
+        // Update CSS style on select choices
+        function choiceSelected(item) {
+            var values = $(item).attr("id").split(":");
+            var before = values[0].concat(":",values[1],":");
+            var buttonValidateId = before.concat("buttonValidate");
+            var buttonModifyId = before.concat("buttonModify");
+            var buttonRejectId = before.concat("buttonReject");
+            var itemId = values[2];
+            switch(itemId) {
+                case 'buttonValidate':
+                    document.getElementById($(item).attr("id")).setAttribute("class", "commandButtonChoiceSelected");
+                    document.getElementById(buttonModifyId).setAttribute("class", "commandButtonChoice");
+                    document.getElementById(buttonRejectId).setAttribute("class", "commandButtonChoice");
+                    break;
+                case 'buttonModify':
+                    document.getElementById(buttonValidateId).setAttribute("class", "commandButtonChoice");
+                    document.getElementById($(item).attr("id")).setAttribute("class", "commandButtonChoiceSelected");
+                    document.getElementById(buttonRejectId).setAttribute("class", "commandButtonChoice");
+                    break;
+                case 'buttonReject':
+                    document.getElementById(buttonValidateId).setAttribute("class", "commandButtonChoice");
+                    document.getElementById(buttonModifyId).setAttribute("class", "commandButtonChoice");
+                    document.getElementById($(item).attr("id")).setAttribute("class", "commandButtonChoiceSelected");
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        }
+    </script>
+    
+    <div class="divContent">
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis en attente de traitement :" rendered="#{!manageReviewBean.areReviews}" />
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Il n'y a aucun avis en attente de traitement." rendered="#{manageReviewBean.areReviews}" /> 
+        <p:panel>
+            <c:forEach items="#{manageReviewBean.reviewList}" var="review" >
+                <div class="panelReviewAdmin">
+                    <!-- Review informations -->
+                    <div class="leftPanelAdmin">
+                        <div class="divImageReviewAdmin">
+                            <h:graphicImage value="#{review.contractor.logo}" width="40px"/>
+                        </div>
+                        <div class="divDescriptionReviewAdmin">
+                            <h:outputLabel styleClass="labelTitleReviewAdmin" value="#{review.contractor.socialReason}" /> 
+                            <br/><br/>
+                            <h:outputLabel value="#{review.appreciation}" />
+                            <br/>
+                            <h:outputLabel value="#{review.content}" />
+                            <br/><br/>
+                            <div>
+                                <h:outputLabel styleClass="labelDateReviewAdmin" value="Le #{review.date}" />
+                                <p:rating id="stars" styleClass="starsReviewAdmin" value="#{review.rating}" stars="5" readonly="true"/>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Moderator actions -->
+                    <div class="rightPanelTitleAdmin">
+                        <div class="rightPanelTitleLeftAdmin">
+                            <h:outputLabel value="Décision" />
+                        </div>
+                        <div class="rightPanelTitleRightAdmin">
+                            <h:outputLabel value="Description" />
+                        </div>
+                    </div>
+                    <div class="rightPanelAdmin">
+                        <div class="buttonsRightPanelAdmin">
+                            <h:form>
+                                <div class="divButtonsRightPanelAdmin">
+                                    <div class="divButtonsLeftRightPanelAdmin">
+                                        <h:commandButton id="buttonModify" style="height: 65px; width: 100%;"  value="Modifier" styleClass="commandButtonChoice" onclick="choiceSelected(this);" action="#{manageReviewBean.modifyReview(review.id)}" >
+                                            <f:ajax execute="formDecision" render="@none" />
+                                        </h:commandButton>
+                                        <h:commandButton id="buttonReject" style="height: 65px; width: 100%; margin-top: 10px;" value="Rejeter" styleClass="commandButtonChoice" onclick="choiceSelected(this);" action="#{manageReviewBean.rejectReview(review.id)}" >
+                                            <f:ajax execute="formDecision" render="@none" />
+                                        </h:commandButton>
+                                    </div>
+                                    <h:commandButton id="buttonValidate" style="float: right; height: 140px; width: 45%;" value="Valider" styleClass="commandButtonChoice" onclick="choiceSelected(this);" action="#{manageReviewBean.validateReview(review.id)}" >
+                                        <f:ajax execute="formDecision" render="@none" />
+                                    </h:commandButton>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="inputLeftPanelAdmin" >
+                            <h:form>
+                                <p:growl id="growlReviewAdmin" sticky="false" showDetail="false" life="3000" /> 
+                                <p:inputTextarea id="reviewContent" styleClass="inputReviewAdmin" rows="6" cols="20" value="#{manageReviewBean.contentReview[review.id]}" required="false" label="Facultatif" />
+                                <h:commandButton value="Envoyer" styleClass="commandButtonSaveAdmin" action="#{manageReviewBean.manageReview(review.id)}" />
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </p:panel>
+    </div>
+    
+</ui:composition>

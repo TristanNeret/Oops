@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -102,6 +103,27 @@ public class SearchBeanImpl implements SearchBean {
             return (Tenderer) query.getSingleResult();
             
         }
+        
+    }
+    
+    // REVIEW
+
+    @Override
+    public List<Review> searchWaitingReviews() {
+       
+        Query query = em.createNamedQuery("Review.findWaitingReviews");
+        
+        return query.getResultList();
+        
+    }
+
+    @Override
+    public List<Review> searchAcceptedReviews(long id) {
+       
+        Query query = em.createNamedQuery("Review.findAcceptedReviews");
+        query.setParameter(1, id);
+        
+        return query.getResultList();
         
     }
     

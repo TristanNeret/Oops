@@ -65,7 +65,42 @@ public class Notification implements Serializable {
         this.contractor = contractor;
         this.category = notificationType;
         this.state = NotificationState.NOT_READ;
+        this.date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         
+    }
+    
+    /**
+     * Create a new Notification with parameters
+     * @param review the Review concerned by the Notification
+     * @param tenderer the Tenderer concerned by the Notification
+     * @param moderator the Moderator concerned by the Notification
+     * @param notificationType type of the new Notification
+     */
+    public Notification(Review review, Tenderer tenderer, Moderator moderator, NotificationType notificationType) {
+        
+        this.review = review;
+        this.tenderer = tenderer;
+        this.moderator = moderator;
+        this.category = notificationType;
+        this.state = NotificationState.NOT_READ;
+        this.date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        
+    }
+    
+    /**
+     * Create a new Notification with parameters
+     * @param review the Review concerned by the Notification
+     * @param contractor the Contrcator concerned by the Notification
+     * @param moderator the Moderator concerned by the Notification
+     * @param notificationType type of the new Notification
+     */
+    public Notification(Review review, Contractor contractor, Moderator moderator, NotificationType notificationType) {
+        
+        this.review = review;
+        this.contractor = contractor;
+        this.moderator = moderator;
+        this.category = notificationType;
+        this.state = NotificationState.NOT_READ;
         this.date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         
     }

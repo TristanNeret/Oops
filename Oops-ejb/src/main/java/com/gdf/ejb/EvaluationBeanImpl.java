@@ -35,7 +35,9 @@ public class EvaluationBeanImpl implements EvaluationBean {
 
         Tenderer attachedTenderer = em.merge(tenderer);
         Contractor attachedContractor = em.merge(contractor);
-
+        
+        em.persist(review);
+        
         attachedTenderer.addReview(review);
         attachedContractor.addReview(review);
 
@@ -50,6 +52,7 @@ public class EvaluationBeanImpl implements EvaluationBean {
 
         // Create and persist the new Review
         Review newReview = new Review(reviewAppreciation, reviewContent, reviewRate);
+        newReview.setReviewState(ReviewState.DELIVERED);
         em.persist(newReview);
 
         // Add the new Review to others entities
@@ -83,9 +86,11 @@ public class EvaluationBeanImpl implements EvaluationBean {
 
     @Override
     public void updateContractorsAnswer(Review review, String contractorsAnswer) {
-        review.setContractorAnswer(contractorsAnswer);
 
-        if (!contractorsAnswer.equals("") || contractorsAnswer != null) {
+        if (contractorsAnswer != null && !contractorsAnswer.equals("")) {
+            
+            review.setContractorAnswer(contractorsAnswer);
+            
             // Get attached entities concerned
             Tenderer attachedTenderer = em.merge(review.getTenderer());
             Contractor attachedContractor = em.merge(review.getContractor());
@@ -101,7 +106,18 @@ public class EvaluationBeanImpl implements EvaluationBean {
             attachedReview.addNotification(newNotification);
             em.merge(attachedReview);
             
+            em.merge(review);
+            
         }
-        em.merge(review);
+        
     }
+
+    @Override
+    public void deleteContractorsAnswer(Review review) {
+       
+        review.setContractorAnswer(null);
+        em.merge(review);
+        
+    }
+    
 }

@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Tenderer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -51,6 +52,13 @@ public class RegistrationBeanImpl implements RegistrationBean {
         
         em.persist(t);
 
+    }
+
+    @Override
+    public void register(Moderator m) {
+        
+        em.persist(m);
+        
     }
 
 }
