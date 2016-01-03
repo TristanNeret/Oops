@@ -66,7 +66,7 @@ public class SearchBeanImpl implements SearchBean {
      * @return the list of contractors
      */
     @Override
-    public List<Contractor> findContractors(String keyWord, int rating, String country, String category ) {
+    public List<Contractor> findContractors(String keyWord, int rating, String country, String category, String order) {
         
         boolean first = true;        
         String requete;
@@ -93,6 +93,15 @@ public class SearchBeanImpl implements SearchBean {
             }    
             requete = requete + " c.address.country = :country " ;
         } 
+        
+        switch(order){
+            case "ALPHABETICAL" :
+                requete += " ORDER BY c.socialReason";
+                break;
+            case "RATINGS" :
+                requete += " ORDER BY c.rating DESC";
+                break;
+        }
         
         TypedQuery<Contractor> query;
         query = em.createQuery(requete,Contractor.class);

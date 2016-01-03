@@ -9,11 +9,17 @@ import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
+import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 /**
@@ -74,7 +80,17 @@ public class SearchManagedBean implements Serializable {
      */
     @EJB
     private SearchBean sb;
+
+    private Map<String,String> orders;
     
+    private String order = "ALPHABETICAL"; // default value
+    
+    @PostConstruct
+    public void setup(){
+        orders = new LinkedHashMap<>();
+        orders.put("Nom", "ALPHABETICAL"); // label, value
+        orders.put("Note", "RATINGS");
+    }
     
     public String getKeyWord() {
         return keyWord;
@@ -120,7 +136,6 @@ public class SearchManagedBean implements Serializable {
         
         List<String> listC = sb.getAllCountry();
         List<SelectItem> li = new ArrayList<>();
-        li.add(new SelectItem(""));
         
         for(String country : listC)
                 li.add(new SelectItem(country)); 
@@ -136,7 +151,6 @@ public class SearchManagedBean implements Serializable {
         
         List<String> listC = sb.getAllCategory();   
         List<SelectItem> li = new ArrayList<>();
-        li.add(new SelectItem(""));
         
         for(String category : listC)
                 li.add(new SelectItem(category)); 
@@ -163,13 +177,21 @@ public class SearchManagedBean implements Serializable {
     public void setLt(List<Tenderer> ltd) {
         this.ltd = ltd;
     }
-    
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
+
     /**
      * Starts the search given all the criterias
      * @return the view where the results will be displayed
      */
     public String search(){
-        
+  
         if(type.equals("tend"))
         {
             ltd =  sb.findTenderers(keyWord);
@@ -177,8 +199,21 @@ public class SearchManagedBean implements Serializable {
         }
         else
         {
-            lc = sb.findContractors(keyWord,rating,country,category);            
+            lc = sb.findContractors(keyWord,rating,country,category, order);            
             return "/views/listContractor.xhtml?faces-redirect=true";       
         }        
+    }
+    
+    public void valueChangeMethod(ValueChangeEvent e){
+        order = e.getNewValue().toString();
+	search();
+    }
+
+    public Map<String, String> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Map<String, String> orders) {
+        this.orders = orders;
     }
 }
