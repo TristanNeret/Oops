@@ -59,7 +59,7 @@ public class SearchManagedBeanTest {
      * TESTS FOR TENDERER SEARCH ---------------------------------------------------------------------------------------------
      */
     private static final String TENDERER_QUERY = "mich", TENDERER_EXPECTED = "Michmich", TENDERER_EXPECTED_2 = "Dede";
-/*
+
     @Test
     public void testTendererSearchWithoutQuery() {
         driver.get(baseUrl);
@@ -102,7 +102,7 @@ public class SearchManagedBeanTest {
     /*
      * TESTS FOR CONTRACTOR SEARCH ---------------------------------------------------------------------------------------------
      */
-  /*  private static final String CONTRACTOR_QUERY = "IT Contractor", CONTRACTOR_EXPECTED = "IT Contractor Inc.",
+    private static final String CONTRACTOR_QUERY = "IT Contractor", CONTRACTOR_EXPECTED = "IT Contractor Inc.",
             CONTRACTOR_EXPECTED_2 = "FranceBTP Sarl",
             RATING_0 = ">=4", RATING_1 = ">=3", RATING_2 = ">=2", // find 0, 1, and 2 contractor(s)
             COUNTRY_1 = "USA", COUNTRY_2 = "France",
@@ -515,7 +515,7 @@ public class SearchManagedBeanTest {
 
         driver.findElement(By.id("noResultOutputText"));
     }
-    */
+    
     
     @Test 
     public void testContractorSortByInAlphabeticalOrder(){
