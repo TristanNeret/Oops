@@ -66,6 +66,6 @@ public class ContractorInformationTest {
     public void testGoodid(){
         driver.get(baseUrl+"?id=4");        
         driver.findElement(By.xpath("//h2[1][contains(text(), 'Description')]"));      
+
     }
-   
 }

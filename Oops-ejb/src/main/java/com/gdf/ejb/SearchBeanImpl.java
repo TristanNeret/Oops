@@ -18,7 +18,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-
 /**
  * Class supplying searching methods 
  * @author nicolas
@@ -96,49 +95,6 @@ public class SearchBeanImpl implements SearchBean {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-
-    
-    // TENDERER
-    @Override
-    public Tenderer searchTendererByLogin(String login) {
-        
-        Query query = em.createNamedQuery("Tenderer.findByLogin");
-        query.setParameter(1, login);
-        if (query.getResultList().isEmpty()) {
-            
-            return null;
-            
-        } else {
-            
-            return (Tenderer) query.getSingleResult();
-            
-        }
-        
-    }
-    
-    // REVIEW
-
-    @Override
-    public List<Review> searchWaitingReviews() {
-       
-        Query query = em.createNamedQuery("Review.findWaitingReviews");
-        
-        return query.getResultList();
-        
-    }
-
-    @Override
-    public List<Review> searchAcceptedReviews(long id) {
-       
-        Query query = em.createNamedQuery("Review.findAcceptedReviews");
-        query.setParameter(1, id);
-        
-        return query.getResultList();
-        
-    }
-    
-
-
     /**
      * Search contractors by several criteria 
      * @param keyWord a keyword which could be present on the contractor informations
@@ -147,7 +103,6 @@ public class SearchBeanImpl implements SearchBean {
      * @param category the category of service given by the contractor
      * @return the list of contractors
      */
-
     @Override
     public List<Contractor> findContractors(String keyWord, int rating, String country, String category, String order) {
         
@@ -288,10 +243,42 @@ public class SearchBeanImpl implements SearchBean {
         return lc;   
     }
 
+    // TENDERER
     @Override
-    public List<Contractor> searchContractorByKeyWord(String keyWord) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Tenderer searchTendererByLogin(String login) {
+        
+        Query query = em.createNamedQuery("Tenderer.findByLogin");
+        query.setParameter(1, login);
+        if (query.getResultList().isEmpty()) {
+            
+            return null;
+            
+        } else {
+            
+            return (Tenderer) query.getSingleResult();
+            
+        }
+        
+    }
+    
+    // REVIEW
+    
+    @Override
+    public List<Review> searchWaitingReviews() {
+       
+        Query query = em.createNamedQuery("Review.findWaitingReviews");
+        
+        return query.getResultList();
+        
     }
 
- 
+    @Override
+    public List<Review> searchAcceptedReviews(long id) {
+       
+        Query query = em.createNamedQuery("Review.findAcceptedReviews");
+        query.setParameter(1, id);
+        
+        return query.getResultList();
+        
+    } 
 }

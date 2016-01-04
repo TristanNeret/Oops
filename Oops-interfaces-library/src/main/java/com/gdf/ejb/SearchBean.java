@@ -77,24 +77,19 @@ public interface SearchBean {
      */
     public List<Review> searchAcceptedReviews(long id);
     
-
-    public List<Contractor> searchContractorByKeyWord(String keyWord);
-    
- 
     /**
      * Search tenderers by keyword
      * @param keyWord a keyword which could be present on the tenderer informations
      * @return the tenderer matching with the keyword or a list of all tenderers if keyword is empty
      */
     public List<Tenderer> findTenderers(String keyWord);
-
  
     /**
      * Search tenderers by keyword
      * @param keyWord a keyword which could be present on the tenderer informations
      * @return the list of tenderers
      */
-    public List<Tenderer> searchTendererByKeyWord(String keyWord); 
+    public List<Tenderer> searchTendererByKeyWord(String keyWord);
     
     /**
      * Get all the tenderers
@@ -123,7 +118,5 @@ public interface SearchBean {
      * Get all categories
      * @return all categories
      */
-    public List<String> getAllCategory();
-      
-
+    public List<String> getAllCategory();  
 }

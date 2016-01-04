@@ -27,7 +27,6 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Contractor.findBySiren", query = "SELECT c FROM Contractor c WHERE c.legalInformation.siren=?1"),
     @NamedQuery(name = "Contractor.findAll",
             query = "select c from Contractor c order by c.email"),
     @NamedQuery(name = "Contractor.findByLogin",
@@ -170,7 +169,7 @@ public class Contractor implements Serializable {
     }
 
     public int getRating() {
-        return rating;//this.calculRate();
+        return rating;
     }
 
     public void setRating(int rating) {

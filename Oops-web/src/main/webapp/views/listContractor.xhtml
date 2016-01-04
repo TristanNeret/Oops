@@ -10,7 +10,6 @@ and open the template in the editor.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:o="http://omnifaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
@@ -29,21 +28,23 @@ and open the template in the editor.
         <ui:include src="/includes/search.xhtml" />
 
         <div style="width : 50%; margin : auto; ">
-        <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de recherche !" 
-                      rendered="#{empty searchManagedBean.lc}"/>
+            <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de recherche !" 
+                          rendered="#{empty searchManagedBean.lc}"/>
         </div>
-        
-        
+
+
         <h:panelGroup rendered ="#{searchManagedBean.lc.size() ge 2}">
-            <h:form>
-                <h:outputText value="Trier par : " />
-                <h:selectOneMenu id ="listOrder" value="#{searchManagedBean.order}" onchange="submit()"
-                    valueChangeListener="#{searchManagedBean.valueChangeMethod}">
-                    <f:selectItems value="#{searchManagedBean.orders}" />
-                </h:selectOneMenu>
-            </h:form>
+            <fieldset>
+                <h:form>
+                    <h:outputText value="Trier par : " />
+                    <h:selectOneMenu id ="listOrder" value="#{searchManagedBean.order}" onchange="submit()"
+                                     valueChangeListener="#{searchManagedBean.valueChangeMethod}">
+                        <f:selectItems value="#{searchManagedBean.orders}" />
+                    </h:selectOneMenu>
+                </h:form>
+            </fieldset>
         </h:panelGroup>
-        
+
         <table style="margin:auto;">
             <c:forEach items="#{searchManagedBean.lc}" var="contractor" rendered="#{not empty searchManagedBean.lc}">
                 <tr>
@@ -67,7 +68,7 @@ and open the template in the editor.
                         </div>
                     </fieldset> 
                     <h:outputText style="padding-left: 10px" value="#{contractor.description}" /> 
-                    
+
                 </tr>
             </c:forEach>
         </table>
