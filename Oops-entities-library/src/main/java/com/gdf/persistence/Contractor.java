@@ -168,9 +168,7 @@ public class Contractor implements Serializable {
     }
 
     public int getRating() {
-        return rating;//this.calculRate();
-        this.rating = this.calculRate();
-        return this.rating;
+        return rating;
     }
 
     public void setRating(int rating) {

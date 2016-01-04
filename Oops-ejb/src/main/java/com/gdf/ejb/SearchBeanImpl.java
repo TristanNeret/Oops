@@ -5,8 +5,8 @@
  */
 package com.gdf.ejb;
 
-import com.gdf.persistence.Address;
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
 import java.util.Iterator;
@@ -14,6 +14,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -241,5 +242,43 @@ public class SearchBeanImpl implements SearchBean {
         return lc;   
     }
 
-  
+    // TENDERER
+    
+    @Override
+    public Tenderer searchTendererByLogin(String login) {
+        
+        Query query = em.createNamedQuery("Tenderer.findByLogin");
+        query.setParameter(1, login);
+        if (query.getResultList().isEmpty()) {
+            
+            return null;
+            
+        } else {
+            
+            return (Tenderer) query.getSingleResult();
+            
+        }
+        
+    }
+    
+    // REVIEW
+    
+    @Override
+    public List<Review> searchWaitingReviews() {
+       
+        Query query = em.createNamedQuery("Review.findWaitingReviews");
+        
+        return query.getResultList();
+        
+    }
+
+    @Override
+    public List<Review> searchAcceptedReviews(long id) {
+       
+        Query query = em.createNamedQuery("Review.findAcceptedReviews");
+        query.setParameter(1, id);
+        
+        return query.getResultList();
+        
+    } 
 }

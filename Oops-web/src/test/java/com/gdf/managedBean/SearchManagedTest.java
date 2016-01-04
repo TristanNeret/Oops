@@ -21,7 +21,7 @@ import org.openqa.selenium.support.ui.Select;
  *
  * @author aziz
  */
-public class SearchManagedBeanTest {
+public class SearchManagedTest {
 
     private final By searchButtonXpathExp = By.xpath("//input[contains(@id, 'searchButton')]"),
             typeListXpathExp = By.xpath("//select[contains(@id, 'listType')]"),
@@ -108,7 +108,7 @@ public class SearchManagedBeanTest {
             COUNTRY_1 = "USA", COUNTRY_2 = "France",
             CATEGORY_1 = "Informatique", CATEGORY_2 = "Batiment";
 
-    @Test
+    //@Test
     public void testContractorSearchWithoutQuery() {
         driver.get(baseUrl);
 

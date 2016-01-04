@@ -55,7 +55,7 @@ public class Tenderer implements Serializable {
     public Tenderer() {
     }
     
-    public Tenderer(String login, String email, String password, String firstname, String lastname, String avatar, String phone, Date registrationDate) {
+    public Tenderer(String login, String email, String password, String firstname, String lastname, String avatar, String phone, String registrationDate) {
         this.login = login;
         this.email = email;
         this.password = password;

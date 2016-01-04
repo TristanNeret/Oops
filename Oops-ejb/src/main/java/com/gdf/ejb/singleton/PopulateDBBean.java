@@ -11,7 +11,6 @@ import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
-import java.util.Calendar;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -36,18 +35,14 @@ public class PopulateDBBean {
     //@PostConstruct
     private void populateDatabase(){
         
-        Calendar calendar = Calendar.getInstance();
-        java.util.Date currentDate = calendar.getTime();
-        java.sql.Date date = new java.sql.Date(currentDate.getTime());
-        
         // TENDERERS
         
         Tenderer tenderer = new Tenderer("Michmich", "michou.dupond@gmail.com", 
-                "password", "Michel", "Dupond", "avatar", "3988937", date);
+                "password", "Michel", "Dupond", "avatar", "3988937", "01/01/2016");
         em.persist(tenderer);
         
         tenderer = new Tenderer("Dede", "dede.legrand@gmail.com", "password", "Didier", "Legrand", 
-                "avatar", "9837937", date);
+                "avatar", "9837937", "01/01/2016");
         em.persist(tenderer);
         
         // CONTRACTOR
@@ -61,14 +56,8 @@ public class PopulateDBBean {
         Service service = new Service("Developpement Informatique", "Nous developpons vos projets informatique, sous forme d'applications "
                 + "web et mobiles.", 500.0, contractor, category);
         contractor.addService(service);
-        /**try {
-            Query query = em.createNamedQuery("Category.findByName");
-            query.setParameter(1, category.getName());
-            Category c = (Category) query.getSingleResult();
-            service.setCategory(c);
-        } catch(NoResultException e){**/
+
         em.persist(category);
-        //}
         em.persist(contractor);
         
         category = new Category("Batiment", "image"); 
@@ -79,14 +68,8 @@ public class PopulateDBBean {
         new Address(3, "rue des haricots", 2648, "Paris", "France"), new LegalInformation("siret", "siren", "rcs", "assurance"));
         service = new Service("Démolition", "Nous réalisons vos travaux de démolition", 100.0, contractor, category);
         contractor.addService(service);  
-        /**try {
-            Query query = em.createNamedQuery("Category.findByName");
-            query.setParameter(1, category.getName());
-            Category c = (Category) query.getSingleResult();
-            service.setCategory(c);
-        } catch(NoResultException e){**/
+        
         em.persist(category);
-        //}
         em.persist(contractor);
     }
 }

@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
 import java.util.List;
 import javax.ejb.Remote;
@@ -26,12 +27,53 @@ public interface SearchBean {
      */
     public Contractor searchContractorById(long id);
     
+    
     /**
-     * Search contractors using an email
-     * @param email the email
-     * @return the list of contractors
+     * Search a Contractor by his login
+     * @param login the login of the Contractor
+     * @return the Contractor identified by the login if any or null if he doesn't exist
+     */
+    public Contractor searchContractorByLogin(String login);
+    
+    
+    /**
+     * Search a Contractor by his SIREN
+     * @param siren the SIREN number of the Contractor
+     * @return the Contractor ientified by the SIREN if any or null if he doesn't exist
+     */
+    public Contractor searchContractorBySiren(String siren);
+    
+    
+    /**
+     * Search a Contractor by his email
+     * @param email the email of the Contractor
+     * @return the Contractor identified by the email if any or null if doesn't exist
      */
     public List<Contractor> searchContractorByEmail(String email);
+    
+    // TENDERER
+    
+    /**
+     * Search a Tenderer by his login
+     * @param login the login of the Tenderer
+     * @return the Tenderer identified by the login if any or null if he doesn't exist
+     */
+    public Tenderer searchTendererByLogin(String login);
+    
+    // REVIEW
+    
+    /**
+     * Search waiting Reviews
+     * @return list of waiting reviews
+     */
+    public List<Review> searchWaitingReviews();
+    
+    /**
+     * Search accepted Reviews for a Contractor
+     * @param id id of the Contractor
+     * @return the accepted Reviews List of the Contractor
+     */
+    public List<Review> searchAcceptedReviews(long id);
     
     /**
      * Search tenderers by keyword
@@ -74,6 +116,5 @@ public interface SearchBean {
      * Get all categories
      * @return all categories
      */
-    public List<String> getAllCategory();
-      
+    public List<String> getAllCategory();  
 }

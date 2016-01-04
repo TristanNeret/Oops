@@ -32,8 +32,9 @@ and open the template in the editor.
                           rendered="#{empty searchManagedBean.lc}"/>
         </div>
 
-        <fieldset>
-            <h:panelGroup rendered ="#{searchManagedBean.lc.size() ge 2}">
+
+        <h:panelGroup rendered ="#{searchManagedBean.lc.size() ge 2}">
+            <fieldset>
                 <h:form>
                     <h:outputText value="Trier par : " />
                     <h:selectOneMenu id ="listOrder" value="#{searchManagedBean.order}" onchange="submit()"
@@ -41,8 +42,8 @@ and open the template in the editor.
                         <f:selectItems value="#{searchManagedBean.orders}" />
                     </h:selectOneMenu>
                 </h:form>
-            </h:panelGroup>
-        </fieldset>
+            </fieldset>
+        </h:panelGroup>
 
         <table style="margin:auto;">
             <c:forEach items="#{searchManagedBean.lc}" var="contractor" rendered="#{not empty searchManagedBean.lc}">
