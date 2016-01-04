@@ -12,13 +12,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -26,13 +27,18 @@ import javax.persistence.OneToMany;
  * @author aziz
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Review.findWaitingReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.DELIVERED"),
+    @NamedQuery(name = "Review.findAcceptedReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1")
+})
 public class Review implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String appreciation,content, contractorAnswer;
+    private String appreciation, content, contractorAnswer;
     private int rating;
     @Column(name = "REVIEW_DATE")
     private String date;
@@ -51,7 +57,7 @@ public class Review implements Serializable {
     private List<Notification> notifications = new ArrayList<>();
     
     /**
-     * Empty constructor for Review
+     * Create an instance of a Review
      */
     public Review() {
         

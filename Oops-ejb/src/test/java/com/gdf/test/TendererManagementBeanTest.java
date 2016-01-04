@@ -6,7 +6,6 @@ package com.gdf.test;
  * and open the template in the editor.
  */
 
-import com.gdf.ejb.TendererBean;
 import com.gdf.ejb.TendererManagerBean;
 import com.gdf.persistence.Tenderer;
 import java.util.ArrayList;
@@ -36,17 +35,17 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class TendererManagementBeanTest {
     
-    @Mock
-    private EntityManager mockedEntityManager;
-    private static TendererBean tendererBean;
-    private static TendererManagerBean tendererManagerBean;   
-    private static EJBContainer container;
-    
-    
-    private static Tenderer t1, t2, t3;
-    private static String login1, login2, login3;
-    private static String mail1, mail2, mail3;
-    private static String pwd1, pwd2, pwd3;
+//    @Mock
+//    private EntityManager mockedEntityManager;
+//    private static TendererBean tendererBean;
+//    private static TendererManagerBean tendererManagerBean;   
+//    private static EJBContainer container;
+//    
+//    
+//    private static Tenderer t1, t2, t3;
+//    private static String login1, login2, login3;
+//    private static String mail1, mail2, mail3;
+//    private static String pwd1, pwd2, pwd3;
     
     
     public TendererManagementBeanTest() {

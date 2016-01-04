@@ -34,7 +34,6 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
     @NamedQuery(name = "Contractor.findByEmail",
             query = "select c from Contractor c where c.email=?1"),
 })
-
 public class Contractor implements Serializable {
     
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";
@@ -50,6 +49,7 @@ public class Contractor implements Serializable {
     
     private String email, password, socialReason, legalForm, description, phone, logo, representatorFirstname, representatorLastname;
     private int turnover, nbEmployees, rating;  
+    private String registrationDate, updateDate;
    
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Service> services = new ArrayList<>();
@@ -61,7 +61,7 @@ public class Contractor implements Serializable {
     private LegalInformation legalInformation;
         
     @OneToMany
-    private List<Notification> notifications = new ArrayList<>();
+    private List<Notification> notifications;
   
     @OneToMany(mappedBy = "contractor",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private List<Review> reviews = new ArrayList<>();
@@ -169,6 +169,8 @@ public class Contractor implements Serializable {
 
     public int getRating() {
         return rating;//this.calculRate();
+        this.rating = this.calculRate();
+        return this.rating;
     }
 
     public void setRating(int rating) {
@@ -247,15 +249,20 @@ public class Contractor implements Serializable {
         int res = 0;
         int nb = 0 ;
         
-        for(Review r : reviews){
-            if(r.getReviewState() == ReviewState.ACCEPTED)
-               res =+ r.getRating(); nb++;
+        for(Review r : this.reviews) {
+            if(r.getReviewState().equals(ReviewState.ACCEPTED)) {
+             
+                res = res + r.getRating(); 
+                nb++;
+               
+            }
         }
         
         if(nb == 0 )
             return 0;
         else            
             return (int)(res/nb);
+        
     }
     
     public void setDescription(String description) {
@@ -269,15 +276,29 @@ public class Contractor implements Serializable {
     public void setLogin(String login) {
         this.login = login;
     }
-    
+
+    public String getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
+    }
+
     private String encryptPassword(String password){
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
         passwordEncryptor.setAlgorithm( ENCRYPTION_ALGORITHM );
         passwordEncryptor.setPlainDigest( true );
         return passwordEncryptor.encryptPassword(password);
     }
-    
-    
     
     @Override
     public int hashCode() {

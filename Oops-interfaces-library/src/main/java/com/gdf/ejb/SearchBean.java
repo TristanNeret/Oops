@@ -17,8 +17,10 @@ import javax.ejb.Remote;
 @Remote
 public interface SearchBean {
     
+    // CONTRACTOR
+    
     /**
-     * SearchBean a Contractor by his id
+     * Search a Contractor by his id
      * @param id the id of the Contractor
      * @return the Contractor identified by the id if any or null if he doesn't exist
      */

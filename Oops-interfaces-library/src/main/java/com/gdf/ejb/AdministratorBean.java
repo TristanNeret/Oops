@@ -6,6 +6,8 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Category;
+import com.gdf.persistence.Review;
+import com.gdf.persistence.ReviewState;
 import javax.ejb.Remote;
 
 /**
@@ -20,4 +22,16 @@ public interface AdministratorBean {
      * @param category the Category to add
      */
     public void addCategory(Category category);
+    
+    /**
+     * Manage the Review as Moderator decided and send a Notification to the
+     * Tenderer who wrote it 
+     * @param reviewId id of the Review managed by the Moderator
+     * @param moderatorId od of the Moderator who manage the Review
+     * @param reviewState new state for the Review
+     * @param content optional content for the Tenderer who wrote the Review
+     */
+    public void manageReview(long reviewId, long moderatorId, ReviewState reviewState, String content);
+    
+    
 }

@@ -29,6 +29,8 @@ public class SearchBeanImpl implements SearchBean {
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;  
     
+    // CONTRACTOR
+    
     /**
      * Search a Contractor by his id
      * @param id the id of the Contractor
@@ -45,6 +47,40 @@ public class SearchBeanImpl implements SearchBean {
             contractor.getReviews().size();
         } 
         return contractor;
+    }
+    
+    @Override
+    public Contractor searchContractorByLogin(String login) {
+        
+        Query query = em.createNamedQuery("Contractor.findByLogin");
+        query.setParameter(1, login);
+        if (query.getResultList().isEmpty()) {
+            
+            return null;
+            
+        } else {
+            
+            return (Contractor) query.getSingleResult();
+            
+        }
+        
+    }
+    
+    @Override
+    public Contractor searchContractorBySiren(String siren) {
+       
+        Query query = em.createNamedQuery("Contractor.findBySiren");
+        query.setParameter(1, siren);
+        if (query.getResultList().isEmpty()) {
+            
+            return null;
+            
+        } else {
+            
+            return (Contractor) query.getSingleResult();
+            
+        }
+        
     }
 
     /**

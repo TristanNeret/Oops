@@ -6,17 +6,25 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
-import java.util.List;
 import javax.ejb.Remote;
 
 /**
- *
+ * Manage Contractors
  * @author bibo
  */
 @Remote
 public interface ContractorManagerBean {
-    public void register(Contractor c);
-    public List<Contractor> findAll();
-    public List<Contractor> findByLogin(String login);
-    public List<Contractor> findByEmail(String email);
+    
+    /**
+     * Update Contractor informations
+     * @param c the Contractor to update
+     */
+    public void update(Contractor c);
+    
+    /**
+     * Delete a Contractor
+     * @param c the Contractor to delete
+     */
+    public void delete(Contractor c); 
+    
 }

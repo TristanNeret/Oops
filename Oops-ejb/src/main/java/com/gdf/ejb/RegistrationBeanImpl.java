@@ -6,7 +6,11 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Tenderer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,21 +28,37 @@ public class RegistrationBeanImpl implements RegistrationBean {
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em; 
     
-    /**
-     * Register a Contractor 
-     * @param c the Contractor to register
-     */
     @Override
     public void register(Contractor c) {
+        
+        // Get current date 
+        Calendar cal = Calendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        c.setRegistrationDate(dateFormat.format(cal.getTime()));
+        c.setUpdateDate(dateFormat.format(cal.getTime()));
+        
         em.persist(c);
+        
     }
     
-    /**
-     * Register a Tenderer
-     * @param t the Tenderer to register
-     */
     @Override
     public void register(Tenderer t) {
+        
+        // Get current date 
+        Calendar cal = Calendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        t.setRegistrationDate(dateFormat.format(cal.getTime()));
+        t.setUpdateDate(dateFormat.format(cal.getTime()));
+        
         em.persist(t);
+
     }
+
+    @Override
+    public void register(Moderator m) {
+        
+        em.persist(m);
+        
+    }
+
 }

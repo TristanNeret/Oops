@@ -34,9 +34,11 @@ public class EvaluationBeanImpl implements EvaluationBean {
         Tenderer attachedTenderer = em.merge(tenderer);
         Contractor attachedContractor = em.merge(contractor);
         
+        em.persist(review);
+        
         attachedTenderer.addReview(review);
         attachedContractor.addReview(review);
-    
+        
     }
     
     @Override
@@ -48,6 +50,7 @@ public class EvaluationBeanImpl implements EvaluationBean {
         
         // Create and persist the new Review
         Review newReview = new Review(reviewAppreciation, reviewContent, reviewRate);
+        newReview.setReviewState(ReviewState.DELIVERED);
         em.persist(newReview);
         
         // Add the new Review to others entities
@@ -59,7 +62,13 @@ public class EvaluationBeanImpl implements EvaluationBean {
         
     }
     
-    @Override
+    /**
+     * Send a new Notification
+     * @param review Review concerned by the Notification
+     * @param tenderer Tenderer concerned by the Notification
+     * @param contractor Contractor concerned by the Notification
+     * @param notificationType type of the Notification
+     */
     public void sendNotification(Review review, Tenderer tenderer, Contractor contractor, NotificationType notificationType) {
         
         // Get attached entities concerned
