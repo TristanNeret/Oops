@@ -33,21 +33,23 @@ public class PopulateDBBean {
     /**
      * Populate the database for the selenium tests
      */
-    //@PostConstruct
+    @PostConstruct
     private void populateDatabase(){
         
         Calendar calendar = Calendar.getInstance();
         java.util.Date currentDate = calendar.getTime();
-        java.sql.Date date = new java.sql.Date(currentDate.getTime());
+        String format = "dd/MM/yy H:mm:ss";
+        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
+        java.util.Date date = new java.util.Date();
         
         // TENDERERS
         
         Tenderer tenderer = new Tenderer("Michmich", "michou.dupond@gmail.com", 
-                "password", "Michel", "Dupond", "avatar", "3988937", date);
+                "password", "Michel", "Dupond", "avatar", "3988937", formater.format(date));
         em.persist(tenderer);
         
         tenderer = new Tenderer("Dede", "dede.legrand@gmail.com", "password", "Didier", "Legrand", 
-                "avatar", "9837937", date);
+                "avatar", "9837937", formater.format(date));
         em.persist(tenderer);
         
         // CONTRACTOR

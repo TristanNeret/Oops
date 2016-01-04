@@ -6,10 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
-<<<<<<< Upstream, based on origin/develop
 import com.gdf.persistence.Review;
-=======
->>>>>>> 7fe1550 search Tenderer and Contractor V1
 import com.gdf.persistence.Tenderer;
 import java.util.List;
 import javax.ejb.Remote;
@@ -29,8 +26,7 @@ public interface SearchBean {
      * @return the Contractor identified by the id if any or null if he doesn't exist
      */
     public Contractor searchContractorById(long id);
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     
     
     /**
@@ -56,7 +52,7 @@ public interface SearchBean {
      */
     public List<Contractor> searchContractorByEmail(String email);
     
-<<<<<<< Upstream, based on origin/develop
+
     // TENDERER
     
     /**
@@ -81,37 +77,24 @@ public interface SearchBean {
      */
     public List<Review> searchAcceptedReviews(long id);
     
-=======
+
     public List<Contractor> searchContractorByKeyWord(String keyWord);
     
-=======
-=======
-    
-    /**
-     * Search contractors using an email
-     * @param email the email
-     * @return the list of contractors
-     */
->>>>>>> 3ec392d... CSS, Javadoc and some selenium tests
-    public List<Contractor> searchContractorByEmail(String email);
-    
+ 
     /**
      * Search tenderers by keyword
      * @param keyWord a keyword which could be present on the tenderer informations
      * @return the tenderer matching with the keyword or a list of all tenderers if keyword is empty
      */
     public List<Tenderer> findTenderers(String keyWord);
-<<<<<<< HEAD
->>>>>>> bdc548c... Search feature V2
-=======
+
  
     /**
      * Search tenderers by keyword
      * @param keyWord a keyword which could be present on the tenderer informations
      * @return the list of tenderers
      */
->>>>>>> 3ec392d... CSS, Javadoc and some selenium tests
-    public List<Tenderer> searchTendererByKeyWord(String keyWord);
+    public List<Tenderer> searchTendererByKeyWord(String keyWord); 
     
     /**
      * Get all the tenderers
@@ -142,5 +125,5 @@ public interface SearchBean {
      */
     public List<String> getAllCategory();
       
->>>>>>> 7fe1550 search Tenderer and Contractor V1
+
 }
