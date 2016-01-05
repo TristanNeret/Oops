@@ -119,4 +119,10 @@ public interface SearchBean {
      * @return all categories
      */
     public List<String> getAllCategory();  
+    
+    
+    public List<String> findTendererBeginBy(String query);
+    
+    public List<String> findContractorBeginBy(String query);
+    
 }

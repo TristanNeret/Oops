@@ -32,7 +32,7 @@ public class PopulateDBBean {
     /**
      * Populate the database for the selenium tests
      */
-    //@PostConstruct
+    @PostConstruct
     private void populateDatabase(){
         
         // TENDERERS

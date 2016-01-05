@@ -9,14 +9,18 @@ and open the template in the editor.
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+   
+
 
     <div id="divSearch">
 
         <h:form>
-
-            <h:inputText id="queryInputText" class="searchInputText" value="#{searchManagedBean.keyWord}"/>
-
+            
+            <p:autoComplete  id="queryInputText" class="searchInputText" value="#{searchManagedBean.keyWord}" completeMethod="#{searchManagedBean.completeQuery}"  />
+                
             <h:outputText style="margin-right: 5px; color: white"/>
             <h:selectOneMenu id="listType" value="#{searchManagedBean.type}" style="margin-right: 5px">
                 <f:selectItem  id="tend" itemLabel="Soumissionnaire" itemValue="tend"/>
@@ -47,11 +51,15 @@ and open the template in the editor.
             </h:panelGroup>   
 
             <h:commandButton id="searchButton" class="searchCommandButton" value="Recherche" action="#{searchManagedBean.search()}"></h:commandButton>      
-
+        
         </h:form> 
-
+        
 
     </div>
+   
+   
 
 
 </ui:composition>
+
+

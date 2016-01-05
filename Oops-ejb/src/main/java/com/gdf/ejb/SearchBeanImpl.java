@@ -281,4 +281,20 @@ public class SearchBeanImpl implements SearchBean {
         return query.getResultList();
         
     } 
+
+    @Override
+    public List<String> findTendererBeginBy(String first) {
+        Query query;
+        query = em.createNamedQuery("Tenderer.beginBy");
+        query.setParameter(1, first + "%" );
+        return query.getResultList();
+    }
+
+    @Override
+    public List<String> findContractorBeginBy(String first) {
+        Query query;
+        query = em.createNamedQuery("Contractor.beginBy");
+        query.setParameter(1, first + "%" );
+        return query.getResultList();
+    }
 }

@@ -90,6 +90,7 @@ public class SearchManagedBean implements Serializable {
         orders = new LinkedHashMap<>();
         orders.put("Nom", "ALPHABETICAL"); // label, value
         orders.put("Note", "RATINGS");
+        type = "tend";
     }
     
     public String getKeyWord() {
@@ -202,6 +203,18 @@ public class SearchManagedBean implements Serializable {
             lc = sb.findContractors(keyWord,rating,country,category, order);  
             return "/views/listContractor.xhtml?faces-redirect=true";       
         }        
+    }
+    
+    public List<String> completeQuery(String query) {
+       
+        List<String> results;
+        
+        if(type.equals("tend")){
+            results = sb.findTendererBeginBy(query);
+        }else{
+            results = sb.findContractorBeginBy(query);
+        }
+        return results;   
     }
     
     public void valueChangeMethod(ValueChangeEvent e){

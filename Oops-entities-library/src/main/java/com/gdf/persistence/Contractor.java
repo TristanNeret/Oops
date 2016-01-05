@@ -33,6 +33,8 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
             query = "select c from Contractor c where c.login=?1"),
     @NamedQuery(name = "Contractor.findByEmail",
             query = "select c from Contractor c where c.email=?1"),
+    @NamedQuery(name= "Contractor.beginBy", query = "SELECT c.socialReason from Contractor c WHERE c.socialReason LIKE ?1")    
+
 })
 
 public class Contractor implements Serializable {
