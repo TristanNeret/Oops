@@ -69,6 +69,8 @@ public class Contractor implements Serializable {
     @OneToMany(mappedBy = "contractor",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private List<Review> reviews = new ArrayList<>();
 
+    public static final String userCategory = "CONTRACTOR";
+    
     public Contractor(){
     }
     

@@ -18,7 +18,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
 /**
- *
+ * SearchManagedTest
  * @author aziz
  */
 public class SearchManagedTest {
@@ -32,27 +32,27 @@ public class SearchManagedTest {
             sortListXpathExp = By.xpath("//select[contains(@id, 'listOrder')]");
            
 
-    private WebDriver driver;
-    private String baseUrl;
+    private static WebDriver driver;
+    private static String baseUrl;
 
     @BeforeClass
     public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
         driver = new FirefoxDriver();
         baseUrl = "http://localhost:8080/Oops-web/index.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
 
-    @After
-    public void tearDown() {
+    @AfterClass
+    public static void tearDownClass() {
         driver.close();
+    }
+
+    @Before
+    public void setUp() {
+    }
+
+    @After
+    public void tearDown() { 
     }
 
     /*
@@ -542,8 +542,5 @@ public class SearchManagedTest {
         new Select(driver.findElement(sortListXpathExp)).selectByVisibleText("Note");
         driver.findElement(By.xpath("//fieldset[contains(@id,'listContractor')][1]/span[contains(text(), 'IT Contractor Inc')]"));   
     }
-    
-    
-    
-  
+ 
 }

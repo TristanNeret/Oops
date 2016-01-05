@@ -21,35 +21,35 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  */
 public class ContractorInformationTest {
     
-    private WebDriver driver;
-    private String baseUrl;
+    private static WebDriver driver;
+    private static String baseUrl;
     
     public ContractorInformationTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
         driver = new FirefoxDriver();
         baseUrl = "http://localhost:8080/Oops-web/views/contractorInformation.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
     
-    @After
-    public void tearDown() {
+    @AfterClass
+    public static void tearDownClass() {
         driver.close();
     }
+    
+    @Before
+    public void setUp() { 
+    }
+    
+    @After
+    public void tearDown() {
+    }
 
-    /*
-     Search without parameters in the url
-    */
+    /**
+     * Search without parameters in the url
+     */
     @Test
     public void testNoId() {
         driver.get(baseUrl);        
@@ -68,4 +68,5 @@ public class ContractorInformationTest {
         driver.findElement(By.xpath("//h2[1][contains(text(), 'Description')]"));      
 
     }
+    
 }
