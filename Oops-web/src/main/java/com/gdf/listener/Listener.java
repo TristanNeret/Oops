@@ -34,10 +34,9 @@ public class Listener implements ServletContextListener {
     @EJB
     private AdministratorBean adminBean;
     
-    
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        
+        /*
         Contractor contractor = new Contractor();
         contractor.setEmail("tim.cook@apple.com");
         contractor.setLegalForm("legal form");
@@ -122,9 +121,9 @@ public class Listener implements ServletContextListener {
         registrationBean.register(moderator);
         
         evalBean.addReview(tenderer, contractor, review);
-        
+        */
     }
-    
+
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         

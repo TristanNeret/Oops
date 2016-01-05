@@ -15,7 +15,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
- * ManagedBean allowing to search a Contractor
+ * ManagedBean providing contractor informations
  * @author nicolas
  */
 @Named(value = "contractorInformationsBean")
@@ -36,7 +36,7 @@ public class ContractorInformationsBean implements Serializable {
     private List<Review> reviews;
     
     /**
-     * Injected EJB giving the search method
+     * Injected EJB giving the search methods
      */
     @EJB
     private SearchBean searchBean;

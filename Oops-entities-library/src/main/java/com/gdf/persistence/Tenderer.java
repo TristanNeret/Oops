@@ -6,6 +6,7 @@
 package com.gdf.persistence;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,8 +30,10 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 @NamedQueries({
     @NamedQuery(name = "Tenderer.findAll", query = "SELECT t FROM Tenderer t ORDER BY t.login ASC"),
     @NamedQuery(name = "Tenderer.findByLogin", query = "SELECT t FROM Tenderer t WHERE t.login=?1"),
-    @NamedQuery(name = "Tenderer.findByEmail", query = "SELECT t FROM Tenderer t WHERE t.email=?1")
+    @NamedQuery(name = "Tenderer.findByEmail", query = "SELECT t FROM Tenderer t WHERE t.email=?1"),
+    @NamedQuery(name= "Tenderer.beginBy", query = "SELECT t.login from Tenderer t WHERE t.login LIKE ?1")    
 })
+
 public class Tenderer implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";
@@ -51,7 +54,21 @@ public class Tenderer implements Serializable {
     private List<Notification> notifications = new ArrayList<>();
     
     public static final String userCategory = "TENDERER";
-
+    
+    public Tenderer() {
+    }
+    
+    public Tenderer(String login, String email, String password, String firstname, String lastname, String avatar, String phone, String registrationDate) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.avatar = avatar;
+        this.phone = phone;
+        this.registrationDate = registrationDate;
+    }
+    
     public String getLogin() {
         return login;
     }

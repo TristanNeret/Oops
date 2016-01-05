@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title>Tenderer list</title>
+        <h:outputStylesheet library="css" name="style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+    <h:body>
+
+
+        <!-- HEADER -->
+        <ui:include src="/includes/header.xhtml" />
+
+        <!-- SEARCH -->
+        <ui:include src="/includes/search.xhtml" />
+
+        <div style="width : 50%; margin : auto; ">
+        <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de recherche !" 
+                      rendered="#{empty searchManagedBean.ltd}" />
+        </div>
+        
+        <table style="width : 50%; margin : auto; ">
+            <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
+                <tr>
+
+                    <fieldset>
+                        <h:outputText style="font-size: x-large; padding-right: 20px" 
+                                      value="#{tend.login}" />
+                        (<h:outputText value="#{tend.firstname}" style="padding-right: 5px"/>
+                        <h:outputText value="#{tend.lastname}" />)
+                        <h:button class="headerCommandButton" value="Voir #{tend.login}" 
+                                  outcome="/views/tendererSearch?id=#{tend.id}" />
+                    </fieldset>
+
+                </tr>
+            </c:forEach>
+        </table>
+
+    </h:body>
+
+    <!-- FOOTER -->
+    <ui:include src="/includes/footer.xhtml" />
+
+</html>
