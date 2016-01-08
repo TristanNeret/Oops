@@ -5,46 +5,39 @@
  */
 package com.gdf.managedBean;
 
+
 import com.gdf.ejb.TendererManagerBean;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author hamou
  */
-@Named(value="tendrerInformationBean")
-@ViewScoped
-public class TendrerInformationBean implements Serializable {
+@Named(value = "tendererUpdateInformation")
+@SessionScoped
+public class TendererUpdateInformationBean implements Serializable {
 
     @EJB
     TendererManagerBean tb;
 
     private String login;
-    private String password;
     private String email;
     private String firstname;
     private String lastname;
     private String avatar;
     private String phone;
+    private String password;
 
-    public TendrerInformationBean() {
-
-    }
-
-    public void initTendrerIformation() {
-        //Dans le cas où vous sauvegardez le soumissionnaire
+    public void initTendererInformation() {
         Tenderer tenderer = (Tenderer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("tenderer");
-
-//Dans le cas où vous auvegardez le login 
-//        String loginTenderer = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Logintenderer");
+//        String loginTenderer = (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Logintenderer");
 //        Tenderer tenderer = tb.findByLogin(loginTenderer).get(0);
         login = tenderer.getLogin();
-        password = tenderer.getPassword();
         email = tenderer.getEmail();
         firstname = tenderer.getFirstname();
         lastname = tenderer.getLastname();
@@ -53,32 +46,35 @@ public class TendrerInformationBean implements Serializable {
 
     }
 
-    public String getPassword() {
-        return password;
+    public TendererUpdateInformationBean() {
+
     }
 
-    public String getLogin() {
-        return login;
-    }
+    public void applyUpdate() {
+        
+        Tenderer tnd = (Tenderer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("tenderer");
+//        String loginTenderer = (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("Logintenderer");
+//        Tenderer tnd = tb.findByLogin(loginTenderer).get(0);
 
-    public String getEmail() {
-        return email;
-    }
+   
+        tnd.setEmail(email);
+        tnd.setLogin(login);
+        tnd.setFirstname(firstname);
+        tnd.setLastname(lastname);
+        tnd.setAvatar(avatar);
+        tnd.setPhone(phone);
+        tnd.setPassword(password);
 
-    public String getFirstname() {
-        return firstname;
-    }
+        tb.update(tnd);
 
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setEmail(String email) {
@@ -101,6 +97,22 @@ public class TendrerInformationBean implements Serializable {
         this.phone = phone;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
     public String getAvatar() {
         return avatar;
     }
@@ -109,4 +121,7 @@ public class TendrerInformationBean implements Serializable {
         return phone;
     }
 
+    public String getPassword() {
+        return password;
+    }
 }

@@ -19,31 +19,38 @@ and open the template in the editor.
     </h:head>
 
     <h:body>
-
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
         <table>
-            <tr>
-                <td>password</td>
-            </tr>
+
+
             <tr>
                 <td>email</td>
+                <td><h:outputText value="#{tendererInformationBean.email}"/></td>
             </tr>
             <tr>
                 <td>firstname</td>
+                <td><h:outputText value="#{tendererInformationBean.firstname}"/></td>
             </tr>
             <tr>
                 <td>lastname</td>
+                <td><h:outputText value="#{tendererInformationBean.lastname}"/></td>
             </tr>
             <tr>
                 <td>avatar</td>
+                <td><h:outputText value="#{tendererInformationBean.avatar}"/></td>
             </tr>
             <tr>
                 <td>phone</td>
+                <td><h:outputText value="#{tendererInformationBean.phone}"/></td>
 
             </tr>
         </table>
-
+        <h:form>
+            
+             <h:commandButton value="Modifier"
+                     action="tendererUpdateIformation.xhtml" />
+        </h:form>
         <!-- FOOTER -->
         <ui:include src="/includes/footer.xhtml" />
 
