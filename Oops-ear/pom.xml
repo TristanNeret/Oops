@@ -36,7 +36,6 @@
                 <configuration>
                     <version>6</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
-                    <finalName>Oops-ear-1.0-dev-SNAPSHOT</finalName>
                 </configuration>
             </plugin>
         </plugins>
