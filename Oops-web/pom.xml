@@ -8,7 +8,7 @@
   </parent>
 
     <groupId>com.gdf</groupId>
-    <artifactId>Oops-web-dev</artifactId>
+    <artifactId>Oops-web</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
