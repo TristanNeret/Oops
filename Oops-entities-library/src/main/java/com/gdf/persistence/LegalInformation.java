@@ -23,6 +23,16 @@ public class LegalInformation implements Serializable {
     private Long id;
 
     private String siret, siren, rcs, insurrance;
+
+    public LegalInformation() {
+    }
+
+    public LegalInformation(String siret, String siren, String rcs, String insurrance) {
+        this.siret = siret;
+        this.siren = siren;
+        this.rcs = rcs;
+        this.insurrance = insurrance;
+    }
     
     public Long getId() {
         return id;

@@ -1,30 +1,29 @@
 body {
-    margin: 0px;
     font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    margin: 0;
 }
 
-fieldset 
-{
+fieldset {
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px #1E90FF solid;
-    background-color: #1E90FF;
+    border: none;
+    background-color: #18abff;
     color: white;
-    /*arrondir les coins en haut à gauche et en bas à droite*/
+    margin-left: 0px; 
+    /* Arrondir les coins en haut à gauche et en bas à droite
     -moz-border-radius:7px;
     -webkit-border-radius:7px;
-    border-radius:7px;
+    border-radius:7px;*/
 }
 
-h2
-{
-     color: #1E90FF;     
+h2 {
+    color: #1E90FF;     
 }
 
-.divContent
-{
+.divContent {
     margin-left: 30px;
     margin-right: 30px;
+    padding-bottom: 80px;
 }
 
 /* HEADER */
@@ -66,7 +65,6 @@ table.panelHeader td.ui-panelgrid-cell a.headerTitle {
     margin-left: 50px;
     color: #ffffff;
     text-decoration:none;
-    margin-right: -60px;
 }
 
 table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
@@ -87,22 +85,27 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     font-size: 18px;
     font-weight: 100;
     text-align: center;
+    clear: both;
+    bottom: 0;
 }
 
 /* SEARCH */
 
 #divSearch {
-    background-color: #009999;
+    background-color: #66cccc;
     color: #333333;
     font-size:20px;
     font-weight: 200;
     height: 50px;
     padding: 10px;
     text-align: center;
+    border-color: #666666;
+    border-width: 1px;
+    border-style: solid;
 }
 
 .searchCommandButton {
-    border: 1px #ffffff solid;
+    border: 1px #333333 solid;
     height: 30px;
     margin: 10px;
     background-color: #cccccc;
@@ -119,25 +122,328 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     font-size: 12px;
 }
 
+.sortBar{
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px #1E90FF solid;
+    background-color: #1E90FF;
+    color: white;
+    /*arrondir les coins en haut à gauche et en bas à droite*/
+    -moz-border-radius:7px;
+    -webkit-border-radius:7px;
+    border-radius:7px;   
+}
+
 /* Contractor Information */
 
+#divPresentation {
+    width: 100%;
+    height: 120px;
+    background-color: #18abff;
+    font-size: 34px;
+    font-weight: bold;
+    color: white;
+}
+
+#divImagePresentation {
+    float: left; 
+    text-align: center;
+}
+
+#divDetailsPresentation {
+    float: left; 
+    margin-left: 15px; 
+    margin-top: 22px;
+}
+
+#divInformationsPresentation {
+    font-size: 18px; 
+    font-weight: 100; 
+    margin-top: 10px;
+}
+
+#divSubPresentation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 20px;
+}
+
+.divDetailsPrestations {
+    width: 45%; 
+    /*float: left;*/ 
+    margin-right: 20px; 
+    margin-bottom: 20px;
+}
+
+.divReviews {
+    width: 45%; 
+    float: left; 
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.diveRateReview {
+    width: 100%; 
+    height: 20px; 
+    margin-top: 10px;
+}
+
+.imageLogo {
+    height: 120px;
+}
+
 #rating {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
+    margin-left: 0px;
+    width: 100%;
+}
+
+#divDescription {
+    width: 100%;
+}
+
+#divPrestations {
+    width: 100%;
 }
 
 label.ratingH2 {
     color: #1E90FF;
-    display: block;
     font-size: 1.5em;
-    -webkit-margin-before: 0.83em;
-    -webkit-margin-after: 0.83em;
-    -webkit-margin-start: 0px;
-    -webkit-margin-end: 0px;
     font-weight: bold;
 }
 
 form#reviewForm {
-    height: 60px;
+    width: 100%;
+    margin-left: -2px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+/* Contractor manager */
+
+.panelReviewContractor {
+    width: 100%; 
+    float: left;
+    margin-bottom: 15px;
+}
+
+.starsReviewContractor {
+    float: left; 
+    margin-left: 20px;
+}
+
+.leftPanelContractor {
+    width: 45%; 
+    float: left;
+    height: 140px;
+    margin-top: 40px;
+    border-bottom-width: 3px;
+    border-bottom-color: darkgray;
+    border-bottom-style: ridge;
+}
+
+.rightPanelContractor {
+    width: 50%; 
+    float: left;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    height: 180px;
+}
+
+.divContractorReviewComment {
+    width: 18%; 
+    height: 100%; 
+    float: right;
+}
+
+form .textAreaContractorReviewComment {
+    width: 80%; 
+    height: 135px; 
+    float: left;
+}
+
+.divTitleReviewComment {
+    height: 40px; 
+    font-size: 22px;
+}
+
+.divRatingContractorReview {
+    width:100%; 
+    height: 30px;
+}
+
+.divTendererContractorReview {
+    margin-top: 10px; 
+    float: bottom;
+}
+
+.labelPresentationContractorReview {
+    font-size: 20px; 
+    color: #336c6c; 
+    float: left;
+}
+
+form .deleteButtonContractorReview {
+    width: 100%; 
+    height: 50px; 
+    background-color: red !important; 
+    color: #f6f6f6 !important;
+}
+
+form .updateButtonContractorReview {
+    width: 100%; 
+    height: 95px; 
+    float: top; 
+    background-color: #336c6c !important; 
+    color: #66cccc !important;
+}
+
+/* Moderator */
+
+.titlePanelReviewAdmin {
+    font-size: 22px;
+}
+
+.panelReviewAdmin {
+    width: 100%; 
+    float: left;
+}
+
+.starsReviewAdmin {
+    float: right; 
+    margin-left: 20px;
+}
+
+.labelTitleReviewAdmin {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.labelDateReviewAdmin {
+    font-size: 15px;
+    color: gray;
+}
+
+.divImageReviewAdmin {
+    width: 50px; 
+    height: 120px; 
+    text-align: center; 
+    float: left; 
+    background-color: #66cccc; 
+    padding-top: 20px;
+}
+
+.divDescriptionReviewAdmin {
+    float: left; 
+    margin-left: 20px; 
+    height: 100%;
+}
+
+.leftPanelAdmin {
+    width: 45%; 
+    float: left;
+    height: 140px;
+    margin-top: 40px;
+    border-right-width: 3px;
+    border-right-color: darkgray;
+    border-right-style: ridge;
+}
+
+.rightPanelAdmin {
+    width: 50%; 
+    float: left;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    height: 150px;
+}
+
+.rightPanelTitleAdmin {
+    width: 50%; 
+    float: left;
+    margin-left: 20px;
+    margin-top: 10px;
+    height: 30px;
+}
+
+.rightPanelTitleLeftAdmin {
+    width: 35%; 
+    float: left;
+}
+
+.rightPanelTitleRightAdmin {
+    width: 60%; 
+    float: right;
+}
+
+.buttonsRightPanelAdmin {
+    float: left; 
+    width: 35%;
+}
+
+.divButtonsRightPanelAdmin {
+    width: 100%; 
+    text-align: center;
+}
+
+.divButtonsLeftRightPanelAdmin {
+    float: left; 
+    height: 140px; 
+    width: 48%;
+}
+
+.inputLeftPanelAdmin {
+    float: right; 
+    width: 60%;
+}
+
+.inputReviewAdmin {
+    float: left; 
+    height: 130px !important; 
+    width: 70%;
+}
+
+.commandButtonSaveAdmin {
+    float: right; 
+    height: 140px !important; 
+    width: 25%;
+    background-color: #336c6c;
+    color: #66cccc;
+    font-size: 15px !important;
+    font-weight: 100;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.commandButtonSaveAdmin:active {
+    background-color: #666666;
+}
+
+.commandButtonChoice {
+    background-color: #66cccc;
+    color: #336c6c;
+    font-size: 15px !important;
+    font-weight: 100;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.commandButtonChoiceSelected {
+    background-color: #336c6c;
+    color: #66cccc;
+    font-size: 15px !important;
+    font-weight: 100;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
 }
 
 /* Primefaces redifinition */
@@ -166,6 +472,59 @@ form#reviewForm {
 .ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield {
     background-color: #f6f6f6;
     color: #333333;
+}
+
+.ui-tabs {
+    padding: 0em !important;
+}
+
+.ui-tabs.ui-tabs-top > .ui-tabs-nav {
+    padding: 0em !important;
+}
+
+.ui-tabs .ui-tabs-nav {
+    background-color: #66cccc;
+    background: #66cccc;
+    border-bottom-color: #666666;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-top-color: #666666;
+    border-top-width: 2px;
+    border-top-style: solid;
+    border-left-width: 0px;
+    border-left-style: none;
+    border-right-width: 0px;
+    border-right-style: none;
+   
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a {
+    background-color: #336c6c;
+    color: #66cccc;
+    cursor: pointer !important;
+    text-shadow: none;
+    font-weight: 100;
+    font-size: 22px;
+    border-style: solid;
+    border-color: #666666;
+    border-width: 2px;
+}
+
+.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+    background-color: #66cccc;
+    color: #336c6c;
+    text-shadow: none;
+    font-weight: 100;
+    font-size: 22px;
+    border-style: solid;
+    border-color: #666666;
+    border-width: 2px;
+    margin: -2px;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    margin: 0em !important;
+    position: inherit !important;
 }
 
 /* Dialog */
@@ -197,4 +556,9 @@ form#reviewForm {
 
 .ui-widget-content {
     border: none;
+}
+
+.ui-inputfield {
+    background-color: white;
+    color: dimgrey;
 }

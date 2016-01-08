@@ -7,13 +7,15 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Review;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
- * ManagedBean allowing to search a Contractor
+ * ManagedBean providing contractor informations
  * @author nicolas
  */
 @Named(value = "contractorInformationsBean")
@@ -24,12 +26,35 @@ public class ContractorInformationsBean implements Serializable {
      * Id of the searched Contractor 
      */
     private long id;
+    /**
+     * Searched Contractor
+     */
+    private Contractor contractor;
+    /**
+     * Contractor reviews
+     */
+    private List<Review> reviews;
     
     /**
-     * Injected EJB giving the search method
+     * Injected EJB giving the search methods
      */
     @EJB
     private SearchBean searchBean;
+    
+    /**
+     * Create en instance of ContractorInformationsBean
+     */
+    public ContractorInformationsBean() {
+        
+    }
+    
+    /**
+     * Initialize Contractor informations
+     */
+    public void init() {
+        this.contractor = this.searchBean.searchContractorById(id);
+        this.reviews = this.searchBean.searchAcceptedReviews(this.id);
+    }
     
     /**
      * Set the id of the Contrator to search
@@ -47,12 +72,20 @@ public class ContractorInformationsBean implements Serializable {
         return id;
     }
 
-    /**
-     * Get the searched Contractor
-     * @return the Contractor identified by the id
-     */
     public Contractor getContractor() {
-        return searchBean.searchContractorById(id);
+        return contractor;
+    }
+
+    public void setContractor(Contractor contractor) {
+        this.contractor = contractor;
+    }
+    
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
     
 }

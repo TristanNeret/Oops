@@ -41,6 +41,8 @@ public class Moderator implements Serializable {
     @OneToMany
     private List<Notification> notifications = new ArrayList<>();
     
+    public static final String userCategory = "MODERATOR";
+    
     public Long getId() {
         return id;
     }
@@ -81,6 +83,10 @@ public class Moderator implements Serializable {
         this.notifications = notifications;
     }
     
+    public void addNotification(Notification n){
+        this.notifications.add(n);
+        n.setModerator(this);
+    }
     
     private String encryptPassword(String password){
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
