@@ -47,7 +47,7 @@ public class ContractorsReviewBean implements Serializable {
     public void initBean() {
         
         // Temporary used to connect a Contractor
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", "1");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", "50");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Contractor.userCategory);
         
         // Check if a user is connected
