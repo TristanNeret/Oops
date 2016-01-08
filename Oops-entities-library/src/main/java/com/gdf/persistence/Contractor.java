@@ -159,7 +159,11 @@ public class Contractor implements Serializable {
     public void setServices(List<Service> services) {
         this.services = services;
     }
-
+    
+    public void removeService(Service service){
+        this.services.remove(service);
+    }
+    
     public Address getAddress() {
         return address;
     }

@@ -11,12 +11,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author aziz
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Address.findAll", query = "SELECT adr FROM Address adr"),
+    @NamedQuery(name = "Address.findById", query = "SELECT adr FROM Address adr WHERE adr.id=?1"),
+    @NamedQuery(name = "Address.findByZip", query = "SELECT adr FROM Address adr WHERE adr.zipCode=?1")
+})
 public class Address implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

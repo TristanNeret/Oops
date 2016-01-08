@@ -27,4 +27,18 @@ public interface RegistrationBean {
      * @param t the Tenderer to register
      */
     public void register(Tenderer t);
+    
+    /**
+     * Register a Contractor
+     * @param c the Contractor to update
+     */
+    
+    public void update(Contractor c);
+    
+    /**
+     * Register a Tenderer
+     * @param t the Tenderer to update
+     */
+    
+    public void update(Tenderer t);
 }
