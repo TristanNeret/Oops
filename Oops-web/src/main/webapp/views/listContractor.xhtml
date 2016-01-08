@@ -20,7 +20,6 @@ and open the template in the editor.
 
     <h:body>
 
-
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
 
@@ -31,7 +30,6 @@ and open the template in the editor.
             <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de recherche !" 
                           rendered="#{empty searchManagedBean.lc}"/>
         </div>
-
 
         <h:panelGroup rendered ="#{searchManagedBean.lc.size() ge 2}">
             <fieldset>
@@ -45,34 +43,36 @@ and open the template in the editor.
             </fieldset>
         </h:panelGroup>
 
-        <table style="margin:auto;">
-            <c:forEach items="#{searchManagedBean.lc}" var="contractor" rendered="#{not empty searchManagedBean.lc}">
-                <tr>
+        <!-- CONTENT -->
+        <div class="divContent">
+            <table style="margin:auto;">
+                <c:forEach items="#{searchManagedBean.lc}" var="contractor" rendered="#{not empty searchManagedBean.lc}">
+                    <tr>
 
-                    <fieldset id="listContractor"> 
-                        <h:graphicImage value="#{contractor.logo}" height="75px" style="float: left;"/>
-                        <h:outputText style="font-size: x-large; padding-right: 25px;" 
-                                      value="#{contractor.socialReason}"/> 
-                        <h:outputText value="#{contractor.address.town}" /> 
-                        (<h:outputText value="#{contractor.address.zipCode}" />)
-                        <div style="float: right;">
-                            <div>
-                                <h:outputText value="Note moyenne : " /> 
-                                <p:rating id="stars1" value="#{contractor.rating}" stars="5" readonly="true"/>
+                        <fieldset id="listContractor" style="margin-top: 30px;"> 
+                            <h:graphicImage value="#{contractor.logo}" height="75px" style="float: left;"/>
+                            <h:outputText style="font-size: x-large; padding-right: 25px; padding-left: 20px;" 
+                                          value="#{contractor.socialReason}"/> 
+                            <h:outputText value="#{contractor.address.town}" /> 
+                            (<h:outputText value="#{contractor.address.zipCode}" />)
+                            <div style="float: right;">
+                                <div>
+                                    <h:outputText value="Note moyenne : " /> 
+                                    <p:rating id="stars1" value="#{contractor.rating}" stars="5" readonly="true"/>
+                                </div>
+                                <div>
+                                    <h:button class="headerCommandButton" value="Voir #{contractor.socialReason}" 
+                                              outcome="/views/contractorInformation?id=#{contractor.id}" />
+                                </div>
+
                             </div>
-                            <div>
-                                <h:button class="headerCommandButton" value="Voir #{contractor.socialReason}" 
-                                          outcome="/views/contractorInformation?id=#{contractor.id}" />
-                            </div>
+                        </fieldset> 
+                        <h:outputText style="padding-left: 10px; margin-bottom: 20px;" value="#{contractor.description}" /> 
 
-                        </div>
-                    </fieldset> 
-                    <h:outputText style="padding-left: 10px" value="#{contractor.description}" /> 
-
-                </tr>
-            </c:forEach>
-        </table>
-
+                    </tr>
+                </c:forEach>
+            </table>
+        </div>
 
     </h:body>
 

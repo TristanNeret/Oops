@@ -108,7 +108,7 @@ public class PopulateDBBean {
         contractor = new Contractor("FranceBTP", "contact@francebtp.com", "password", "FranceBTP Sarl",
         "Societe", "Nous sommes FranceBTP nous vous offront different services dans le domaine de la construction et du batiment,"
                 + " n'hesitez pas a nous contacter pour plus d'informations."
-                , "937937820", "logo", "FranceBTP", "Representant", 309293, 18, 2,
+                , "937937820", "http://www.cibtp.fr/fileadmin/templates/portail/img/logo_charte_qualite.png", "FranceBTP", "Representant", 309293, 18, 2,
         new Address(3, "rue des haricots", 2648, "Paris", "France"), new LegalInformation("siret", "siren", "rcs", "assurance"));
         service = new Service("Démolition", "Nous réalisons vos travaux de démolition", 100.0, contractor, category);
         contractor.addService(service);  

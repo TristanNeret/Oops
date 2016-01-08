@@ -65,7 +65,6 @@ table.panelHeader td.ui-panelgrid-cell a.headerTitle {
     margin-left: 50px;
     color: #ffffff;
     text-decoration:none;
-    margin-right: -60px;
 }
 
 table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
@@ -153,7 +152,7 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 
 #divDetailsPresentation {
     float: left; 
-    margin-left: 5px; 
+    margin-left: 15px; 
     margin-top: 22px;
 }
 
@@ -172,7 +171,7 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 
 .divDetailsPrestations {
     width: 45%; 
-    float: left; 
+    /*float: left;*/ 
     margin-right: 20px; 
     margin-bottom: 20px;
 }
@@ -557,4 +556,9 @@ form .updateButtonContractorReview {
 
 .ui-widget-content {
     border: none;
+}
+
+.ui-inputfield {
+    background-color: white;
+    color: dimgrey;
 }

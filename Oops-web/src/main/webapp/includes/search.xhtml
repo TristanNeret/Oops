@@ -12,9 +12,6 @@ and open the template in the editor.
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
     
-   
-
-
     <div id="divSearch">
 
         <h:form>
@@ -23,8 +20,8 @@ and open the template in the editor.
                 
             <h:outputText style="margin-right: 5px; color: white"/>
             <h:selectOneMenu id="listType" value="#{searchManagedBean.type}" style="margin-right: 5px">
-                <f:selectItem  id="tend" itemLabel="Soumissionnaire" itemValue="tend"/>
                 <f:selectItem id="cont" itemLabel="Prestataire" itemValue="cont"/>
+                <f:selectItem  id="tend" itemLabel="Soumissionnaire" itemValue="tend"/>
                 <f:ajax render ="@form"/>
             </h:selectOneMenu>
 
@@ -54,12 +51,8 @@ and open the template in the editor.
         
         </h:form> 
         
-
     </div>
    
-   
-
-
 </ui:composition>
 
 
