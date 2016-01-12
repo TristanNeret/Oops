@@ -21,12 +21,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
- * ContractorsReviewBean
+ * ContractorReviewBean
  * @author chris
  */
-@Named(value = "contractorsReviewBean")
+@Named(value = "contractorReviewBean")
 @ViewScoped
-public class ContractorsReviewBean implements Serializable {
+public class ContractorReviewBean implements Serializable {
     
     @EJB
     private EvaluationBean eb;
@@ -39,7 +39,7 @@ public class ContractorsReviewBean implements Serializable {
     /**
      * Creates a new instance of ContractorsReviewBean
      */
-    public ContractorsReviewBean() {
+    public ContractorReviewBean() {
         
     }
     
