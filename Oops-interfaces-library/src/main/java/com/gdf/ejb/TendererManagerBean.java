@@ -5,6 +5,7 @@
  */
 package com.gdf.ejb;
 
+import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer; 
 import javax.ejb.Remote;
 
@@ -14,6 +15,19 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface TendererManagerBean {
+    
+    /**
+     * Edit a Tenderer Review
+     * @param review the Review to update
+     */
+    public void editReview(Review review);
+    
+    /**
+     * Remove a Tenderer Review
+     * @param tendererId id of the Tenderer who wrote the Review
+     * @param reviewId id of the Review to remove
+     */
+    public void removeReview(long tendererId, long reviewId);
     
     /**
      * Update Tenderer informations

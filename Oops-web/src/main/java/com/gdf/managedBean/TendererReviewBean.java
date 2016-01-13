@@ -6,6 +6,7 @@
 package com.gdf.managedBean;
 
 import com.gdf.ejb.SearchBean;
+import com.gdf.ejb.TendererManagerBean;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
@@ -13,6 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -28,11 +30,22 @@ public class TendererReviewBean implements Serializable {
     private long id;
     private List<Review> reviews;
     
+    // Edit Review
+    private Review editReview;
+    private String editReviewAppreciation;
+    private String editReviewContent;
+    private int editReviewRating;
+    
     /**
      * Injected EJB giving the search methods
      */
     @EJB
     private SearchBean searchBean;
+    /**
+     * Injected EJB giving methods to manage Tenderer
+     */
+    @EJB
+    private TendererManagerBean tendererManagerBean;
     
     /**
      * Create en instance of TendererReviewBean
@@ -60,6 +73,33 @@ public class TendererReviewBean implements Serializable {
             this.reviews = this.searchBean.searchTendererById(this.id).getReviews();
         
         }
+        
+    }
+    
+    /**
+     * Save Review changes
+     */
+    public void editReview() {
+        
+        this.editReview.setAppreciation(this.editReviewAppreciation);
+        this.editReview.setContent(this.editReviewContent);
+        this.editReview.setRating(this.editReviewRating);
+        
+        this.tendererManagerBean.editReview(this.editReview);
+        this.reviews = this.searchBean.searchTendererById(this.id).getReviews();
+        FacesContext.getCurrentInstance().addMessage("growlReviewTenderer", new FacesMessage("Votre avis a été soumis avec succès !", ""));
+        
+    }
+    
+    /**
+     * Remove a Tenderer Review
+     * @param idReview id of the Review to remove
+     */
+    public void removeReview(long idReview) {
+        
+        this.tendererManagerBean.removeReview(this.id, idReview);
+        this.reviews = this.searchBean.searchTendererById(this.id).getReviews();
+        FacesContext.getCurrentInstance().addMessage("growlReviewTenderer", new FacesMessage("Votre avis a été supprimé avec succès.", ""));
         
     }
     
@@ -103,6 +143,41 @@ public class TendererReviewBean implements Serializable {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Review getEditReview() {
+        return editReview;
+    }
+
+    public void setEditReview(Review editReview) {
+        this.editReview = editReview;
+        this.editReviewAppreciation = editReview.getAppreciation();
+        this.editReviewContent = editReview.getContent();
+        this.editReviewRating = editReview.getRating();
+    }
+
+    public String getEditReviewAppreciation() {
+        return editReviewAppreciation;
+    }
+
+    public void setEditReviewAppreciation(String editReviewAppreciation) {
+        this.editReviewAppreciation = editReviewAppreciation;
+    }
+
+    public String getEditReviewContent() {
+        return editReviewContent;
+    }
+
+    public void setEditReviewContent(String editReviewContent) {
+        this.editReviewContent = editReviewContent;
+    }
+
+    public int getEditReviewRating() {
+        return editReviewRating;
+    }
+
+    public void setEditReviewRating(int editReviewRating) {
+        this.editReviewRating = editReviewRating;
     }
     
 }

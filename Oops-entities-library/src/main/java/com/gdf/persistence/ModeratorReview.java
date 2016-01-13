@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class ModeratorReview implements Serializable {
     @ManyToOne
     private Moderator moderator;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private Review review;
     
     /**

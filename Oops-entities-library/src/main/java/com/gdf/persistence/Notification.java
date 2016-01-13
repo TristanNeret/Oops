@@ -8,8 +8,10 @@ package com.gdf.persistence;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Calendar;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,16 +35,16 @@ public class Notification implements Serializable {
     private NotificationState state;
     private NotificationType category;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private Contractor contractor;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private Tenderer tenderer;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private Moderator moderator;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private Review review;
 
     /**

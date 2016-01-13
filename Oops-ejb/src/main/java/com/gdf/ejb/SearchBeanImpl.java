@@ -5,7 +5,6 @@
  */
 package com.gdf.ejb;
 
-import com.gdf.persistence.Address;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
