@@ -87,8 +87,9 @@ public class TendererReviewBean implements Serializable {
         
         this.tendererManagerBean.editReview(this.editReview);
         this.reviews = this.searchBean.searchTendererById(this.id).getReviews();
-        FacesContext.getCurrentInstance().addMessage("growlReviewTenderer", new FacesMessage("Votre avis a été soumis avec succès !", ""));
         
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Avis soumis !", "Un modérateur va se charger de vérifier sa validité."));
+
     }
     
     /**
@@ -99,6 +100,7 @@ public class TendererReviewBean implements Serializable {
         
         this.tendererManagerBean.removeReview(this.id, idReview);
         this.reviews = this.searchBean.searchTendererById(this.id).getReviews();
+        
         FacesContext.getCurrentInstance().addMessage("growlReviewTenderer", new FacesMessage("Votre avis a été supprimé avec succès.", ""));
         
     }
