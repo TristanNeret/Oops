@@ -7,8 +7,12 @@ package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Tenderer;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
+import javax.naming.NamingException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,6 +28,8 @@ public class RegistrationBeanImplTest {
     private static EJBContainer container;
     private static Context context;
     
+    private static ContractorManagerBean contractorManagerBean;
+    
     private Contractor c1;
     private String c1Login;
     private Tenderer t1;
@@ -36,12 +42,20 @@ public class RegistrationBeanImplTest {
     }
     
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() throws NamingException {
         
-        System.out.println("Opening the container");
+//        System.out.println("Opening the container");
 //        container = EJBContainer.createEJBContainer();
 //        context = container.getContext();
-        
+//        
+//        Map<String, Object> properties = new HashMap<>();
+//        properties.put(EJBContainer.MODULES, new File("target/classes"));
+//        container = EJBContainer.createEJBContainer(properties);
+//        context = container.getContext();
+//        String contractorManagerBeanImplName = ContractorManagerBeanImpl.class.getSimpleName();
+//        contractorManagerBeanImplName = "java:global/classes.ext/" + contractorManagerBeanImplName;
+//        contractorManagerBean = (ContractorManagerBean) context.lookup(contractorManagerBeanImplName);
+//        
     }
     
     @AfterClass

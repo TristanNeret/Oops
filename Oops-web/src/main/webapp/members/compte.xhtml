@@ -44,10 +44,10 @@ and open the template in the editor.
                                             
                                             
                                             <h:outputLabel value="Prénom :" />
-                                            <h:outputText  id="fnameCompte" value="#{contractorEditBean.firstname}" />
+                                            <h:outputText  id="fnameCompte" value="#{contractorEditBean.lastname}" />
                                             
                                             <h:outputLabel value="Nom :" />
-                                            <h:outputText  id="lnameCompte" value="#{contractorEditBean.lastname}" />
+                                            <h:outputText  id="lnameCompte" value="#{contractorEditBean.firstname}" />
                                             
                                             <h:outputLabel value="Adresse mail :" />
                                             <h:outputText  id="emailCompte" value="#{contractorEditBean.email}" />
@@ -85,7 +85,7 @@ and open the template in the editor.
                                                     
                                               </p:panelGrid>
                                                 <div class="dialogFooter" >
-                                                    <p:commandButton value="Enregistrer" actionListener="#{contractorEditBean.update_compte()}" update=":form:tabview" />          
+                                                    <p:commandButton value="Enregistrer" actionListener="#{contractorEditBean.updateCompte()}" update=":form:tabview" />          
                                                 </div>
                                              </p:dialog>
                                            
@@ -123,30 +123,38 @@ and open the template in the editor.
                                                                                        
                                         </h:panelGrid>
                                            
-                                           <p:commandButton  value="Modifier" oncomplete="PF('dlginfo').show()"/>
+                                           <p:commandButton  value="Modifier" oncomplete="PF('dlginfo').show()">
+                                           <p:ajax update="modifiedRs" resetValues="true" />
+                                            <p:ajax update="modifiedLf" resetValues="true" />
+                                            <p:ajax update="modifiedTurnover" resetValues="true" />
+                                            <p:ajax update="modifiedNbemploye" resetValues="true" />
+                                            <p:ajax update="modifiedSiren" resetValues="true" />
+                                            <p:ajax update="modifiedSiret" resetValues="true" />
+                                            <p:ajax update="modifiedRcs" resetValues="true" />
+                                           </p:commandButton>
                                         <p:dialog header="Modifier mes informations" resizable="false" showEffect="fade" widgetVar="dlginfo">
                                              <div class="dialogTitle"> Modifier les informations de mon entreprise !</div> 
                                             <p:panelGrid id="outputinfo" columns="2" columnClasses="label, value">
                                                     <h:outputText value="Raison social:" />
-                                                    <p:inputText  value="#{contractorEditBean.socialReason}" label="Social Reason" />
+                                                    <p:inputText  id="modifiedRs" value="#{contractorEditBean.socialReason}" label="Social Reason" />
                                                     <h:outputText value="Forme juridique :" />
-                                                    <p:inputText  value="#{contractorEditBean.legalForm}" label="Legal Form"/>
+                                                    <p:inputText  id="modifiedLf" value="#{contractorEditBean.legalForm}" label="Legal Form"/>
                                                     <h:outputText value="Chiffres d'affaire:" />
-                                                    <p:inputText  value="#{contractorEditBean.turnover}" label="Turnover"/>
+                                                    <p:inputText  id="modifiedTurnover" value="#{contractorEditBean.turnover}" label="Turnover"/>
                                                     <h:outputText value="Nombres d'employes" />
-                                                    <p:inputText  value="#{contractorEditBean.nbEmployees}" label="nombres de employees"/>
+                                                    <p:inputText  id="modifiedNbemploye" value="#{contractorEditBean.nbEmployees}" label="nombres de employees"/>
                                                     <h:outputText value="SIREN :" />
-                                                    <p:inputText  value="#{contractorEditBean.siren}" label="Siren"/>
+                                                    <p:inputText  id="modifiedSiren" value="#{contractorEditBean.siren}" label="Siren"/>
                                                     <h:outputText value="SIRET :" />
-                                                    <p:inputText  value="#{contractorEditBean.siret}" label="Siret"/>
+                                                    <p:inputText  id="modifiedSiret" value="#{contractorEditBean.siret}" label="Siret"/>
                                                     <h:outputText value="ASSURANCES :" />
-                                                    <p:inputText  value="#{contractorEditBean.rcs}" label="RCS"/>
+                                                    <p:inputText  id="modifiedRcs" value="#{contractorEditBean.rcs}" label="RCS"/>
                                                     
                                                    
                                                     
                                               </p:panelGrid>
                                             <div class="dialogFooter" >
-                                                <p:commandButton value="Enregistrer" actionListener="#{contractorEditBean.update_info()}" update=":form:tabview"/>
+                                                <p:commandButton value="Enregistrer" actionListener="#{contractorEditBean.updateInfo()}" update=":form:tabview"/>
                                             </div>
                                         </p:dialog>
                                                 
@@ -190,19 +198,19 @@ and open the template in the editor.
                                             <br/>
 
 
-                                       </div>
+                                            </div>
 
-                                        <div id="addservice">
-                                           <h:outputLabel value="Ajouter un service :" /> <br/>
-                                           <h:inputText id="title" size="40" value="#{serviceAddBean.title}" style="padding:5px; border:solid 1px black; color:steelblue; border-radius:1px;"/> <br/>
-                                           <h:inputTextarea id="description" cols="50" rows="10" value="#{serviceAddBean.description}"  style="padding:5px; border:solid 1px black; color:steelblue; border-radius:1px;"/><br/>
-                                           <h:inputText id="price" size="20" value="#{serviceAddBean.price}" style="padding:5px; border:solid 1px black; color:steelblue; border-radius:1px;" /> <br/>
-                                           <p:commandButton value="Ajouter" actionListener="#{serviceAddBean.add}" update=":form:tabview" />
-                                               
-                                       </div>
-                                </h:form>
+                                             <div id="addservice">
+                                                <h:outputLabel value="Ajouter un service :" /> <br/>
+                                                <h:inputText id="title" size="40" value="#{serviceAddBean.title}" style="padding:5px; border:solid 1px black; color:steelblue; border-radius:1px;"/> <br/>
+                                                <h:inputTextarea id="description" cols="50" rows="10" value="#{serviceAddBean.description}"  style="padding:5px; border:solid 1px black; color:steelblue; border-radius:1px;"/><br/>
+                                                <h:inputText id="price" size="20" value="#{serviceAddBean.price}" style="padding:5px; border:solid 1px black; color:steelblue; border-radius:1px;" /> <br/>
+                                                <p:commandButton value="Ajouter" actionListener="#{serviceAddBean.addService()}"  />
 
-                            </p:tab>
+                                            </div>
+                                        </h:form>
+
+                                    </p:tab>
                                             
                                     <p:tab id="mesavis" title="Mes Avis">
                                                 

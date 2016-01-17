@@ -27,11 +27,16 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Contractor.findAll", query = "SELECT c FROM Contractor c ORDER BY c.login ASC"),
-    @NamedQuery(name = "Contractor.findByLogin", query = "SELECT c FROM Contractor c WHERE c.login=?1"),
-    @NamedQuery(name = "Contractor.findBySiren", query = "SELECT c FROM Contractor c WHERE c.legalInformation.siren=?1"),
-    @NamedQuery(name = "Contractor.findByEmail", query = "SELECT c FROM Contractor c WHERE c.email=?1")
+    @NamedQuery(name = "Contractor.findAll",
+            query = "select c from Contractor c order by c.email"),
+    @NamedQuery(name = "Contractor.findByLogin",
+            query = "select c from Contractor c where c.login=?1"),
+    @NamedQuery(name = "Contractor.findByEmail",
+            query = "select c from Contractor c where c.email=?1"),
+    @NamedQuery(name= "Contractor.beginBy", query = "SELECT c.socialReason from Contractor c WHERE c.socialReason LIKE ?1")    
+
 })
+
 public class Contractor implements Serializable {
     
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";
@@ -59,10 +64,33 @@ public class Contractor implements Serializable {
     private LegalInformation legalInformation;
         
     @OneToMany
-    private List<Notification> notifications = new ArrayList<>();
+    private List<Notification> notifications;
   
     @OneToMany(mappedBy = "contractor",cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     private List<Review> reviews = new ArrayList<>();
+
+    public static final String userCategory = "CONTRACTOR";
+    
+    public Contractor(){
+    }
+    
+    public Contractor(String login, String email, String password, String socialReason, String legalForm, String description, String phone, String logo, String representatorFirstname, String representatorLastname, int turnover, int nbEmployees, int rating, Address address, LegalInformation legalInformation) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.socialReason = socialReason;
+        this.legalForm = legalForm;
+        this.description = description;
+        this.phone = phone;
+        this.logo = logo;
+        this.representatorFirstname = representatorFirstname;
+        this.representatorLastname = representatorLastname;
+        this.turnover = turnover;
+        this.nbEmployees = nbEmployees;
+        this.rating = rating;
+        this.address = address;
+        this.legalInformation = legalInformation;
+    }
     
     public String getPassword() {
         return password;
@@ -145,7 +173,7 @@ public class Contractor implements Serializable {
     }
 
     public int getRating() {
-        return this.calculRate();
+        return rating;
     }
 
     public void setRating(int rating) {
@@ -228,15 +256,20 @@ public class Contractor implements Serializable {
         int res = 0;
         int nb = 0 ;
         
-        for(Review r : reviews){
-            if(r.getReviewState() == ReviewState.ACCEPTED)
-               res =+ r.getRating(); nb++;
+        for(Review r : this.reviews) {
+            if(r.getReviewState().equals(ReviewState.ACCEPTED)) {
+             
+                res = res + r.getRating(); 
+                nb++;
+               
+            }
         }
         
         if(nb == 0 )
             return 0;
         else            
             return (int)(res/nb);
+        
     }
     
     public void setDescription(String description) {

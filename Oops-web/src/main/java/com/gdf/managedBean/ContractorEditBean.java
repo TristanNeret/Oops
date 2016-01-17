@@ -13,10 +13,10 @@ import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Address;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
+import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -24,8 +24,8 @@ import javax.inject.Named;
  * @author bibo
  */
 @Named(value = "contractorEditBean")
-@RequestScoped
-public class ContractorEditBean{
+@ViewScoped
+public class ContractorEditBean implements Serializable{
     
     @EJB
     private SearchBean searchBean;
@@ -83,30 +83,22 @@ public class ContractorEditBean{
     
     
     
-    public String update_compte() {
-
-        contractor.setPassword(getPassword());
-        contractor.setRepresentatorFirstname(getFirstname());
-        contractor.setRepresentatorLastname(getLastname());
-        contractor.setEmail(getEmail());
-        contractor.setPhone(getPhone());
-        this.rb.update(contractor);
+    public String updateCompte() {
+        this.rb.update(this.contractor);
         return "modified";
     }
     
-    public String update_info(){
-        contractor.setSocialReason(getSocialReason());
-        contractor.setLegalForm(getLegalForm());
-        contractor.setTurnover(getTurnover());
-        contractor.setNbEmployees(getNbEmployees());
-        legalinformation.setInsurrance(getInsurrance());
+  
+    
+    public String updateInfo(){
+        
+        /*legalinformation.setInsurrance(getInsurrance());
         legalinformation.setSiren(getSiren());
         legalinformation.setSiret(getSiret());
-        contractor.setLegalInformation(legalinformation);
-        System.out.println("saved");
+        contractor.setLegalInformation(legalinformation);/*/
         this.rb.update(contractor);
         this.legalinformationBean.update(legalinformation);
-        System.out.println("saved");
+        
         return "modified";
     }
     

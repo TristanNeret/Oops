@@ -12,6 +12,7 @@ import com.gdf.persistence.Address;
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
+import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Service;
@@ -33,10 +34,9 @@ public class Listener implements ServletContextListener {
     @EJB
     private AdministratorBean adminBean;
     
-    
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        
+        /*
         Contractor contractor = new Contractor();
         contractor.setEmail("tim.cook@apple.com");
         contractor.setLegalForm("legal form");
@@ -111,15 +111,19 @@ public class Listener implements ServletContextListener {
         tenderer.setEmail("oo@oo.om");
         tenderer.setLogin("Julie Johnson");
         tenderer.setId((long)1);
-
-                
+        
+        Moderator moderator = new Moderator();
+        moderator.setLogin("SuperModerator");
+        moderator.setId((long)1);
+ 
         registrationBean.register(tenderer); 
         registrationBean.register(contractor);
+        registrationBean.register(moderator);
         
         evalBean.addReview(tenderer, contractor, review);
-        
+        */
     }
-    
+
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         

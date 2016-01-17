@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <script type="text/javascript">
+        function handleRegisterRequest(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('registerDialog').jq.effect("shake", {times: 5}, 100);
+            }
+            else {
+                PF('registerDialog').hide();
+                PF('registerGrowlError').renderMessage({summary: 'Inscription réussie !', detail: 'Bienvenue sur Oops !', severity: 'info'});
+            }
+        }
+    </script>
+
+    <div id="divHeader">
+        
+        <p:growl widgetVar="registerGrowlError" sticky="false" showDetail="true" life="3000" />
+        <p:growl widgetVar="contractorRegisterGrowlError" sticky="false" showDetail="true" life="3000" />
+
+        <p:panelGrid styleClass="panelHeader" columns="3">
+            <h:link styleClass="headerTitle" value="Oops" outcome="/admin.xhtml"/>
+            <h:link styleClass="headerSubtitle" value="Opinion on providers of services" outcome="/admin.xhtml"/>
+
+            <p:panelGrid styleClass="panelHeaderButton" columns="1">
+                <h:button class="headerCommandButton" value="Connexion (Modérateurs)" />
+            </p:panelGrid>
+        </p:panelGrid>
+            
+    </div>
+
+</ui:composition>

@@ -32,6 +32,17 @@ public class Address implements Serializable {
 
     private int streetNumber, zipCode;
     private String street, town, country;
+
+    public Address() {
+    }
+    
+    public Address(int streetNumber, String street, int zipCode, String town, String country) {
+        this.streetNumber = streetNumber;
+        this.zipCode = zipCode;
+        this.street = street;
+        this.town = town;
+        this.country = country;
+    }
     
     public Long getId() {
         return id;
@@ -118,4 +129,9 @@ public class Address implements Serializable {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return streetNumber+" "+street+" "+zipCode+" "+town+" "+country;
+    } 
 }

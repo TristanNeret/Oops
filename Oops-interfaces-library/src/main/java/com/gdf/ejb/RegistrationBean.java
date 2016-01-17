@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.Remote;
 
@@ -41,4 +42,9 @@ public interface RegistrationBean {
      */
     
     public void update(Tenderer t);
+     /** Register a Moderator
+     * @param m the Moderator to register
+     */
+    public void register(Moderator m);
+    
 }

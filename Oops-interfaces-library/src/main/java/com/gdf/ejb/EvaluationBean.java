@@ -25,6 +25,7 @@ public interface EvaluationBean {
      * @param review the Review to add
      */
     public void addReview(Tenderer tenderer, Contractor contractor, Review review);
+    
     /**
      * Add a new Review
      * @param tendererID id of the Tenderer who write the Review
@@ -34,6 +35,7 @@ public interface EvaluationBean {
      * @param reviewRate ratting for the Review
      */
     public void addReview(Long tendererID, Long contractorID, String reviewAppreciation, String reviewContent, int reviewRate);
+
     /**
      * Send a new Notification
      * @param review Review concerned by the Notification
@@ -43,4 +45,17 @@ public interface EvaluationBean {
      */
     public void sendNotification(Review review, Tenderer tenderer, Contractor contractor, NotificationType notificationType);
     
+    /**
+     * Update Review Contractor's answer 
+     * @param review Review on which update the Contractor's answer
+     * @param contractorsAnswer Contractor's answer
+     */
+    public void updateContractorsAnswer(Review review, String contractorsAnswer);
+    
+    /**
+     * Delete Review Contractor's answer
+     * @param review Review on which delete the Contractor's answer
+     */
+    public void deleteContractorsAnswer(Review review);
+
 }

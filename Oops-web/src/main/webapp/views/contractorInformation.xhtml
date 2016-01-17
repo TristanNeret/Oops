@@ -16,9 +16,6 @@ and open the template in the editor.
         <title>Contractor informations</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="style.css" />
-        <f:metadata>
-            <o:viewParam name ="id" value="#{contractorInformationsBean.id}" />
-        </f:metadata>
         <script type="text/javascript">
             function handleReviewRequest(xhr, status, args) {
                 if (args.validationFailed) {
@@ -33,10 +30,16 @@ and open the template in the editor.
     </h:head>
 
     <h:body>
+        
+        <f:metadata>
+            <o:viewParam name ="id" value="#{contractorInformationsBean.id}" />
+            <f:viewAction action="#{contractorInformationsBean.init()}" />
+        </f:metadata>
 
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
 
+        <!-- CONTENT -->
         <div class="divContent">
             <c:if test="#{contractorInformationsBean.contractor == null}" >
                 <h2>Prestataire introuvable !</h2> 
@@ -44,52 +47,44 @@ and open the template in the editor.
 
             <c:if test="#{contractorInformationsBean.contractor != null}" >
 
-                <fieldset> 
-                    <table>
-                        <tr>
-                            <td>
-                                <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" height="150px"/>
-                            </td>
-                            <td>
-                                <h1><h:outputText value="#{contractorInformationsBean.contractor.socialReason}"/></h1>  
-                                <b>Email : </b> <h:outputText value="#{contractorInformationsBean.contractor.email}"/> <br/>
-                                <b>Téléphone : </b> <h:outputText value="#{contractorInformationsBean.contractor.phone}"/> <br/>
-                                <b>Localisation : </b> <h:outputText value="#{contractorInformationsBean.contractor.address.town}"/> 
-                                (<h:outputText value="#{contractorInformationsBean.contractor.address.country}"/>) <br/>
-                                <b id="starsTxt1">Note moyenne : </b>
-                                <p:rating id="stars1" value="#{contractorInformationsBean.contractor.rating}" stars="5" readonly="true"/>
-                            </td>
-                        </tr>
-                    </table>
-
-                </fieldset>
-
-                <div id="description">
+                <div id="divPresentation">
+                    <div id="divImagePresentation">
+                        <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" styleClass="imageLogo" />
+                    </div>
+                    <div id="divDetailsPresentation">
+                        <h:outputLabel value="#{contractorInformationsBean.contractor.socialReason}" />
+                        <div id="divInformationsPresentation">
+                            <b>Email : </b> <h:outputText value="#{contractorInformationsBean.contractor.email}" />
+                            <b style="margin-left: 20px;">Téléphone : </b> <h:outputText value="#{contractorInformationsBean.contractor.phone}" />
+                        </div>
+                    </div>
+                </div>
+                <div id="divSubPresentation">
+                    <div style="float: right;">
+                        <b>Localisation : </b> <h:outputText value="#{contractorInformationsBean.contractor.address.town}" /> <h:outputText value="(#{contractorInformationsBean.contractor.address.country})" /> 
+                        <b style="margin-left: 20px;">Note moyenne : </b> <p:rating id="stars1" value="#{contractorInformationsBean.contractor.rating}" stars="5" readonly="true" />
+                    </div>
+                </div>
+                
+                <div id="divDescription">
                     <h2>Description</h2>
                     <h:outputText value="#{contractorInformationsBean.contractor.description}"/>
                 </div>
 
-                <div id="prestations">
+                <div id="divPrestations">
                     <h2>Prestations</h2>
-                    <table style="width: 100%;">
-                        <tr>
-                            <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
-                                <td style="padding-right: 30px; width: 50%;">
-                                    <fieldset>
-                                        <h:outputText value="#{service.title}"/> (<h:outputText value="#{service.category.name}"/>)
-                                    </fieldset>
-                                    <h:outputText value="#{service.description}"/> <br/>
-                                    <b>Tarif horraire : <span style="color: #1E90FF;">
-                                            <h:outputText value="#{service.price}"/> €
-                                        </span></b>
-                                </td>
-                            </c:forEach > 
-                        </tr>
-                    </table>
+                    <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
+                        <div class="divDetailsPrestations">
+                            <fieldset>
+                                <h:outputText value="#{service.title}"/> (<h:outputText value="#{service.category.name}"/>)
+                            </fieldset>
+                            <h:outputText value="#{service.description}"/> <br/>
+                            <b>Tarif horraire : <h:outputText style="color: #1E90FF;" value="#{service.price} €" /></b>
+                        </div>
+                    </c:forEach> 
                 </div>
 
                 <div id="rating">   
-
                     <!-- DIALOG BOX FOR RATING -->
                     <o:form id="reviewForm" includeViewParams="true">
                         <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
@@ -125,25 +120,30 @@ and open the template in the editor.
                             </h:panelGrid>
                         </p:dialog>
                     </o:form>
-
-                    <br/>
-
-                    <table>
-                        <tr>
-                            <c:forEach items="#{contractorInformationsBean.contractor.reviews}" var="review" >
-                                <c:if test="#{review.reviewState == 'ACCEPTED'}"> 
-                                    <td style="padding-right: 30px">
-                                        <h:outputText value="#{review.appreciation}"/>
-                                        <span style="color: gray;">par <h:outputText value="#{review.tenderer.login}"/> le <h:outputText value="#{review.date}"/></span><br/>
-                                        <h:outputText value="#{review.content}"/> <br/>
-                                        <b id="starsTxt2">Note : </b>
-                                        <p:rating id="stars2" value="#{review.rating}" stars="5" readonly="true"/> <br/>
-                                        <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}"/>
-                                    </td>
-                                </c:if> 
-                            </c:forEach>
-                        </tr>
-                    </table>
+                </div>
+                <div>
+                    <c:forEach items="#{contractorInformationsBean.reviews}" var="review" >
+                        <div class="divReviews">
+                            <h:outputLabel style="font-size: 20px;" value="#{review.appreciation}"/><h:outputLabel style="font-size: 14px; color: #999999;" value=" par #{review.tenderer.login} le #{review.date}" />
+                            <br/>
+                            <h:outputText value="#{review.content}" />
+                            <br/>
+                            <div class="diveRateReview">
+                                <b id="starsTxt2" style="float:left;">Note : </b> 
+                                <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
+                            </div>
+                            <br/>
+                            <c:if test="#{review.contractorAnswer != null}" >
+                                <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
+                            </c:if>
+                            <c:if test="#{review.contractorAnswer == null}" >
+                                <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
+                            </c:if>
+                        </div>
+                    </c:forEach>
+                    <c:if test="#{contractorInformationsBean.reviews.size() == 0}">
+                        <h:outputLabel value="Il n'existe aucun avis pour ce prestataire." />
+                    </c:if>
                 </div>
             </c:if>
         </div>

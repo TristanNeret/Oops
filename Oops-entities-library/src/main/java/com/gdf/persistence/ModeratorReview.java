@@ -7,6 +7,7 @@ package com.gdf.persistence;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +22,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class ModeratorReview implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,6 +37,26 @@ public class ModeratorReview implements Serializable {
     
     @ManyToOne
     private Review review;
+    
+    /**
+     * Create an instance of ModeratorReview
+     */
+    public ModeratorReview() {
+        
+    }
+    
+    /**
+     * Initialize a new ModeratorReview from a Review and a Moderator
+     * @param review managed Review
+     * @param moderator Moderator who managed the Review
+     */
+    public ModeratorReview(Review review, Moderator moderator) {
+        
+        this.review = review;
+        this.moderator = moderator;
+        this.date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        
+    }
     
     public Long getId() {
         return id;

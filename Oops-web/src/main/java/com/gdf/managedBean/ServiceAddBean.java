@@ -11,13 +11,19 @@ import com.gdf.ejb.CategoryBean;
 import com.gdf.ejb.ContractorManagerBean;
 import com.gdf.ejb.RegistrationBean;
 import com.gdf.ejb.SearchBean;
+import com.gdf.ejb.ServiceBean;
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Service;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 
 /**
  *
@@ -25,18 +31,21 @@ import javax.enterprise.context.RequestScoped;
  */
 
 @Named(value = "serviceAddBean")
-@RequestScoped
-public class ServiceAddBean {
+@ViewScoped
+public class ServiceAddBean implements Serializable {
 
     /**
      * Creates a new instance of ServiceAddBean
      */
     
     @EJB
-    SearchBean searchBean;
+    private SearchBean searchBean;
     
     @EJB
-    CategoryBean categoryBean;
+    private CategoryBean categoryBean;
+    
+    @EJB
+    private ServiceBean serviceBean;
     
     @EJB
     private RegistrationBean rb;
@@ -47,52 +56,74 @@ public class ServiceAddBean {
     private double price;
     private Contractor contractor;
     private Category category;
-    private boolean editable;
+    private List<Category> categories;
     
     
     
     @PostConstruct
     public void init() {
 
-        this.setContractor(searchBean.searchContractorById(1));
-        this.setCategory(categoryBean.findById((long) 1));
+        this.setContractor(searchBean.searchContractorById(50));
+        //this.setCategory(categoryBean.findById((long) 9));
+        categories = new ArrayList<>();
+        setCategories(categoryBean.findAll());
         
+   
     }
     
-    public String add(){
+    
+    public boolean areServices() {
+        return !this.contractor.getServices().isEmpty();
+    }
+    
+    public void addService(){
 
         Service service =new Service();
-        service.setTitle(title);
-        service.setDescription(description);
-        service.setPrice(price);
-        service.setCategory(category);
+        service.setTitle(getTitle());
+        service.setDescription(getDescription());
+        service.setPrice(getPrice());
+        service.setCategory(getCategory());
+        //serviceBean.register(service);
         contractor.addService(service);
         rb.update(contractor);
-        System.out.println("saved");
-        return "register";
+        
+        this.init();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre service a été ajoutée avec succès !", ""));
     }
     
     
-    
-    /*
-        Modifications
-    */
-    
-    public boolean isEditable() {
-	return editable;
+    public void deleteService(Service service){
+        
+        contractor.removeService(service);
+        rb.update(contractor);
+        //serviceBean.deleteContractorService(service);
+        this.init();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre service a été supprimé avec succès !", ""));
+ 
     }
     
-    public void setEditable(boolean editable) {
-	this.editable = editable;
-    } 
-    
-    
-    /*
-     getters and setters
-    */
+    public void updateService(Service service){
+        
+        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre service a été modifiée avec succès !", ""));
+    }
+
 
   
-  public String getTitle() {
+   
+
+    /*
+    getters and setters
+     */
+    public List<Category> getCategories() {
+        return categories;
+    }
+    
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public String getTitle() {
         return title;
     }
 

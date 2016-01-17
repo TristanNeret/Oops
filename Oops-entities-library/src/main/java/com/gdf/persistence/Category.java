@@ -24,8 +24,10 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Category.findAll", query = "SELECT cat FROM Address cat"),
-    @NamedQuery(name = "Category.findById", query = "SELECT cat FROM Address cat WHERE cat.id=?1")
+    @NamedQuery(name = "Category.findByName",
+            query = "select c from Category c where c.name=?1"),
+    @NamedQuery(name = "Category.findAll", query = "SELECT cat FROM Category cat"),
+    @NamedQuery(name = "Category.findById", query = "SELECT cat FROM Category cat WHERE cat.id=?1")
 })
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -40,6 +42,14 @@ public class Category implements Serializable {
     
     @OneToMany(mappedBy = "category")
     private List<Service> services = new ArrayList<>();
+    
+    public Category(){
+    }
+
+    public Category(String name, String image) {
+        this.name = name;
+        this.image = image;
+    }
     
     public Long getId() {
         return id;
