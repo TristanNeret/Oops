@@ -39,12 +39,8 @@ public class ListTendererBean {
 
     
     public Boolean isContractorConnected(Long contractorID) {
-
         // Check if connected user is a contrator
-        String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");
-        
-       // System.out.println("user ID : " + contractorID + " " + userCategory);
-        
+        String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");      
         return contractorID != null && !contractorID.equals("") && userCategory.equals(Contractor.userCategory);
     }
 
@@ -53,7 +49,7 @@ public class ListTendererBean {
         Long contractorID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
         ebi.askForReview(contractorID, tendererID);
         // open a dialog
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Avis soumis", "Avis envoyé avec succès !");
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Avis envoyé avec succès !",null );
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
     

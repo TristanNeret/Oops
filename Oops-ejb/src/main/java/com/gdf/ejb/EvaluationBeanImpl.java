@@ -37,7 +37,6 @@ public class EvaluationBeanImpl implements EvaluationBean {
     
     @PostConstruct
     private void init(){
-        System.out.println("ENTRE WESH");
     }
 
     @Override
