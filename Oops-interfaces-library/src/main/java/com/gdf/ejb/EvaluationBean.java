@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Notification;
 import com.gdf.persistence.NotificationType;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
@@ -57,5 +58,14 @@ public interface EvaluationBean {
      * @param review Review on which delete the Contractor's answer
      */
     public void deleteContractorsAnswer(Review review);
+    
+      /**
+     * A contractor asks a tenderer for a review
+     * @param contractorID the contractor who wants the review
+     * @param tendererID the tender who will give the review to the contractor
+     */
+    public void askForReview(Long contractorID, Long tendererID);
+    
+    public Notification getLastNotificationSent(Long contractorID, Long tendererID);
 
 }

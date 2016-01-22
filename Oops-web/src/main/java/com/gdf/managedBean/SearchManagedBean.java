@@ -5,6 +5,7 @@
  */
 package com.gdf.managedBean;
 
+import com.gdf.ejb.EvaluationBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Tenderer;
@@ -19,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -80,6 +82,7 @@ public class SearchManagedBean implements Serializable {
      */
     @EJB
     private SearchBean sb;
+   
 
     private Map<String,String> orders;
     
@@ -90,8 +93,14 @@ public class SearchManagedBean implements Serializable {
         orders = new LinkedHashMap<>();
         orders.put("Nom", "ALPHABETICAL"); // label, value
         orders.put("Note", "RATINGS");
-        type = "cont";
+        type = "cont";  
     }
+
+    public SearchManagedBean() {
+        
+    }
+    
+    
     
     public String getKeyWord() {
         return keyWord;
@@ -229,4 +238,7 @@ public class SearchManagedBean implements Serializable {
     public void setOrders(Map<String, String> orders) {
         this.orders = orders;
     }
+    
+
+    
 }

@@ -7,14 +7,20 @@ package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Notification;
+import com.gdf.persistence.NotificationState;
 import com.gdf.persistence.NotificationType;
 import static com.gdf.persistence.NotificationType.TO_TENDERER;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
+import java.sql.Date;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  * Class supplying methods to manage Reviews
@@ -29,6 +35,12 @@ public class EvaluationBeanImpl implements EvaluationBean {
      */
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;
+    
+    
+    @PostConstruct
+    private void init(){
+        System.out.println("ENTRE WESH");
+    }
 
     @Override
     public void addReview(Tenderer tenderer, Contractor contractor, Review review) {
@@ -114,10 +126,39 @@ public class EvaluationBeanImpl implements EvaluationBean {
 
     @Override
     public void deleteContractorsAnswer(Review review) {
-       
         review.setContractorAnswer(null);
         em.merge(review);
-        
+    }
+
+    @Override
+    public void askForReview(Long contractorID, Long tendererID) {
+        Notification n = new Notification();
+        java.util.Date date = new java.util.Date();
+        n.setDate(new java.sql.Date(date.getTime()));
+        n.setCategory(TO_TENDERER);
+        n.setState(NotificationState.NOT_READ);
+        Contractor contractor = em.find(Contractor.class, contractorID);
+        n.setContractor(contractor);
+        Tenderer tenderer = em.find(Tenderer.class, tendererID);
+        n.setTenderer(tenderer);
+        n.setDescription(contractor.getSocialReason()+" vous demande de le noter");
+        n.setDescription("http://localhost:8080/Oops-web/views/contractorInformation.xhtml?id="+contractorID);
+        em.persist(n);
+        Notification ni = em.find(Notification.class, n.getId());
+    }
+
+    @Override
+    public Notification getLastNotificationSent(Long contractorID, Long tendererID){
+        Query q = em.createNamedQuery("Notification.findByContractorAndTenderer", Notification.class);
+        Contractor contractor = em.find(Contractor.class, contractorID);
+        Tenderer tenderer = em.find(Tenderer.class, tendererID);
+        q.setParameter(1, contractor);
+        q.setParameter(2, tenderer);
+        List<Notification> ln = q.getResultList();
+        if(!ln.isEmpty())
+            return ln.get(0);
+        else
+            return null;                   
     }
     
 }
