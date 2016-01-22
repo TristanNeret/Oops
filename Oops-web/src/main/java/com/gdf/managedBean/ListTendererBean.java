@@ -11,8 +11,8 @@ import com.gdf.persistence.Notification;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 
 /**
  *
@@ -25,7 +25,7 @@ public class ListTendererBean {
     /**
      * Creates a new instance of ListTendererBean
      */
-    private static long interval = 7*24*60*60*1000;
+    private static final long INTERVAL = 7*24*60*60*1000;
     
     @EJB
     private EvaluationBean ebi;
@@ -52,6 +52,9 @@ public class ListTendererBean {
     public void askReview(long tendererID){
         Long contractorID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
         ebi.askForReview(contractorID, tendererID);
+        // open a dialog
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Avis soumis", "Avis envoyé avec succès !");
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
     
     public boolean isValidAskReview(long contractorID, long tendererID){
@@ -59,16 +62,13 @@ public class ListTendererBean {
         if(n != null){
             java.util.Date date = new java.util.Date();
             long current = date.getTime();
-            return n.getDate().getTime()+interval <=  current;
+            return n.getDate().getTime()+INTERVAL <=  current;
         }
         return true;
     }
     
     public boolean display(long tendererID){
         long contractorID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
-        System.out.println("ID TEND = " + tendererID);
-        System.out.println("ID Con = " + contractorID);
-        
         return isContractorConnected(contractorID) && isValidAskReview(contractorID,(Long)tendererID);
     }
 }

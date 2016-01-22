@@ -21,8 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * Class used to populate the database for selenium tests,
- * uncomment @PostConstruct to execute the populateDatabase method on stratup
+ * Class used to populate the database for selenium tests
  * @author aziz
  */
 @Singleton

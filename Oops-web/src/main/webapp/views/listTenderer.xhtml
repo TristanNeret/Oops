@@ -44,7 +44,7 @@ and open the template in the editor.
                             <h:outputText value="#{tend.lastname}" />
                 
                             <h:form>
-                                    <h:commandButton class= "headerCommandButton" value="DemanderAvis"  action="#{listTendererBean.askReview(tend.id)}" rendered="#{listTendererBean.display(tend.id)}"/> 
+                                    <h:commandButton class= "headerCommandButton" value="Demander un avis"  action="#{listTendererBean.askReview(tend.id)}" rendered="#{listTendererBean.display(tend.id)}"/> 
                                     <h:button class="headerCommandButton" value="Voir #{tend.login}" 
                                               outcome="/views/tendererSearch?id=#{tend.id}" />
                             </h:form>
