@@ -5,7 +5,6 @@
  */
 package com.gdf.ejb;
 
-import com.gdf.persistence.Address;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
@@ -49,6 +48,7 @@ public class SearchBeanImpl implements SearchBean {
             contractor.getReviews().size();
         } 
         return contractor;
+        
     }
     
     @Override
@@ -244,6 +244,21 @@ public class SearchBeanImpl implements SearchBean {
     }
 
     // TENDERER
+    
+    @Override
+    public Tenderer searchTendererById(Long id) {
+        
+        Tenderer tenderer =  em.find(Tenderer.class, id);
+        
+        if(tenderer != null) {  
+            // The lazy relationships must be traversed before exiting the scope of the JPA Session to avoid the Exception.
+            tenderer.getReviews().size();
+        } 
+        
+        return tenderer;
+        
+    }
+    
     @Override
     public Tenderer searchTendererByLogin(String login) {
         
@@ -297,4 +312,5 @@ public class SearchBeanImpl implements SearchBean {
         query.setParameter(1, first + "%" );
         return query.getResultList();
     }
+
 }

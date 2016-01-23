@@ -27,15 +27,12 @@ public interface SearchBean {
      */
     public Contractor searchContractorById(long id);
 
-    
-    
     /**
      * Search a Contractor by his login
      * @param login the login of the Contractor
      * @return the Contractor identified by the login if any or null if he doesn't exist
      */
     public Contractor searchContractorByLogin(String login);
-    
     
     /**
      * Search a Contractor by his SIREN
@@ -44,7 +41,6 @@ public interface SearchBean {
      */
     public Contractor searchContractorBySiren(String siren);
     
-    
     /**
      * Search a Contractor by his email
      * @param email the email of the Contractor
@@ -52,8 +48,14 @@ public interface SearchBean {
      */
     public List<Contractor> searchContractorByEmail(String email);
     
-
     // TENDERER
+    
+    /**
+     * Search a Tenderer by his id
+     * @param id id of the Tenderer
+     * @return the Tenderer identified by the id if any or null if he doesn't exist
+     */
+    public Tenderer searchTendererById(Long id);
     
     /**
      * Search a Tenderer by his login
@@ -76,6 +78,8 @@ public interface SearchBean {
      * @return the accepted Reviews List of the Contractor
      */
     public List<Review> searchAcceptedReviews(long id);
+    
+    // SEARCH
     
     /**
      * Search tenderers by keyword
@@ -119,7 +123,6 @@ public interface SearchBean {
      * @return all categories
      */
     public List<String> getAllCategory();  
-    
     
     public List<String> findTendererBeginBy(String query);
     

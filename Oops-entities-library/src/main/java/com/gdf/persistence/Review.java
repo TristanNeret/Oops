@@ -29,7 +29,9 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Review.findWaitingReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.DELIVERED"),
-    @NamedQuery(name = "Review.findAcceptedReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1")
+    @NamedQuery(name = "Review.findAcceptedReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1"),
+    @NamedQuery(name = "Review.findTendererReviews", query = "SELECT r FROM Review r WHERE r.tenderer.id=?1"),
+    @NamedQuery(name = "Review.deleteReviewById", query = "DELETE FROM Review r WHERE r.id=?1")
 })
 public class Review implements Serializable {
     
