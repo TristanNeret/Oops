@@ -23,14 +23,11 @@ import javax.persistence.NamedQuery;
  *
  * @author aziz
  */
-@NamedQueries({
-    @NamedQuery(name = "Notification.findByContractorAndTenderer",
-            query = "Select n FROM Notification n WHERE n.contractor=?1 "
-                    + "AND n.tenderer=?2 ORDER BY n.date DESC")
-})
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Notification.deleteByReviewId", query = "DELETE FROM Notification n WHERE n.review.id=?1")
+    @NamedQuery(name = "Notification.deleteByReviewId", query = "DELETE FROM Notification n WHERE n.review.id=?1"),
+    @NamedQuery(name = "Notification.findByContractorAndTenderer", query = "Select n FROM Notification n WHERE n.contractor=?1 "
+                    + "AND n.tenderer=?2 ORDER BY n.date DESC")
 })
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
