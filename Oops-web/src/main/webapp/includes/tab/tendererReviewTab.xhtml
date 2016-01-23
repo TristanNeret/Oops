@@ -14,7 +14,7 @@ and open the template in the editor.
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <div class="divContent">
-        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste de vos amis soumis :" rendered="#{tendererReviewBean.areReviews()}" />
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste de vos avis soumis :" rendered="#{tendererReviewBean.areReviews()}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Vous n'avez pas encore soumis d'avis." rendered="#{!tendererReviewBean.areReviews()}" /> 
         
         <p:panel id="reviewsList">
@@ -48,36 +48,46 @@ and open the template in the editor.
                         <!-- REVIEW -->
                         <div class="divReviews">
                             
-                            <div class="divImageReviewAdmin">
-                                <h:graphicImage value="#{review.contractor.logo}" width="40px"/>
+                            <div class="divTendererReviewInformation">
+                                <div class="divImageReviewTenderer">
+                                    <h:graphicImage value="#{review.contractor.logo}" width="40px"/>
+                                </div>
+                                <h:outputLabel class="divReviewContractorNameTenderer" value="#{review.contractor.socialReason}"/>
+                                <div style="margin-top: 10px;">
+                                    <h:outputLabel class="divReviewAppreciationTenderer" value="#{review.appreciation}"/>
+                                    <br/>
+                                    <h:outputText value="#{review.content}" />
+                                </div>
+                                <br/>
+                                <div class="diveRateReview">
+                                    <b id="starsTxt2" style="float:left;">Note : </b> 
+                                    <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
+                                    <h:outputLabel value="Le #{review.date}" class="divReviewUpdateDateTenderer" />
+                                </div>
+                                <br/>
+                                <c:if test="#{review.contractorAnswer != null}" >
+                                    <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
+                                </c:if>
+                                <c:if test="#{review.contractorAnswer == null}" >
+                                    <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
+                                </c:if>
                             </div>
-                            <h:outputLabel style="font-size: 20px;" value="#{review.appreciation}"/>
-                            <br/>
-                            <h:outputText value="#{review.content}" />
-                            <br/>
-                            <div class="diveRateReview">
-                                <b id="starsTxt2" style="float:left;">Note : </b> 
-                                <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
+                            <div class="divTendererReviewButton">
+                                <h:outputLabel value="Statut : #{tendererReviewBean.getReviewState(review.reviewState)}" />
+
+                                <div style="float: right;">
+                                    <p:growl id="growlReviewTenderer" sticky="false" showDetail="true" life="3000" />
+                                    <p:commandButton id="deleteButton" value="Supprimer" action="#{tendererReviewBean.removeReview(review)}" update="growlReviewTenderer reviews">
+                                        <p:confirm header="Confirmation" message="Êtes-vous sûr de vouloir supprimer cet avis ?" icon="ui-icon-alert" />
+                                    </p:commandButton>
+                                    <p:commandButton id="editButton" value="Modifier" action="#{tendererReviewBean.setEditReview(review)}" update="dialogEditReview" oncomplete="PF('reviewDialog').show();" />
+
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                    </p:confirmDialog>
+                                </div>
                             </div>
-                            <br/>
-                            <c:if test="#{review.contractorAnswer != null}" >
-                                <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
-                            </c:if>
-                            <c:if test="#{review.contractorAnswer == null}" >
-                                <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
-                            </c:if>
-                            <h:outputLabel value="Statut : #{tendererReviewBean.getReviewState(review.reviewState)}"/>
-                            
-                            <p:growl id="growlReviewTenderer" sticky="false" showDetail="true" life="3000" />
-                            <p:commandButton id="deleteButton" value="Supprimer" action="#{tendererReviewBean.removeReview(review.id)}" update="growlReviewTenderer reviews">
-                                <p:confirm header="Confirmation" message="Êtes-vous sûr de vouloir supprimer cet avis ?" icon="ui-icon-alert" />
-                            </p:commandButton>
-                            <p:commandButton id="editButton" value="Modifier" action="#{tendererReviewBean.setEditReview(review)}" update="dialogEditReview" oncomplete="PF('reviewDialog').show();" />
-                            
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                            </p:confirmDialog>
                             
                         </div>
                     </p:dataGrid>

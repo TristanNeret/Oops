@@ -25,9 +25,9 @@ public interface TendererManagerBean {
     /**
      * Remove a Tenderer Review
      * @param tendererId id of the Tenderer who wrote the Review
-     * @param reviewId id of the Review to remove
+     * @param review Review to remove
      */
-    public void removeReview(long tendererId, long reviewId);
+    public void removeReview(long tendererId, Review review);
     
     /**
      * Update Tenderer informations

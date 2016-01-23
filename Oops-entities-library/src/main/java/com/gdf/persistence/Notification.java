@@ -16,12 +16,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author aziz
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Notification.deleteByReviewId", query = "DELETE FROM Notification n WHERE n.review.id=?1")
+})
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

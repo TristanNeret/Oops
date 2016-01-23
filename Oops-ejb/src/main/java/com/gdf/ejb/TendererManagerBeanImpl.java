@@ -11,9 +11,12 @@ import com.gdf.persistence.NotificationType;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  * Class managing Tenderer
@@ -33,7 +36,7 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         
         Tenderer tenderer =  em.find(Tenderer.class, review.getTenderer().getId());
         Contractor contractor =  em.find(Contractor.class, review.getContractor().getId());
-        
+
         review.setReviewState(ReviewState.DELIVERED);
         this.em.merge(review);
         
@@ -65,20 +68,18 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
     }
 
     @Override
-    public void removeReview(long tendererId, long reviewId) {
+    public void removeReview(long tendererId, Review review) {
         
-        Review reviewToRemove = em.find(Review.class, reviewId);
+        Review reviewToRemove = em.find(Review.class, review.getId());
         if (reviewToRemove != null) {
             
             // Remove the Review from the Tenderer Review list
             Tenderer tendererToUpdate = em.find(Tenderer.class, tendererId);
-            if(tendererToUpdate != null) {
-
-                tendererToUpdate.getReviews().remove(reviewToRemove);
-                this.em.merge(tendererToUpdate);
-
-            }
-            this.em.remove(reviewToRemove);
+            tendererToUpdate.getReviews().remove(reviewToRemove);
+            
+            Query queryReview = em.createNamedQuery("Review.deleteReviewById");
+            queryReview.setParameter(1, review.getId());
+            queryReview.executeUpdate();
             
         }
         

@@ -11,6 +11,7 @@ import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -94,11 +95,11 @@ public class TendererReviewBean implements Serializable {
     
     /**
      * Remove a Tenderer Review
-     * @param idReview id of the Review to remove
+     * @param review Review to remove
      */
-    public void removeReview(long idReview) {
+    public void removeReview(Review review) {
         
-        this.tendererManagerBean.removeReview(this.id, idReview);
+        this.tendererManagerBean.removeReview(this.id, review);
         this.reviews = this.searchBean.searchTendererById(this.id).getReviews();
         
         FacesContext.getCurrentInstance().addMessage("growlReviewTenderer", new FacesMessage("Votre avis a été supprimé avec succès.", ""));
