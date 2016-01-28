@@ -6,7 +6,6 @@
 package com.gdf.persistence;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -47,7 +46,7 @@ public class Tenderer implements Serializable {
     private String email, password, firstname, lastname, avatar, phone;
     private String registrationDate, updateDate;
   
-    @OneToMany(mappedBy = "tenderer", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @OneToMany(mappedBy = "tenderer", cascade = {CascadeType.ALL})
     private List<Review> reviews = new ArrayList<>();
     
     @OneToMany
@@ -166,9 +165,18 @@ public class Tenderer implements Serializable {
         this.updateDate = updateDate;
     }
     
-    public void addReview(Review r){
+    public void addReview(Review r) {
         this.reviews.add(r);
         r.setTenderer(this);
+    }
+    
+    public void removeReview(Review r) {
+        int i = 0;
+        while (i < this.reviews.size() && !this.reviews.get(i).getId().equals(r.getId())) {
+            i++;
+        } 
+        this.reviews.get(i).setTenderer(null);
+        this.reviews.remove(i);
     }
     
     public void addNotification(Notification n){

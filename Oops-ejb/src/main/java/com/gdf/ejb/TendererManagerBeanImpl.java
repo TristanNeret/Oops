@@ -75,7 +75,7 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
             
             // Remove the Review from the Tenderer Review list
             Tenderer tendererToUpdate = em.find(Tenderer.class, tendererId);
-            tendererToUpdate.getReviews().remove(reviewToRemove);
+            tendererToUpdate.removeReview(review);
             
             Query queryReview = em.createNamedQuery("Review.deleteReviewById");
             queryReview.setParameter(1, review.getId());

@@ -11,13 +11,12 @@ import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -25,7 +24,7 @@ import javax.inject.Named;
  * @author Tristan
  */
 @Named(value = "tendererReviewBean")
-@ViewScoped
+@RequestScoped
 public class TendererReviewBean implements Serializable {
  
     private long id;
