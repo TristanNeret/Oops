@@ -107,7 +107,7 @@ public class TendererReviewBean implements Serializable {
     
     /**
      * Test if the Tenderer has Reviews
-     * @return 
+     * @return True if reviews exist, or False
      */
     public boolean areReviews() {
         
