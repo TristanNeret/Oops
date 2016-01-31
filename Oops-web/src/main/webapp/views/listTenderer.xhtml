@@ -56,48 +56,57 @@ and open the template in the editor.
                                 (<h:outputText value="#{tend.firstname}" style="padding-right: 5px"/>
                                 <h:outputText value="#{tend.lastname}" />)
 
-                                <!-- DIALOG BOX FOR ASKING REVIEWS  -->
+
                                 <o:form id="askReviewForm" includeViewParams="true">
                                     <p:growl widgetVar="askReviewGrowlError" sticky="false" showDetail="true" life="3000" />
                                     <h:panelGrid columns="2" style="float: right;">
+
                                         <h:button class="headerCommandButton" value="Voir #{tend.login}" 
                                                   outcome="/views/tendererSearch?id=#{tend.id}" />
 
                                         <p:commandButton id="askReviewBtn" class="headerCommandButton" value="Demander un avis" 
                                                          rendered="#{listTendererBean.display(tend.id)}"
-                                                         onclick="PF('askReviewDialog').show();">
+                                                         onclick="PF('askReviewDialog').show();"
+                                                         actionListener="#{listTendererBean.setTenderer(tend)}"
+                                                         update="askReviewDialogForm:dialogPanel">
                                             <!-- Reset fields on opening -->
-                                            <p:ajax update="askReviewMsg" resetValues="true" />
+                                            <p:ajax update="askReviewDialogForm:askReviewMsg" resetValues="true" />
                                         </p:commandButton>
 
                                     </h:panelGrid>
-
-                                    <p:growl id="askReviewGrowl" sticky="false" showDetail="false" life="3000" />
-                                    <p:dialog header="Demande d'avis" modal="true" widgetVar="askReviewDialog" resizable="false">
-                                        <h:panelGrid columns="1" cellpadding="5">
-
-                                            <h:outputLabel value="Soumissionaire : #{tend.login} (#{tend.firstname} #{tend.lastname})" />
-
-                                            <h:outputLabel value="Message :" />
-                                            <p:inputTextarea id="askReviewMsg" value="#{listTendererBean.message}" 
-                                                             rows="6" cols="33" placeholder="Facultatif" />
-
-                                        </h:panelGrid>
-                                        <div class="dialogFooter" >
-                                            <p:commandButton id="sendAskReviewBtn" 
-                                                             value="Envoyer" update="askReviewGrowl"  
-                                                             actionListener="#{listTendererBean.askReview(tend.id)}"                                                          
-                                                             oncomplete="handleAskReviewRequest(xhr, status, args)" /> 
-                                        </div>
-                                    </p:dialog>
                                 </o:form>
                             </fieldset>
-
                         </td>
                     </tr>
                 </c:forEach>
             </table>            
         </div>
+
+        <!-- DIALOG BOX FOR ASKING REVIEWS  -->
+        <o:form id="askReviewDialogForm" includeViewParams="true">
+            <p:growl id="askReviewGrowl" sticky="false" showDetail="false" life="3000" />
+            <p:dialog header="Demande d'avis" modal="true" widgetVar="askReviewDialog" resizable="false">
+                <p:outputPanel id="dialogPanel">
+                    <h:panelGrid columns="1" cellpadding="5">
+
+                        <h:outputLabel id="Infos" value="Soumissionaire : #{listTendererBean.tenderer.login} 
+                                       (#{listTendererBean.tenderer.firstname} 
+                                       #{listTendererBean.tenderer.lastname})" />
+
+                        <h:outputLabel value="Message :" />
+                        <p:inputTextarea id="askReviewMsg" value="#{listTendererBean.message}" 
+                                         rows="6" cols="33" placeholder="Facultatif" />
+
+                    </h:panelGrid>
+                    <div class="dialogFooter" >
+                        <p:commandButton id="sendAskReviewBtn" 
+                                         value="Envoyer" update="askReviewGrowl"  
+                                         actionListener="#{listTendererBean.askReview()}"                                                          
+                                         oncomplete="handleAskReviewRequest(xhr, status, args)" /> 
+                    </div>
+                </p:outputPanel>
+            </p:dialog>
+        </o:form>
 
     </h:body>
 

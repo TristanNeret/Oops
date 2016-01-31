@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -58,9 +59,10 @@ public class ListTendererBeanTest {
         // Preparation
         driver.get(baseUrl); 
         WebElement askButton = driver.findElement(askReviewBtnXpathExp);
-        askButton.click();
-        
+
         WebElement sendButton = driver.findElement(sendReviewBtnXpathExp);
+        
+        askButton.click();
         sendButton.click(); // selenium can't click on it
         
         // Test
