@@ -25,8 +25,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  */
 public class ListTendererBeanTest {
     
-     private final By askReviewBtnXpathExp = By.xpath("//button[contains(@id, 'askReviewBtn')]"),
-             sendReviewBtnXpathExp = By.xpath("//button[contains(@id, 'sendAskReviewBtn')]");
+     private final By askReviewBtnXpathExp = By.xpath("//button[contains(@id, 'askReviewForm:askReviewBtn')]"),
+             sendReviewBtnXpathExp = By.xpath("//button[contains(@id, 'askReviewDialogForm:sendAskReviewBtn')]");
     
     private static WebDriver driver;
     private static String baseUrl;
@@ -59,33 +59,15 @@ public class ListTendererBeanTest {
         // Preparation
         driver.get(baseUrl); 
         WebElement askButton = driver.findElement(askReviewBtnXpathExp);
-
-        WebElement sendButton = driver.findElement(sendReviewBtnXpathExp);
-        
         askButton.click();
-        sendButton.click(); // selenium can't click on it
+        
+        WebElement sendButton = driver.findElement(sendReviewBtnXpathExp); 
+        sendButton.click(); 
         
         // Test
         WebElement growlTitle = driver.findElement(By.className("ui-growl-title"));
 
         // Verification
         assertEquals(growlTitle.getText(), "Demande d'avis envoyée !");
-    }
-    
-    //@Test
-    public void testReviewAsked(){
-         // Preparation
-        driver.get(baseUrl);
-        boolean notFind = false;
-        
-        // Test
-        try {
-            driver.findElement(askReviewBtnXpathExp);
-        }catch(NoSuchElementException e){
-            notFind = true;
-        }
-        
-        // Verification
-        assertTrue(notFind);
     }
 }

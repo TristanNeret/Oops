@@ -9,12 +9,17 @@ import com.gdf.ejb.EvaluationBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Notification;
 import com.gdf.persistence.Tenderer;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -41,19 +46,27 @@ public class ListTendererBean implements Serializable {
      * The tenderer who is going to be asked to give a review
      */
     private Tenderer tenderer;
+    
+    /**
+     * Id of the current user connected
+     */
+    private Long userID;
+    
+    /**
+     * Category of the current user connected
+     */
+    private String userCategory; 
 
     public ListTendererBean() {
         
     }
     
     public Tenderer getTenderer() { 
-        //if(tenderer != null) System.out.println("GET "+tenderer.getLogin());
         return tenderer;
     }
 
     public void setTenderer(Tenderer tenderer) { 
         this.tenderer = tenderer;
-        //if(tenderer != null) System.out.println("SET "+tenderer.getLogin());
     }
     
     public String getMessage() {
@@ -68,31 +81,41 @@ public class ListTendererBean implements Serializable {
     public void initBean() {
         // Temporary used to connect a Contractor
         FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", Long.parseLong("10"));
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userCategory", Contractor.userCategory);    
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userCategory", Contractor.userCategory);          
+        
+        userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
+        userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");
+        
+        //System.out.println(userID+" ------------------------------------ "+userCategory);
     }
-
+    
     /**
      * Tests whether or not if the id of the connected user is a contractor
      * @param contractorID the id of the contractor
      * @return true if the id of the connected user is a contractor
      */
-    private Boolean isContractorConnected(Long contractorID) {
+    private Boolean isContractorConnected() {
         // Check if connected user is a contrator
-        String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");      
-        return contractorID != null && !contractorID.equals("") && userCategory.equals(Contractor.userCategory);
+        return userID != null && !userID.equals("") && userCategory.equals(Contractor.userCategory);
     }
 
     /**
      * Send a request for review to a tenderer
      */
     public void askReview(){ 
-    
-        Long contractorID =  Long.parseLong("10");//(Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
-        ebi.askForReview(contractorID, tenderer.getId(), message);
+        ebi.askForReview(userID, tenderer.getId(), message);
         
         // raz
         tenderer = null;
         message = "";
+        
+        // redirection to reload the page (hide the "Demander un avis" button)
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+        } catch (IOException ex) {
+            Logger.getLogger(ListTendererBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
@@ -101,7 +124,7 @@ public class ListTendererBean implements Serializable {
      * @param tendererID the id of the tenderer
      * @return true if the  contractor can send a request for review to the tenderer
      */
-    private boolean isValidAskReview(long contractorID, long tendererID){
+    private boolean isValidAskReview(Long contractorID, Long tendererID){
         Notification n = ebi.getLastNotificationSent(contractorID, tendererID); 
         if(n != null){
             java.util.Date date = new java.util.Date();
@@ -116,9 +139,7 @@ public class ListTendererBean implements Serializable {
      * @param tendererID the id of the tenderer concerned by the request
      * @return true if the "Demander un avis" button can be displayed
      */
-    public boolean display(long tendererID){
-        //Long contractorID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
-        //return isContractorConnected(contractorID) && isValidAskReview(contractorID, (Long)tendererID);
-        return true;
+    public boolean display(Long tendererID){
+        return isContractorConnected() && isValidAskReview(userID, tendererID);
     }
 }
