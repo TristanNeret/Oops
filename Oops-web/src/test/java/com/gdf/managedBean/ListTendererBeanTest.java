@@ -6,12 +6,10 @@
 package com.gdf.managedBean;
 
 import java.util.concurrent.TimeUnit;
-import javax.validation.constraints.AssertTrue;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.openqa.selenium.By;
@@ -25,7 +23,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  * @author aziz
  */
 public class ListTendererBeanTest {
-    /**
+    
+     private final By askReviewBtnXpathExp = By.xpath("//button[contains(@id, 'askReviewBtn')]"),
+             sendReviewBtnXpathExp = By.xpath("//button[contains(@id, 'sendAskReviewBtn')]");
+    
     private static WebDriver driver;
     private static String baseUrl;
     
@@ -35,7 +36,7 @@ public class ListTendererBeanTest {
     @BeforeClass
     public static void setUpClass() {
         driver = new FirefoxDriver();
-        baseUrl = "http://localhost:8080/Oops-web/index.xhtml";
+        baseUrl = "http://localhost:8080/Oops-web/views/listTenderer.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
     }
     
@@ -52,21 +53,24 @@ public class ListTendererBeanTest {
     public void tearDown() {
     }
     
-    @Test
+    //@Test
     public void testAskForReview(){
         // Preparation
         driver.get(baseUrl); 
-        WebElement askButton = driver.findElement(By.className("commandButtonAskReview"));
+        WebElement askButton = driver.findElement(askReviewBtnXpathExp);
         askButton.click();
-
+        
+        WebElement sendButton = driver.findElement(sendReviewBtnXpathExp);
+        sendButton.click(); // selenium can't click on it
+        
         // Test
         WebElement growlTitle = driver.findElement(By.className("ui-growl-title"));
 
         // Verification
-        assertEquals(growlTitle.getText(), "Avis envoyé avec succès !");
+        assertEquals(growlTitle.getText(), "Demande d'avis envoyée !");
     }
     
-    @Test
+    //@Test
     public void testReviewAsked(){
          // Preparation
         driver.get(baseUrl);
@@ -74,12 +78,12 @@ public class ListTendererBeanTest {
         
         // Test
         try {
-            driver.findElement(By.className("commandButtonAskReview"));
+            driver.findElement(askReviewBtnXpathExp);
         }catch(NoSuchElementException e){
             notFind = true;
         }
         
         // Verification
         assertTrue(notFind);
-    }**/
+    }
 }

@@ -128,7 +128,7 @@ public class EvaluationBeanImpl implements EvaluationBean {
     }
 
     @Override
-    public void askForReview(Long contractorID, Long tendererID) {
+    public void askForReview(Long contractorID, Long tendererID, String message) {
         Notification n = new Notification();
         java.util.Date date = new java.util.Date();
         n.setDate(new java.sql.Date(date.getTime()));
@@ -138,7 +138,7 @@ public class EvaluationBeanImpl implements EvaluationBean {
         n.setContractor(contractor);
         Tenderer tenderer = em.find(Tenderer.class, tendererID);
         n.setTenderer(tenderer);
-        n.setDescription(contractor.getSocialReason()+" vous demande de le noter");
+        n.setDescription(message);
         em.persist(n);
     }
 

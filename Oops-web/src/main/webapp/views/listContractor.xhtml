@@ -32,7 +32,7 @@ and open the template in the editor.
         </div>
 
         <h:panelGroup rendered ="#{searchManagedBean.lc.size() ge 2}">
-            <fieldset>
+            <fieldset width="100%" style="margin: 0px;">
                 <h:form>
                     <h:outputText value="Trier par : " />
                     <h:selectOneMenu id ="listOrder" value="#{searchManagedBean.order}" onchange="submit()"
@@ -45,11 +45,11 @@ and open the template in the editor.
 
         <!-- CONTENT -->
         <div class="divContent">
-            <table style="margin:auto;">
+            <table width="100%" style="margin: 0px;">
                 <c:forEach items="#{searchManagedBean.lc}" var="contractor" rendered="#{not empty searchManagedBean.lc}">
                     <tr>
-
-                        <fieldset id="listContractor" style="margin-top: 30px;"> 
+                       <td>
+                        <fieldset id="listContractor" style="margin-top: 10px;"> 
                             <h:graphicImage value="#{contractor.logo}" height="75px" style="float: left;"/>
                             <h:outputText style="font-size: x-large; padding-right: 25px; padding-left: 20px;" 
                                           value="#{contractor.socialReason}"/> 
@@ -68,7 +68,7 @@ and open the template in the editor.
                             </div>
                         </fieldset> 
                         <h:outputText style="padding-left: 10px; margin-bottom: 20px;" value="#{contractor.description}" /> 
-
+                       </td>
                     </tr>
                 </c:forEach>
             </table>

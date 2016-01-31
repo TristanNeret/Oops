@@ -30,6 +30,15 @@ public class ListTendererBean {
     @EJB
     private EvaluationBean ebi;
     
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
     
 
     public ListTendererBean() {
@@ -47,10 +56,7 @@ public class ListTendererBean {
     
     public void askReview(long tendererID){
         Long contractorID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
-        ebi.askForReview(contractorID, tendererID);
-        // open a dialog
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Avis envoyé avec succès !",null );
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        ebi.askForReview(contractorID, tendererID, message);
     }
     
     public boolean isValidAskReview(long contractorID, long tendererID){

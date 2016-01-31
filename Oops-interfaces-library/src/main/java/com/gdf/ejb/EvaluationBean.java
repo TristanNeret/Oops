@@ -63,8 +63,9 @@ public interface EvaluationBean {
      * A contractor asks a tenderer for a review
      * @param contractorID the contractor who wants the review
      * @param tendererID the tender who will give the review to the contractor
+     * @param message the message given by the contractor to the tenderer
      */
-    public void askForReview(Long contractorID, Long tendererID);
+    public void askForReview(Long contractorID, Long tendererID, String message);
     
     public Notification getLastNotificationSent(Long contractorID, Long tendererID);
 

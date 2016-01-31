@@ -297,4 +297,10 @@ public class SearchBeanImpl implements SearchBean {
         query.setParameter(1, first + "%" );
         return query.getResultList();
     }
+         
+    
+    // for unit test
+    void setEm(EntityManager em) {
+        this.em = em;
+    }
 }
