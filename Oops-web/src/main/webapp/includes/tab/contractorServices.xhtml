@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:t="http://xmlns.jcp.org/jsf/passthrough">
+    
+    <div>
+        
+     
+        <h:outputLabel styleClass="titleServiceManage" value="Liste des services :" rendered="#{serviceAddBean.areServices()}" />
+        <h:outputLabel styleClass="titleServiceManage" value="Il n'y a encore aucun service vous concernant." rendered="#{!serviceAddBean.areServices()}" /> 
+          
+        <p:panel id="sevicePanel">
+         
+            <h:form id="formService">   
+                
+            <p:growl id="growlServiceContractorList" sticky="false" showDetail="false" life="3000" />
+            
+            <c:forEach items="#{serviceAddBean.contractor.services}" var="service" > 
+                 <div class="leftPanelService">
+                     
+                            
+                        <span style="color: #1E90FF;"><b>
+                             <h:outputText value="#{service.title}" /></b> </span><br/>
+
+                               <h:outputText value="#{service.description}"/> 
+                                
+                                <div>
+
+                                    <tr>
+                                        <td><b>Tarif horraire : 
+                                        <h:outputText value="#{service.price}"/> €
+                                        </b>
+                                        </td>
+                                        
+                                       
+                                    <td>
+                                  <div class="rightServiceButton">      
+                                  <p:commandButton id="updateCommandButton" value="Modifier" action="#{serviceAddBean.updateService(service)}" style="updateButtonService"/>
+                                  <p:commandButton id="deleteCommandButton" value="Supprimer" action="#{serviceAddBean.deleteService(service)}" style="removeButtonService" update="growlServiceContractorList @form"/>
+                                  </div>
+                                    </td>
+
+                                    </tr>
+                                 </div>
+                               
+                </div>
+                        
+               </c:forEach> 
+            
+            
+            
+            <!-- contractor's new service -->
+            <div id="divContractorAddService">
+            
+                            <div>
+                                <h:outputLabel value="Ajouter un service :" styleClass="titleServiceManage" />
+                            </div>
+                            <div>
+                                
+                                <h:inputText id="titleService" size="20" value="#{serviceAddBean.title}" label="titleLabel"/> 
+                                <p:watermark for="titleService" value="Service Title" id="wtitleService" /><br/>
+                                 
+                                <p:inputTextarea id="ServiceContent"  styleClass="textAreaServiceDescription" rows="6" cols="30" value="#{serviceAddBean.description}" required="true" autoResize="false" label="descriptionLabel" />
+                                <p:watermark for="ServiceContent" value="Description ..." id="wServiceContent" /><br/>
+                                <h:inputText id="priceService" size="10" value="#{serviceAddBean.price}" label="priceLabel" /> <br/>
+                                <div class="divContractorService">
+                                    <p:commandButton id="addButton" action="#{serviceAddBean.addService()}"  value="Ajouter"  update="growlServiceContractorList @form" />
+
+                                </div>
+                            </div>
+                         
+            </div>
+            
+            
+            
+             </h:form>            
+        </p:panel>
+        
+        
+        
+        
+        
+        
+    </div>
+    
+    
+</ui:composition>
+

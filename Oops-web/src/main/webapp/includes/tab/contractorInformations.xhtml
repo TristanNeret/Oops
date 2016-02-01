@@ -11,84 +11,66 @@
     
     <div>
         
-     
-        <h:outputLabel styleClass="titleServiceManage" value="Liste des services :" rendered="#{serviceAddBean.areServices()}" />
-        <h:outputLabel styleClass="titleServiceManage" value="Il n'y a encore aucun service vous concernant." rendered="#{!serviceAddBean.areServices()}" /> 
-          
-        <p:panel id="sevicePanel">
+        <p:panel id="informationsPanel">
          
-            <h:form id="formService">   
-                
-            <p:growl id="growlServiceContractorList" sticky="false" showDetail="false" life="3000" />
-            
-            <c:forEach items="#{serviceAddBean.contractor.services}" var="service" > 
-                 <div class="leftPanelService">
-                     
-                            
-                        <span style="color: #1E90FF;"><b>
-                             <h:outputText value="#{service.title}" /></b> </span><br/>
+            <h:form id="form">
 
-                               <h:outputText value="#{service.description}"/> 
-                                
-                                <div>
+               <h:panelGrid columns="2">
+                                         
+                                            <h:outputLabel value="Login :" />
+                                            <h:outputText  id="loginCompte" value="#{contractorEditBean.login}"/>
 
-                                    <tr>
-                                        <td><b>Tarif horraire : 
-                                        <h:outputText value="#{service.price}"/> €
-                                        </b>
-                                        </td>
+                                            <h:outputLabel value="Mot de passe :" />
+                                            <h:outputText  id="passCompte" value="********" />
+                                            
+                                            
+                                            <h:outputLabel value="Prénom :" />
+                                            <h:outputText  id="fnameCompte" value="#{contractorEditBean.lastname}" />
+                                            
+                                            <h:outputLabel value="Nom :" />
+                                            <h:outputText  id="lnameCompte" value="#{contractorEditBean.firstname}" />
+                                            
+                                            <h:outputLabel value="Adresse mail :" />
+                                            <h:outputText  id="emailCompte" value="#{contractorEditBean.email}" />
+                                                
+
+                                            <h:outputLabel value="Téléphone :"  />
+                                            <h:outputText  id="phoneCompte" value="#{contractorEditBean.phone}" />
+                                            
+                                            
+                                        </h:panelGrid>
+                                            
                                         
-                                       
-                                    <td>
-                                  <div class="rightServiceButton">      
-                                  <p:commandButton id="updateCommandButton" value="Modifier" action="#{serviceAddBean.updateService(service)}" style="updateButtonService"/>
-                                  <p:commandButton id="deleteCommandButton" value="Supprimer" action="#{serviceAddBean.deleteService(service)}" style="removeButtonService" update="growlServiceContractorList @form"/>
-                                  </div>
-                                    </td>
-
-                                    </tr>
-                                 </div>
-                               
-                </div>
-                        
-               </c:forEach> 
-            
-            
-            
-            <!-- contractor's new service -->
-            <div id="divContractorAddService">
-            
-                            <div>
-                                <h:outputLabel value="Ajouter un service :" styleClass="titleServiceManage" />
-                            </div>
-                            <div>
-                                
-                                <h:inputText id="titleService" size="20" value="#{serviceAddBean.title}" label="titleLabel"/> 
-                                <p:watermark for="titleService" value="Service Title" id="wtitleService" /><br/>
-                                 
-                                <p:inputTextarea id="ServiceContent"  styleClass="textAreaServiceDescription" rows="6" cols="30" value="#{serviceAddBean.description}" required="true" autoResize="false" label="descriptionLabel" />
-                                <p:watermark for="ServiceContent" value="Description ..." id="wServiceContent" /><br/>
-                                <h:inputText id="priceService" size="10" value="#{serviceAddBean.price}" label="priceLabel" /> <br/>
-                                <div class="divContractorService">
-                                    <p:commandButton id="addButton" action="#{serviceAddBean.addService()}"  value="Ajouter"  update="growlServiceContractorList @form" />
-
-                                </div>
-                            </div>
-                         
-            </div>
-            
-            
-            
-             </h:form>            
+                                            <p:commandButton  value="Modifier" oncomplete="PF('dlgcompte').show()" />
+                                               
+                                           <!-- DIALOG BOX FOR CONTRACTOR MODIFICATION -->
+                                            <p:dialog header="Modifier mes informations" resizable="false" showEffect="fade" widgetVar="dlgcompte">
+                                                <div class="dialogTitle"> Modifier les informations de mon compte !</div>
+                                                <p:panelGrid id="outputcompte" columns="2" >
+                                                    
+                                                    
+                                                    <h:outputLabel value="Mot de passe:"  />
+                                                    <p:password  id="modifiedMDP" value="#{contractorEditBean.password}" required="true" label="Pass" />
+                                                    <h:outputLabel value="Confirmer le mot de passe :" />
+                                                    <p:password  id="modifiedConfirmMDP" value="#{contractorEditBean.cpassword}" required="true" label="cPass"/>
+                                                    <h:outputLabel value="Prénom:" />
+                                                    <p:inputText  id="modifiedLastName" value="#{contractorEditBean.lastname}" required="true" label="lName" />
+                                                    <h:outputLabel value="Nom" />
+                                                    <p:inputText  id="modifiedFirstName" value="#{contractorEditBean.firstname}" required="true" label="fName"/>
+                                                    <h:outputLabel value="Adresse mail :" />
+                                                    <p:inputText  id="modifiedMail" value="#{contractorEditBean.email}" required="true" label="Email"/>
+                                                    <h:outputLabel value="Téléphone :" />
+                                                    <p:inputText  id="modifiedPhoneNumber" value="#{contractorEditBean.phone}" required="true" label="Phone" />
+                                                    
+                                                    
+                                                    
+                                              </p:panelGrid>
+                                                <div class="dialogFooter" >
+                                                    <p:commandButton value="Enregistrer" actionListener="#{contractorEditBean.updateCompte()}" update="@form" />          
+                                                </div>
+                                             </p:dialog>     
+                                     
+                </h:form>
         </p:panel>
-        
-        
-        
-        
-        
-        
-    </div>
-    
-    
+        </div>
 </ui:composition>
-
