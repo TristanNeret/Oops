@@ -38,9 +38,9 @@ and open the template in the editor.
                                 <p:rating id="reviewRate" value="#{tendererReviewBean.editReviewRating}" required="true" />
 
                                 <f:facet name="footer">
-                                    <p:commandButton value="Soumettre l'avis modifié" action="#{tendererReviewBean.editReview()}" 
+                                    <p:commandButton id="editButtonDialogValidate" value="Soumettre l'avis modifié" action="#{tendererReviewBean.editReview()}" 
                                                      oncomplete="PF('reviewDialog').hide();" update="@form" />
-                                    <p:commandButton value="Annuler" oncomplete="PF('reviewDialog').hide();" />
+                                    <p:commandButton id="cancelButtonDialogValidate" value="Annuler" oncomplete="PF('reviewDialog').hide();" />
                                 </f:facet>  
                             </h:panelGrid>
                         </p:dialog>
@@ -83,8 +83,8 @@ and open the template in the editor.
                                     <p:commandButton id="editButton" value="Modifier" action="#{tendererReviewBean.setEditReview(review)}" update="dialogEditReview" oncomplete="PF('reviewDialog').show();" />
 
                                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                        <p:commandButton id="confirmButtonDialogValidate" value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                        <p:commandButton id="confirmButtonDialogUnvalidate" value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                                     </p:confirmDialog>
                                 </div>
                             </div>

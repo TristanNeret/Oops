@@ -14,9 +14,9 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
@@ -24,7 +24,7 @@ import javax.inject.Named;
  * @author Tristan
  */
 @Named(value = "tendererReviewBean")
-@RequestScoped
+@ViewScoped
 public class TendererReviewBean implements Serializable {
  
     private long id;
@@ -70,6 +70,7 @@ public class TendererReviewBean implements Serializable {
         if (userID != null && !userID.isEmpty()) {
 
             this.id = new Long(userID);
+            this.reviews = null;
             this.reviews = this.searchBean.searchTendererById(this.id).getReviews();
         
         }
@@ -99,7 +100,11 @@ public class TendererReviewBean implements Serializable {
     public void removeReview(Review review) {
         
         this.tendererManagerBean.removeReview(this.id, review);
-        this.reviews = this.searchBean.searchTendererById(this.id).getReviews();
+        int i = 0;
+        while (i<this.reviews.size() && !this.reviews.get(i).getId().equals(review.getId())) {
+            i++;
+        }
+        this.reviews.remove(i);// = this.searchBean.searchTendererById(this.id).getReviews();
         
         FacesContext.getCurrentInstance().addMessage("growlReviewTenderer", new FacesMessage("Votre avis a été supprimé avec succès.", ""));
         

@@ -8,6 +8,7 @@ package com.gdf.persistence;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -182,6 +183,15 @@ public class Tenderer implements Serializable {
     public void addNotification(Notification n){
         this.notifications.add(n);
         n.setTenderer(this);
+    }
+    
+    public void removeNotificationByReviewId(long reviewId) {
+        for (ListIterator<Notification> iter = this.notifications.listIterator(); iter.hasNext(); ) {
+            Notification n = iter.next();
+            if (n.getReview().getId().equals(reviewId)) {
+                iter.remove();
+            }
+        }
     }
     
     private String encryptPassword(String password){

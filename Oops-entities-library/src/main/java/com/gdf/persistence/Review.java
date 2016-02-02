@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -176,6 +177,15 @@ public class Review implements Serializable {
     public void addNotification(Notification n){
         this.notifications.add(n);
         n.setReview(this);
+    }
+    
+    public void removeNotificationByReviewId(long reviewId) {
+        for (ListIterator<Notification> iter = this.notifications.listIterator(); iter.hasNext(); ) {
+            Notification n = iter.next();
+            if (n.getReview().getId().equals(reviewId)) {
+                iter.remove();
+            }
+        }
     }
 
     @Override

@@ -25,7 +25,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  * @author aziz
  */
 public class ListTendererBeanTest {
-    /**
+    
     private static WebDriver driver;
     private static String baseUrl;
     
@@ -55,31 +55,31 @@ public class ListTendererBeanTest {
     @Test
     public void testAskForReview(){
         // Preparation
-        driver.get(baseUrl); 
-        WebElement askButton = driver.findElement(By.className("commandButtonAskReview"));
-        askButton.click();
-
-        // Test
-        WebElement growlTitle = driver.findElement(By.className("ui-growl-title"));
-
-        // Verification
-        assertEquals(growlTitle.getText(), "Avis envoyé avec succès !");
+//        driver.get(baseUrl); 
+//        WebElement askButton = driver.findElement(By.className("commandButtonAskReview"));
+//        askButton.click();
+//
+//        // Test
+//        WebElement growlTitle = driver.findElement(By.className("ui-growl-title"));
+//
+//        // Verification
+//        assertEquals(growlTitle.getText(), "Avis envoyé avec succès !");
     }
     
     @Test
     public void testReviewAsked(){
-         // Preparation
-        driver.get(baseUrl);
-        boolean notFind = false;
-        
-        // Test
-        try {
-            driver.findElement(By.className("commandButtonAskReview"));
-        }catch(NoSuchElementException e){
-            notFind = true;
-        }
-        
-        // Verification
-        assertTrue(notFind);
-    }**/
+        // Preparation
+//        driver.get(baseUrl);
+//        boolean notFind = false;
+//        
+//        // Test
+//        try {
+//            driver.findElement(By.className("commandButtonAskReview"));
+//        }catch(NoSuchElementException e){
+//            notFind = true;
+//        }
+//        
+//        // Verification
+//        assertTrue(notFind);
+    }
 }
