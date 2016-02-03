@@ -6,7 +6,6 @@
 package com.gdf.managedBean;
 
 import com.gdf.ejb.AddressBean;
-import com.gdf.ejb.ContractorManagerBean;
 import com.gdf.ejb.LegalInformationBean;
 import com.gdf.ejb.RegistrationBean;
 import com.gdf.ejb.SearchBean;
@@ -20,7 +19,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
- *
+ * ContractorEditBean
  * @author bibo
  */
 @Named(value = "contractorEditBean")
@@ -30,10 +29,8 @@ public class ContractorEditBean implements Serializable{
     @EJB
     private SearchBean searchBean;
     
-    
     @EJB
     private RegistrationBean rb;
-    
     
     @EJB
     private LegalInformationBean legalinformationBean;
@@ -44,7 +41,6 @@ public class ContractorEditBean implements Serializable{
     private Contractor contractor;
     private LegalInformation legalinformation;
     private Address address; 
-    
     
     private String login;
     private String password;
@@ -66,31 +62,27 @@ public class ContractorEditBean implements Serializable{
     /**
      * Creates a new instance of ContractorEditBean
      */
-    
-    
-    
     public ContractorEditBean() {
+    
     }
     
-   
-   
     @PostConstruct
     public void init() {
         
-        setContractor(searchBean.searchContractorById(1));
-        setLegalinformation(legalinformationBean.findById(2));
+        setContractor(searchBean.searchContractorById(50));
+        setLegalinformation(legalinformationBean.findById(12));
+    
     }
-    
-    
     
     public String updateCompte() {
+        
         this.rb.update(this.contractor);
+        
         return "modified";
+    
     }
     
-  
-    
-    public String updateInfo(){
+    public String updateInfo() {
         
         /*legalinformation.setInsurrance(getInsurrance());
         legalinformation.setSiren(getSiren());
@@ -100,20 +92,20 @@ public class ContractorEditBean implements Serializable{
         this.legalinformationBean.update(legalinformation);
         
         return "modified";
+        
     }
     
-    public String update_address(){
+    public String update_address() {
+        
         this.addressBean.update(address);
+        
         return "";
+        
     }
-    
-    
-    
-    
     
     /*
-        Contractor setters and getters
-    */
+     * Contractor setters and getters
+     */
     
     public Contractor getContractor() {
         return contractor;
@@ -127,9 +119,9 @@ public class ContractorEditBean implements Serializable{
         return contractor.getLogin();
     }
 
-    /*public void setLogin(String login) {
+    public void setLogin(String login) {
         this.login = login;
-    }*/
+    }
 
     public String getPassword() {
         return contractor.getPassword();
@@ -212,8 +204,8 @@ public class ContractorEditBean implements Serializable{
     }
 
     /*
-        Legal information setters and getters
-    */
+     * Legal information setters and getters
+     */
       
     public LegalInformation getLegalinformation() {
         return legalinformation;
@@ -267,4 +259,5 @@ public class ContractorEditBean implements Serializable{
     public void setAddress(Address address) {
         this.address = address;
     }
+    
 }

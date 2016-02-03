@@ -9,86 +9,108 @@
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:t="http://xmlns.jcp.org/jsf/passthrough">
     
-    <div>
-        
-     
-        <h:outputLabel styleClass="titleServiceManage" value="Liste des services :" rendered="#{serviceAddBean.areServices()}" />
-        <h:outputLabel styleClass="titleServiceManage" value="Il n'y a encore aucun service vous concernant." rendered="#{!serviceAddBean.areServices()}" /> 
+    <script type="text/javascript">
+        function handleReviewRequest(xhr, status, args) {
+            if (args.validationFailed) {
+                //PF('prestationDialog').jq.effect("shake", {times: 5}, 100);
+                PF('prestationDialog').show();
+            }
+            else {
+                PF('prestationDialog').hide();
+            }
+        }
+    </script>
+    
+    <div class="divContent">
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste des services :" />
           
         <p:panel id="sevicePanel">
-         
+            
+            <!-- CONTRACTOR'S SERVICES -->
             <h:form id="formService">   
-                
-            <p:growl id="growlServiceContractorList" sticky="false" showDetail="false" life="3000" />
-            
-            <c:forEach items="#{serviceAddBean.contractor.services}" var="service" > 
-                 <div class="leftPanelService">
-                     
-                            
-                        <span style="color: #1E90FF;"><b>
-                             <h:outputText value="#{service.title}" /></b> </span><br/>
-
-                               <h:outputText value="#{service.description}"/> 
-                                
-                                <div>
-
-                                    <tr>
-                                        <td><b>Tarif horraire : 
-                                        <h:outputText value="#{service.price}"/> €
-                                        </b>
-                                        </td>
-                                        
-                                       
-                                    <td>
-                                  <div class="rightServiceButton">      
-                                  <p:commandButton id="updateCommandButton" value="Modifier" action="#{serviceAddBean.updateService(service)}" style="updateButtonService"/>
-                                  <p:commandButton id="deleteCommandButton" value="Supprimer" action="#{serviceAddBean.deleteService(service)}" style="removeButtonService" update="growlServiceContractorList @form"/>
-                                  </div>
-                                    </td>
-
-                                    </tr>
-                                 </div>
-                               
-                </div>
-                        
-               </c:forEach> 
-            
-            
-            
-            <!-- contractor's new service -->
-            <div id="divContractorAddService">
-            
-                            <div>
-                                <h:outputLabel value="Ajouter un service :" styleClass="titleServiceManage" />
+                <p:growl id="growlServiceContractorList" sticky="false" showDetail="false" life="3000" />
+                <div class="divCurrentContractorServices">
+                    <h:outputLabel value="Il n'y a encore aucun service vous concernant." rendered="#{!serviceAddBean.areServices()}" /> 
+                    <c:forEach items="#{serviceAddBean.contractor.services}" var="service" > 
+                        <div class="divLeftContractorService">
+                            <div class="divServiceTitle">
+                                <h:outputText value="#{service.title}" />
                             </div>
-                            <div>
-                                
-                                <h:inputText id="titleService" size="20" value="#{serviceAddBean.title}" label="titleLabel"/> 
-                                <p:watermark for="titleService" value="Service Title" id="wtitleService" /><br/>
-                                 
-                                <p:inputTextarea id="ServiceContent"  styleClass="textAreaServiceDescription" rows="6" cols="30" value="#{serviceAddBean.description}" required="true" autoResize="false" label="descriptionLabel" />
-                                <p:watermark for="ServiceContent" value="Description ..." id="wServiceContent" /><br/>
-                                <h:inputText id="priceService" size="10" value="#{serviceAddBean.price}" label="priceLabel" /> <br/>
-                                <div class="divContractorService">
-                                    <p:commandButton id="addButton" action="#{serviceAddBean.addService()}"  value="Ajouter"  update="growlServiceContractorList @form" />
+                            <h:outputText value="#{service.description}"/> 
+                            <div class="divServiceButton">
+                                <div class="leftServiceButton">
+                                    Tarif horraire : <b><h:outputText value="#{service.price}"/> €</b> - 
+                                    <span class="spanServiceCategory">#{service.category.name}</span>
+                                </div>
+                                <div class="rightServiceButton">  
+                                    
+                                    <!-- Dialog view to edit Prestation -->
+                                    <p:dialog id="prestationDialog" header="Modifier votre prestation :" resizable="false" widgetVar="prestationDialog" dynamic="true">
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <h:outputLabel value="Titre :" />
+                                            <p:inputText id="serviceTitle" value="#{serviceAddBean.editService.title}" style="width: 100%;" required="true" label="Titre de la prestation" />
 
+                                            <h:outputLabel value="Description :" />
+                                            <p:inputTextarea id="serviceDescription" rows="6" cols="33" style="width: 100%;" value="#{serviceAddBean.editService.description}" required="true" label="Description" />
+
+                                            <h:outputLabel value="Catégorie :" />
+                                            <h:outputLabel value="#{serviceAddBean.editService.category.name}" />
+
+                                            <h:outputLabel value="Tarif :" />
+                                            <p:inputText id="servicePrice" value="#{serviceAddBean.editService.price}" style="width: 100%;" label="Tarif" />
+                                            
+                                            <f:facet name="footer">
+                                                <p:commandButton id="editButtonDialogValidate" value="Modifier" action="#{serviceAddBean.updateService()}" 
+                                                                 oncomplete="handleReviewRequest(xhr, status, args);" update="@form" />
+                                                <p:commandButton id="cancelButtonDialogValidate" value="Annuler" oncomplete="PF('prestationDialog').hide();" />
+                                            </f:facet>  
+                                        </h:panelGrid>
+                                    </p:dialog>
+                                    
+                                    <p:commandButton id="updateCommandButton" value="Modifier" action="#{serviceAddBean.setEditService(service)}" styleClass="updateButtonService" update="prestationDialog" oncomplete="PF('prestationDialog').show();"/>
+                                    <p:commandButton id="deleteCommandButton" value="Supprimer" action="#{serviceAddBean.deleteService(service)}" styleClass="removeButtonService" update="growlServiceContractorList @form">
+                                        <p:confirm header="Confirmation" message="Êtes-vous sûr de vouloir supprimer cette prestation ?" icon="ui-icon-alert" />
+                                    </p:commandButton>
+                                    
+                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                        <p:commandButton id="confirmButtonDialogValidate" value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                        <p:commandButton id="confirmButtonDialogUnvalidate" value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                    </p:confirmDialog>
                                 </div>
                             </div>
-                         
-            </div>
+                        </div>      
+                    </c:forEach> 
+                </div>
+            </h:form>
+                
+            <!-- CONTRACTOR'S NEW SERVICE -->
+            <h:form id="formNewService">   
+                <p:growl id="growlNewServiceContractor" sticky="false" showDetail="false" life="3000" />
+                <div class="divContractorAddService">
+                    <div id="divAddServiceTitle">
+                        <h:outputLabel value="Ajouter un service :" />
+                    </div>
+                    <div>
+                        <h:inputText id="titleService" styleClass="inputNewContractorService" required="true" size="20" value="#{serviceAddBean.title}" label="Nom de la prestation"/> 
+                        <p:watermark for="titleService" value="Nom de la prestation" id="wTitleService" /><br/>
+                        <p:inputTextarea id="ServiceContent" styleClass="inputNewContractorService" rows="6" cols="50" value="#{serviceAddBean.description}" required="true" autoResize="false" label="Description" />
+                        <p:watermark for="ServiceContent" value="Description ..." id="wServiceContent" /><br/>
+                        <div class="inputNewContractorService">
+                            <p:selectOneMenu id="selectOneMenuCategorie" value="#{serviceAddBean.idCategory}" style="width: 60%;">
+                                <f:selectItems value="#{serviceAddBean.categories}" var="categoryItem" itemLabel="#{categoryItem.name}" itemValue="#{categoryItem.id}" />
+                            </p:selectOneMenu>
+                        </div>
+                        Tarif : <h:inputText id="priceService" size="10" value="#{serviceAddBean.price}" label="Tarif" /> €<br/>
+                        <p:watermark for="priceService" value="Tarif en €" id="wPriceService" /><br/>
+                        <div class="divContractorService">
+                            <p:commandButton id="addButton" action="#{serviceAddBean.addService()}" value="Ajouter" update="growlNewServiceContractor @form :tabViewContractor:formService" />
+                        </div>
+                    </div>          
+                </div>
+            </h:form>      
             
-            
-            
-             </h:form>            
         </p:panel>
-        
-        
-        
-        
-        
-        
     </div>
-    
     
 </ui:composition>
 

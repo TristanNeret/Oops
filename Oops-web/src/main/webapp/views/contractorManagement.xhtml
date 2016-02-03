@@ -12,15 +12,15 @@
     <h:body>
         <ui:include src="/includes/header.xhtml" />
         <!-- TAB -->
-        <p:tabView>
+        <p:tabView id="tabViewContractor">
             <p:tab title="Mes Informations">
-                <ui:include src="" />
+                <ui:include src="/includes/tab/contractorInformations.xhtml" />
             </p:tab>
             <p:tab title="Mon Entreprise">
                 <ui:include src="" />
             </p:tab>
             <p:tab title="Mes Préstations">
-                <ui:include src="/includes/tab/contractorInformations.xhtml" />
+                <ui:include src="/includes/tab/contractorServices.xhtml" />
             </p:tab>
             <p:tab title="Mes Avis">
                 <ui:include src="/includes/tab/contractorsReview.xhtml" />

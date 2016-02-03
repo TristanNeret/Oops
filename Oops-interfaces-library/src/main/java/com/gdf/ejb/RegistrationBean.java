@@ -7,6 +7,7 @@ package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Moderator;
+import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.Remote;
 
@@ -30,21 +31,26 @@ public interface RegistrationBean {
     public void register(Tenderer t);
     
     /**
-     * Register a Contractor
+     * Update a Contractor
      * @param c the Contractor to update
      */
-    
     public void update(Contractor c);
     
     /**
-     * Register a Tenderer
+     * Update a Tenderer
      * @param t the Tenderer to update
      */
-    
     public void update(Tenderer t);
-     /** Register a Moderator
+    
+    /** Register a Moderator
      * @param m the Moderator to register
      */
     public void register(Moderator m);
+    
+    /**
+     * Update a Serice
+     * @param s the Service to update
+     */
+    public void update(Service s);
     
 }

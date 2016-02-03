@@ -5,10 +5,6 @@
  */
 package com.gdf.managedBean;
 
- 
- 
-import com.gdf.ejb.CategoryBean;
-import com.gdf.ejb.ContractorManagerBean;
 import com.gdf.ejb.RegistrationBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.ejb.ServiceBean;
@@ -26,23 +22,15 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
- *
+ * ServiceAddBean
  * @author bibo
  */
-
 @Named(value = "serviceAddBean")
 @ViewScoped
 public class ServiceAddBean implements Serializable {
 
-    /**
-     * Creates a new instance of ServiceAddBean
-     */
-    
     @EJB
     private SearchBean searchBean;
-    
-    @EJB
-    private CategoryBean categoryBean;
     
     @EJB
     private ServiceBean serviceBean;
@@ -50,71 +38,85 @@ public class ServiceAddBean implements Serializable {
     @EJB
     private RegistrationBean rb;
     
-    
     private String title;
     private String description;
+    private long idCategory;
     private double price;
     private Contractor contractor;
-    private Category category;
     private List<Category> categories;
-    
-    
+    private Service editService;
     
     @PostConstruct
     public void init() {
 
         this.setContractor(searchBean.searchContractorById(50));
-        //this.setCategory(categoryBean.findById((long) 9));
         categories = new ArrayList<>();
-        setCategories(categoryBean.findAll());
+        this.setCategories(searchBean.getCategories());
         
-   
+        this.setTitle(null);
+        this.setDescription(null);
+        this.setPrice(0.0);
+        
     }
     
-    
+    /**
+     * Test if the Contractor has Services 
+     * @return True if the Contractor has Service, or False 
+     */
     public boolean areServices() {
+        
         return !this.contractor.getServices().isEmpty();
+    
     }
     
+    /**
+     * Add a new Service
+     */
     public void addService(){
 
-        Service service =new Service();
+        Service service = new Service();
         service.setTitle(getTitle());
         service.setDescription(getDescription());
-        service.setPrice(getPrice());
-        service.setCategory(getCategory());
-        //serviceBean.register(service);
+        if (this.getPrice() != 0.0) {
+            service.setPrice(getPrice());
+        }
+        service.setCategory(this.searchBean.searchCategoryById(this.idCategory));
         contractor.addService(service);
         rb.update(contractor);
         
         this.init();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre service a été ajoutée avec succès !", ""));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre prestation a été ajoutée avec succès !", ""));
+        
     }
     
-    
+    /**
+     * Delete a Contractor's Service
+     * @param service Service to Remove
+     */
     public void deleteService(Service service){
         
         contractor.removeService(service);
         rb.update(contractor);
-        //serviceBean.deleteContractorService(service);
         this.init();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre service a été supprimé avec succès !", ""));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre prestation a été supprimé avec succès !", ""));
  
     }
     
-    public void updateService(Service service){
+    /**
+     * Uppdate a Contractor's Service
+     */
+    public void updateService(){
         
-        
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre service a été modifiée avec succès !", ""));
+        rb.update(this.editService);
+        this.init();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre prestation a été modifiée avec succès !", ""));
+    
     }
 
-
-  
-   
-
     /*
-    getters and setters
+     * GETTER and SETTER
      */
+    
     public List<Category> getCategories() {
         return categories;
     }
@@ -155,16 +157,20 @@ public class ServiceAddBean implements Serializable {
         this.contractor = contractor;
     }
 
-    public Category getCategory() {
-        return category;
+    public long getIdCategory() {
+        return idCategory;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setIdCategory(long idCategory) {
+        this.idCategory = idCategory;
     }
-    
-    
 
-   
+    public Service getEditService() {
+        return editService;
+    }
+
+    public void setEditService(Service editService) {
+        this.editService = editService;
+    }
     
 }

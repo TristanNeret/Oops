@@ -5,7 +5,7 @@
  */
 package com.gdf.ejb;
 
-import com.gdf.persistence.Address;
+import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
@@ -159,11 +159,6 @@ public class SearchBeanImpl implements SearchBean {
             return query.getResultList();
     }
 
-    /**
-     * Search tenderers by keyword
-     * @param keyWord a keyword which could be present on the tenderer informations
-     * @return the tenderer matching with the keyword or all tenderers if keyword is empty
-     */
     @Override
     public List<Tenderer> findTenderers(String keyWord) {
         if(keyWord == null)
@@ -172,11 +167,6 @@ public class SearchBeanImpl implements SearchBean {
             return this.searchTendererByKeyWord(keyWord);   
     }
     
-    /**
-     * Search tenderers by keyword
-     * @param keyWord a keyword which could be present on the tenderer informations
-     * @return the list of tenderers
-     */
     @Override
     public List<Tenderer> searchTendererByKeyWord(String keyWord) {
         TypedQuery<Tenderer> query;
@@ -185,35 +175,16 @@ public class SearchBeanImpl implements SearchBean {
         return query.getResultList();   
     }
 
-    /**
-     * Get all the tenderers
-     * @return all the tenderers
-     */
     @Override
     public List<Tenderer> findAllTenderer() {
         TypedQuery<Tenderer> query = em.createNamedQuery("Tenderer.findAll", Tenderer.class);
         return query.getResultList(); 
     }
-    
-    /**
-     * Get all countries
-     * @return all countries
-     */
+   
     @Override
     public List<String> getAllCountry() {
         TypedQuery<String> query;
         query = em.createQuery("SELECT DISTINCT c.address.country FROM Contractor c ",String.class);
-        return query.getResultList();  
-    }
-    
-    /**
-     * Get all categories
-     * @return all categories
-     */
-    @Override
-    public List<String> getAllCategory() {
-        TypedQuery<String> query;
-        query = em.createQuery("SELECT DISTINCT c.name FROM Category c ",String.class);
         return query.getResultList();  
     }
     
@@ -244,6 +215,7 @@ public class SearchBeanImpl implements SearchBean {
     }
 
     // TENDERER
+    
     @Override
     public Tenderer searchTendererByLogin(String login) {
         
@@ -297,4 +269,31 @@ public class SearchBeanImpl implements SearchBean {
         query.setParameter(1, first + "%" );
         return query.getResultList();
     }
+
+    // CATEGORY
+    
+    @Override
+    public List<String> getAllCategory() {
+        
+        TypedQuery<String> query;
+        query = em.createQuery("SELECT DISTINCT c.name FROM Category c ", String.class);
+        return query.getResultList();  
+    
+    }
+    
+    @Override
+    public List<Category> getCategories() {
+        
+        TypedQuery<Category> query = em.createQuery("SELECT c FROM Category c ", Category.class);
+        return query.getResultList();
+        
+    }
+
+    @Override
+    public Category searchCategoryById(long idCategory) {
+        
+        return em.find(Category.class, idCategory);
+        
+    }
+    
 }

@@ -5,6 +5,7 @@
  */
 package com.gdf.ejb;
 
+import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
@@ -27,15 +28,12 @@ public interface SearchBean {
      */
     public Contractor searchContractorById(long id);
 
-    
-    
     /**
      * Search a Contractor by his login
      * @param login the login of the Contractor
      * @return the Contractor identified by the login if any or null if he doesn't exist
      */
     public Contractor searchContractorByLogin(String login);
-    
     
     /**
      * Search a Contractor by his SIREN
@@ -44,14 +42,23 @@ public interface SearchBean {
      */
     public Contractor searchContractorBySiren(String siren);
     
-    
     /**
      * Search a Contractor by his email
      * @param email the email of the Contractor
      * @return the Contractor identified by the email if any or null if doesn't exist
      */
     public List<Contractor> searchContractorByEmail(String email);
-    
+
+    /**
+     * Search contractors by several criteria 
+     * @param keyWord a keyword which could be present on the contractor informations
+     * @param rating the rating of the contractor 
+     * @param country the country of the contractor
+     * @param category the category of service given by the contractor
+     * @param order the order used to display the results
+     * @return the list of contractors
+     */
+    public List<Contractor> findContractors(String keyWord,int rating, String country, String category, String order);
 
     // TENDERER
     
@@ -61,21 +68,6 @@ public interface SearchBean {
      * @return the Tenderer identified by the login if any or null if he doesn't exist
      */
     public Tenderer searchTendererByLogin(String login);
-    
-    // REVIEW
-    
-    /**
-     * Search waiting Reviews
-     * @return list of waiting reviews
-     */
-    public List<Review> searchWaitingReviews();
-    
-    /**
-     * Search accepted Reviews for a Contractor
-     * @param id id of the Contractor
-     * @return the accepted Reviews List of the Contractor
-     */
-    public List<Review> searchAcceptedReviews(long id);
     
     /**
      * Search tenderers by keyword
@@ -98,31 +90,59 @@ public interface SearchBean {
     public List<Tenderer> findAllTenderer();
     
     /**
-     * Search contractors by several criteria 
-     * @param keyWord a keyword which could be present on the contractor informations
-     * @param rating the rating of the contractor 
-     * @param country the country of the contractor
-     * @param category the category of service given by the contractor
-     * @param order the order used to display the results
-     * @return the list of contractors
+     * Return tenderers name begin by the query
+     * @param query query the Tenderer name begin
+     * @return list of tenderers name found
      */
-    public List<Contractor> findContractors(String keyWord,int rating, String country, String category, String order);
+    public List<String> findTendererBeginBy(String query);
     
     /**
-     * Get all countries
-     * @return all countries
+     * Return tenderers name ending by the query
+     * @param query query the Tenderer name ends
+     * @return list of tenderers name found
+     */
+    public List<String> findContractorBeginBy(String query);
+    
+    // REVIEW
+    
+    /**
+     * Search waiting Reviews
+     * @return list of waiting reviews
+     */
+    public List<Review> searchWaitingReviews();
+    
+    /**
+     * Search accepted Reviews for a Contractor
+     * @param id id of the Contractor
+     * @return the accepted Reviews List of the Contractor
+     */
+    public List<Review> searchAcceptedReviews(long id);
+    
+    /**
+     * Get all countries name
+     * @return list of all countries name
      */
     public List<String> getAllCountry();
     
+    // CATEGORY
+    
     /**
-     * Get all categories
-     * @return all categories
+     * Get a Category from it's id
+     * @param idCategory id of the Category to return 
+     * @return the Category of the id
+     */
+    public Category searchCategoryById(long idCategory);
+    
+    /**
+     * Get all categories name
+     * @return list of all categories name
      */
     public List<String> getAllCategory();  
     
-    
-    public List<String> findTendererBeginBy(String query);
-    
-    public List<String> findContractorBeginBy(String query);
+    /**
+     * Get all categories
+     * @return list of all categories
+     */
+    public List<Category> getCategories();
     
 }

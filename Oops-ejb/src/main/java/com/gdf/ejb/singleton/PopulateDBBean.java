@@ -38,6 +38,15 @@ public class PopulateDBBean {
     @PostConstruct
     private void populateDatabase(){
         
+        // CATEGORIES
+        
+        Category defaultCategory = new Category("Divers", "image");
+        em.persist(defaultCategory);
+        defaultCategory = new Category("Restauration", "image");
+        em.persist(defaultCategory);
+        defaultCategory = new Category("Animation", "image");
+        em.persist(defaultCategory);
+        
         // REVIEWS
         
         Review review = new Review();
