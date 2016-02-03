@@ -86,11 +86,6 @@ public class RegistrationBeanImpl implements RegistrationBean {
         
     }
 
-    @Override
-    public void register(Moderator m) {
-        
-        em.persist(m);
-        
-    }
+  
 
 }
