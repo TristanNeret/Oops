@@ -46,18 +46,17 @@ and open the template in the editor.
 
         <!-- CONTENT -->
         <div class="divContent">
-            <table width="100%" style="margin: 0px;">
-                <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
-                    <tr>
-                        <td>
+            <o:form id="askReviewForm" includeViewParams="true">
+                <table  width="100%" style="margin: 0px;">
+                    <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
+                        <tr>
+                            <td>
 
-                            <fieldset style="margin-top: 10px;">
-                                <h:outputText style="font-size: x-large; padding-right: 20px" value="#{tend.login}" />
-                                (<h:outputText value="#{tend.firstname}" style="padding-right: 5px"/>
-                                <h:outputText value="#{tend.lastname}" />)
+                                <fieldset style="margin-top: 10px;">
+                                    <h:outputText style="font-size: x-large; padding-right: 20px" value="#{tend.login}" />
+                                    (<h:outputText value="#{tend.firstname}" style="padding-right: 5px"/>
+                                    <h:outputText value="#{tend.lastname}" />)
 
-
-                                <o:form id="askReviewForm" includeViewParams="true">
                                     <p:growl widgetVar="askReviewGrowlError" sticky="false" showDetail="true" life="3000" />
                                     <h:panelGrid columns="2" style="float: right;">
 
@@ -70,43 +69,49 @@ and open the template in the editor.
                                                          actionListener="#{listTendererBean.setTenderer(tend)}"
                                                          update="askReviewDialogForm:dialogPanel">
                                             <!-- Reset fields on opening -->
-                                            <p:ajax update="askReviewDialogForm:askReviewMsg" resetValues="true" />
+                                            <p:ajax update="askReviewDialogForm:askReviewMsg" resetValues="true" /> 
                                         </p:commandButton>
 
                                     </h:panelGrid>
-                                </o:form>
-                            </fieldset>
-                        </td>
-                    </tr>
-                </c:forEach>
-            </table>            
+
+                                </fieldset>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>         
+            </o:form>
+
+            <!-- DIALOG BOX FOR ASKING REVIEWS  -->
+            <o:form id="askReviewDialogForm" includeViewParams="true">
+                <p:growl id="askReviewGrowl" sticky="false" showDetail="false" life="3000" />
+                <p:dialog header="Demande d'avis" modal="true" widgetVar="askReviewDialog" resizable="false">
+                    <p:outputPanel id="dialogPanel">
+                        <h:panelGrid columns="1" cellpadding="5">
+
+                            <h:outputLabel id="Infos" value="Soumissionaire : #{listTendererBean.tenderer.login} 
+                                           (#{listTendererBean.tenderer.firstname} 
+                                           #{listTendererBean.tenderer.lastname})" />
+
+                            <h:outputLabel value="Message :" />
+                            <p:inputTextarea id="askReviewMsg" value="#{listTendererBean.message}" 
+                                             rows="6" cols="33" placeholder="Facultatif" />
+
+                        </h:panelGrid>
+                        <div class="dialogFooter" >
+                            <p:commandButton id="sendAskReviewBtn" update="askReviewGrowl"
+                                             value="Envoyer" actionListener="#{listTendererBean.askReview()}"                                                          
+                                             oncomplete="handleAskReviewRequest(xhr, status, args)" > 
+
+                                <!-- Update -->
+                                <p:ajax update="askReviewForm" resetValues="true" /> 
+                            </p:commandButton>
+                        </div>
+                        
+                    </p:outputPanel>
+                </p:dialog>
+            </o:form>
+
         </div>
-
-        <!-- DIALOG BOX FOR ASKING REVIEWS  -->
-        <o:form id="askReviewDialogForm" includeViewParams="true">
-            <p:growl id="askReviewGrowl" sticky="false" showDetail="false" life="3000" />
-            <p:dialog header="Demande d'avis" modal="true" widgetVar="askReviewDialog" resizable="false">
-                <p:outputPanel id="dialogPanel">
-                    <h:panelGrid columns="1" cellpadding="5">
-
-                        <h:outputLabel id="Infos" value="Soumissionaire : #{listTendererBean.tenderer.login} 
-                                       (#{listTendererBean.tenderer.firstname} 
-                                       #{listTendererBean.tenderer.lastname})" />
-
-                        <h:outputLabel value="Message :" />
-                        <p:inputTextarea id="askReviewMsg" value="#{listTendererBean.message}" 
-                                         rows="6" cols="33" placeholder="Facultatif" />
-
-                    </h:panelGrid>
-                    <div class="dialogFooter" >
-                        <p:commandButton id="sendAskReviewBtn" 
-                                         value="Envoyer" update="askReviewGrowl"  
-                                         actionListener="#{listTendererBean.askReview()}"                                                          
-                                         oncomplete="handleAskReviewRequest(xhr, status, args)" /> 
-                    </div>
-                </p:outputPanel>
-            </p:dialog>
-        </o:form>
 
     </h:body>
 

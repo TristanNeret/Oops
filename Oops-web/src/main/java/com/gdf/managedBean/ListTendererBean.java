@@ -108,14 +108,7 @@ public class ListTendererBean implements Serializable {
         // raz
         tenderer = null;
         message = "";
-        
-        // redirection to reload the page (hide the "Demander un avis" button)
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        try {
-            ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
-        } catch (IOException ex) {
-            Logger.getLogger(ListTendererBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
     }
     
     /**
