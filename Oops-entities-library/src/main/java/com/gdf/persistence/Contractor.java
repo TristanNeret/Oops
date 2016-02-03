@@ -207,7 +207,13 @@ public class Contractor implements Serializable {
     }
 
     public List<Notification> getNotifications() {
-        return notifications;
+        List<Notification> returnNotifications = new ArrayList<>();
+        for (Notification notification : this.notifications) {
+            if (notification.getReview().isReviewEnabled()) {
+                returnNotifications.add(notification);
+            }
+        }
+        return returnNotifications;
     }
 
     public void setNotifications(List<Notification> notifications) {
@@ -215,7 +221,13 @@ public class Contractor implements Serializable {
     }
 
     public List<Review> getReviews() {
-        return reviews;
+        List<Review> returnReviews = new ArrayList<>();
+        for (Review review : this.reviews) {
+            if (review.isReviewEnabled()) {
+                returnReviews.add(review);
+            }
+        }
+        return returnReviews;
     }
 
     public void setReviews(List<Review> reviews) {

@@ -69,7 +69,13 @@ public class Moderator implements Serializable {
     }
 
     public List<ModeratorReview> getReviews() {
-        return reviews;
+        List<ModeratorReview> returnModeratorReviews = new ArrayList<>();
+        for (ModeratorReview review : this.reviews) {
+            if (review.getReview().isReviewEnabled()) {
+                returnModeratorReviews.add(review);
+            }
+        }
+        return returnModeratorReviews;
     }
 
     public void setReviews(List<ModeratorReview> reviews) {
@@ -77,7 +83,13 @@ public class Moderator implements Serializable {
     }
 
     public List<Notification> getNotifications() {
-        return notifications;
+        List<Notification> returnNotifications = new ArrayList<>();
+        for (Notification notification : this.notifications) {
+            if (notification.getReview().isReviewEnabled()) {
+                returnNotifications.add(notification);
+            }
+        }
+        return returnNotifications;
     }
 
     public void setNotifications(List<Notification> notifications) {

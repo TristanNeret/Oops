@@ -75,6 +75,9 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         Review reviewToRemove = em.find(Review.class, review.getId());
         if (reviewToRemove != null) {
             
+            reviewToRemove.setReviewEnabled(false);
+            
+            /*
             // Remove the Review from the Contractor Review list
             Contractor contractorToUpdate = em.find(Contractor.class, reviewToRemove.getContractor().getId());
             contractorToUpdate.removeNotificationByReviewId(reviewToRemove.getId());
@@ -103,7 +106,8 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
             Query queryReview = em.createNamedQuery("Review.deleteReviewById");
             queryReview.setParameter(1, reviewToRemove.getId());
             queryReview.executeUpdate();
-            
+            */
+                    
         }
         
     }
