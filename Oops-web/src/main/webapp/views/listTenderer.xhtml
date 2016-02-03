@@ -22,8 +22,7 @@ and open the template in the editor.
                     PF('askReviewDialog').jq.effect("shake", {times: 5}, 100);
                 }
                 else {
-                    PF('askReviewDialog').hide();
-                    PF('askReviewGrowlError').renderMessage({summary: 'Demande d\'avis envoyée !', detail: 'La demande d\'avis à été envoyée', severity: 'info'});
+                    PF('askReviewDialog').hide();                 
                 }
             }
         </script>
@@ -57,7 +56,7 @@ and open the template in the editor.
                                     (<h:outputText value="#{tend.firstname}" style="padding-right: 5px"/>
                                     <h:outputText value="#{tend.lastname}" />)
 
-                                    <p:growl widgetVar="askReviewGrowlError" sticky="false" showDetail="true" life="3000" />
+                                    <p:growl widgetVar="askReviewGrowl" sticky="false" showDetail="true" life="3000" />
                                     <h:panelGrid columns="2" style="float: right;">
 
                                         <h:button class="headerCommandButton" value="Voir #{tend.login}" 
@@ -83,7 +82,6 @@ and open the template in the editor.
 
             <!-- DIALOG BOX FOR ASKING REVIEWS  -->
             <o:form id="askReviewDialogForm" includeViewParams="true">
-                <p:growl id="askReviewGrowl" sticky="false" showDetail="false" life="3000" />
                 <p:dialog header="Demande d'avis" modal="true" widgetVar="askReviewDialog" resizable="false">
                     <p:outputPanel id="dialogPanel">
                         <h:panelGrid columns="1" cellpadding="5">
@@ -98,13 +96,9 @@ and open the template in the editor.
 
                         </h:panelGrid>
                         <div class="dialogFooter" >
-                            <p:commandButton id="sendAskReviewBtn" update="askReviewGrowl"
+                            <p:commandButton id="sendAskReviewBtn" update="askReviewForm"
                                              value="Envoyer" actionListener="#{listTendererBean.askReview()}"                                                          
-                                             oncomplete="handleAskReviewRequest(xhr, status, args)" > 
-
-                                <!-- Update -->
-                                <p:ajax update="askReviewForm" resetValues="true" /> 
-                            </p:commandButton>
+                                             oncomplete="handleAskReviewRequest(xhr, status, args)" /> 
                         </div>
                         
                     </p:outputPanel>

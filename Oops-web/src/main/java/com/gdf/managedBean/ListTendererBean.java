@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
@@ -105,6 +106,8 @@ public class ListTendererBean implements Serializable {
     public void askReview(){ 
         ebi.askForReview(userID, tenderer.getId(), message);
         
+        showPopup(tenderer.getLogin());
+        
         // raz
         tenderer = null;
         message = "";
@@ -134,5 +137,12 @@ public class ListTendererBean implements Serializable {
      */
     public boolean display(Long tendererID){
         return isContractorConnected() && isValidAskReview(userID, tendererID);
+    }
+    
+    public void showPopup(String tenderer) {
+        FacesContext context = FacesContext.getCurrentInstance();
+         
+        context.addMessage(null, new FacesMessage("Demande d'avis envoyée !",  
+                "La demande d'avis à été envoyée à "+tenderer) );
     }
 }
