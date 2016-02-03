@@ -29,7 +29,9 @@ h2 {
     width: 95%;
 }
 
-/* HEADER */
+/*****************************************************************************/
+/********************************* HEADER ************************************/
+/*****************************************************************************/
 
 #divHeader {
     background-color: #666666;
@@ -78,7 +80,9 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     text-decoration:none;
 }
 
-/* FOOTER */
+/*****************************************************************************/
+/********************************* FOOTER ************************************/
+/*****************************************************************************/
 
 #divFooter {
     background-color: #666666;
@@ -92,7 +96,9 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     bottom: 0;
 }
 
-/* SEARCH */
+/*****************************************************************************/
+/********************************* SEARCH ************************************/
+/*****************************************************************************/
 
 #divSearch {
     background-color: #66cccc;
@@ -137,7 +143,65 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     border-radius:7px;   
 }
 
-/* Contractor Information */
+/*****************************************************************************/
+/************************* CONTRACTOR INFORMATION ****************************/
+/*****************************************************************************/
+
+#divPresentation {
+    width: 100%;
+    height: 120px;
+    background-color: #18abff;
+    font-size: 34px;
+    font-weight: bold;
+    color: white;
+}
+
+#divImagePresentation {
+    float: left; 
+    text-align: center;
+}
+
+#divDetailsPresentation {
+    float: left; 
+    margin-left: 15px; 
+    margin-top: 22px;
+}
+
+#divInformationsPresentation {
+    font-size: 18px; 
+    font-weight: 100; 
+    margin-top: 10px;
+}
+
+#divSubPresentation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 20px;
+}
+
+.divDetailsPrestations {
+    width: 45%; 
+    margin-right: 20px; 
+    margin-bottom: 20px;
+}
+
+.divReviews {
+    width: 100%;
+    float: left; 
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.diveRateReview {
+    width: 100%; 
+    height: 20px; 
+    margin-top: 10px;
+}
+
+.imageLogo {
+    height: 120px;
+}
 
 #divPresentation {
     width: 100%;
@@ -222,7 +286,9 @@ form#reviewForm {
     margin-left: -2px;
 }
 
-/* Service Manager */
+/*****************************************************************************/
+/***************************** SERVICE MANAGER********************************/
+/*****************************************************************************/
 
 .divContractorAddService {
     width: 40%;
@@ -293,7 +359,51 @@ form#reviewForm {
     margin-bottom: 5px;
 }
 
-/* Contractor manager */
+/*****************************************************************************/
+/**************************** TENDERER MANAGER *******************************/
+/*****************************************************************************/
+
+.divTendererReviewInformation {
+    float: left; 
+    width: 90%;
+}
+
+.divTendererReviewButton {
+    float: left; 
+    width: 90%; 
+    padding-top: 10px;
+    color: #336c6c;
+}
+
+.divImageReviewTenderer {
+    margin-right: 10px;
+    width: 50px; 
+    height: 120px; 
+    text-align: center; 
+    float: left; 
+    background-color: #66cccc; 
+    padding-top: 20px;
+}
+
+.divReviewContractorNameTenderer {
+    font-size: 22px;
+    color: #336c6c;
+}
+
+.divReviewAppreciationTenderer {
+    font-size: 20px;
+}
+
+.divReviewUpdateDateTenderer {
+    font-style: italic; 
+    color: lightgray; 
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+/*****************************************************************************/
+/*************************** CONTRACTOR MANAGER ******************************/
+/*****************************************************************************/
 
 .panelReviewContractor {
     width: 100%; 
@@ -519,7 +629,173 @@ form .updateButtonContractorReview {
     cursor: pointer;
 }
 
-/* Primefaces redifinition */
+form .deleteButtonContractorReview {
+    width: 100%; 
+    height: 50px; 
+    background-color: red !important; 
+    color: #f6f6f6 !important;
+}
+
+form .updateButtonContractorReview {
+    width: 100%; 
+    height: 95px; 
+    float: top; 
+    background-color: #336c6c !important; 
+    color: #66cccc !important;
+}
+
+/*****************************************************************************/
+/******************************** MODERATOR **********************************/
+/*****************************************************************************/
+
+.titlePanelReviewAdmin {
+    font-size: 22px;
+}
+
+.panelReviewAdmin {
+    width: 100%; 
+    float: left;
+}
+
+.starsReviewAdmin {
+    float: right; 
+    margin-left: 20px;
+}
+
+.labelTitleReviewAdmin {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.labelDateReviewAdmin {
+    font-size: 15px;
+    color: gray;
+}
+
+.divImageReviewAdmin {
+    width: 50px; 
+    height: 120px; 
+    text-align: center; 
+    float: left; 
+    background-color: #66cccc; 
+    padding-top: 20px;
+}
+
+.divDescriptionReviewAdmin {
+    float: left; 
+    margin-left: 20px; 
+    height: 100%;
+}
+
+.leftPanelAdmin {
+    width: 45%; 
+    float: left;
+    height: 140px;
+    margin-top: 40px;
+    border-right-width: 3px;
+    border-right-color: darkgray;
+    border-right-style: ridge;
+}
+
+.rightPanelAdmin {
+    width: 50%; 
+    float: left;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    height: 150px;
+}
+
+.rightPanelTitleAdmin {
+    width: 50%; 
+    float: left;
+    margin-left: 20px;
+    margin-top: 10px;
+    height: 30px;
+}
+
+.rightPanelTitleLeftAdmin {
+    width: 35%; 
+    float: left;
+}
+
+.rightPanelTitleRightAdmin {
+    width: 60%; 
+    float: right;
+}
+
+.buttonsRightPanelAdmin {
+    float: left; 
+    width: 35%;
+}
+
+.divButtonsRightPanelAdmin {
+    width: 100%; 
+    text-align: center;
+}
+
+.divButtonsLeftRightPanelAdmin {
+    float: left; 
+    height: 140px; 
+    width: 48%;
+}
+
+.inputLeftPanelAdmin {
+    float: right; 
+    width: 60%;
+}
+
+.inputReviewAdmin {
+    float: left; 
+    height: 130px !important; 
+    width: 70%;
+}
+
+.commandButtonSaveAdmin {
+    float: right; 
+    height: 140px !important; 
+    width: 25%;
+    background-color: #336c6c;
+    color: #66cccc;
+    font-size: 15px !important;
+    font-weight: 100;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.commandButtonSaveAdmin:active {
+    background-color: #666666;
+}
+
+.commandButtonChoice {
+    background-color: #66cccc;
+    color: #336c6c;
+    font-size: 15px !important;
+    font-weight: 100;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+.commandButtonChoiceSelected {
+    background-color: #336c6c;
+    color: #66cccc;
+    font-size: 15px !important;
+    font-weight: 100;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
+
+/*****************************************************************************/
+/************************** PRIMEFACES REDEFINTION ***************************/
+/*****************************************************************************/
 
 .ui-corner-all {
     -moz-border-radius: 0px;
@@ -600,7 +876,9 @@ form .updateButtonContractorReview {
     position: inherit !important;
 }
 
-/* Dialog */
+/*****************************************************************************/
+/********************************* DIALOG ************************************/
+/*****************************************************************************/
 
 .dialogTitle {
     text-align: center;
@@ -636,7 +914,9 @@ form .updateButtonContractorReview {
     color: dimgrey;
 }
 
-/* Tab style */
+/*****************************************************************************/
+/******************************** TAB STYLE **********************************/
+/*****************************************************************************/
 
 .tabs .tab-content {
   z-index: 2;
@@ -660,4 +940,3 @@ form .updateButtonContractorReview {
   margin: 80px 0 0 10px;
   text-align: left;
 }
- 

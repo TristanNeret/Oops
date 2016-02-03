@@ -9,16 +9,19 @@ import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Notification;
 import com.gdf.persistence.NotificationType;
 import static com.gdf.persistence.NotificationType.TO_TENDERER;
+import static com.gdf.persistence.NotificationState.NOT_READ;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  * Class supplying methods to manage Reviews
- *
  * @author aziz
  */
 @Stateless
@@ -29,6 +32,10 @@ public class EvaluationBeanImpl implements EvaluationBean {
      */
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;
+
+    @PostConstruct
+    private void init(){
+    }
 
     @Override
     public void addReview(Tenderer tenderer, Contractor contractor, Review review) {
@@ -117,7 +124,36 @@ public class EvaluationBeanImpl implements EvaluationBean {
        
         review.setContractorAnswer(null);
         em.merge(review);
-        
+
+    }
+
+    @Override
+    public void askForReview(Long contractorID, Long tendererID) {
+        Notification n = new Notification();
+        java.util.Date date = new java.util.Date();
+        n.setDate(new java.sql.Date(date.getTime()));
+        n.setCategory(TO_TENDERER);
+        n.setState(NOT_READ);
+        Contractor contractor = em.find(Contractor.class, contractorID);
+        n.setContractor(contractor);
+        Tenderer tenderer = em.find(Tenderer.class, tendererID);
+        n.setTenderer(tenderer);
+        n.setDescription(contractor.getSocialReason()+" vous demande de le noter");
+        em.persist(n);
+    }
+
+    @Override
+    public Notification getLastNotificationSent(Long contractorID, Long tendererID){
+        Query q = em.createNamedQuery("Notification.findByContractorAndTenderer", Notification.class);
+        Contractor contractor = em.find(Contractor.class, contractorID);
+        Tenderer tenderer = em.find(Tenderer.class, tendererID);
+        q.setParameter(1, contractor);
+        q.setParameter(2, tenderer);
+        List<Notification> ln = q.getResultList();
+        if(!ln.isEmpty())
+            return ln.get(0);
+        else
+            return null;                   
     }
     
 }

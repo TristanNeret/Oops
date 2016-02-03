@@ -21,8 +21,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
+<<<<<<< HEAD
  * Class used to populate the database for selenium tests,
  * uncomment @PostConstruct to execute the populateDatabase method on stratup
+=======
+ * Class used to populate the database for selenium tests
+>>>>>>> master
  * @author aziz
  */
 @Singleton
@@ -46,7 +50,7 @@ public class PopulateDBBean {
         em.persist(defaultCategory);
         defaultCategory = new Category("Animation", "image");
         em.persist(defaultCategory);
-        
+
         // REVIEWS
         
         Review review = new Review();

@@ -29,7 +29,10 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Review.findWaitingReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.DELIVERED"),
-    @NamedQuery(name = "Review.findAcceptedReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1")
+    @NamedQuery(name = "Review.findAcceptedReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1"),
+    @NamedQuery(name = "Review.findAcceptedReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1"),
+    @NamedQuery(name = "Review.findTendererReviews", query = "SELECT r FROM Review r WHERE r.tenderer.id=?1"),
+    @NamedQuery(name = "Review.deleteReviewById", query = "DELETE FROM Review r WHERE r.id=?1")
 })
 public class Review implements Serializable {
     
@@ -51,10 +54,10 @@ public class Review implements Serializable {
     private Contractor contractor;
     
     @OneToMany(mappedBy = "review")
-    private List<ModeratorReview> moderatorReviews = new ArrayList<>();
+    private List<ModeratorReview> moderatorReviews = new ArrayList<ModeratorReview>();
     
     @OneToMany
-    private List<Notification> notifications = new ArrayList<>();
+    private List<Notification> notifications = new ArrayList<Notification>();
     
     /**
      * Create an instance of a Review
@@ -205,4 +208,5 @@ public class Review implements Serializable {
         }
         return true;
     }
+    
 }

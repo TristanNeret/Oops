@@ -49,6 +49,7 @@ public class SearchBeanImpl implements SearchBean {
             contractor.getReviews().size();
         } 
         return contractor;
+        
     }
     
     @Override
@@ -159,6 +160,11 @@ public class SearchBeanImpl implements SearchBean {
             return query.getResultList();
     }
 
+    /**
+     * Search tenderers by keyword
+     * @param keyWord a keyword which could be present on the tenderer informations
+     * @return the tenderer matching with the keyword or all tenderers if keyword is empty
+     */
     @Override
     public List<Tenderer> findTenderers(String keyWord) {
         if(keyWord == null)
@@ -167,6 +173,11 @@ public class SearchBeanImpl implements SearchBean {
             return this.searchTendererByKeyWord(keyWord);   
     }
     
+    /**
+     * Search tenderers by keyword
+     * @param keyWord a keyword which could be present on the tenderer informations
+     * @return the list of tenderers
+     */
     @Override
     public List<Tenderer> searchTendererByKeyWord(String keyWord) {
         TypedQuery<Tenderer> query;
@@ -175,12 +186,20 @@ public class SearchBeanImpl implements SearchBean {
         return query.getResultList();   
     }
 
+    /**
+     * Get all the tenderers
+     * @return all the tenderers
+     */
     @Override
     public List<Tenderer> findAllTenderer() {
         TypedQuery<Tenderer> query = em.createNamedQuery("Tenderer.findAll", Tenderer.class);
         return query.getResultList(); 
     }
-   
+    
+    /**
+     * Get all countries
+     * @return all countries
+     */
     @Override
     public List<String> getAllCountry() {
         TypedQuery<String> query;
@@ -215,6 +234,20 @@ public class SearchBeanImpl implements SearchBean {
     }
 
     // TENDERER
+    
+    @Override
+    public Tenderer searchTendererById(Long id) {
+        
+        Tenderer tenderer =  em.find(Tenderer.class, id);
+        
+        if(tenderer != null) {  
+            // The lazy relationships must be traversed before exiting the scope of the JPA Session to avoid the Exception.
+            tenderer.getReviews().size();
+        } 
+        
+        return tenderer;
+        
+    }
     
     @Override
     public Tenderer searchTendererByLogin(String login) {
@@ -295,5 +328,5 @@ public class SearchBeanImpl implements SearchBean {
         return em.find(Category.class, idCategory);
         
     }
-    
+
 }

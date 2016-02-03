@@ -46,11 +46,11 @@ public interface RegistrationBean {
      * @param m the Moderator to register
      */
     public void register(Moderator m);
-    
+
     /**
      * Update a Serice
      * @param s the Service to update
      */
     public void update(Service s);
-    
+
 }

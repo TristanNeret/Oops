@@ -63,11 +63,35 @@ public interface SearchBean {
     // TENDERER
     
     /**
+     * Search a Tenderer by his id
+     * @param id id of the Tenderer
+     * @return the Tenderer identified by the id if any or null if he doesn't exist
+     */
+    public Tenderer searchTendererById(Long id);
+    
+    /**
      * Search a Tenderer by his login
      * @param login the login of the Tenderer
      * @return the Tenderer identified by the login if any or null if he doesn't exist
      */
     public Tenderer searchTendererByLogin(String login);
+
+    // REVIEW
+    
+    /**
+     * Search waiting Reviews
+     * @return list of waiting reviews
+     */
+    public List<Review> searchWaitingReviews();
+    
+    /**
+     * Search accepted Reviews for a Contractor
+     * @param id id of the Contractor
+     * @return the accepted Reviews List of the Contractor
+     */
+    public List<Review> searchAcceptedReviews(long id);
+    
+    // SEARCH
     
     /**
      * Search tenderers by keyword
@@ -102,28 +126,7 @@ public interface SearchBean {
      * @return list of tenderers name found
      */
     public List<String> findContractorBeginBy(String query);
-    
-    // REVIEW
-    
-    /**
-     * Search waiting Reviews
-     * @return list of waiting reviews
-     */
-    public List<Review> searchWaitingReviews();
-    
-    /**
-     * Search accepted Reviews for a Contractor
-     * @param id id of the Contractor
-     * @return the accepted Reviews List of the Contractor
-     */
-    public List<Review> searchAcceptedReviews(long id);
-    
-    /**
-     * Get all countries name
-     * @return list of all countries name
-     */
-    public List<String> getAllCountry();
-    
+
     // CATEGORY
     
     /**
@@ -144,5 +147,11 @@ public interface SearchBean {
      * @return list of all categories
      */
     public List<Category> getCategories();
+   
+    /**
+     * Get all countries
+     * @return all countries
+     */
+    public List<String> getAllCountry();
     
 }

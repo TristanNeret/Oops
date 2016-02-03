@@ -13,10 +13,17 @@
     <class>com.gdf.persistence.Service</class>
     <class>com.gdf.persistence.Tenderer</class>
     <properties>
+<<<<<<< HEAD
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/OopsDB"/>
       <property name="javax.persistence.jdbc.user" value="gdf"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
       <property name="javax.persistence.jdbc.password" value="gdf"/>
+=======
+      <property name="javax.persistence.jdbc.url" value="${jdbc.connectionURL}"/>
+      <property name="javax.persistence.jdbc.user" value="${jdbc.username}"/>
+      <property name="javax.persistence.jdbc.driver" value="${jdbc.driver}"/>
+      <property name="javax.persistence.jdbc.password" value="${jdbc.password}"/>
+>>>>>>> master
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>

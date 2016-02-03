@@ -8,7 +8,12 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+<<<<<<< HEAD
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+=======
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+>>>>>>> master
 
     <h:head>
         <title>Tenderer list</title>
@@ -40,15 +45,31 @@ and open the template in the editor.
                             <h:outputText style="font-size: x-large; padding-right: 20px" 
                                           value="#{tend.login}" />
                             (<h:outputText value="#{tend.firstname}" style="padding-right: 5px"/>
+<<<<<<< HEAD
                             <h:outputText value="#{tend.lastname}" />)
                             <h:button class="headerCommandButton" value="Voir #{tend.login}" 
                                       outcome="/views/tendererSearch?id=#{tend.id}" />
+=======
+                            <h:outputText value="#{tend.lastname}" />
+                
+                            <h:form>
+                                    <h:commandButton class= "headerCommandButton" value="Demander un avis"  action="#{listTendererBean.askReview(tend.id)}" rendered="#{listTendererBean.display(tend.id)}"/> 
+                                    <h:button class="headerCommandButton" value="Voir #{tend.login}" 
+                                              outcome="/views/tendererSearch?id=#{tend.id}" />
+                            </h:form>
+>>>>>>> master
                         </fieldset>
 
                     </tr>
                 </c:forEach>
+<<<<<<< HEAD
             </table>
         </div>
+=======
+            </table>            
+        </div>
+        
+>>>>>>> master
 
     </h:body>
 
