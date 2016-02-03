@@ -42,10 +42,7 @@
             </resource>
         </resources>
     </build>
-  
-<<<<<<< HEAD
-=======
-    
+
     <profiles>
         <profile>
             <id>development</id>
@@ -120,6 +117,5 @@
             </build>
         </profile>
     </profiles>
-  
->>>>>>> master
+
 </project>

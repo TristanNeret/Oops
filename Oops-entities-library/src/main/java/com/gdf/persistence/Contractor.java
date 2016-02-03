@@ -22,7 +22,7 @@ import javax.persistence.OneToOne;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
- *
+ * Contractor
  * @author aziz
  */
 @Entity
@@ -36,7 +36,6 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
     @NamedQuery(name= "Contractor.beginBy", query = "SELECT c.socialReason from Contractor c WHERE c.socialReason LIKE ?1")    
 
 })
-
 public class Contractor implements Serializable {
     
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";

@@ -29,6 +29,7 @@ import javax.persistence.OneToMany;
     @NamedQuery(name = "Category.findById", query = "SELECT cat FROM Category cat WHERE cat.id=?1")
 })
 public class Category implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

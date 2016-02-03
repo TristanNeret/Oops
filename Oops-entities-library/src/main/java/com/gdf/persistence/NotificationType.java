@@ -6,7 +6,7 @@
 package com.gdf.persistence;
 
 /**
- *
+ * NotificationType
  * @author aziz
  */
 public enum NotificationType {

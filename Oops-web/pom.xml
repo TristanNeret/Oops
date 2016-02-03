@@ -173,11 +173,8 @@
         <profile>
             <id>test</id>
             <properties>
-<<<<<<< HEAD
                 <jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
-=======
                 <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
->>>>>>> master
                 <jdbc.name>OopsDB_Test</jdbc.name>
                 <jdbc.username>root</jdbc.username>
                 <jdbc.password>C5T-m2003l-K89</jdbc.password>
@@ -201,11 +198,7 @@
         <profile>
             <id>production</id>
             <properties>
-<<<<<<< HEAD
                 <jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
-=======
-                <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
->>>>>>> master
                 <jdbc.name>OopsDB</jdbc.name>
                 <jdbc.username>root</jdbc.username>
                 <jdbc.password>C5T-m2003l-K89</jdbc.password>

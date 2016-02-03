@@ -23,7 +23,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
- *
+ * Review
  * @author aziz
  */
 @Entity

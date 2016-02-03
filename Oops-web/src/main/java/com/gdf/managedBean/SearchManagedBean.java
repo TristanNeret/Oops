@@ -82,33 +82,25 @@ public class SearchManagedBean implements Serializable {
      */
     @EJB
     private SearchBean sb;
-<<<<<<< HEAD
-=======
-   
->>>>>>> master
 
     private Map<String,String> orders;
     
     private String order = "ALPHABETICAL"; // default value
     
     @PostConstruct
-    public void setup(){
+    public void setup() {
+        
         orders = new LinkedHashMap<>();
         orders.put("Nom", "ALPHABETICAL"); // label, value
         orders.put("Note", "RATINGS");
-<<<<<<< HEAD
-        type = "cont";
-    }
-=======
-        type = "cont";  
+
     }
 
     public SearchManagedBean() {
         
     }
     
-    
->>>>>>> master
+    // GETTER/SETTER
     
     public String getKeyWord() {
         return keyWord;
