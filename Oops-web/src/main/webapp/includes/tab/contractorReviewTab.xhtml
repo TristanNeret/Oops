@@ -14,10 +14,10 @@ and open the template in the editor.
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <div>
-        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis des utilisateurs :" rendered="#{contractorsReviewBean.areReviews()}" />
-        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Il n'y a encore aucun avis vous concernant." rendered="#{!contractorsReviewBean.areReviews()}" /> 
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis des utilisateurs :" rendered="#{contractorReviewBean.areReviews()}" />
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Il n'y a encore aucun avis vous concernant." rendered="#{!contractorReviewBean.areReviews()}" /> 
         <p:panel id="reviewsList">
-            <c:forEach items="#{contractorsReviewBean.reviews}" var="review" >
+            <c:forEach items="#{contractorReviewBean.reviews}" var="review" >
                 <div class="panelReviewContractor">
                     <!-- Review informations -->
                     <div class="leftPanelContractor">
@@ -39,11 +39,11 @@ and open the template in the editor.
                                 <h:outputLabel value="Réponse :" />
                             </div>
                             <div>
-                                <p:inputTextarea id="reviewContent" styleClass="textAreaContractorReviewComment" rows="6" cols="20" value="#{contractorsReviewBean.answersReview[review.id]}" required="true" autoResize="false" label="Réponse" />
+                                <p:inputTextarea id="reviewContent" styleClass="textAreaContractorReviewComment" rows="6" cols="20" value="#{contractorReviewBean.answersReview[review.id]}" required="true" autoResize="false" label="Réponse" />
                                 <div class="divContractorReviewComment">
-                                    <p:commandButton id="answerButton" rendered="#{empty review.contractorAnswer}" value="Répondre" styleClass="updateButtonContractorReview" action="#{contractorsReviewBean.updateReviewsAnswer(review)}" update="growlReviewContractor @form" />
-                                    <p:commandButton id="editButton" rendered="#{not empty review.contractorAnswer}" value="Modifier" styleClass="updateButtonContractorReview" action="#{contractorsReviewBean.updateReviewsAnswer(review)}" update="growlReviewContractor @form" />
-                                    <p:commandButton id="deleteButton" rendered="#{not empty review.contractorAnswer}" value="Supprimer" styleClass="deleteButtonContractorReview" action="#{contractorsReviewBean.deleteReviewsAnswer(review)}" update="growlReviewContractor @form" />
+                                    <p:commandButton id="answerButton" rendered="#{empty review.contractorAnswer}" value="Répondre" styleClass="updateButtonContractorReview" action="#{contractorReviewBean.updateReviewsAnswer(review)}" update="growlReviewContractor @form" />
+                                    <p:commandButton id="editButton" rendered="#{not empty review.contractorAnswer}" value="Modifier" styleClass="updateButtonContractorReview" action="#{contractorReviewBean.updateReviewsAnswer(review)}" update="growlReviewContractor @form" />
+                                    <p:commandButton id="deleteButton" rendered="#{not empty review.contractorAnswer}" value="Supprimer" styleClass="deleteButtonContractorReview" action="#{contractorReviewBean.deleteReviewsAnswer(review)}" update="growlReviewContractor @form" />
                                 </div>
                             </div>
                         </h:form>

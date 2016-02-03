@@ -9,18 +9,24 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author aziz
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "ModeratorReview.deleteByReviewId", query = "DELETE FROM ModeratorReview mr WHERE mr.review.id=?1")
+})
 public class ModeratorReview implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -35,7 +41,7 @@ public class ModeratorReview implements Serializable {
     @ManyToOne
     private Moderator moderator;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private Review review;
     
     /**

@@ -26,7 +26,9 @@ h2 {
     padding-bottom: 80px;
 }
 
-/* HEADER */
+/*****************************************************************************/
+/********************************* HEADER ************************************/
+/*****************************************************************************/
 
 #divHeader {
     background-color: #666666;
@@ -75,7 +77,9 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     text-decoration:none;
 }
 
-/* FOOTER */
+/*****************************************************************************/
+/********************************* FOOTER ************************************/
+/*****************************************************************************/
 
 #divFooter {
     background-color: #666666;
@@ -89,7 +93,9 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     bottom: 0;
 }
 
-/* SEARCH */
+/*****************************************************************************/
+/********************************* SEARCH ************************************/
+/*****************************************************************************/
 
 #divSearch {
     background-color: #66cccc;
@@ -134,7 +140,9 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     border-radius:7px;   
 }
 
-/* Contractor Information */
+/*****************************************************************************/
+/************************* CONTRACTOR INFORMATION ****************************/
+/*****************************************************************************/
 
 #divPresentation {
     width: 100%;
@@ -171,13 +179,12 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 
 .divDetailsPrestations {
     width: 45%; 
-    /*float: left;*/ 
     margin-right: 20px; 
     margin-bottom: 20px;
 }
 
 .divReviews {
-    width: 45%; 
+    width: 100%;
     float: left; 
     margin-right: 20px;
     margin-bottom: 20px;
@@ -220,7 +227,51 @@ form#reviewForm {
     margin-top: 20px;
 }
 
-/* Contractor manager */
+/*****************************************************************************/
+/**************************** TENDERER MANAGER *******************************/
+/*****************************************************************************/
+
+.divTendererReviewInformation {
+    float: left; 
+    width: 90%;
+}
+
+.divTendererReviewButton {
+    float: left; 
+    width: 90%; 
+    padding-top: 10px;
+    color: #336c6c;
+}
+
+.divImageReviewTenderer {
+    margin-right: 10px;
+    width: 50px; 
+    height: 120px; 
+    text-align: center; 
+    float: left; 
+    background-color: #66cccc; 
+    padding-top: 20px;
+}
+
+.divReviewContractorNameTenderer {
+    font-size: 22px;
+    color: #336c6c;
+}
+
+.divReviewAppreciationTenderer {
+    font-size: 20px;
+}
+
+.divReviewUpdateDateTenderer {
+    font-style: italic; 
+    color: lightgray; 
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+/*****************************************************************************/
+/*************************** CONTRACTOR MANAGER ******************************/
+/*****************************************************************************/
 
 .panelReviewContractor {
     width: 100%; 
@@ -299,7 +350,9 @@ form .updateButtonContractorReview {
     color: #66cccc !important;
 }
 
-/* Moderator */
+/*****************************************************************************/
+/******************************** MODERATOR **********************************/
+/*****************************************************************************/
 
 .titlePanelReviewAdmin {
     font-size: 22px;
@@ -446,7 +499,9 @@ form .updateButtonContractorReview {
     cursor: pointer;
 }
 
-/* Primefaces redifinition */
+/*****************************************************************************/
+/************************** PRIMEFACES REDEFINTION ***************************/
+/*****************************************************************************/
 
 .ui-corner-all {
     -moz-border-radius: 0px;
@@ -527,7 +582,9 @@ form .updateButtonContractorReview {
     position: inherit !important;
 }
 
-/* Dialog */
+/*****************************************************************************/
+/********************************* DIALOG ************************************/
+/*****************************************************************************/
 
 .dialogTitle {
     text-align: center;

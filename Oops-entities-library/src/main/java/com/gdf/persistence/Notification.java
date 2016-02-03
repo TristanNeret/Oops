@@ -8,8 +8,10 @@ package com.gdf.persistence;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Calendar;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,12 +23,12 @@ import javax.persistence.NamedQuery;
  *
  * @author aziz
  */
+@Entity
 @NamedQueries({
-    @NamedQuery(name = "Notification.findByContractorAndTenderer",
-            query = "Select n FROM Notification n WHERE n.contractor=?1 "
+    @NamedQuery(name = "Notification.deleteByReviewId", query = "DELETE FROM Notification n WHERE n.review.id=?1"),
+    @NamedQuery(name = "Notification.findByContractorAndTenderer", query = "Select n FROM Notification n WHERE n.contractor=?1 "
                     + "AND n.tenderer=?2 ORDER BY n.date DESC")
 })
-@Entity
 public class Notification implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,16 +42,16 @@ public class Notification implements Serializable {
     private NotificationState state;
     private NotificationType category;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private Contractor contractor;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private Tenderer tenderer;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private Moderator moderator;
     
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REMOVE})
     private Review review;
 
     /**
