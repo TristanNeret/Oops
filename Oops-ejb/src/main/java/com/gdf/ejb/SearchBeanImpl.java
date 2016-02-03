@@ -312,5 +312,30 @@ public class SearchBeanImpl implements SearchBean {
         query.setParameter(1, first + "%" );
         return query.getResultList();
     }
+    @Override
+    public Tenderer searchTenderByEMAIL(String email) {
+Query query = em.createNamedQuery("Tenderer.findByEmail"); 
+        query.setParameter(1, email);
+        if (query.getResultList().isEmpty()) {
+            
+            return null;
+            
+        } else {
+            
+            return (Tenderer) query.getSingleResult();
+            
+        }    }
+
+    @Override
+    public Tenderer searchTendererById(long id) {
+ Tenderer tenderer =  em.find(Tenderer.class, id);
+        
+        if(tenderer != null) {  
+            //The lazy relationships must be traversed before exiting the scope of the JPA Session to avoid the Exception.
+           // tenderer.getServices().size(); 
+            //tenderer.getReviews().size();
+        } 
+        return tenderer;    }
+
 
 }

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+       xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Contractor informations</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="style.css" />
+      
+       
+    </h:head>
+
+    <h:body>
+        <h:form>
+   
+            <f:metadata>
+             <o:viewParam name ="id" value="#{T1.id}" />
+             
+             <f:viewAction action="#{T1.init()}" />
+        </f:metadata>
+            
+            
+            
+                      <ui:include src="/includes/headerTender.xhtml" />
+
+        <!-- HEADER -->
+        <!--<ui:include src="/includes/header.xhtml" />-->
+            <p:growl id="tender" autoUpdate="true"   />
+          
+                <p:tabView dynamic="true" cache="true"  >
+                        <p:tab  title="Mon Compte" id="tab1" titleStyleClass="blueTab"  >
+                                   
+
+                            <div style="max-with:960px;margin:auto;" id="div">
+                            <div style="float:left;width:400px;">
+                            <h:panelGrid columns="2" style="float:left;" columnClasses="column" cellpadding="13" id="content"  >
+                              
+                                        <h:outputText value="My Login :" style="color: #000000"/> 
+                                        <h:inputText value="#{T1.tenderer.login}" style="color: #000000;width:250px;height:21px;"  disabled="true" />
+                                
+                                        <h:outputText value="My Email :" style="color: #000000"/> 
+                                        <h:inputText value="#{T1.tenderer.email}" style="color: #000000;width:250px;height:21px;"  disabled="true" />
+                                        
+                                        <h:outputText value="My Firstname :" style="color: #000000" /> 
+                                        <h:inputText value="#{T1.tenderer.firstname}" style="color: #000000;width:250px;height:21px;"  disabled="true" />
+                                        
+                                        <h:outputText value="My Lastname :" style="color: #000000" /> 
+                                        <h:inputText value="#{T1.tenderer.lastname}" style="color: #000000;width:250px;height:21px;"  disabled="true" />
+
+                                       
+                                        
+                                                                             
+                                        <h:outputText value="My Phone :" style="color: #000000" /> 
+                                        <h:inputText value="#{T1.tenderer.phone}" style="color: #000000;width:250px;height:21px;"  disabled="true" />
+                                        
+                                        <h:outputText value="My REGISTRATION DATE :" style="color: #000000" /> 
+                                        <h:inputText value="#{T1.tenderer.registrationDate}" style="color: #000000;width:250px;height:21px;"  disabled="true" />
+                                        <h:outputText value="My UPDATEDATE :" style="color: #000000" /> 
+                                        <h:inputText value="#{T1.tenderer.updateDate}" style="color: #000000;width:250px;height:21px;"  disabled="true" />
+	
+
+                            </h:panelGrid>
+                            </div>
+                            <div style="margin-left:680px;">
+                            <h:panelGrid  >
+                                 
+                                <p:graphicImage value="/resources/images/#{T1.tenderer.avatar}" style="width:400px;
+height:400px;"  />
+                                
+                            </h:panelGrid>
+                            </div>
+                            </div>
+                            <h:graphicImage value="/resources/images/edit-user-icon.png"
+                                    onclick="PF('dlg').show()"
+                                    style="height: 80px; width:100px; left: 60px "
+                                                title="Update_Profile"/>                                     
+                                      
+                                       
+ 
+                            <p:dialog header="Update My Profile" resizable="false" showEffect="fade" widgetVar="dlg" >
+                                <p:panelGrid id="output"  columnClasses="label, value"   >
+                                    <p:remoteCommand name="update_action" actionListener="#{T1.updateUser}" />
+                                           
+                                           <tr>
+                                               <td>
+                                                    <h:outputText value="Login :" style="padding-left: 90px;color: #000000" /></td><td>
+                                                    <h:inputText value="#{T1.tenderer.login}" style="color: #000000;width:250px;height:21px;"  disabled="true" /></td></tr>
+
+                                            <tr>
+                                                <td>                                                               
+                                                    <h:outputText value="Email :" style="padding-left: 90px;color: #000000" /></td><td>
+                                                    <p:inputText id="email" value="#{T1.tenderer.email}" style="color: #000000;width:250px;height:21px;" required="false" label="email"> <f:validator validatorId="com.gdf.EmailAlredayExisyValidator" binding="#{EmailAlredayExisyValidator}" />
+                                                    <f:validator validatorId="com.gdf.mailFormatValidator" binding="#{mailFormatValidator}" />
+                                                                
+
+                                                               </p:inputText>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td> 
+                                                    <h:outputText value="Firstname :" style="padding-left: 90px;color: #000000" />
+                                                </td>
+                                                <td>
+                                                    <p:inputText id="firstname" value="#{T1.tenderer.firstname}" style="color: #000000;width:250px;height:21px;"  />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h:outputText value="Lastname :"  style="padding-left: 90px;color: #000000"/></td><td>
+                                                    <p:inputText id="lastname" value="#{T1.tenderer.lastname}" style="color: #000000;width:250px;height:21px;" />
+                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h:outputText value="Password :"  style="padding-left: 90px;color: #000000"/>
+                                                </td>
+                                                <td>
+                                                    <p:password id="MDP" value="#{T1.pwd}" style="color: #000000;width:250px;height:21px;" >
+                                                     
+                                                        <f:validator validatorId="com.gdf.PasswordFormatValidator" binding="#{PasswordFormatValidator}" />
+                                                    </p:password>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h:outputText value="Avatar :" style="padding-left: 90px;color: #000000" /></td>
+                         
+                                                    <td>   <p:fileUpload fileUploadListener="#{T1.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="100000" /> 
+    <p:growl id="messages" showDetail="true" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <h:outputText value="Phone :" style="padding-left: 90px;color: #000000" /></td><td>
+                                                        <p:inputText id="phone" value="#{T1.tenderer.phone}" style="color: #000000;width:250px;height:21px;" required="true" label="phone"> 
+                                                            <f:validator validatorId="com.gdf.phoneFormatValidator" binding="#{phoneFormatValidator}" />
+                                                    </p:inputText>
+                                                </td>
+                                            </tr>
+                                                            
+                                            <tr>
+                                                <td>
+                                                    <p:growl id="msgs" showDetail="true" />
+                                                </td>
+                                                <td>
+                                                    <p:commandButton type="button" onclick="update_action()" value="save" icon="ui-icon-refresh"  id="ref_butn"  ajax="true" update="@all"/>
+                                       
+                                                </td>
+                                                <td>                                              
+                                                      <p:commandButton value="close"  icon="ui-icon-check" ajax="true" update="@all" />
+                                                </td>
+                                            </tr>
+                                     </p:panelGrid>
+                            </p:dialog>
+                        </p:tab>
+                        <p:tab titleStyleClass="blueTab" title="Mes Avis" >
+                            <h:panelGrid columns="2" cellpadding="10">
+                                 <h:outputText value="Nancy est une commune française située en Lorraine au bord de la Meurthe à quelques kilomètres en amont de son point de confluence avec la Moselle, à 281 kilomètres à l'est de Paris et 116 kilomètres à l'ouest de Strasbourg. C'est la préfecture du département de Meurthe-et-Moselle, en région Alsace-Champagne-Ardenne-Lorraine. Ses habitants sont appelés les Nancéiens.
+
+Capitale du duché de Lorraine jusqu'au rattachement de celui-ci au Royaume de France en 1766, évêché depuis 1777, Nancy est le chef-lieu du département de la Meurthe de 1790 à 1871 puis de Meurthe-et-Moselle à partir de 1871. Elle est aussi célèbre pour sa place Stanislas, du nom du dernier duc de Lorraine, qui fait partie d'un ensemble du xviiie siècle classé au patrimoine mondial de l'UNESCO. Elle compte également de nombreux édifices classés aux monuments historiques et elle est l'un des foyers de l'Art nouveau grâce à l'École de Nancy.
+
+La population intra-muros s'élève au 1er janvier 2013 à 104 072 habitants2, ce qui fait de Nancy la deuxième commune la plus peuplée de Lorraine après Metz. Avec 434 479 habitants en 20123, l'aire urbaine de Nancy est la plus peuplée de Lorraine, la deuxième du Grand Est après celle de Strasbourg et la vingtième de France. Nancy est aussi l'une des principales villes universitaires et l'agglomération abrite l'un des principaux pôles de santé en France.
+Nancy se situe dans le Grand Est, au sud du département de Meurthe-et-Moselle et au centre de la région Lorraine. La cité se trouve au croisement de deux grands axes européens de circulation : l’axe nord-sud Bruxelles-Luxembourg-Metz-Nancy-Lyon-Marseille, qui relie directement la mer du Nord à la mer Méditerranée en traversant la Lorraine par le Sillon mosellan ; l’axe est-ouest entre Paris et Strasbourg.
+
+Par distance orthodromique :
+
+à l'échelle nationale, Nancy est distante de 281 kilomètres de Paris, de 116 kilomètres de Strasbourg et de 341 kilomètres de Lyon4 ;
+à l'échelle régionale (euro-région Saar-Lor-Lux), Nancy est située à 48 kilomètres au sud de Metz, préfecture de la Moselle et préfecture de la région Lorraine, 60 kilomètres au nord d'Épinal, préfecture des Vosges, 74 kilomètres à l'est de Bar-le-Duc, préfecture de la Meuse, 102 kilomètres au sud de Luxembourg, capitale du grand-duché, 121 kilomètres au sud-ouest de Sarrebruck, capitale de la Sarre4 ;
+à l'échelle départementale, Nancy se trouve à 21 kilomètres à l'est de Toul, 26 kilomètres au nord-ouest de Lunéville et à 64 kilomètres au sud de Briey4." />
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="Invitations" titleStyleClass="blueTab">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                      <h:outputText value="Paris (prononcé [pa.ʁi] Prononciation du titre dans sa version originale Écouter) est la capitale de la France. Elle se situe au cœur d'une vaste plaine fertile au climat tempéré, le Bassin parisien, sur une boucle de la Seine, entre les confluents de celle-ci avec la Marne et l'Oise. Ses habitants s’appellent les Parisiens.
+
+Paris est également le chef-lieu de la région Île-de-France et l'unique commune française qui est en même temps un département. Comme les villes françaises de Lyon et de Marseille, elle est divisée en arrondissements, au nombre de vingt, et possède un préfet de police.
+
+Ville longtemps la plus peuplée d'Europe, elle reste la plus peuplée de France et l'une des agglomérations européennes les plus peuplées. D'après le recensement de l’Inseeb 1, la commune de Paris comptait au 1er janvier 2012 plus de 2,2 millions d'habitants. L'agglomération de Paris s’est largement développée au cours du xxe siècle, rassemblant 10,5 millions d'habitants au 1er janvier 2011b 2, et son aire urbaine (l'agglomération et la couronne périurbaine) comptait plus de 12,3 millions d'habitants au 1er janvier 2012b 3.
+
+La position de Paris, sur une île permettant le franchissement du grand fleuve navigable qu'est la Seine par une voie reliant le Nord et le Sud des Gaules, en fait dès l'Antiquité une cité importante, capitale des Parisii, puis lieu de séjour d'un empereur. Sa position au centre du territoire contrôlé par les rois Francs la fait choisir comme capitale de la France à la place de Tournai. Placée au centre d'un territoire agricole fertile avec un climat humide et doux, Paris devient une des principales villes de France au cours du xe siècle, avec des palais royaux, de riches abbayes et une cathédrale ; au cours du xiie siècle, avec l'Université de Paris, la cité devient un des premiers foyers en Europe pour l’enseignement et les arts. Le pouvoir royal se fixant dans cette ville, son importance économique et politique ne cesse de croître. Ainsi, au début du xive siècle, Paris est l'une des villes les plus importantes de tout le monde chrétien. Au xviie siècle, elle est la capitale de l'une des principales puissances politiques européennes, au xviiie siècle l'un des plus grands centres culturels de l’Europe et au xixe siècle la capitale des arts et des plaisirs. Paris joue donc un rôle politique et économique majeur dans l’histoire de l'Europe au cours du IIe millénaire.
+
+Symbole de la culture française, abritant de nombreux monuments, la ville, surnommée la ville lumière, attire dans les années 2000 près de trente millions de visiteurs par an ce qui en fait une des capitales les plus visitées au monde1. Paris occupe également une place prépondérante dans le milieu de la mode et du luxe.
+
+La ville est, avec sa banlieue, la capitale économique et commerciale de la France." />
+                            </h:panelGrid>
+                        </p:tab>
+                </p:tabView>
+           
+
+        <!-- FOOTER -->
+        <ui:include src="/includes/footer.xhtml" />
+        </h:form>
+        	<script>
+		function handleUpdateClaim(xhr, status, args) {
+			if (args.validationFailed) {
+				jQuery('#updateDialog').effect("shake", {
+					times : 3
+				}, 100);
+			} else {
+				updateDialog.hide();
+
+			}
+		}
+	</script>
+    </h:body> 
+
+</html>

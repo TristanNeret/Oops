@@ -73,7 +73,7 @@ public class PopulateDBBean {
         // TENDERERS
         
         Tenderer tenderer = new Tenderer("Michmich", "michou.dupond@gmail.com", 
-                "password", "Michel", "Dupond", "avatar", "3988937", "01/01/2016");
+                "passwordpassword", "Michel", "Dupond", "me.png", "0601482584", "01/01/2016");
         tenderer.setId(1);
         tenderer.addReview(review);
         tenderer.addReview(review1);
@@ -81,7 +81,7 @@ public class PopulateDBBean {
         em.persist(tenderer);
         
         tenderer = new Tenderer("Dede", "dede.legrand@gmail.com", "password", "Didier", "Legrand", 
-                "avatar", "9837937", "01/01/2016");
+                "me.png", "0601483114", "01/01/2016");
         em.persist(tenderer);
         
         // CONTRACTOR

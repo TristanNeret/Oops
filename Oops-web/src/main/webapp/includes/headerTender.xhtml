@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+   
+
+    <div id="divHeader">
+        
+        
+        
+            <p:growl widgetVar="registerGrowlError" sticky="false" showDetail="true" life="3000" />
+            <p:growl widgetVar="contractorRegisterGrowlError" sticky="false" showDetail="true" life="3000" />
+            
+            <p:panelGrid styleClass="panelHeader" columns="3">
+                <h:link styleClass="headerTitle" value="Oops" outcome="/index.xhtml"/>
+                <h:link styleClass="headerSubtitle" value="Opinion on providers of services" outcome="/index.xhtml"/>
+
+                <p:panelGrid styleClass="panelHeaderButton" columns="3">
+                    <h:button class="headerCommandButton" value="Connexion" />
+                    <o:form id="registerForm" includeViewParams="true">
+                    <p:commandButton class="headerCommandButton" value="Inscription"   type="button">
+                        <!-- Reset fields on opening -->
+                       
+                    </p:commandButton>
+                    <!-- DIALOG BOX FOR TENDERER REGISTRATION -->
+                    <p:growl id="registerGrowl" sticky="false" showDetail="false" life="3000" />
+                    <p:dialog header="Inscription" modal="true" widgetVar="registerDialog" resizable="false">
+                      
+                       
+                    </p:dialog>
+                    </o:form>
+                    
+                    <o:form id="registerContractorForm" includeViewParams="true">
+                   
+                    <!-- DIALOG BOX FOR CONTRACTOR REGISTRATION -->
+                    <p:growl id="contractorRegisterGrowl" sticky="false" showDetail="false" life="3000" />
+                    
+                    </o:form>
+                    
+                </p:panelGrid>
+            </p:panelGrid>
+            
+            
+    </div>
+
+</ui:composition>

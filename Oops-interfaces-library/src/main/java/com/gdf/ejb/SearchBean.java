@@ -26,6 +26,7 @@ public interface SearchBean {
      * @return the Contractor identified by the id if any or null if he doesn't exist
      */
     public Contractor searchContractorById(long id);
+    public Tenderer searchTendererById(long id);
 
     /**
      * Search a Contractor by his login
@@ -48,6 +49,8 @@ public interface SearchBean {
      */
     public List<Contractor> searchContractorByEmail(String email);
     
+        public Tenderer searchTenderByEMAIL(String email);
+
     // TENDERER
     
     /**
