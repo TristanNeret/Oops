@@ -23,6 +23,7 @@ public class ContractorInformationTest {
     
     private static WebDriver driver;
     private static String baseUrl;
+
     
     public ContractorInformationTest() {
     }

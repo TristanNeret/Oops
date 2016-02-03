@@ -56,7 +56,7 @@ public class Tenderer implements Serializable {
     public static final String userCategory = "TENDERER";
     
     public Tenderer() {
-        
+
     }
     
     public Tenderer(String login, String email, String password, String firstname, String lastname, String avatar, String phone, String registrationDate) {

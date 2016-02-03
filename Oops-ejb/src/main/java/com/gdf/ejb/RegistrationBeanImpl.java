@@ -53,6 +53,38 @@ public class RegistrationBeanImpl implements RegistrationBean {
         em.persist(t);
 
     }
+    
+    
+    @Override
+    public void update(Contractor c) {
+        
+        // Get current date 
+        Calendar cal = Calendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        c.setUpdateDate(dateFormat.format(cal.getTime()));
+        
+        em.merge(c);
+        
+    }
+    
+    @Override
+    public void update(Tenderer t) {
+        
+        // Get current date 
+        Calendar cal = Calendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        t.setUpdateDate(dateFormat.format(cal.getTime()));
+        
+        em.merge(t);
+
+    }
+
+    @Override
+    public void register(Moderator m) {
+        
+        em.persist(m);
+        
+    }
 
     @Override
     public void register(Moderator m) {

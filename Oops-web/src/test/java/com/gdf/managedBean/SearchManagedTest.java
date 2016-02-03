@@ -35,6 +35,7 @@ public class SearchManagedTest {
     private static WebDriver driver;
     private static String baseUrl;
 
+
     @BeforeClass
     public static void setUpClass() {
         driver = new FirefoxDriver();
@@ -542,5 +543,6 @@ public class SearchManagedTest {
         new Select(driver.findElement(sortListXpathExp)).selectByVisibleText("Note");
         driver.findElement(By.xpath("//fieldset[contains(@id,'listContractor')][1]/span[contains(text(), 'IT Contractor Inc')]"));   
     }
+
  
 }

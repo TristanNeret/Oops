@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <div>
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis des utilisateurs :" rendered="#{contractorsReviewBean.areReviews()}" />
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Il n'y a encore aucun avis vous concernant." rendered="#{!contractorsReviewBean.areReviews()}" /> 
+        <p:panel id="reviewsList">
+            <c:forEach items="#{contractorsReviewBean.reviews}" var="review" >
+                <div class="panelReviewContractor">
+                    <!-- Review informations -->
+                    <div class="leftPanelContractor">
+                        <div class="divRatingContractorReview">
+                            <h:outputLabel styleClass="labelPresentationContractorReview" value="#{review.appreciation}" />
+                            <p:rating styleClass="starsReviewContractor" value="#{review.rating}" stars="5" readonly="true"/>
+                        </div>
+                        <h:outputLabel value="#{review.content}" style="width:100%;" />
+                        <div class="divTendererContractorReview">
+                            <h:outputLabel value="#{review.tenderer.login}" style="color: #666666;" />
+                            <h:outputLabel value="#{review.date}" style="color: #66cccc; margin-left: 10px;" />
+                        </div>
+                    </div>
+                    <!-- contractor's actions -->
+                    <div class="rightPanelContractor">
+                        <h:form id="formComment">
+                            <p:growl id="growlReviewContractor" sticky="false" showDetail="false" life="3000" /> 
+                            <div class="divTitleReviewComment">
+                                <h:outputLabel value="Réponse :" />
+                            </div>
+                            <div>
+                                <p:inputTextarea id="reviewContent" styleClass="textAreaContractorReviewComment" rows="6" cols="20" value="#{contractorsReviewBean.answersReview[review.id]}" required="true" autoResize="false" label="Réponse" />
+                                <div class="divContractorReviewComment">
+                                    <p:commandButton id="answerButton" rendered="#{empty review.contractorAnswer}" value="Répondre" styleClass="updateButtonContractorReview" action="#{contractorsReviewBean.updateReviewsAnswer(review)}" update="growlReviewContractor @form" />
+                                    <p:commandButton id="editButton" rendered="#{not empty review.contractorAnswer}" value="Modifier" styleClass="updateButtonContractorReview" action="#{contractorsReviewBean.updateReviewsAnswer(review)}" update="growlReviewContractor @form" />
+                                    <p:commandButton id="deleteButton" rendered="#{not empty review.contractorAnswer}" value="Supprimer" styleClass="deleteButtonContractorReview" action="#{contractorsReviewBean.deleteReviewsAnswer(review)}" update="growlReviewContractor @form" />
+                                </div>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </c:forEach>
+        </p:panel>
+    </div>
+    
+</ui:composition>

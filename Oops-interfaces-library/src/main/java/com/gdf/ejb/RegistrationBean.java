@@ -30,7 +30,23 @@ public interface RegistrationBean {
     public void register(Tenderer t);
     
     /**
+<<<<<<< HEAD
      * Register a Moderator
+=======
+     * Register a Contractor
+     * @param c the Contractor to update
+     */
+    
+    public void update(Contractor c);
+    
+    /**
+     * Register a Tenderer
+     * @param t the Tenderer to update
+     */
+    
+    public void update(Tenderer t);
+     /** Register a Moderator
+>>>>>>> origin/featureManageContractor
      * @param m the Moderator to register
      */
     public void register(Moderator m);

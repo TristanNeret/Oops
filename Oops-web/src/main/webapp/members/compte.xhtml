@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+          
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Consulter mes informations</title>
+       
+        <h:outputStylesheet library="css" name="style.css" />
+        
+    </h:head>
+    
+   
+        
+    
+    <h:body>
+       
+               
+        <ui:include src="/includes/header.xhtml" />
+        
+
+                        <h:form id="form">                       
+                            <p:tabView id="tabview" >
+                                   
+                                    <p:tab id="moncompte" title="Mon Compte">
+                                               
+                                        <h:panelGrid columns="2">
+                                         
+                                            <h:outputLabel value="Login :" />
+                                            <h:outputText  id="loginCompte" value="#{contractorEditBean.login}"/>
+
+                                            <h:outputLabel value="Mot de passe :" />
+                                            <h:outputText  id="passCompte" value="********" />
+                                            
+                                            
+                                            <h:outputLabel value="Prénom :" />
+                                            <h:outputText  id="fnameCompte" value="#{contractorEditBean.lastname}" />
+                                            
+                                            <h:outputLabel value="Nom :" />
+                                            <h:outputText  id="lnameCompte" value="#{contractorEditBean.firstname}" />
+                                            
+                                            <h:outputLabel value="Adresse mail :" />
+                                            <h:outputText  id="emailCompte" value="#{contractorEditBean.email}" />
+                                                
+
+                                            <h:outputLabel value="Téléphone :"  />
+                                            <h:outputText  id="phoneCompte" value="#{contractorEditBean.phone}" />
+                                            
+                                            
+                                        </h:panelGrid>
+                                            
+                                        
+                                            <p:commandButton  value="Modifier" oncomplete="PF('dlgcompte').show()" />
+                                               
+                                           <!-- DIALOG BOX FOR CONTRACTOR MODIFICATION -->
+                                            <p:dialog header="Modifier mes informations" resizable="false" showEffect="fade" widgetVar="dlgcompte">
+                                                <div class="dialogTitle"> Modifier les informations de mon compte !</div>
+                                                <p:panelGrid id="outputcompte" columns="2" >
+                                                    
+                                                    
+                                                    <h:outputLabel value="Mot de passe:"  />
+                                                    <p:password  id="modifiedMDP" value="#{contractorEditBean.password}" required="true" label="Pass" />
+                                                    <h:outputLabel value="Confirmer le mot de passe :" />
+                                                    <p:password  id="modifiedConfirmMDP" value="#{contractorEditBean.cpassword}" required="true" label="cPass"/>
+                                                    <h:outputLabel value="Prénom:" />
+                                                    <p:inputText  id="modifiedLastName" value="#{contractorEditBean.lastname}" required="true" label="lName" />
+                                                    <h:outputLabel value="Nom" />
+                                                    <p:inputText  id="modifiedFirstName" value="#{contractorEditBean.firstname}" required="true" label="fName"/>
+                                                    <h:outputLabel value="Adresse mail :" />
+                                                    <p:inputText  id="modifiedMail" value="#{contractorEditBean.email}" required="true" label="Email"/>
+                                                    <h:outputLabel value="Téléphone :" />
+                                                    <p:inputText  id="modifiedPhoneNumber" value="#{contractorEditBean.phone}" required="true" label="Phone" />
+                                                    
+                                                    
+                                                    
+                                              </p:panelGrid>
+                                                <div class="dialogFooter" >
+                                                    <p:commandButton value="Enregistrer" actionListener="#{contractorEditBean.updateCompte()}" update=":form:tabview" />          
+                                                </div>
+                                             </p:dialog>
+                                           
+                                    </p:tab >         
+                                           
+                                    
+                                    
+                                       <p:tab id="monentreprise" title="Mon Entreprise">
+                                                
+                                           <h:panelGrid columns="2">
+                                            <h:outputLabel value="Raison sociale : "  />
+                                            <h:outputText  id="socialReason" value="#{contractorEditBean.socialReason}" />
+                                            
+
+                                            <h:outputLabel value="Forme juridique :"  />
+                                            <h:outputText  id="legalForm" value="#{contractorEditBean.legalForm}" />
+                                             
+                                            
+                                            <h:outputLabel value="Chiffres d'affaire : "  />
+                                            <h:outputText  id="turnover" value="#{contractorEditBean.turnover}" />
+                                               
+                                            
+                                            <h:outputLabel value="Nombres d'employes : "  />
+                                            <h:outputText  id="nbEmployees" value="#{contractorEditBean.nbEmployees}" />
+                                                
+                                            
+                                            <h:outputLabel value="SIREN"/>
+                                            <h:outputText  id="siren" value="#{contractorEditBean.siren}" />
+
+                                            <h:outputLabel value="SIRET"/>
+                                            <h:outputText  id="siret" value="#{contractorEditBean.siret}" />
+                                            
+                                            <h:outputLabel value="ASSURANCES"/>
+                                            <h:outputText  id="insurrance" value="#{contractorEditBean.insurrance}" />
+                                                                                       
+                                        </h:panelGrid>
+                                           
+                                           <p:commandButton  value="Modifier" oncomplete="PF('dlginfo').show()">
+                                           <p:ajax update="modifiedRs" resetValues="true" />
+                                            <p:ajax update="modifiedLf" resetValues="true" />
+                                            <p:ajax update="modifiedTurnover" resetValues="true" />
+                                            <p:ajax update="modifiedNbemploye" resetValues="true" />
+                                            <p:ajax update="modifiedSiren" resetValues="true" />
+                                            <p:ajax update="modifiedSiret" resetValues="true" />
+                                            <p:ajax update="modifiedRcs" resetValues="true" />
+                                           </p:commandButton>
+                                        <p:dialog header="Modifier mes informations" resizable="false" showEffect="fade" widgetVar="dlginfo">
+                                             <div class="dialogTitle"> Modifier les informations de mon entreprise !</div> 
+                                            <p:panelGrid id="outputinfo" columns="2" columnClasses="label, value">
+                                                    <h:outputText value="Raison social:" />
+                                                    <p:inputText  id="modifiedRs" value="#{contractorEditBean.socialReason}" label="Social Reason" />
+                                                    <h:outputText value="Forme juridique :" />
+                                                    <p:inputText  id="modifiedLf" value="#{contractorEditBean.legalForm}" label="Legal Form"/>
+                                                    <h:outputText value="Chiffres d'affaire:" />
+                                                    <p:inputText  id="modifiedTurnover" value="#{contractorEditBean.turnover}" label="Turnover"/>
+                                                    <h:outputText value="Nombres d'employes" />
+                                                    <p:inputText  id="modifiedNbemploye" value="#{contractorEditBean.nbEmployees}" label="nombres de employees"/>
+                                                    <h:outputText value="SIREN :" />
+                                                    <p:inputText  id="modifiedSiren" value="#{contractorEditBean.siren}" label="Siren"/>
+                                                    <h:outputText value="SIRET :" />
+                                                    <p:inputText  id="modifiedSiret" value="#{contractorEditBean.siret}" label="Siret"/>
+                                                    <h:outputText value="ASSURANCES :" />
+                                                    <p:inputText  id="modifiedRcs" value="#{contractorEditBean.rcs}" label="RCS"/>
+                                                    
+                                                   
+                                                    
+                                              </p:panelGrid>
+                                            <div class="dialogFooter" >
+                                                <p:commandButton value="Enregistrer" actionListener="#{contractorEditBean.updateInfo()}" update=":form:tabview"/>
+                                            </div>
+                                        </p:dialog>
+                                                
+                                    </p:tab >
+                                            
+                                    <p:tab id="mesprestations" title="Mes Prestations">
+                                     
+                                        
+                                        <h:form id="prestationsForm">
+                                            <div id="prestations">
+
+
+                                                <c:forEach items="#{serviceAddBean.contractor.services}" var="service" > 
+
+                                                            <br/>
+
+                                                                <span style="color: #1E90FF;"><b>
+                                                                        <h:outputText value="#{service.title}" /></b> </span><br/>
+
+                                                                <h:outputText value="#{service.description}"/> 
+                                                               <div>
+
+                                                                   <tr>
+                                                                        <td><b>Tarif horraire : 
+                                                                        <h:outputText value="#{service.price}"/> €
+                                                                        </b>
+                                                                        </td>
+
+
+
+                                                                        <td >
+                                                                            <p:commandButton value="Modifier" action="#{serviceAddBean.modification}" />
+                                                                            <p:commandButton value="Supprimer" action="#{serviceAddBean.annuler}" />
+                                                                        </td>
+
+                                                                   </tr>
+                                                               </div>
+
+                                                </c:forEach> 
+                        
+                                            <br/>
+
+
+                                            </div>
+
+                                             <div id="addservice">
+                                                <h:outputLabel value="Ajouter un service :" /> <br/>
+                                                <h:inputText id="title" size="40" value="#{serviceAddBean.title}" style="padding:5px; border:solid 1px black; color:steelblue; border-radius:1px;"/> <br/>
+                                                <h:inputTextarea id="description" cols="50" rows="10" value="#{serviceAddBean.description}"  style="padding:5px; border:solid 1px black; color:steelblue; border-radius:1px;"/><br/>
+                                                <h:inputText id="price" size="20" value="#{serviceAddBean.price}" style="padding:5px; border:solid 1px black; color:steelblue; border-radius:1px;" /> <br/>
+                                                <p:commandButton value="Ajouter" actionListener="#{serviceAddBean.addService()}"  />
+
+                                            </div>
+                                        </h:form>
+
+                                    </p:tab>
+                                            
+                                    <p:tab id="mesavis" title="Mes Avis">
+                                                
+                                                
+                                                
+                                    </p:tab>
+                                            
+                                    
+                                    
+                                    <p:tab id="invitations" title="Invitations">
+                                                
+                                                
+                                                
+                                    </p:tab>
+                                                        
+           
+                              </p:tabView>
+                            </h:form>
+  
+        <!-- Footer begin here -->
+    <ui:include src="/includes/footer.xhtml" />
+    <!-- Footer end here -->
+    </h:body>
+    
+</html>

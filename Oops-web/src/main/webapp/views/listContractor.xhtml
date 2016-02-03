@@ -32,6 +32,7 @@ and open the template in the editor.
         </div>
 
         <h:panelGroup rendered ="#{searchManagedBean.lc.size() ge 2}">
+
             <fieldset width="100%" style="margin: 0px;">
                 <h:form>
                     <h:outputText value="Trier par : " />
@@ -69,6 +70,7 @@ and open the template in the editor.
                         </fieldset> 
                         <h:outputText style="padding-left: 10px; margin-bottom: 20px;" value="#{contractor.description}" /> 
                        </td>
+
                     </tr>
                 </c:forEach>
             </table>

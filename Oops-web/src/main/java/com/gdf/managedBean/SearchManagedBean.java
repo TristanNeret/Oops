@@ -5,6 +5,7 @@
  */
 package com.gdf.managedBean;
 
+
 import com.gdf.ejb.EvaluationBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
@@ -238,7 +239,5 @@ public class SearchManagedBean implements Serializable {
     public void setOrders(Map<String, String> orders) {
         this.orders = orders;
     }
-    
-
-    
+  
 }

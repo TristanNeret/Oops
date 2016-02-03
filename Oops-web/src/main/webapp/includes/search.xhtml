@@ -16,7 +16,9 @@ and open the template in the editor.
 
         <h:form>
             
+
             <p:autoComplete  placeholder="Mots-clés" id="queryInputText" class="searchInputText" value="#{searchManagedBean.keyWord}" completeMethod="#{searchManagedBean.completeQuery}"  />
+
                 
             <h:outputText style="margin-right: 5px; color: white"/>
             <h:selectOneMenu id="listType" value="#{searchManagedBean.type}" style="margin-right: 5px">

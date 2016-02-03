@@ -33,11 +33,13 @@ public class EvaluationBeanImpl implements EvaluationBean {
      */
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;
+
     
     
     @PostConstruct
     private void init(){
     }
+
 
     @Override
     public void addReview(Tenderer tenderer, Contractor contractor, Review review) {
@@ -118,14 +120,18 @@ public class EvaluationBeanImpl implements EvaluationBean {
             em.merge(review);
             
         }
+
+
         
     }
 
     @Override
     public void deleteContractorsAnswer(Review review) {
+       
         review.setContractorAnswer(null);
         em.merge(review);
-    }
+    }   
+
 
     /**
      * Send a request for review given by a contractor to a tenderer
@@ -133,6 +139,7 @@ public class EvaluationBeanImpl implements EvaluationBean {
      * @param tendererID  the id of the tenderer who have been asked to give the review
      * @param message a message given by the contractor to the tenderer
      */
+    
     @Override
     public void askForReview(Long contractorID, Long tendererID, String message) {
         Notification n = new Notification();
@@ -154,6 +161,7 @@ public class EvaluationBeanImpl implements EvaluationBean {
      * @param tendererID the id of the tenderer
      * @return the last notification exchanged between a contractor and a tenderer
      */
+
     @Override
     public Notification getLastNotificationSent(Long contractorID, Long tendererID){
         Query q = em.createNamedQuery("Notification.findByContractorAndTenderer", Notification.class);

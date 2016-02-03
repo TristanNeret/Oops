@@ -5,6 +5,7 @@
  */
 package com.gdf.ejb;
 
+import com.gdf.persistence.Address;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
@@ -244,6 +245,7 @@ public class SearchBeanImpl implements SearchBean {
     }
 
     // TENDERER
+
     
     @Override
     public Tenderer searchTendererById(Long id) {
@@ -258,7 +260,7 @@ public class SearchBeanImpl implements SearchBean {
         return tenderer;
         
     }
-    
+
     @Override
     public Tenderer searchTendererByLogin(String login) {
         
@@ -312,10 +314,11 @@ public class SearchBeanImpl implements SearchBean {
         query.setParameter(1, first + "%" );
         return query.getResultList();
     }
-         
-    
+
+             
     // for unit test
     void setEm(EntityManager em) {
         this.em = em;
     }
+
 }

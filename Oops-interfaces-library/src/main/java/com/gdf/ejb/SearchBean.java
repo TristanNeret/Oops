@@ -27,6 +27,7 @@ public interface SearchBean {
      */
     public Contractor searchContractorById(long id);
 
+
     /**
      * Search a Contractor by his login
      * @param login the login of the Contractor
@@ -48,6 +49,7 @@ public interface SearchBean {
      */
     public List<Contractor> searchContractorByEmail(String email);
     
+
     // TENDERER
     
     /**
@@ -79,6 +81,7 @@ public interface SearchBean {
      */
     public List<Review> searchAcceptedReviews(long id);
     
+
     // SEARCH
     
     /**
@@ -123,6 +126,7 @@ public interface SearchBean {
      * @return all categories
      */
     public List<String> getAllCategory();  
+
     
     public List<String> findTendererBeginBy(String query);
     

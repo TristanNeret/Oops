@@ -200,6 +200,64 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     height: 120px;
 }
 
+
+#divPresentation {
+    width: 100%;
+    height: 120px;
+    background-color: #18abff;
+    font-size: 34px;
+    font-weight: bold;
+    color: white;
+}
+
+#divImagePresentation {
+    float: left; 
+    text-align: center;
+}
+
+#divDetailsPresentation {
+    float: left; 
+    margin-left: 15px; 
+    margin-top: 22px;
+}
+
+#divInformationsPresentation {
+    font-size: 18px; 
+    font-weight: 100; 
+    margin-top: 10px;
+}
+
+#divSubPresentation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 20px;
+}
+
+.divDetailsPrestations {
+    width: 45%; 
+    /*float: left;*/ 
+    margin-right: 20px; 
+    margin-bottom: 20px;
+}
+
+.divReviews {
+    width: 45%; 
+    float: left; 
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.diveRateReview {
+    width: 100%; 
+    height: 20px; 
+    margin-top: 10px;
+}
+
+.imageLogo {
+    height: 120px;
+}
+
 #rating {
     margin-bottom: 15px;
     margin-left: 0px;
@@ -225,6 +283,7 @@ form#reviewForm {
     margin-left: -2px;
     margin-bottom: 20px;
     margin-top: 20px;
+
 }
 
 /*****************************************************************************/
@@ -582,6 +641,59 @@ form .updateButtonContractorReview {
     position: inherit !important;
 }
 
+.ui-tabs {
+    padding: 0em !important;
+}
+
+.ui-tabs.ui-tabs-top > .ui-tabs-nav {
+    padding: 0em !important;
+}
+
+.ui-tabs .ui-tabs-nav {
+    background-color: #66cccc;
+    background: #66cccc;
+    border-bottom-color: #666666;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-top-color: #666666;
+    border-top-width: 2px;
+    border-top-style: solid;
+    border-left-width: 0px;
+    border-left-style: none;
+    border-right-width: 0px;
+    border-right-style: none;
+   
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a {
+    background-color: #336c6c;
+    color: #66cccc;
+    cursor: pointer !important;
+    text-shadow: none;
+    font-weight: 100;
+    font-size: 22px;
+    border-style: solid;
+    border-color: #666666;
+    border-width: 2px;
+}
+
+.ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
+    background-color: #66cccc;
+    color: #336c6c;
+    text-shadow: none;
+    font-weight: 100;
+    font-size: 22px;
+    border-style: solid;
+    border-color: #666666;
+    border-width: 2px;
+    margin: -2px;
+}
+
+.ui-tabs .ui-tabs-nav li {
+    margin: 0em !important;
+    position: inherit !important;
+}
+
 /*****************************************************************************/
 /********************************* DIALOG ************************************/
 /*****************************************************************************/
@@ -619,3 +731,4 @@ form .updateButtonContractorReview {
     background-color: white;
     color: dimgrey;
 }
+

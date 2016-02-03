@@ -58,6 +58,7 @@ public interface EvaluationBean {
      * @param review Review on which delete the Contractor's answer
      */
     public void deleteContractorsAnswer(Review review);
+
     
       /**
      * A contractor asks a tenderer for a review
