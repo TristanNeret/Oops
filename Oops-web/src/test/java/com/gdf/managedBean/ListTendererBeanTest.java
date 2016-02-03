@@ -54,7 +54,7 @@ public class ListTendererBeanTest {
     public void tearDown() {
     }
     
-    //@Test
+    @Test
     public void testAskForReview(){
         // Preparation
         driver.get(baseUrl); 
