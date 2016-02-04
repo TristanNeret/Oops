@@ -49,6 +49,8 @@ public class Contractor implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     
+    @NotNull( message = "Veuillez saisir un login" )
+    @Size( min = 5, message = "Le login doit contenir au moins 5 caractères" )
     @Column(unique=true)
     private String login;
     

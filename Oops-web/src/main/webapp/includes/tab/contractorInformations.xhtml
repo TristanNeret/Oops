@@ -8,12 +8,27 @@
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:p="http://primefaces.org/ui">
     
-    <div>
+    
         
+        
+        <div id="maDivGauche" style="float:left; ">
+         
             <h:form>
+          
+                
+                <p>
+                    <h:outputLabel for="modifiedLogin" class="labelModificationForm"> Login: </h:outputLabel>
+                    <p:inputText  id="modifiedLogin" value="#{contractorEditBean.contractor.login}">
+                        <f:ajax  event="blur" render="loginMessage"/>
+                        <f:validator validatorId="com.gdf.loginAlreadyExistForModificationValidator"/>
+                        <f:attribute value="#{contractorEditBean.contractor.id}" name="idContractor"/>
+                    </p:inputText>
+                    <h:message id="loginMessage" for="modifiedLogin" errorClass="erreur" />
+                </p>
+             
                
                 <p>
-                    <h:outputLabel for="modifiedFirstName" style="color: #66cccc"> Prénom: </h:outputLabel>
+                    <h:outputLabel for="modifiedFirstName" class="labelModificationForm"> Prénom: </h:outputLabel>
                     <p:inputText  id="modifiedFirstName" value="#{contractorEditBean.contractor.representatorFirstname}">
                         <f:ajax  event="blur" render="firstNameMessage"/>
                     </p:inputText>
@@ -21,7 +36,7 @@
                 </p>
                 
                 <p>
-                <h:outputLabel for="modifiedLastName" style="color: #66cccc"> Nom: </h:outputLabel>
+                <h:outputLabel for="modifiedLastName" class="labelModificationForm"> Nom: </h:outputLabel>
                 <p:inputText  id="modifiedLastName" value="#{contractorEditBean.contractor.representatorLastname}">
                     <f:ajax  event="blur" render="lastNameMessage"/>
                 </p:inputText>
@@ -29,7 +44,7 @@
                 </p>
                 
                 <p>
-                <h:outputLabel for="modifiedEmail" style="color: #66cccc"> Email : </h:outputLabel>
+                <h:outputLabel for="modifiedEmail" class="labelModificationForm"> Email : </h:outputLabel>
                 <p:inputText  id="modifiedEmail" value="#{contractorEditBean.contractor.email}">
                     <f:ajax  event="blur" render="emailMessage"/>
                     <f:validator validatorId="com.gdf.mailFormatValidator"/>
@@ -38,26 +53,34 @@
                 </p>
                 
                 <p>
-                <h:outputLabel for="modifiedPhoneNumber" style="color: #66cccc"> Phone : </h:outputLabel>
+                <h:outputLabel for="modifiedPhoneNumber" class="labelModificationForm"> Phone : </h:outputLabel>
                 <p:inputText  id="modifiedPhoneNumber" value="#{contractorEditBean.contractor.phone}">
                     <f:validator validatorId="com.gdf.phoneFormatValidator"/>
                     <f:ajax  event="blur" render="phoneMessage"/>
                 </p:inputText>
-                <h:message id="phoneMessage" for="modifiedPhoneNumber" errorClass="erreur" />
                 </p>
+                
+                <h:message id="phoneMessage" for="modifiedPhoneNumber" errorClass="erreur" />
+              
                  
-                <h:commandButton value="enregistrer" action="#{contractorEditBean.update}"></h:commandButton>    
-             </h:form>   
+                <h:commandButton class="searchCommandButton" value="Enregistrer" action="#{contractorEditBean.update}"></h:commandButton>    
+       
+            
+            </h:form>   
         
+         
             <h:form>
-                <h:commandButton value="annuler" action="#{contractorEditBean.undo}"></h:commandButton>    
+                <h:commandButton class="searchCommandButton" value="Annuler" action="#{contractorEditBean.undo}"></h:commandButton>    
             </h:form> 
-        
+       
+              
+            </div>
+            <div id="maDivDroite" style="float:right;width: 50%; ">
             <br/>
             <h:form >
             
                 <p>
-                <h:outputLabel value ="" for="password" style="color: #66cccc">Mot de passe <span class="requis">*</span></h:outputLabel>
+                <h:outputLabel value ="" for="password" class="labelModificationForm" >Mot de passe</h:outputLabel>
                 <h:inputSecret id="password" value="#{contractorEditBean.contractor.password}" size="20" maxlength="20" binding="#{composantMotDePasse}" >
                     <f:ajax event="blur" execute="password confirmationPassword" render="passwordMessage confirmationPasswordMessage" />
                 </h:inputSecret>  
@@ -65,7 +88,7 @@
                 </p>
 
                 <p>
-                <h:outputLabel for="confirmationPassword" style="color: #66cccc">Confirmation du mot de passe <span class="requis">*</span></h:outputLabel>
+                <h:outputLabel for="confirmationPassword" class="labelModificationForm">Confirmation du mot de passe</h:outputLabel>
                 <h:inputSecret id="confirmationPassword" value="#{contractorEditBean.contractor.password}" size="20" maxlength="20">
                     <f:validator validatorId="passwordConfirmationValidator" />
                     <f:attribute name="composantMotDePasse" value="#{composantMotDePasse}" />
@@ -74,9 +97,10 @@
                 <h:message id="confirmationPasswordMessage" for="confirmationPassword" errorClass="erreur" />
                 </p>
                
-                <h:commandButton value="modifier mot de passe" action="#{contractorEditBean.update}"></h:commandButton>    
+                <h:commandButton class="searchCommandButton" value="Modifier" action="#{contractorEditBean.update}"></h:commandButton>    
     
             </h:form>        
                  
-        </div>
+       
+    </div>
 </ui:composition>

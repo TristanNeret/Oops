@@ -437,6 +437,16 @@ form .updateButtonContractorReview {
     color: gray;
 }
 
+.labelModificationForm 
+{
+    display: block;
+    width: 130px;
+    float: left;
+    color: #008080;
+}
+
+
+
 .divImageReviewAdmin {
     width: 50px; 
     height: 120px; 
@@ -736,3 +746,4 @@ form .updateButtonContractorReview {
 .erreur {
     color: #900;
 }
+
