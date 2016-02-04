@@ -33,10 +33,9 @@ public class PhoneFormatValidator implements Validator {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         
-        String telephone = value.toString();
-        
-         if ( telephone != null ) {
+         if ( value != null ) {
 
+            String telephone = value.toString();   
             if ( !telephone.matches( "^\\d+$" ) ) {
                         throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, BAD_PHONE_FORMAT, null));
             } else if ( telephone.length() < 4 ) {

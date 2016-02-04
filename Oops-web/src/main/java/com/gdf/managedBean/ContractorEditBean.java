@@ -25,6 +25,7 @@ public class ContractorEditBean implements Serializable{
     
     private Contractor contractor;
     
+    
     @EJB
     ContractorManagerBean cm;
     
@@ -54,11 +55,6 @@ public class ContractorEditBean implements Serializable{
     
     public void update(){
         cm.update(contractor);
-        System.out.println("mdp = " + contractor.getPassword());
     }
-    
-     
-  
-    
     
 }

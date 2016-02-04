@@ -5,28 +5,47 @@
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui">
     
     <div>
         
             <h:form>
-                <h:outputLabel value="Prénom:" />
-                <h:inputText  id="modifiedLastName" value="#{contractorEditBean.contractor.representatorLastname}" required="true"/><br/>
-                <h:outputLabel value="Nom" />
-                <h:inputText  id="modifiedFirstName" value="#{contractorEditBean.contractor.representatorFirstname}" required="true"/><br/>
+               
+                <p>
+                    <h:outputLabel for="modifiedFirstName" style="color: #66cccc"> Prénom: </h:outputLabel>
+                    <p:inputText  id="modifiedFirstName" value="#{contractorEditBean.contractor.representatorFirstname}">
+                        <f:ajax  event="blur" render="firstNameMessage"/>
+                    </p:inputText>
+                    <h:message id="firstNameMessage" for="modifiedFirstName" errorClass="erreur" />
+                </p>
                 
-                <h:outputLabel value="Adresse mail :" />
-                <h:inputText  value="#{contractorEditBean.contractor.email}">
+                <p>
+                <h:outputLabel for="modifiedLastName" style="color: #66cccc"> Nom: </h:outputLabel>
+                <p:inputText  id="modifiedLastName" value="#{contractorEditBean.contractor.representatorLastname}">
+                    <f:ajax  event="blur" render="lastNameMessage"/>
+                </p:inputText>
+                <h:message id="lastNameMessage" for="modifiedLastName" errorClass="erreur" />
+                </p>
+                
+                <p>
+                <h:outputLabel for="modifiedEmail" style="color: #66cccc"> Email : </h:outputLabel>
+                <p:inputText  id="modifiedEmail" value="#{contractorEditBean.contractor.email}">
+                    <f:ajax  event="blur" render="emailMessage"/>
                     <f:validator validatorId="com.gdf.mailFormatValidator"/>
-                </h:inputText>    
-                <br/>
-                <h:outputLabel value="Téléphone :" />
+                </p:inputText>    
+                <h:message id="emailMessage" for="modifiedEmail" errorClass="erreur" />
+                </p>
                 
-                
-                <h:inputText  id="modifiedPhoneNumber" value="#{contractorEditBean.contractor.phone}" required="true" /><br/>
+                <p>
+                <h:outputLabel for="modifiedPhoneNumber" style="color: #66cccc"> Phone : </h:outputLabel>
+                <p:inputText  id="modifiedPhoneNumber" value="#{contractorEditBean.contractor.phone}">
+                    <f:validator validatorId="com.gdf.phoneFormatValidator"/>
+                    <f:ajax  event="blur" render="phoneMessage"/>
+                </p:inputText>
+                <h:message id="phoneMessage" for="modifiedPhoneNumber" errorClass="erreur" />
+                </p>
                  
-                <h:message id="passwordMessage" for="password" errorClass="erreur" />
-                <br />
                 <h:commandButton value="enregistrer" action="#{contractorEditBean.update}"></h:commandButton>    
              </h:form>   
         
@@ -34,23 +53,26 @@
                 <h:commandButton value="annuler" action="#{contractorEditBean.undo}"></h:commandButton>    
             </h:form> 
         
-        
+            <br/>
             <h:form >
             
-                <h:outputLabel for="password">Mot de passe <span class="requis">*</span></h:outputLabel>
-                <h:inputSecret id="password" value="#{contractorEditBean.contractor.password}" required="true" size="20" maxlength="20" binding="#{composantMotDePasse}" >
+                <p>
+                <h:outputLabel value ="" for="password" style="color: #66cccc">Mot de passe <span class="requis">*</span></h:outputLabel>
+                <h:inputSecret id="password" value="#{contractorEditBean.contractor.password}" size="20" maxlength="20" binding="#{composantMotDePasse}" >
                     <f:ajax event="blur" execute="password confirmationPassword" render="passwordMessage confirmationPasswordMessage" />
-                </h:inputSecret>   
+                </h:inputSecret>  
+                <h:message id="passwordMessage" for="password" errorClass="erreur" />
+                </p>
 
-               
-                <h:outputLabel for="confirmationPassword">Confirmation du mot de passe <span class="requis">*</span></h:outputLabel>
-                <h:inputSecret id="confirmationPassword" value="#{contractorEditBean.contractor.password}" required="true" size="20" maxlength="20">
+                <p>
+                <h:outputLabel for="confirmationPassword" style="color: #66cccc">Confirmation du mot de passe <span class="requis">*</span></h:outputLabel>
+                <h:inputSecret id="confirmationPassword" value="#{contractorEditBean.contractor.password}" size="20" maxlength="20">
                     <f:validator validatorId="passwordConfirmationValidator" />
                     <f:attribute name="composantMotDePasse" value="#{composantMotDePasse}" />
                     <f:ajax event="blur" execute="password confirmationPassword" render="passwordMessage confirmationPasswordMessage" /> 
-                </h:inputSecret>    
+                </h:inputSecret> 
                 <h:message id="confirmationPasswordMessage" for="confirmationPassword" errorClass="erreur" />
-                <br />
+                </p>
                
                 <h:commandButton value="modifier mot de passe" action="#{contractorEditBean.update}"></h:commandButton>    
     

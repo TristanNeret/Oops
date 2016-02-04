@@ -19,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
@@ -50,9 +52,21 @@ public class Contractor implements Serializable {
     @Column(unique=true)
     private String login;
     
-    private String email, password, socialReason, legalForm, description, phone, logo, representatorFirstname, representatorLastname;
+    private String email,socialReason, legalForm, description, phone, logo;
     private int turnover, nbEmployees, rating;  
     private String registrationDate, updateDate;
+    
+    @NotNull( message = "Veuillez saisir un mot de passe" )
+    @Size( min = 6, message = "Le mot de passe doit contenir au moins 6 caractères" )
+    private String password;
+    
+    @NotNull( message = "Veuillez saisir un prénom" )
+    @Size( min = 3, message = "Le prénom doit contenir au moins 3 caractères" )
+    private String representatorFirstname; 
+    
+    @NotNull( message = "Veuillez saisir un nom" )
+    @Size( min = 3, message = "Le nom doit contenir au moins 3 caractères" )
+    private String representatorLastname;
    
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Service> services = new ArrayList<>();
