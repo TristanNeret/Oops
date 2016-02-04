@@ -41,15 +41,6 @@ public class PopulateDBBean {
      */
     @PostConstruct
     private void populateDatabase(){
-        
-        // CATEGORIES
-        
-        Category defaultCategory = new Category("Divers", "image");
-        em.persist(defaultCategory);
-        defaultCategory = new Category("Restauration", "image");
-        em.persist(defaultCategory);
-        defaultCategory = new Category("Animation", "image");
-        em.persist(defaultCategory);
 
         // REVIEWS
         
@@ -134,6 +125,15 @@ public class PopulateDBBean {
         moderator.setId((long)1);
         
         em.persist(moderator);
+        
+        // CATEGORIES
+        
+        Category defaultCategory = new Category("Divers", "image");
+        em.persist(defaultCategory);
+        defaultCategory = new Category("Restauration", "image");
+        em.persist(defaultCategory);
+        defaultCategory = new Category("Animation", "image");
+        em.persist(defaultCategory);
         
     }
     
