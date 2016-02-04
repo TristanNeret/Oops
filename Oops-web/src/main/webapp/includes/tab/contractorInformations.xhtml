@@ -5,72 +5,56 @@
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-    xmlns:t="http://xmlns.jcp.org/jsf/passthrough">
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <div>
         
-        <p:panel id="informationsPanel">
-         
-            <h:form id="form">
+            <h:form>
+                <h:outputLabel value="Prénom:" />
+                <h:inputText  id="modifiedLastName" value="#{contractorEditBean.contractor.representatorLastname}" required="true"/><br/>
+                <h:outputLabel value="Nom" />
+                <h:inputText  id="modifiedFirstName" value="#{contractorEditBean.contractor.representatorFirstname}" required="true"/><br/>
+                
+                <h:outputLabel value="Adresse mail :" />
+                <h:inputText  value="#{contractorEditBean.contractor.email}">
+                    <f:validator validatorId="com.gdf.mailFormatValidator"/>
+                </h:inputText>    
+                <br/>
+                <h:outputLabel value="Téléphone :" />
+                
+                
+                <h:inputText  id="modifiedPhoneNumber" value="#{contractorEditBean.contractor.phone}" required="true" /><br/>
+                 
+                <h:message id="passwordMessage" for="password" errorClass="erreur" />
+                <br />
+                <h:commandButton value="enregistrer" action="#{contractorEditBean.update}"></h:commandButton>    
+             </h:form>   
+        
+            <h:form>
+                <h:commandButton value="annuler" action="#{contractorEditBean.undo}"></h:commandButton>    
+            </h:form> 
+        
+        
+            <h:form >
+            
+                <h:outputLabel for="password">Mot de passe <span class="requis">*</span></h:outputLabel>
+                <h:inputSecret id="password" value="#{contractorEditBean.contractor.password}" required="true" size="20" maxlength="20" binding="#{composantMotDePasse}" >
+                    <f:ajax event="blur" execute="password confirmationPassword" render="passwordMessage confirmationPasswordMessage" />
+                </h:inputSecret>   
 
-               <h:panelGrid columns="2">
-                                         
-                                            <h:outputLabel value="Login :" />
-                                            <h:outputText  id="loginCompte" value="#{contractorEditBean.login}"/>
-
-                                            <h:outputLabel value="Mot de passe :" />
-                                            <h:outputText  id="passCompte" value="********" />
-                                            
-                                            
-                                            <h:outputLabel value="Prénom :" />
-                                            <h:outputText  id="fnameCompte" value="#{contractorEditBean.lastname}" />
-                                            
-                                            <h:outputLabel value="Nom :" />
-                                            <h:outputText  id="lnameCompte" value="#{contractorEditBean.firstname}" />
-                                            
-                                            <h:outputLabel value="Adresse mail :" />
-                                            <h:outputText  id="emailCompte" value="#{contractorEditBean.email}" />
-                                                
-
-                                            <h:outputLabel value="Téléphone :"  />
-                                            <h:outputText  id="phoneCompte" value="#{contractorEditBean.phone}" />
-                                            
-                                            
-                                        </h:panelGrid>
-                                            
-                                        
-                                            <p:commandButton  value="Modifier" oncomplete="PF('dlgcompte').show()" />
-                                               
-                                           <!-- DIALOG BOX FOR CONTRACTOR MODIFICATION -->
-                                            <p:dialog header="Modifier mes informations" resizable="false" showEffect="fade" widgetVar="dlgcompte">
-                                                <div class="dialogTitle"> Modifier les informations de mon compte !</div>
-                                                <p:panelGrid id="outputcompte" columns="2" >
-                                                    
-                                                    
-                                                    <h:outputLabel value="Mot de passe:"  />
-                                                    <p:password  id="modifiedMDP" value="#{contractorEditBean.password}" required="true" label="Pass" />
-                                                    <h:outputLabel value="Confirmer le mot de passe :" />
-                                                    <p:password  id="modifiedConfirmMDP" value="#{contractorEditBean.cpassword}" required="true" label="cPass"/>
-                                                    <h:outputLabel value="Prénom:" />
-                                                    <p:inputText  id="modifiedLastName" value="#{contractorEditBean.lastname}" required="true" label="lName" />
-                                                    <h:outputLabel value="Nom" />
-                                                    <p:inputText  id="modifiedFirstName" value="#{contractorEditBean.firstname}" required="true" label="fName"/>
-                                                    <h:outputLabel value="Adresse mail :" />
-                                                    <p:inputText  id="modifiedMail" value="#{contractorEditBean.email}" required="true" label="Email"/>
-                                                    <h:outputLabel value="Téléphone :" />
-                                                    <p:inputText  id="modifiedPhoneNumber" value="#{contractorEditBean.phone}" required="true" label="Phone" />
-                                                    
-                                                    
-                                                    
-                                              </p:panelGrid>
-                                                <div class="dialogFooter" >
-                                                    <p:commandButton value="Enregistrer" actionListener="#{contractorEditBean.updateCompte()}" update="@form" />          
-                                                </div>
-                                             </p:dialog>     
-                                     
-                </h:form>
-        </p:panel>
+               
+                <h:outputLabel for="confirmationPassword">Confirmation du mot de passe <span class="requis">*</span></h:outputLabel>
+                <h:inputSecret id="confirmationPassword" value="#{contractorEditBean.contractor.password}" required="true" size="20" maxlength="20">
+                    <f:validator validatorId="passwordConfirmationValidator" />
+                    <f:attribute name="composantMotDePasse" value="#{composantMotDePasse}" />
+                    <f:ajax event="blur" execute="password confirmationPassword" render="passwordMessage confirmationPasswordMessage" /> 
+                </h:inputSecret>    
+                <h:message id="confirmationPasswordMessage" for="confirmationPassword" errorClass="erreur" />
+                <br />
+               
+                <h:commandButton value="modifier mot de passe" action="#{contractorEditBean.update}"></h:commandButton>    
+    
+            </h:form>        
+                 
         </div>
 </ui:composition>

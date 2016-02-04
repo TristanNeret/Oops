@@ -27,4 +27,7 @@ public interface ContractorManagerBean {
      */
     public void delete(Contractor c); 
     
+    
+    public Contractor undo(Contractor c);
+    
 }

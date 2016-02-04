@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -13,6 +14,7 @@ import javax.persistence.PersistenceContext;
  * Class managing Contractor
  * @author Tristan
  */
+@Stateless
 public class ContractorManagerBeanImpl implements ContractorManagerBean {
 
     /**
@@ -24,9 +26,7 @@ public class ContractorManagerBeanImpl implements ContractorManagerBean {
     
     @Override
     public void update(Contractor c) {
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    
+        em.merge(c);
     }
 
     @Override
@@ -39,6 +39,14 @@ public class ContractorManagerBeanImpl implements ContractorManagerBean {
         
         }
         
+    }
+    
+    @Override
+    public Contractor undo(Contractor c) {
+        Contractor attachedContractor = em.merge(c);
+        em.refresh(attachedContractor);
+        System.out.println("entre : " + attachedContractor.getPhone());
+        return attachedContractor;
     }
     
 }
