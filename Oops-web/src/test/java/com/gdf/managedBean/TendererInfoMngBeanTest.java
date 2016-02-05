@@ -14,7 +14,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -42,7 +41,7 @@ public class TendererInfoMngBeanTest {
     
     @AfterClass
     public static void tearDownClass() {
-        driver.close();
+        //driver.close();
     }
     
     @Before
@@ -61,24 +60,24 @@ public class TendererInfoMngBeanTest {
         driver.get(baseUrl);
         
         // Go to first tab
-        List<WebElement> liElements = driver.findElements(By.xpath("//ul/li"));;
+        List<WebElement> liElements = driver.findElements(By.xpath("//ul/li"));
         for (int i = 1; i < liElements.size()+1; i++) {
             WebElement linkElement = driver.findElement(By.xpath("//ul/li[" + i + "]/a"));
-            if (linkElement.getText().equals("Mes compte")) {
+            if (linkElement.getText().equals("Mon compte")) {
                 linkElement.click();
             }
         }
         
         // Click on 'modifier' button
-        WebElement editButton = driver.findElement(By.xpath("//button[contains(@id, 'editButton')]"));
+        WebElement editButton = driver.findElement(By.xpath("//button[contains(@id, ':infoForm:modifier')]"));
         editButton.click();
         
         WebElement inputTitle = driver.findElement(By.xpath("//input[contains(@id, 'infoForm:firstname')]"));
         inputTitle.clear();
         inputTitle.sendKeys("testfirstname");
         
-         // Validate edition of the first Review
-        WebElement validateButton = driver.findElement(By.xpath("//button[contains(@id, 'j_idt56:infoForm:j_idt84')]"));
+         // Validate edition of the tenderer
+        WebElement validateButton = driver.findElement(By.xpath("//button[contains(@id, 'infoForm:enregistrer')]"));
         validateButton.click();
         
         // Test

@@ -37,7 +37,7 @@ public class TendererInfoMngBean implements Serializable {
     }
 
     /**
-     * Initialize Tenderer reviews
+     * Initialize Tenderer to be connected
      */
     @PostConstruct
     public void initBean() {
@@ -54,15 +54,14 @@ public class TendererInfoMngBean implements Serializable {
         
     }
     
+    /**
+     * update the informations of the tenderer
+     */
     public void update(){
         if(password != null){
             this.tenderer.setPassword(password);
         }     
         this.tenderer = tmb.update(this.tenderer);
-    }
-    
-    public boolean isTendererConnected(){
-        return tenderer == null;
     }
 
     public Tenderer getTenderer() {

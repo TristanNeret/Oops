@@ -54,7 +54,7 @@ and open the template in the editor.
                     </tr>
                 </table>
                
-                <p:commandButton value="Modifier" update="dialogEditInfo" oncomplete="PF('infoDialog').show();" />
+                <p:commandButton id="modifier" value="Modifier" update="dialogEditInfo" oncomplete="PF('infoDialog').show();" />
  </p:panel>
                 <script type="text/javascript">
                     function handleUpdateRequest(xhr, status, args) {
@@ -103,7 +103,7 @@ and open the template in the editor.
                         <p:password id="passconfirm" value="#{tendererInfoMngBean.passConfirm}" feedback="true" placeholder="laissez vide pour ne pas modifier"/>
 
                         <f:facet name="footer">
-                            <p:commandButton value="Enregistrer" action="#{tendererInfoMngBean.update()}" 
+                            <p:commandButton id="enregistrer" value="Enregistrer" action="#{tendererInfoMngBean.update()}" 
                                              oncomplete="handleUpdateRequest(xhr, status, args)" update="updateGrowl content" />
                             <p:commandButton value="Annuler" oncomplete="PF('infoDialog').hide();" />
                         </f:facet>  

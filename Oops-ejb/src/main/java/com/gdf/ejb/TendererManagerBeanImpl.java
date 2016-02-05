@@ -86,6 +86,11 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         
     }
     
+    /**
+     * merge the tenderer to the base for update informations
+     * @param t the tenderer to merge
+     * @return return the tenderer updated
+     */
     @Override
     public Tenderer update(Tenderer t) {
         // Get current date 
@@ -95,7 +100,11 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         Tenderer update = em.merge(t);
         return update;
     }
-
+    
+    /**
+     * delete a tenderer of the base
+     * @param t the tenderer to delete
+     */
     @Override
     public void delete(Tenderer t) {
         
@@ -107,7 +116,12 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         }
         
     }
-
+    
+    /**
+     * get a tenderer from the base by his id
+     * @param id the id of the tenderer
+     * @return return the tenderer of the base
+     */
     @Override
     public Tenderer getTendererById(long id) {
         return em.find(Tenderer.class, id);
