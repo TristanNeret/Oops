@@ -5,6 +5,7 @@
  */
 package com.gdf.managedBean;
 
+import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -27,6 +28,7 @@ public class ManageReviewTest {
     private static String baseUrl;
     
     public ManageReviewTest() {
+        
     }
     
     @BeforeClass

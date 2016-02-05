@@ -54,7 +54,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -82,7 +82,9 @@
             <artifactId>jasypt</artifactId>
             <version>1.9.2</version>
         </dependency>
-
+        
+        
+              
     </dependencies>
 
     <build>
@@ -171,6 +173,7 @@
         <profile>
             <id>test</id>
             <properties>
+                <jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
                 <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
                 <jdbc.name>OopsDB_Test</jdbc.name>
                 <jdbc.username>root</jdbc.username>
@@ -195,7 +198,7 @@
         <profile>
             <id>production</id>
             <properties>
-                <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+                <jdbc.driverClassName>oracle.jdbc.driver.OracleDriver</jdbc.driverClassName>
                 <jdbc.name>OopsDB</jdbc.name>
                 <jdbc.username>root</jdbc.username>
                 <jdbc.password>C5T-m2003l-K89</jdbc.password>

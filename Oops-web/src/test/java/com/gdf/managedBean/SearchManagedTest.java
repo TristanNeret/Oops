@@ -5,6 +5,8 @@
  */
 package com.gdf.managedBean;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.After;

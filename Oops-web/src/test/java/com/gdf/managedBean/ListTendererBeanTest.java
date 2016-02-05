@@ -22,7 +22,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  * @author aziz
  */
 public class ListTendererBeanTest {
-
+    
     private final By askReviewBtnXpathExp = By.xpath("//button[contains(@id, 'askReviewForm:askReviewBtn')]"),
              sendReviewBtnXpathExp = By.xpath("//button[contains(@id, 'askReviewDialogForm:sendAskReviewBtn')]");
 
@@ -30,13 +30,16 @@ public class ListTendererBeanTest {
     private static String baseUrl;
     
     public ListTendererBeanTest() {
+        
     }
     
     @BeforeClass
     public static void setUpClass() {
+        
         driver = new FirefoxDriver();
         baseUrl = "http://localhost:8080/Oops-web/views/listTenderer.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+    
     }
     
     @AfterClass
@@ -69,8 +72,8 @@ public class ListTendererBeanTest {
     }
     
     @Test
-    public void testReviewAsked() {
-        
+    public void testReviewAsked(){
+
         // Preparation
 //        driver.get(baseUrl);
 //        boolean notFind = false;

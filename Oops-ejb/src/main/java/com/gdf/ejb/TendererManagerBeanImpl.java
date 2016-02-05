@@ -6,19 +6,14 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
-import com.gdf.persistence.Moderator;
-import com.gdf.persistence.ModeratorReview;
 import com.gdf.persistence.Notification;
 import com.gdf.persistence.NotificationType;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  * Class managing Tenderer
@@ -87,12 +82,6 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
             Tenderer tendererToUpdate = em.find(Tenderer.class, tendererId);
             tendererToUpdate.removeNotificationByReviewId(reviewToRemove.getId());
             tendererToUpdate.removeReview(reviewToRemove);
-            
-            // Remove the Notification from the Moderator Review list
-            for (ModeratorReview mr : reviewToRemove.getModeratorReviews()) {
-                Moderator moderator = em.find(Moderator.class, mr.getModerator().getId());
-                moderator.removeNotificationByReviewId(reviewToRemove.getId());
-            }
             
             // Remove Notifications from the Review to remove
             reviewToRemove.removeNotificationByReviewId(reviewToRemove.getId());

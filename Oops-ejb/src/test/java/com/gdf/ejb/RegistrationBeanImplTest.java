@@ -44,10 +44,10 @@ public class RegistrationBeanImplTest {
     @BeforeClass
     public static void setUpClass() throws NamingException {
         
-        System.out.println("Opening the container");
+//        System.out.println("Opening the container");
 //        container = EJBContainer.createEJBContainer();
 //        context = container.getContext();
-        
+
 //        Map<String, Object> properties = new HashMap<>();
 //        properties.put(EJBContainer.MODULES, new File("target/classes"));
 //        container = EJBContainer.createEJBContainer(properties);
@@ -55,7 +55,7 @@ public class RegistrationBeanImplTest {
 //        String contractorManagerBeanImplName = ContractorManagerBeanImpl.class.getSimpleName();
 //        contractorManagerBeanImplName = "java:global/classes.ext/" + contractorManagerBeanImplName;
 //        contractorManagerBean = (ContractorManagerBean) context.lookup(contractorManagerBeanImplName);
-        
+
     }
     
     @AfterClass

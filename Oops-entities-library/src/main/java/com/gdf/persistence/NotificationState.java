@@ -6,7 +6,7 @@
 package com.gdf.persistence;
 
 /**
- *
+ * NotificationState
  * @author aziz
  */
 public enum NotificationState {

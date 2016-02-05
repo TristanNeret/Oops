@@ -19,7 +19,7 @@ import javax.persistence.OneToMany;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
- *
+ * Moderator
  * @author aziz
  */
 @Entity

@@ -58,8 +58,8 @@ public interface EvaluationBean {
      * @param review Review on which delete the Contractor's answer
      */
     public void deleteContractorsAnswer(Review review);
-    
-      /**
+
+    /**
      * A contractor asks a tenderer for a review
      * @param contractorID the contractor who wants the review
      * @param tendererID the tender who will give the review to the contractor
@@ -67,6 +67,13 @@ public interface EvaluationBean {
      */
     public void askForReview(Long contractorID, Long tendererID, String message);
     
+    /**
+     * Return the last Notification sent
+     * @param contractorID id of the Contractor concerned by the Notification
+     * @param tendererID  id of the Tenderer concerned by the Notification
+     * @return the last Notification which the Tenderer and the Contractor 
+     * are concerned
+     */
     public Notification getLastNotificationSent(Long contractorID, Long tendererID);
 
 }

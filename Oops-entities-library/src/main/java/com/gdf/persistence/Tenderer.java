@@ -22,10 +22,9 @@ import javax.persistence.OneToMany;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
- *
+ * Tenderer
  * @author aziz
  */
-
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Tenderer.findAll", query = "SELECT t FROM Tenderer t ORDER BY t.login ASC"),
@@ -33,8 +32,8 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
     @NamedQuery(name = "Tenderer.findByEmail", query = "SELECT t FROM Tenderer t WHERE t.email=?1"),
     @NamedQuery(name= "Tenderer.beginBy", query = "SELECT t.login from Tenderer t WHERE t.login LIKE ?1")    
 })
-
 public class Tenderer implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";
 
@@ -48,15 +47,15 @@ public class Tenderer implements Serializable {
     private String registrationDate, updateDate;
   
     @OneToMany(mappedBy = "tenderer", cascade = {CascadeType.ALL})
-    private List<Review> reviews = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<Review>();
     
     @OneToMany
-    private List<Notification> notifications = new ArrayList<>();
+    private List<Notification> notifications = new ArrayList<Notification>();
     
     public static final String userCategory = "TENDERER";
     
     public Tenderer() {
-        
+
     }
     
     public Tenderer(String login, String email, String password, String firstname, String lastname, String avatar, String phone, String registrationDate) {

@@ -41,8 +41,7 @@
             </resource>
         </resources>
     </build>
-  
-    
+
     <profiles>
         <profile>
             <id>development</id>
@@ -117,5 +116,5 @@
             </build>
         </profile>
     </profiles>
-  
+
 </project>

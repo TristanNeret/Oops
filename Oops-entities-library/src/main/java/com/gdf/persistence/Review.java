@@ -24,7 +24,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
- *
+ * Review
  * @author aziz
  */
 @Entity
@@ -55,10 +55,10 @@ public class Review implements Serializable {
     private Contractor contractor;
     
     @OneToMany(mappedBy = "review")
-    private List<ModeratorReview> moderatorReviews = new ArrayList<>();
+    private List<ModeratorReview> moderatorReviews = new ArrayList<ModeratorReview>();
     
     @OneToMany
-    private List<Notification> notifications = new ArrayList<>();
+    private List<Notification> notifications = new ArrayList<Notification>();
     
     /**
      * Create an instance of a Review
@@ -235,4 +235,5 @@ public class Review implements Serializable {
         }
         return true;
     }
+    
 }

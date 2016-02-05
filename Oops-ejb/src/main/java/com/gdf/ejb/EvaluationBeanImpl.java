@@ -22,7 +22,6 @@ import javax.persistence.Query;
 
 /**
  * Class supplying methods to manage Reviews
- *
  * @author aziz
  */
 @Stateless
@@ -33,8 +32,7 @@ public class EvaluationBeanImpl implements EvaluationBean {
      */
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;
-    
-    
+
     @PostConstruct
     private void init(){
     }
@@ -123,8 +121,10 @@ public class EvaluationBeanImpl implements EvaluationBean {
 
     @Override
     public void deleteContractorsAnswer(Review review) {
+       
         review.setContractorAnswer(null);
         em.merge(review);
+
     }
 
     /**

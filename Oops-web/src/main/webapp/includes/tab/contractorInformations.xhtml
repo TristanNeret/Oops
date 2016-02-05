@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:t="http://xmlns.jcp.org/jsf/passthrough">
+    
+    <div>
+        
+        <p:panel id="informationsPanel">
+         
+            <h:form id="form">
+
+               <h:panelGrid columns="2">
+                                         
+                                            <h:outputLabel value="Login :" />
+                                            <h:outputText  id="loginCompte" value="#{contractorEditBean.login}"/>
+
+                                            <h:outputLabel value="Mot de passe :" />
+                                            <h:outputText  id="passCompte" value="********" />
+                                            
+                                            
+                                            <h:outputLabel value="Prénom :" />
+                                            <h:outputText  id="fnameCompte" value="#{contractorEditBean.lastname}" />
+                                            
+                                            <h:outputLabel value="Nom :" />
+                                            <h:outputText  id="lnameCompte" value="#{contractorEditBean.firstname}" />
+                                            
+                                            <h:outputLabel value="Adresse mail :" />
+                                            <h:outputText  id="emailCompte" value="#{contractorEditBean.email}" />
+                                                
+
+                                            <h:outputLabel value="Téléphone :"  />
+                                            <h:outputText  id="phoneCompte" value="#{contractorEditBean.phone}" />
+                                            
+                                            
+                                        </h:panelGrid>
+                                            
+                                        
+                                            <p:commandButton  value="Modifier" oncomplete="PF('dlgcompte').show()" />
+                                               
+                                           <!-- DIALOG BOX FOR CONTRACTOR MODIFICATION -->
+                                            <p:dialog header="Modifier mes informations" resizable="false" showEffect="fade" widgetVar="dlgcompte">
+                                                <div class="dialogTitle"> Modifier les informations de mon compte !</div>
+                                                <p:panelGrid id="outputcompte" columns="2" >
+                                                    
+                                                    
+                                                    <h:outputLabel value="Mot de passe:"  />
+                                                    <p:password  id="modifiedMDP" value="#{contractorEditBean.password}" required="true" label="Pass" />
+                                                    <h:outputLabel value="Confirmer le mot de passe :" />
+                                                    <p:password  id="modifiedConfirmMDP" value="#{contractorEditBean.cpassword}" required="true" label="cPass"/>
+                                                    <h:outputLabel value="Prénom:" />
+                                                    <p:inputText  id="modifiedLastName" value="#{contractorEditBean.lastname}" required="true" label="lName" />
+                                                    <h:outputLabel value="Nom" />
+                                                    <p:inputText  id="modifiedFirstName" value="#{contractorEditBean.firstname}" required="true" label="fName"/>
+                                                    <h:outputLabel value="Adresse mail :" />
+                                                    <p:inputText  id="modifiedMail" value="#{contractorEditBean.email}" required="true" label="Email"/>
+                                                    <h:outputLabel value="Téléphone :" />
+                                                    <p:inputText  id="modifiedPhoneNumber" value="#{contractorEditBean.phone}" required="true" label="Phone" />
+                                                    
+                                                    
+                                                    
+                                              </p:panelGrid>
+                                                <div class="dialogFooter" >
+                                                    <p:commandButton value="Enregistrer" actionListener="#{contractorEditBean.updateCompte()}" update="@form" />          
+                                                </div>
+                                             </p:dialog>     
+                                     
+                </h:form>
+        </p:panel>
+        </div>
+</ui:composition>
