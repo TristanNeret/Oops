@@ -20,11 +20,11 @@ import javax.inject.Named;
  * @author bibo
  */
 @Named(value = "contractorEditBean")
-@RequestScoped
+@ViewScoped
 public class ContractorEditBean implements Serializable{
     
     private Contractor contractor;
-    private boolean contractorModif;
+  
     
     
     @EJB
@@ -37,19 +37,8 @@ public class ContractorEditBean implements Serializable{
     @PostConstruct
     public void init() { 
        this.contractor = sb.searchContractorById(10);
-       this.contractorModif = false;
     }
 
-    public boolean isContractorModif() {
-        return contractorModif;
-    }
-
-    public void setContractorModif(boolean contractorModif) {
-        this.contractorModif = contractorModif;
-        System.out.println("entre");
-    }
-    
-    
     public ContractorEditBean() {
     }
 
@@ -62,13 +51,11 @@ public class ContractorEditBean implements Serializable{
     }
     
     public void undo(){
-       contractor =  cm.undo(contractor);    
-       this.contractorModif = false;
+       contractor =  cm.undo(contractor);
     }
     
     public void update(){
         cm.update(contractor);
-        this.contractorModif = false;
     }
     
 }

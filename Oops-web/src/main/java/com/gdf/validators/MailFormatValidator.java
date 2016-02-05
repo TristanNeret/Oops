@@ -25,8 +25,9 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("com.gdf.mailFormatValidator")
 public class MailFormatValidator implements Validator {
     
-    private static final String BAD_MAIL_FORMAT = "Le format de l'addresse mail est incorrect.";
-
+    private static final String BAD_MAIL_FORMAT = "Le format de l'addresse mail est incorrect.";  
+    private static final String NULL_MAIL = "Le mail est requis";
+    
     /**
      * Creates a new instance of MailFormatValidator
      */
@@ -36,6 +37,11 @@ public class MailFormatValidator implements Validator {
     
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+        
+        if(value == null){
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, NULL_MAIL, null));
+        }
+            
         
         String emailRegEx = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern pattern = Pattern.compile(emailRegEx); 
