@@ -41,7 +41,7 @@ public class TendererInfoMngBeanTest {
     
     @AfterClass
     public static void tearDownClass() {
-        //driver.close();
+        driver.close();
     }
     
     @Before
