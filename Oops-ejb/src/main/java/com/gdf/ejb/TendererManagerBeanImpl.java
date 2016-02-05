@@ -11,8 +11,9 @@ import com.gdf.persistence.NotificationType;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -86,10 +87,13 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
     }
     
     @Override
-    public void update(Tenderer t) {
-        
-        this.em.merge(t);
-        
+    public Tenderer update(Tenderer t) {
+        // Get current date 
+        Calendar cal = Calendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        t.setUpdateDate(dateFormat.format(cal.getTime()));
+        Tenderer update = em.merge(t);
+        return update;
     }
 
     @Override
@@ -102,6 +106,11 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         
         }
         
+    }
+
+    @Override
+    public Tenderer getTendererById(long id) {
+        return em.find(Tenderer.class, id);
     }
 
 }
