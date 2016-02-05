@@ -54,7 +54,15 @@ public class Contractor implements Serializable {
     @Column(unique=true)
     private String login;
     
-    private String email,socialReason, legalForm, description, phone, logo;
+    private String email;
+    
+    @NotNull( message = "Veuillez saisir une raison sociale" )
+    private String socialReason;
+    
+    @NotNull( message = "Veuillez saisir une forme juridique" )
+    private String legalForm;
+    
+    private String description, phone, logo;
     private int turnover, nbEmployees, rating;  
     private String registrationDate, updateDate;
     

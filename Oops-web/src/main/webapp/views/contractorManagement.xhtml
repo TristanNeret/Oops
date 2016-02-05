@@ -13,19 +13,19 @@
         <ui:include src="/includes/header.xhtml" />
         <!-- TAB -->
         <p:tabView>
-            <p:tab title="Mes Informations">
+            <p:tab id="tabInfos" title="Mes Informations">
                 <ui:include src="/includes/tab/contractorInformations.xhtml" />
             </p:tab>
-            <p:tab title="Mon Entreprise">
+            <p:tab id="tabCompany" title="Mon Entreprise">
+                <ui:include src="/includes/tab/companyInformation.xhtml" />
+            </p:tab>
+            <p:tab id="tabServices" title="Mes Préstations">
                 <ui:include src="" />
             </p:tab>
-            <p:tab title="Mes Préstations">
-                <ui:include src="" />
-            </p:tab>
-            <p:tab title="Mes Avis">
+            <p:tab id="tabReviews" title="Mes Avis">
                 <ui:include src="/includes/tab/contractorReviewTab.xhtml" />
             </p:tab>
-            <p:tab title="Invitations">
+            <p:tab id="tabInvites" title="Invitations">
                 <ui:include src="" />
             </p:tab>
         </p:tabView>

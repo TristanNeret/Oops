@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -22,7 +23,17 @@ public class LegalInformation implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String siret, siren, rcs, insurrance;
+    @NotNull( message = "Veuillez saisir un numéro de SIRET" )
+    private String siret;
+    
+    @NotNull( message = "Veuillez saisir un numéro de SIREN" )
+    private String siren;
+    
+    @NotNull( message = "Veuillez saisir un numéro de RCS" )
+    private String rcs;
+    
+    @NotNull( message = "Veuillez saisir une assurance" )
+    private String insurrance;
 
     public LegalInformation() {
     }

@@ -8,84 +8,140 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:t="http://xmlns.jcp.org/jsf/passthrough">
-    
-    <div>
+
+    <script type="text/javascript">
+        function handleModifCompanyInfosRequest(xhr, status, args) {
+            if (args.validationFailed) {
+                
+            } else {
+                PF('modifOKGrowl').renderMessage({summary: 'Modification effectuée !',
+                    detail: 'Les informations de votre entreprise ont été mis à jour !',
+                    severity: 'info'});
+            }
+        }
+    </script>
+
+    <div style="float:left; ">
         
-        <p:panel id="companyPanel">
-         
-            <h:form id="form">
+   
 
+        <!--
+        <h:form id="viewForm">
 
-                                        <h:panelGrid columns="2">
-                                            <h:outputLabel value="Raison sociale : "  />
-                                            <h:outputText  id="socialReason" value="#{contractorEditBean.socialReason}" />
-                                            
+            <h:panelGrid columns="2">
 
-                                            <h:outputLabel value="Forme juridique :"  />
-                                            <h:outputText  id="legalForm" value="#{contractorEditBean.legalForm}" />
-                                             
-                                            
-                                            <h:outputLabel value="Chiffres d'affaire : "  />
-                                            <h:outputText  id="turnover" value="#{contractorEditBean.turnover}" />
-                                               
-                                            
-                                            <h:outputLabel value="Nombres d'employes : "  />
-                                            <h:outputText  id="nbEmployees" value="#{contractorEditBean.nbEmployees}" />
-                                                
-                                            
-                                            <h:outputLabel value="SIREN"/>
-                                            <h:outputText  id="siren" value="#{contractorEditBean.siren}" />
+                <h:outputLabel value="Raison sociale : "  />
+                <h:outputText  id="socialReasonOT" value="#{contractorEditBean.contractor.socialReason}" />
 
-                                            <h:outputLabel value="SIRET"/>
-                                            <h:outputText  id="siret" value="#{contractorEditBean.siret}" />
-                                            
-                                            <h:outputLabel value="ASSURANCES"/>
-                                            <h:outputText  id="insurrance" value="#{contractorEditBean.insurrance}" />
-                                            
-                                            <h:outputLabel value="RCS"/>
-                                            <h:outputText  id="rcs" value="#{contractorEditBean.rcs}" />
-                                            
-                                            
-                                                                                       
-                                        </h:panelGrid>
-                                           
-                                           <p:commandButton  value="Modifier" oncomplete="PF('dlginfo').show()">
-                                           <p:ajax update="modifiedRs" resetValues="true" />
-                                            <p:ajax update="modifiedLf" resetValues="true" />
-                                            <p:ajax update="modifiedTurnover" resetValues="true" />
-                                            <p:ajax update="modifiedNbemploye" resetValues="true" />
-                                            <p:ajax update="modifiedSiren" resetValues="true" />
-                                            <p:ajax update="modifiedSiret" resetValues="true" />
-                                            <p:ajax update="modifiedRcs" resetValues="true" />
-                                           </p:commandButton>
-                                        <p:dialog header="Modifier mes informations" resizable="false" showEffect="fade" widgetVar="dlginfo">
-                                             <div class="dialogTitle"> Modifier les informations de mon entreprise !</div> 
-                                            <p:panelGrid id="outputinfo" columns="2" columnClasses="label, value">
-                                                    <h:outputText value="Raison social:" />
-                                                    <p:inputText  id="modifiedRs" value="#{contractorEditBean.socialReason}" label="Social Reason" />
-                                                    <h:outputText value="Forme juridique :" />
-                                                    <p:inputText  id="modifiedLf" value="#{contractorEditBean.legalForm}" label="Legal Form"/>
-                                                    <h:outputText value="Chiffres d'affaire:" />
-                                                    <p:inputText  id="modifiedTurnover" value="#{contractorEditBean.turnover}" label="Turnover"/>
-                                                    <h:outputText value="Nombres d'employes" />
-                                                    <p:inputText  id="modifiedNbemploye" value="#{contractorEditBean.nbEmployees}" label="nombres de employees"/>
-                                                    <h:outputText value="SIREN :" />
-                                                    <p:inputText  id="modifiedSiren" value="#{contractorEditBean.siren}" label="Siren"/>
-                                                    <h:outputText value="SIRET :" />
-                                                    <p:inputText  id="modifiedSiret" value="#{contractorEditBean.siret}" label="Siret"/>
-                                                    <h:outputText value="ASSURANCES :" />
-                                                    <p:inputText  id="modifiedInsurrance" value="#{contractorEditBean.insurrance}" label="ASSURANCES"/>
-                                                    <h:outputText value="RCS :" />
-                                                    <p:inputText  id="modifiedRcs" value="#{contractorEditBean.rcs}" label="RCS"/>
-                                                    
-                                                   
-                                                    
-                                              </p:panelGrid>
-                                            <div class="dialogFooter" >
-                                                <p:commandButton value="Enregistrer" actionListener="#{contractorEditBean.updateInfo()}" update="@form"/>
-                                            </div>
-                                        </p:dialog>
-                </h:form>
-        </p:panel>
-        </div>
+                <h:outputLabel value="Forme juridique :"  />
+                <h:outputText  id="legalFormOT" value="#{contractorEditBean.contractor.legalForm}" />
+
+                <h:outputLabel value="Chiffres d'affaire : "  />
+                <h:outputText  id="turnoverOT" value="#{contractorEditBean.contractor.turnover}" />
+
+                <h:outputLabel value="Nombres d'employes : "  />
+                <h:outputText  id="nbEmployeesOT" value="#{contractorEditBean.contractor.nbEmployees}" />
+
+                <h:outputLabel value="SIREN : "/>
+                <h:outputText  id="sirenOT" value="#{contractorEditBean.contractor.legalInformation.siren}" />
+
+                <h:outputLabel value="SIRET : "/>
+                <h:outputText  id="siretOT" value="#{contractorEditBean.contractor.legalInformation.siret}" />
+
+                <h:outputLabel value="Assurance : "/>
+                <h:outputText  id="insurranceOT" value="#{contractorEditBean.contractor.legalInformation.insurrance}" />
+
+                <h:outputLabel value="RCS : "/>
+                <h:outputText  id="rcsOT" value="#{contractorEditBean.contractor.legalInformation.rcs}" />
+
+            </h:panelGrid>
+
+            <p:commandButton  value="Modifier" />
+
+        </h:form> -->
+
+        <h:form id="editForm">
+            
+            <p:growl widgetVar="modifOKGrowl" sticky="false" showDetail="true" life="3000" />
+
+            <h:panelGrid id="grid" columns="3" cellpadding="5" >
+
+                <h:outputLabel for="socialReasonIT" value="Raison sociale : " class="labelModificationForm" />
+                <p:inputText  id="socialReasonIT" required="true" value="#{contractorEditBean.contractor.socialReason}" >
+                    <f:ajax  event="blur" render="socialReasonMessage"/>
+                        <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                </p:inputText>
+                <h:message id="socialReasonMessage" for="socialReasonIT" errorClass="erreur" />
+                
+                <h:outputLabel for="legalFormIT" value="Forme juridique :" class="labelModificationForm" />
+                <p:inputText  id="legalFormIT" required="true" value="#{contractorEditBean.contractor.legalForm}">
+                    <f:ajax  event="blur" render="legalFormMessage"/>
+                        <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                </p:inputText>
+                <h:message id="legalFormMessage" for="legalFormIT" errorClass="erreur" />
+
+                <h:outputLabel for="turnoverIT" value="Chiffre d'affaire : " class="labelModificationForm" />
+                <p:inputText  id="turnoverIT" required="true" value="#{contractorEditBean.contractor.turnover}">
+                    <f:ajax  event="blur" render="turnoverMessage"/>
+                        <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                </p:inputText>
+                <h:message id="turnoverMessage" for="turnoverIT" errorClass="erreur" />
+                
+                <h:outputLabel for="nbEmployeesIT" value="Nombres d'employés : " class="labelModificationForm" />
+                <p:inputText  id="nbEmployeesIT" required="true" value="#{contractorEditBean.contractor.nbEmployees}">
+                    <f:ajax  event="blur" render="nbEmployeesMessage"/>
+                        <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                </p:inputText>
+                <h:message id="nbEmployeesMessage" for="nbEmployeesIT" errorClass="erreur" />
+                
+
+                <h:outputLabel for="sirenIT" value="N° SIREN : " class="labelModificationForm" />
+                <p:inputText  id="sirenIT" required="true" value="#{contractorEditBean.contractor.legalInformation.siren}" size="9" 
+                              maxlength="9">
+                    <f:ajax  event="blur" render="sirenMessage"/>
+                        <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                </p:inputText>
+                <h:message id="sirenMessage" for="sirenIT" errorClass="erreur" />
+                
+
+                <h:outputLabel for="siretIT" value="N° SIRET : " class="labelModificationForm" />
+                <p:inputText  id="siretIT" required="true" value="#{contractorEditBean.contractor.legalInformation.siret}" size="14" 
+                              maxlength="14">
+                    <f:ajax  event="blur" render="siretMessage"/>
+                        <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                </p:inputText>
+                <h:message id="siretMessage" for="siretIT" errorClass="erreur" />
+                
+                <h:outputLabel for="insurranceIT" value="Assurance : " class="labelModificationForm" />
+                <p:inputText  id="insurranceIT" required="true" value="#{contractorEditBean.contractor.legalInformation.insurrance}">
+                    <f:ajax  event="blur" render="insurranceMessage"/>
+                        <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                </p:inputText>
+                <h:message id="insurranceMessage" for="insurranceIT" errorClass="erreur" />
+                
+
+                <h:outputLabel for="rcsIT" value="N° RCS : " class="labelModificationForm" />
+                <p:inputText  id="rcsIT" required="true" value="#{contractorEditBean.contractor.legalInformation.rcs}">
+                    <f:ajax  event="blur" render="rcsMessage"/>
+                        <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                </p:inputText>
+                <h:message id="rcsMessage" for="rcsIT" errorClass="erreur" />
+                
+
+            </h:panelGrid>
+
+            <p:commandButton  value="Enregistrer" id="saveButton"
+                              actionListener="#{contractorEditBean.update()}"
+                              oncomplete="handleModifCompanyInfosRequest(xhr, status, args)" />
+
+        </h:form>
+        
+        <h:form>
+            
+            <p:commandButton  value="Annuler" id="cancelButton" 
+                              action="#{contractorEditBean.undo()}"/>
+        </h:form>
+
+    </div>
+
 </ui:composition>
