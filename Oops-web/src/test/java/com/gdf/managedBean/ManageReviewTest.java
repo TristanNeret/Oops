@@ -18,7 +18,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
- *
+ * ManageReviewTest
  * @author Tristan
  */
 public class ManageReviewTest {

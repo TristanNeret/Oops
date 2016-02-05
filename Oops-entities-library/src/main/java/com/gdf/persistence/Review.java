@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,9 +29,9 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Review.findWaitingReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.DELIVERED"),
-    @NamedQuery(name = "Review.findAcceptedReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1"),
-    @NamedQuery(name = "Review.findTendererReviews", query = "SELECT r FROM Review r WHERE r.tenderer.id=?1"),
+    @NamedQuery(name = "Review.findWaitingReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.DELIVERED AND r.reviewEnabled=true"),
+    @NamedQuery(name = "Review.findAcceptedReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1 AND r.reviewEnabled=true"),
+    @NamedQuery(name = "Review.findTendererReviews", query = "SELECT r FROM Review r WHERE r.tenderer.id=?1 AND r.reviewEnabled=true"),
     @NamedQuery(name = "Review.deleteReviewById", query = "DELETE FROM Review r WHERE r.id=?1")
 })
 public class Review implements Serializable {
@@ -45,6 +46,7 @@ public class Review implements Serializable {
     @Column(name = "REVIEW_DATE")
     private String date;
     private ReviewState reviewState;
+    private boolean reviewEnabled;
     
     @ManyToOne
     private Tenderer tenderer;
@@ -62,6 +64,8 @@ public class Review implements Serializable {
      * Create an instance of a Review
      */
     public Review() {
+        
+        this.reviewEnabled = true;
         
     }
     
@@ -81,6 +85,7 @@ public class Review implements Serializable {
         Calendar cal = Calendar.getInstance();
         this.date = dateFormat.format(cal.getTime());
         
+        this.reviewEnabled = true;
         this.reviewState = ReviewState.DELIVERED;
         
     }
@@ -166,7 +171,13 @@ public class Review implements Serializable {
     }
 
     public List<Notification> getNotifications() {
-        return notifications;
+        List<Notification> returnNotifications = new ArrayList<>();
+        for (Notification notification : this.notifications) {
+            if (notification.getReview().isReviewEnabled()) {
+                returnNotifications.add(notification);
+            }
+        }
+        return returnNotifications;
     }
 
     public void setNotifications(List<Notification> notifications) {
@@ -176,6 +187,23 @@ public class Review implements Serializable {
     public void addNotification(Notification n){
         this.notifications.add(n);
         n.setReview(this);
+    }
+    
+    public void removeNotificationByReviewId(long reviewId) {
+        for (ListIterator<Notification> iter = this.notifications.listIterator(); iter.hasNext(); ) {
+            Notification n = iter.next();
+            if (n.getReview().getId().equals(reviewId)) {
+                iter.remove();
+            }
+        }
+    }
+
+    public boolean isReviewEnabled() {
+        return reviewEnabled;
+    }
+
+    public void setReviewEnabled(boolean reviewEnabled) {
+        this.reviewEnabled = reviewEnabled;
     }
 
     @Override

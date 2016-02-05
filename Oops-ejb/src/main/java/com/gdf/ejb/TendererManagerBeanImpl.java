@@ -6,6 +6,8 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Moderator;
+import com.gdf.persistence.ModeratorReview;
 import com.gdf.persistence.Notification;
 import com.gdf.persistence.NotificationType;
 import com.gdf.persistence.Review;
@@ -73,14 +75,39 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         Review reviewToRemove = em.find(Review.class, review.getId());
         if (reviewToRemove != null) {
             
+            reviewToRemove.setReviewEnabled(false);
+            
+            /*
+            // Remove the Review from the Contractor Review list
+            Contractor contractorToUpdate = em.find(Contractor.class, reviewToRemove.getContractor().getId());
+            contractorToUpdate.removeNotificationByReviewId(reviewToRemove.getId());
+            contractorToUpdate.removeReview(reviewToRemove);
+            
             // Remove the Review from the Tenderer Review list
             Tenderer tendererToUpdate = em.find(Tenderer.class, tendererId);
-            tendererToUpdate.getReviews().remove(reviewToRemove);
+            tendererToUpdate.removeNotificationByReviewId(reviewToRemove.getId());
+            tendererToUpdate.removeReview(reviewToRemove);
             
+            // Remove the Notification from the Moderator Review list
+            for (ModeratorReview mr : reviewToRemove.getModeratorReviews()) {
+                Moderator moderator = em.find(Moderator.class, mr.getModerator().getId());
+                moderator.removeNotificationByReviewId(reviewToRemove.getId());
+            }
+            
+            // Remove Notifications from the Review to remove
+            reviewToRemove.removeNotificationByReviewId(reviewToRemove.getId());
+            
+            // Remove Notification containing the Review
+            Query queryNotification = em.createNamedQuery("Notification.deleteByReviewId");
+            queryNotification.setParameter(1, reviewToRemove.getId());
+            queryNotification.executeUpdate();
+            
+            // Remove the Review
             Query queryReview = em.createNamedQuery("Review.deleteReviewById");
-            queryReview.setParameter(1, review.getId());
+            queryReview.setParameter(1, reviewToRemove.getId());
             queryReview.executeUpdate();
-            
+            */
+                    
         }
         
     }

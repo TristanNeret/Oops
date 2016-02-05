@@ -58,13 +58,13 @@ public class ContractorInformationTest {
     
     @Test
     public void testBadid(){
-        driver.get(baseUrl+"?id=50");        
+        driver.get(baseUrl+"?id=500");        
         driver.findElement(By.xpath("//h2[contains(text(), 'Prestataire introuvable !')]"));      
     }
     
     @Test
     public void testGoodid(){
-        driver.get(baseUrl+"?id=4");        
+        driver.get(baseUrl+"?id=50");        
         driver.findElement(By.xpath("//h2[1][contains(text(), 'Description')]"));      
 
     }

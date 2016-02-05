@@ -42,16 +42,16 @@ public class Notification implements Serializable {
     private NotificationState state;
     private NotificationType category;
     
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Contractor contractor;
     
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Tenderer tenderer;
     
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Moderator moderator;
     
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Review review;
 
     /**

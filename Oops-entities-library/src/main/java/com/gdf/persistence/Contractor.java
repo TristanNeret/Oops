@@ -7,7 +7,10 @@ package com.gdf.persistence;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -204,7 +207,13 @@ public class Contractor implements Serializable {
     }
 
     public List<Notification> getNotifications() {
-        return notifications;
+        List<Notification> returnNotifications = new ArrayList<>();
+        for (Notification notification : this.notifications) {
+            if (notification.getReview().isReviewEnabled()) {
+                returnNotifications.add(notification);
+            }
+        }
+        return returnNotifications;
     }
 
     public void setNotifications(List<Notification> notifications) {
@@ -212,7 +221,13 @@ public class Contractor implements Serializable {
     }
 
     public List<Review> getReviews() {
-        return reviews;
+        List<Review> returnReviews = new ArrayList<>();
+        for (Review review : this.reviews) {
+            if (review.isReviewEnabled()) {
+                returnReviews.add(review);
+            }
+        }
+        return returnReviews;
     }
 
     public void setReviews(List<Review> reviews) {
@@ -229,9 +244,27 @@ public class Contractor implements Serializable {
         this.reviews.add(review);
     }
     
+    public void removeReview(Review r) {
+        int i = 0;
+        while (i < this.reviews.size() && !this.reviews.get(i).getId().equals(r.getId())) {
+            i++;
+        } 
+        this.reviews.get(i).setContractor(null);
+        this.reviews.remove(i);
+    }
+    
     public void addNotification(Notification n){
         this.notifications.add(n);
         n.setContractor(this);
+    }
+    
+    public void removeNotificationByReviewId(long reviewId) {
+        for (ListIterator<Notification> iter = this.notifications.listIterator(); iter.hasNext(); ) {
+            Notification n = iter.next();
+            if (n.getReview().getId().equals(reviewId)) {
+                iter.remove();
+            }
+        }
     }
 
     public String getDescription() {
