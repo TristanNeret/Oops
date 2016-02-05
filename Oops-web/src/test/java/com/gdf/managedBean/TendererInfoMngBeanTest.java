@@ -5,7 +5,6 @@
  */
 package com.gdf.managedBean;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -21,7 +20,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- *
+ * TendererInfoMngBeanTest
  * @author chris
  */
 public class TendererInfoMngBeanTest {
@@ -30,26 +29,47 @@ public class TendererInfoMngBeanTest {
     private static String baseUrl;
     
     public TendererInfoMngBeanTest() {
+        
     }
     
     @BeforeClass
     public static void setUpClass() {
+        
         driver = new FirefoxDriver();
         baseUrl = "http://localhost:8080/Oops-web/views/tendererManagement.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        
     }
     
     @AfterClass
     public static void tearDownClass() {
+        
         driver.close();
+        
     }
     
     @Before
     public void setUp() {
+        
+        driver.get(baseUrl); 
+        
+        // Go to write Tab
+        boolean test = true;
+        int i = 1;
+        while (test) {
+            WebElement linkElement = driver.findElement(By.xpath("//ul/li[" + i + "]/a"));
+            if (linkElement.getText().equals("Mon compte")) {
+                linkElement.click();
+                test = false;
+            }
+            i++;
+        }
+        
     }
     
     @After
     public void tearDown() {
+        
     }
 
     /**
@@ -57,16 +77,8 @@ public class TendererInfoMngBeanTest {
      */
     @Test
     public void testUpdateSuccess() {
-        driver.get(baseUrl);
         
-        // Go to first tab
-        List<WebElement> liElements = driver.findElements(By.xpath("//ul/li"));
-        for (int i = 1; i < liElements.size()+1; i++) {
-            WebElement linkElement = driver.findElement(By.xpath("//ul/li[" + i + "]/a"));
-            if (linkElement.getText().equals("Mon compte")) {
-                linkElement.click();
-            }
-        }
+        // Preparation
         
         // Click on 'modifier' button
         WebElement editButton = driver.findElement(By.xpath("//button[contains(@id, ':infoForm:modifier')]"));
@@ -87,6 +99,7 @@ public class TendererInfoMngBeanTest {
 
         // Verification
         assertEquals("testfirstname", name.getText()); 
+        
     }
     
 }

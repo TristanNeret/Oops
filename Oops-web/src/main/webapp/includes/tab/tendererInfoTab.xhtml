@@ -14,6 +14,20 @@ and open the template in the editor.
     xmlns:o="http://omnifaces.org/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
+    <script type="text/javascript">
+        function handleUpdateRequest(xhr, status, args) {
+            if (args.validationFailed) {
+                //PF('infoDialog').jq.effect("shake", {times: 5}, 100);
+                PF('infoDialog').show();
+            }
+            else {
+                PF('infoDialog').hide();
+                PF('updateGrowl').renderMessage({summary: 'Modifications enregistrées !', severity: 'info'});
+            }
+        }
+
+    </script>
+    
     <c:if test="#{tendererInfoMngBean.tenderer == null}" >
         <h1>Vous devez être connecté pour acceder à vos informations</h1>
     </c:if>
@@ -22,54 +36,44 @@ and open the template in the editor.
         <div class="divContent">
             <o:form id="infoForm" includeViewParams="true">
                 
-                <p:panel id="content">
+                <div class="divTendererAvatar">
+                    <h:graphicImage value="#{tendererInfoMngBean.tenderer.avatar}" height="150px" rendered="#{tendererInfoMngBean.isAvatar()}" />
+                    <h:outputLabel value="Aucune image" rendered="#{!tendererInfoMngBean.isAvatar()}" />
+                </div>
+                
+                <p:panel id="content" class="panelTendererInformation">
                 <table id="table">
                     <tr>
-                        <td><h:graphicImage value="#{tendererInfoMngBean.tenderer.avatar}"/></td>
-                    </tr> 
-                    <tr>
-                        <td>Login : </td>
+                        <td class="labelTitleTendererInformation">Login : </td>
                         <td><h:outputText value="#{tendererInfoMngBean.tenderer.login}"/></td>
                     </tr>
                     <tr>
-                        <td>Prénom : </td>
+                        <td class="labelTitleTendererInformation">Prénom : </td>
                         <td><h:outputText value="#{tendererInfoMngBean.tenderer.firstname}"/></td>
                     </tr>
                     <tr>
-                        <td>Nom : </td>
+                        <td class="labelTitleTendererInformation">Nom : </td>
                         <td><h:outputText value="#{tendererInfoMngBean.tenderer.lastname}"/></td>
                     </tr>
                     <tr>
-                        <td>E-mail : </td>
+                        <td class="labelTitleTendererInformation">E-mail : </td>
                         <td><h:outputText value="#{tendererInfoMngBean.tenderer.email}"/></td>
                     </tr>
                     <tr>
-                        <td>Téléphone : </td>
+                        <td class="labelTitleTendererInformation">Téléphone : </td>
                         <td><h:outputText value="#{tendererInfoMngBean.tenderer.phone}"/></td>
                     </tr>
                     <tr>
-                        <td>Inscrit depuis le : </td>
+                        <td class="labelTitleTendererInformation">Inscrit depuis le : </td>
                         <td><h:outputText value="#{tendererInfoMngBean.tenderer.registrationDate}"/></td>
 
                     </tr>
                 </table>
                
-                <p:commandButton id="modifier" value="Modifier" update="dialogEditInfo" oncomplete="PF('infoDialog').show();" />
- </p:panel>
-                <script type="text/javascript">
-                    function handleUpdateRequest(xhr, status, args) {
-                        if (args.validationFailed) {
-                            PF('infoDialog').jq.effect("shake", {times: 5}, 100);
-                        }
-                        else {
-                            PF('infoDialog').hide();
-                            PF('updateGrowl').renderMessage({summary: 'Modifications enregistrés !', severity: 'info'});
-                        }
-                    }
+                <p:commandButton id="modifier" value="Modifier" styleClass="commandButtonEditTenderer" update="dialogEditInfo" oncomplete="PF('infoDialog').show();" />
+                </p:panel>
 
-                </script>
-
-                <!-- Dialog view to edit Review -->
+                <!-- Dialog view to edit a Tenderer -->
                 <p:growl id="updateGrowl" widgetVar="updateGrowl" sticky="false" showDetail="false" life="3000" />
                 <p:dialog id="dialogEditInfo" header="Modifier mes informations :" modal="true" widgetVar="infoDialog" dynamic="true" resizable="false">
 
@@ -79,17 +83,17 @@ and open the template in the editor.
                         <p:inputText id="avatar" value="#{tendererInfoMngBean.tenderer.avatar}" />
 
                         <h:outputLabel value="Prénom :" />
-                        <p:inputText id="firstname" value="#{tendererInfoMngBean.tenderer.firstname}" required="true">
+                        <p:inputText id="firstname" value="#{tendererInfoMngBean.tenderer.firstname}" required="true" label="Prénom">
                             <f:validator validatorId="com.gdf.noBlankSpaceValidator" binding="#{noBlankSpaceValidator}" />
                         </p:inputText>
 
                         <h:outputLabel value="Nom :" />
-                        <p:inputText id="lastname" value="#{tendererInfoMngBean.tenderer.lastname}" required="true">
+                        <p:inputText id="lastname" value="#{tendererInfoMngBean.tenderer.lastname}" required="true" label="Nom">
                             <f:validator validatorId="com.gdf.noBlankSpaceValidator" binding="#{noBlankSpaceValidator}" />
                         </p:inputText>
 
                         <h:outputLabel value="E-mail :" />
-                        <p:inputText id="email" value="#{tendererInfoMngBean.tenderer.email}" required="true">
+                        <p:inputText id="email" value="#{tendererInfoMngBean.tenderer.email}" required="true" label="E-mail">
                             <f:validator validatorId="com.gdf.mailFormatValidator" binding="#{mailFormatValidator}" />
                         </p:inputText>
 
@@ -97,14 +101,14 @@ and open the template in the editor.
                         <p:inputText id="phone" value="#{tendererInfoMngBean.tenderer.phone}" required="true"/>
 
                         <h:outputLabel value="Mot de passe :" />
-                        <p:password id="password" value="#{tendererInfoMngBean.password}" match="passconfirm" feedback="true" placeholder="laissez vide pour ne pas modifier" validatorMessage="Les mots de passe ne correspondent pas" />
+                        <p:password id="password" value="#{tendererInfoMngBean.password}" match="passconfirm" feedback="true" placeholder="Laissez vide pour ne pas modifier" validatorMessage="Problème de mot de passe." />
 
                         <h:outputLabel value="Confirmez le mot de passe :" />
-                        <p:password id="passconfirm" value="#{tendererInfoMngBean.passConfirm}" feedback="true" placeholder="laissez vide pour ne pas modifier"/>
+                        <p:password id="passconfirm" value="#{tendererInfoMngBean.passConfirm}" feedback="true" placeholder="Laissez vide pour ne pas modifier" />
 
                         <f:facet name="footer">
                             <p:commandButton id="enregistrer" value="Enregistrer" action="#{tendererInfoMngBean.update()}" 
-                                             oncomplete="handleUpdateRequest(xhr, status, args)" update="updateGrowl content" />
+                                             oncomplete="handleUpdateRequest(xhr, status, args)" update="updateGrowl :tabViewTenderer:infoForm" />
                             <p:commandButton value="Annuler" oncomplete="PF('infoDialog').hide();" />
                         </f:facet>  
 

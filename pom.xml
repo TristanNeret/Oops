@@ -73,6 +73,7 @@
                 <jdbc.name>OopsDB_Dev</jdbc.name>
                 <jdbc.username>root</jdbc.username>
                 <jdbc.password>C5T-m2003l-K89</jdbc.password>
+                <jdbc.port>3306</jdbc.port>
                 <jdbc.datasource>jdbc/OopsMySqlDatasource</jdbc.datasource>
                 <jdbc.pool>OopsMySqlPool</jdbc.pool>
                 <jdbc.connectionURL>jdbc:mysql://51.254.96.204:3306/OopsDB_Dev?zeroDateTimeBehavior=convertToNull</jdbc.connectionURL>
@@ -97,6 +98,7 @@
                 <jdbc.name>OopsDB_Test</jdbc.name>
                 <jdbc.username>root</jdbc.username>
                 <jdbc.password>C5T-m2003l-K89</jdbc.password>
+                <jdbc.port>3306</jdbc.port>
                 <jdbc.datasource>jdbc/OopsTestMySqlDatasource</jdbc.datasource>
                 <jdbc.pool>OopsTestMySqlPool</jdbc.pool>
                 <jdbc.connectionURL>jdbc:mysql://51.254.96.204:3306/OopsDB_Test?zeroDateTimeBehavior=convertToNull</jdbc.connectionURL>
@@ -121,6 +123,7 @@
                 <jdbc.name>OopsDB</jdbc.name>
                 <jdbc.username>root</jdbc.username>
                 <jdbc.password>C5T-m2003l-K89</jdbc.password>
+                <jdbc.port>3306</jdbc.port>
                 <jdbc.datasource>jdbc/OopsMySqlDatasource</jdbc.datasource>
                 <jdbc.pool>OopsMySqlPool</jdbc.pool>
                 <jdbc.connectionURL>jdbc:mysql://51.254.96.204:3306/OopsDB?zeroDateTimeBehavior=convertToNull</jdbc.connectionURL>
@@ -139,8 +142,10 @@
             </build>
         </profile>
     </profiles>
+    
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    
 </project>

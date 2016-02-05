@@ -33,22 +33,28 @@ public class ManageReviewTest {
     
     @BeforeClass
     public static void setUpClass() {
+        
         driver = new FirefoxDriver();
         baseUrl = "http://localhost:8080/Oops-web/views/adminManager.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        
     }
     
     @AfterClass
     public static void tearDownClass() {
+        
         driver.close();
+        
     }
     
     @Before
     public void setUp() { 
+        
     }
     
     @After
     public void tearDown() {
+        
     }
     
     /**

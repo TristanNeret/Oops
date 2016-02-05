@@ -60,6 +60,8 @@ public class TendererRegisterBean {
         return "register";
         
     }
+    
+    // GETTER / SETTER
 
     public String getLogin() {
         return login;

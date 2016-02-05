@@ -31,6 +31,7 @@ public class ServiceAddBeanTest {
     private static String baseUrl;
     
     public ServiceAddBeanTest() {
+        
     }
     
     @BeforeClass

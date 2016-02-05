@@ -44,15 +44,19 @@ public class ListTendererBeanTest {
     
     @AfterClass
     public static void tearDownClass() {
+        
         driver.close();
+        
     }
     
     @Before
     public void setUp() { 
+        
     }
     
     @After
     public void tearDown() {
+        
     }
     
     @Test

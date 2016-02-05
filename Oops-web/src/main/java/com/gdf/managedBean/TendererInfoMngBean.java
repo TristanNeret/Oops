@@ -16,7 +16,7 @@ import javax.faces.view.ViewScoped;
 import javax.validation.constraints.Size;
 
 /**
- *
+ * TendererInfoMngBean
  * @author hamou
  */
 @Named
@@ -27,13 +27,15 @@ public class TendererInfoMngBean implements Serializable {
     TendererManagerBean tmb;
 
     private Tenderer tenderer;
+    
     @Size(min = 8, max = 20, message = "Le mot de passe doit contenir entre 8 et 20 caractères.")
     private String password;
     private String passConfirm;
 
-
     public TendererInfoMngBean() {
+        
         tenderer = null;
+        
     }
 
     /**
@@ -55,7 +57,17 @@ public class TendererInfoMngBean implements Serializable {
     }
     
     /**
-     * update the informations of the tenderer
+     * Test if the Tenderer has an avatar
+     * @return True if Tenderer has an avatar, or False
+     */
+    public boolean isAvatar() {
+        
+        return this.tenderer.getAvatar() != null && !this.tenderer.getAvatar().equals("");
+        
+    }
+    
+    /**
+     * Update the informations of the tenderer
      */
     public void update(){
         if(password != null){
@@ -63,6 +75,8 @@ public class TendererInfoMngBean implements Serializable {
         }     
         this.tenderer = tmb.update(this.tenderer);
     }
+    
+    // GETTER / SETTER
 
     public Tenderer getTenderer() {
         return tenderer;
