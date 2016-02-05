@@ -45,7 +45,7 @@
                                 <div class="rightServiceButton">  
                                     
                                     <!-- Dialog view to edit Prestation -->
-                                    <p:dialog id="prestationDialog" header="Modifier votre prestation :" resizable="false" widgetVar="prestationDialog" dynamic="true">
+                                    <p:dialog id="prestationDialog" header="Modifier votre prestation :" modal="true" resizable="false" widgetVar="prestationDialog" dynamic="true">
                                         <h:panelGrid columns="2" cellpadding="5">
                                             <h:outputLabel value="Titre :" />
                                             <p:inputText id="serviceTitle" value="#{serviceAddBean.editService.title}" style="width: 100%;" required="true" label="Titre de la prestation" />
