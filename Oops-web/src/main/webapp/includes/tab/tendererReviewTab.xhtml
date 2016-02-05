@@ -26,7 +26,7 @@ and open the template in the editor.
                                 rowsPerPageTemplate="6,12,16">
                         
                         <!-- Dialog view to edit Review -->
-                        <p:dialog id="dialogEditReview" header="Modifier votre avis :" modal="true" widgetVar="reviewDialog" dynamic="true" resizable="false">
+                        <p:dialog id="dialogEditReview" header="Modifier votre avis :" dynamic="true" modal="true" widgetVar="reviewDialog" resizable="false">
                             <h:panelGrid columns="2" cellpadding="5">
                                 <h:outputLabel value="Titre :" />
                                 <p:inputText id="reviewAppreciation" value="#{tendererReviewBean.editReviewAppreciation}" required="true" label="Titre" />

@@ -5,7 +5,6 @@
  */
 package com.gdf.managedBean;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -31,22 +30,42 @@ public class TendererReviewBeanTest {
     private static String baseUrl;
     
     public TendererReviewBeanTest() {
+        
     }
     
     @BeforeClass
     public static void setUpClass() {
+        
         driver = new FirefoxDriver();
         baseUrl = "http://localhost:8080/Oops-web/views/tendererManagement.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        
     }
     
     @AfterClass
     public static void tearDownClass() {
+        
         driver.close();
+        
     }
     
     @Before
     public void setUp() {
+        
+        driver.get(baseUrl); 
+        
+        // Go to write Tab
+        boolean test = true;
+        int i = 1;
+        while (test) {
+            WebElement linkElement = driver.findElement(By.xpath("//ul/li[" + i + "]/a"));
+            if (linkElement.getText().equals("Mes Avis")) {
+                linkElement.click();
+                test = false;
+            }
+            i++;
+        }
+        
     }
     
     @After
@@ -62,16 +81,7 @@ public class TendererReviewBeanTest {
         
         // Preparation
         String testTitle = "Test edition title";
-        driver.get(baseUrl); 
-        
-        // Go to write Tab
-        List<WebElement> liElements = driver.findElements(By.xpath("//ul/li"));
-        for (int i = 1; i < liElements.size()+1; i++) {
-            WebElement linkElement = driver.findElement(By.xpath("//ul/li[" + i + "]/a"));
-            if (linkElement.getText().equals("Mes Avis")) {
-                linkElement.click();
-            }
-        }
+ 
         // Click on edit button of the first Review
         WebElement editButton = driver.findElement(By.xpath("//button[contains(@id, 'reviews:1:editButton')]"));
         editButton.click();
@@ -102,18 +112,6 @@ public class TendererReviewBeanTest {
     public void testRemoveReview() {
         
         // Preparation
-        driver.get(baseUrl); 
-        
-        // Go to write Tab
-        List<WebElement> liElements = driver.findElements(By.xpath("//ul/li"));
-        for (int i = 1; i < liElements.size()+1; i++) {
-            WebElement linkElement = driver.findElement(By.xpath("//ul/li[" + i + "]/a"));
-            if (linkElement.getText().equals("Mes Avis")) {
-                linkElement.click();
-            }
-        }
-        
-        // Get number of Review
         int testSize = driver.findElements(By.className("divReviewAppreciationTenderer")).size()-1;
         
         // Click on remove button of the first Review
