@@ -79,22 +79,22 @@ and open the template in the editor.
                         <p:inputText id="avatar" value="#{tendererInfoMngBean.tenderer.avatar}" />
 
                         <h:outputLabel value="Prénom :" />
-                        <p:inputText id="firstname" value="#{tendererInfoMngBean.tenderer.firstname}" >
+                        <p:inputText id="firstname" value="#{tendererInfoMngBean.tenderer.firstname}" required="true">
                             <f:validator validatorId="com.gdf.noBlankSpaceValidator" binding="#{noBlankSpaceValidator}" />
                         </p:inputText>
 
                         <h:outputLabel value="Nom :" />
-                        <p:inputText id="lastname" value="#{tendererInfoMngBean.tenderer.lastname}" >
+                        <p:inputText id="lastname" value="#{tendererInfoMngBean.tenderer.lastname}" required="true">
                             <f:validator validatorId="com.gdf.noBlankSpaceValidator" binding="#{noBlankSpaceValidator}" />
                         </p:inputText>
 
                         <h:outputLabel value="E-mail :" />
-                        <p:inputText id="email" value="#{tendererInfoMngBean.tenderer.email}" >
+                        <p:inputText id="email" value="#{tendererInfoMngBean.tenderer.email}" required="true">
                             <f:validator validatorId="com.gdf.mailFormatValidator" binding="#{mailFormatValidator}" />
                         </p:inputText>
 
                         <h:outputLabel value="Téléphone :" />
-                        <p:inputText id="phone" value="#{tendererInfoMngBean.tenderer.phone}" />
+                        <p:inputText id="phone" value="#{tendererInfoMngBean.tenderer.phone}" required="true"/>
 
                         <h:outputLabel value="Mot de passe :" />
                         <p:password id="password" value="#{tendererInfoMngBean.password}" match="passconfirm" feedback="true" placeholder="laissez vide pour ne pas modifier" validatorMessage="Les mots de passe ne correspondent pas" />
