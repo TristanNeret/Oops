@@ -30,10 +30,18 @@ public interface TendererManagerBean {
     public void removeReview(long tendererId, Review review);
     
     /**
+     * Get a tenderer by id
+     * @param id the id of the tenderer to get
+     * @return return the tenderer of the id 
+     */
+    public Tenderer getTendererById(long id);
+    
+    /**
      * Update Tenderer informations
      * @param t the Tenderer to update
+     * @return return the tenderer updated
      */
-    public void update(Tenderer t);
+    public Tenderer update(Tenderer t);
     
     /**
      * Delete a Tenderer
