@@ -9,16 +9,54 @@
     xmlns:p="http://primefaces.org/ui">
     
     
+    
+    <h:panelGroup rendered="#{!contractorEditBean.contractorModif}">
         
+        <p>
+            <h:outputLabel for="login" class="labelModificationForm"> Login: </h:outputLabel>
+            <h:outputText  id="login" value="#{contractorEditBean.contractor.login}"/>
+        </p>    
         
-        <div id="maDivGauche" style="float:left; ">
+        <p>
+            <h:outputLabel for="firstName" class="labelModificationForm"> Prénom: </h:outputLabel>
+            <h:outputText  id="firstName" value="#{contractorEditBean.contractor.representatorFirstname}"/>
+        </p>
+        
+        <p>
+            <h:outputLabel for="lastName" class="labelModificationForm"> Nom: </h:outputLabel>
+            <h:outputText  id="lastName" value="#{contractorEditBean.contractor.representatorLastname}"/>
+        </p>
+
+        <p>
+            <h:outputLabel for="email" class="labelModificationForm"> Email : </h:outputLabel>
+            <h:outputText  id="email" value="#{contractorEditBean.contractor.email}"/>
+        </p>
+
+        <p>
+            <h:outputLabel for="phoneNumber" class="labelModificationForm"> Phone : </h:outputLabel>
+            <h:outputText  id="phoneNumber" value="#{contractorEditBean.contractor.phone}"/> 
+        </p>
+                      
+        <h:form>
+            <h:commandButton class="searchCommandButton"  value="Modifier" action="#{contractorEditBean.setContractorModif(true)}">
+            </h:commandButton>    
+        </h:form>
+    
+    </h:panelGroup>
+                  
+  
+    <h:panelGroup id="text">
+
+        <h:panelGroup rendered="#{contractorEditBean.contractorModif}">
+     
+        <div id="maDivGauche" style="float:left; " >
          
             <h:form>
           
                 
                 <p>
                     <h:outputLabel for="modifiedLogin" class="labelModificationForm"> Login: </h:outputLabel>
-                    <p:inputText  id="modifiedLogin" value="#{contractorEditBean.contractor.login}">
+                    <p:inputText   id="modifiedLogin" value="#{contractorEditBean.contractor.login}">
                         <f:ajax  event="blur" render="loginMessage"/>
                         <f:validator validatorId="com.gdf.loginAlreadyExistForModificationValidator"/>
                         <f:attribute value="#{contractorEditBean.contractor.id}" name="idContractor"/>
@@ -32,7 +70,7 @@
                     <p:inputText  id="modifiedFirstName" value="#{contractorEditBean.contractor.representatorFirstname}">
                         <f:ajax  event="blur" render="firstNameMessage"/>
                     </p:inputText>
-                    <h:message id="firstNameMessage" for="modifiedFirstName" errorClass="erreur" />
+                    <h:message id="firstNameMessage" for="modifiedFirstName" errorClass="erreur"  />
                 </p>
                 
                 <p>
@@ -103,4 +141,9 @@
                  
        
     </div>
+    </h:panelGroup> 
+    </h:panelGroup>    
+        
+  
+        
 </ui:composition>
