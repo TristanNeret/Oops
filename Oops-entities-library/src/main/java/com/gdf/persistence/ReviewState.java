@@ -6,7 +6,7 @@
 package com.gdf.persistence;
 
 /**
- *
+ * ReviewState
  * @author aziz
  */
 public enum ReviewState {

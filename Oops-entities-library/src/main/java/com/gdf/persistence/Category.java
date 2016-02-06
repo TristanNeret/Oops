@@ -19,7 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
- *
+ * Category
  * @author aziz
  */
 @Entity
@@ -27,9 +27,9 @@ import javax.persistence.OneToMany;
     @NamedQuery(name = "Category.findByName", query = "select c from Category c where c.name=?1"),
     @NamedQuery(name = "Category.findAll", query = "SELECT cat FROM Category cat"),
     @NamedQuery(name = "Category.findById", query = "SELECT cat FROM Category cat WHERE cat.id=?1")
-
 })
 public class Category implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,10 +38,10 @@ public class Category implements Serializable {
     @Column(unique=true)
     private String name;
     private String image;
-    private List<String> keywords = new ArrayList<>();
+    private List<String> keywords = new ArrayList<String>();
     
     @OneToMany(mappedBy = "category")
-    private List<Service> services = new ArrayList<>();
+    private List<Service> services = new ArrayList<Service>();
     
     public Category(){
     }
@@ -112,4 +112,5 @@ public class Category implements Serializable {
         }
         return true;
     }
+    
 }

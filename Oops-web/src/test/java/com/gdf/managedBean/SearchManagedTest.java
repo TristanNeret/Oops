@@ -35,7 +35,6 @@ public class SearchManagedTest {
     private static WebDriver driver;
     private static String baseUrl;
 
-
     @BeforeClass
     public static void setUpClass() {
         driver = new FirefoxDriver();
@@ -516,8 +515,7 @@ public class SearchManagedTest {
 
         driver.findElement(By.id("noResultOutputText"));
     }
-    
-    
+
     @Test 
     public void testContractorSortByInAlphabeticalOrder(){
         driver.get(baseUrl); 

@@ -48,7 +48,7 @@ public class RegistrationBeanImplTest {
 //        container = EJBContainer.createEJBContainer();
 //        context = container.getContext();
 
-        
+
 //        Map<String, Object> properties = new HashMap<>();
 //        properties.put(EJBContainer.MODULES, new File("target/classes"));
 //        container = EJBContainer.createEJBContainer(properties);

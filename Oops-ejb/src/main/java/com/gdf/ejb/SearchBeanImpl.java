@@ -5,7 +5,7 @@
  */
 package com.gdf.ejb;
 
-import com.gdf.persistence.Address;
+import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
@@ -208,17 +208,6 @@ public class SearchBeanImpl implements SearchBean {
     }
     
     /**
-     * Get all categories
-     * @return all categories
-     */
-    @Override
-    public List<String> getAllCategory() {
-        TypedQuery<String> query;
-        query = em.createQuery("SELECT DISTINCT c.name FROM Category c ",String.class);
-        return query.getResultList();  
-    }
-    
-    /**
      * Get the contractors providing a category of service
      * @param lc the list of contractors
      * @param category the catgory of service
@@ -315,8 +304,37 @@ public class SearchBeanImpl implements SearchBean {
         return query.getResultList();
     }
 
-             
-    // for unit test
+
+    // CATEGORY
+    
+    @Override
+    public List<String> getAllCategory() {
+        
+        TypedQuery<String> query;
+        query = em.createQuery("SELECT DISTINCT c.name FROM Category c ", String.class);
+        return query.getResultList();  
+    
+    }
+    
+    @Override
+    public List<Category> getCategories() {
+        
+        TypedQuery<Category> query = em.createQuery("SELECT c FROM Category c ", Category.class);
+        return query.getResultList();
+        
+    }
+
+    @Override
+    public Category searchCategoryById(long idCategory) {
+        
+        return em.find(Category.class, idCategory);
+        
+    }
+    
+    /**
+     * For unit test
+     * */
+
     void setEm(EntityManager em) {
         this.em = em;
     }

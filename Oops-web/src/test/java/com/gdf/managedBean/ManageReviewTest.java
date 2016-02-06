@@ -5,6 +5,7 @@
  */
 package com.gdf.managedBean;
 
+import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,7 +19,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
- *
+ * ManageReviewTest
  * @author Tristan
  */
 public class ManageReviewTest {
@@ -28,26 +29,33 @@ public class ManageReviewTest {
     
 
     public ManageReviewTest() {
+        
     }
     
     @BeforeClass
     public static void setUpClass() {
+        
         driver = new FirefoxDriver();
         baseUrl = "http://localhost:8080/Oops-web/views/adminManager.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        
     }
     
     @AfterClass
     public static void tearDownClass() {
+        
         driver.close();
+        
     }
     
     @Before
     public void setUp() { 
+        
     }
     
     @After
     public void tearDown() {
+        
     }
     
     /**

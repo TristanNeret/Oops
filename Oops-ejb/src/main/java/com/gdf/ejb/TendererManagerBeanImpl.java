@@ -11,12 +11,12 @@ import com.gdf.persistence.NotificationType;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  * Class managing Tenderer
@@ -73,25 +73,56 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         Review reviewToRemove = em.find(Review.class, review.getId());
         if (reviewToRemove != null) {
             
+            reviewToRemove.setReviewEnabled(false);
+            
+            /*
+            // Remove the Review from the Contractor Review list
+            Contractor contractorToUpdate = em.find(Contractor.class, reviewToRemove.getContractor().getId());
+            contractorToUpdate.removeNotificationByReviewId(reviewToRemove.getId());
+            contractorToUpdate.removeReview(reviewToRemove);
+            
             // Remove the Review from the Tenderer Review list
             Tenderer tendererToUpdate = em.find(Tenderer.class, tendererId);
-            tendererToUpdate.getReviews().remove(reviewToRemove);
+            tendererToUpdate.removeNotificationByReviewId(reviewToRemove.getId());
+            tendererToUpdate.removeReview(reviewToRemove);
             
+            // Remove Notifications from the Review to remove
+            reviewToRemove.removeNotificationByReviewId(reviewToRemove.getId());
+            
+            // Remove Notification containing the Review
+            Query queryNotification = em.createNamedQuery("Notification.deleteByReviewId");
+            queryNotification.setParameter(1, reviewToRemove.getId());
+            queryNotification.executeUpdate();
+            
+            // Remove the Review
             Query queryReview = em.createNamedQuery("Review.deleteReviewById");
-            queryReview.setParameter(1, review.getId());
+            queryReview.setParameter(1, reviewToRemove.getId());
             queryReview.executeUpdate();
-            
+            */
+                    
         }
         
     }
     
+    /**
+     * merge the tenderer to the base for update informations
+     * @param t the tenderer to merge
+     * @return return the tenderer updated
+     */
     @Override
-    public void update(Tenderer t) {
-        
-        this.em.merge(t);
-        
+    public Tenderer update(Tenderer t) {
+        // Get current date 
+        Calendar cal = Calendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        t.setUpdateDate(dateFormat.format(cal.getTime()));
+        Tenderer update = em.merge(t);
+        return update;
     }
-
+    
+    /**
+     * delete a tenderer of the base
+     * @param t the tenderer to delete
+     */
     @Override
     public void delete(Tenderer t) {
         
@@ -102,6 +133,16 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         
         }
         
+    }
+    
+    /**
+     * get a tenderer from the base by his id
+     * @param id the id of the tenderer
+     * @return return the tenderer of the base
+     */
+    @Override
+    public Tenderer getTendererById(long id) {
+        return em.find(Tenderer.class, id);
     }
 
 }

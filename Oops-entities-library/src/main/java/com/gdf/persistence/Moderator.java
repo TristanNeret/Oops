@@ -8,6 +8,7 @@ package com.gdf.persistence;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ import javax.persistence.OneToMany;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
- *
+ * Moderator
  * @author aziz
  */
 @Entity
@@ -68,7 +69,13 @@ public class Moderator implements Serializable {
     }
 
     public List<ModeratorReview> getReviews() {
-        return reviews;
+        List<ModeratorReview> returnModeratorReviews = new ArrayList<>();
+        for (ModeratorReview review : this.reviews) {
+            if (review.getReview().isReviewEnabled()) {
+                returnModeratorReviews.add(review);
+            }
+        }
+        return returnModeratorReviews;
     }
 
     public void setReviews(List<ModeratorReview> reviews) {
@@ -76,7 +83,13 @@ public class Moderator implements Serializable {
     }
 
     public List<Notification> getNotifications() {
-        return notifications;
+        List<Notification> returnNotifications = new ArrayList<>();
+        for (Notification notification : this.notifications) {
+            if (notification.getReview().isReviewEnabled()) {
+                returnNotifications.add(notification);
+            }
+        }
+        return returnNotifications;
     }
 
     public void setNotifications(List<Notification> notifications) {
@@ -86,6 +99,15 @@ public class Moderator implements Serializable {
     public void addNotification(Notification n){
         this.notifications.add(n);
         n.setModerator(this);
+    }
+    
+    public void removeNotificationByReviewId(long reviewId) {
+        for (ListIterator<Notification> iter = this.notifications.listIterator(); iter.hasNext(); ) {
+            Notification n = iter.next();
+            if (n.getReview().getId().equals(reviewId)) {
+                iter.remove();
+            }
+        }
     }
     
     private String encryptPassword(String password){

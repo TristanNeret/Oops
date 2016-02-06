@@ -22,7 +22,6 @@ import javax.persistence.Query;
 
 /**
  * Class supplying methods to manage Reviews
- *
  * @author aziz
  */
 @Stateless
@@ -33,12 +32,6 @@ public class EvaluationBeanImpl implements EvaluationBean {
      */
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;
-
-    
-    
-    @PostConstruct
-    private void init(){
-    }
 
 
     @Override
@@ -121,7 +114,6 @@ public class EvaluationBeanImpl implements EvaluationBean {
             
         }
 
-
         
     }
 
@@ -151,6 +143,9 @@ public class EvaluationBeanImpl implements EvaluationBean {
         n.setContractor(contractor);
         Tenderer tenderer = em.find(Tenderer.class, tendererID);
         n.setTenderer(tenderer);
+        if(message == null){
+            message = contractor.getLogin()+" de "+contractor.getSocialReason()+" souhaiterait que vous donniez votre avis sur une des ses prestations.";
+        }
         n.setDescription(message);
         em.persist(n);
     }

@@ -20,7 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 /**
- *
+ * Notification
  * @author aziz
  */
 @Entity
@@ -30,6 +30,7 @@ import javax.persistence.NamedQuery;
                     + "AND n.tenderer=?2 ORDER BY n.date DESC")
 })
 public class Notification implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,16 +43,16 @@ public class Notification implements Serializable {
     private NotificationState state;
     private NotificationType category;
     
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Contractor contractor;
     
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Tenderer tenderer;
     
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Moderator moderator;
     
-    @ManyToOne(cascade = {CascadeType.REMOVE})
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Review review;
 
     /**

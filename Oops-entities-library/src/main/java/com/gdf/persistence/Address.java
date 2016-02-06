@@ -15,7 +15,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 /**
- *
+ * Address
  * @author aziz
  */
 @Entity
@@ -25,6 +25,7 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "Address.findByZip", query = "SELECT adr FROM Address adr WHERE adr.zipCode=?1")
 })
 public class Address implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -134,4 +135,5 @@ public class Address implements Serializable {
     public String toString() {
         return streetNumber+" "+street+" "+zipCode+" "+town+" "+country;
     } 
+    
 }

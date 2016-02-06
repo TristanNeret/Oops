@@ -13,11 +13,12 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 /**
- *
+ * LegalInformation
  * @author aziz
  */
 @Entity
 public class LegalInformation implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

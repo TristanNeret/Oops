@@ -7,6 +7,7 @@ package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Moderator;
+import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -86,6 +87,12 @@ public class RegistrationBeanImpl implements RegistrationBean {
         
     }
 
-  
+
+    @Override
+    public void update(Service s) {
+        
+        em.merge(s);     
+    }
+
 
 }

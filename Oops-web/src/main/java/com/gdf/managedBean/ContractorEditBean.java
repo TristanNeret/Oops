@@ -5,7 +5,11 @@
  */
 package com.gdf.managedBean;
 
+
+import com.gdf.ejb.AddressBean;
 import com.gdf.ejb.ContractorManagerBean;
+import com.gdf.ejb.LegalInformationBean;
+import com.gdf.ejb.RegistrationBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
 import java.io.Serializable;
@@ -16,31 +20,40 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
- *
+ * ContractorEditBean
  * @author bibo
  */
 @Named(value = "contractorEditBean")
 @ViewScoped
 public class ContractorEditBean implements Serializable{
     
+
     private Contractor contractor;
-  
-    
+
+    @EJB
+    SearchBean sb;
     
     @EJB
     ContractorManagerBean cm;
-    
-    @EJB
-    SearchBean sb;
        
     
     @PostConstruct
     public void init() { 
        this.contractor = sb.searchContractorById(10);
     }
-
+   
+    
+    /**
+     * Creates a new instance of ContractorEditBean
+     */
     public ContractorEditBean() {
+    
     }
+
+    
+    /*
+     * Contractor setters and getters
+     */
 
     public Contractor getContractor() {
         return contractor;
@@ -49,6 +62,7 @@ public class ContractorEditBean implements Serializable{
     public void setContractor(Contractor contractor) {
         this.contractor = contractor;
     }
+
     
     public void undo(){
        contractor =  cm.undo(contractor);
@@ -57,5 +71,5 @@ public class ContractorEditBean implements Serializable{
     public void update(){
         cm.update(contractor);
     }
-    
+
 }

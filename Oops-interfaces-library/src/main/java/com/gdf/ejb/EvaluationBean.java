@@ -68,6 +68,13 @@ public interface EvaluationBean {
      */
     public void askForReview(Long contractorID, Long tendererID, String message);
     
+    /**
+     * Return the last Notification sent
+     * @param contractorID id of the Contractor concerned by the Notification
+     * @param tendererID  id of the Tenderer concerned by the Notification
+     * @return the last Notification which the Tenderer and the Contractor 
+     * are concerned
+     */
     public Notification getLastNotificationSent(Long contractorID, Long tendererID);
 
 }
