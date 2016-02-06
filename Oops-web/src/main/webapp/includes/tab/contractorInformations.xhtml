@@ -67,22 +67,22 @@
         <h:form>
             
             <p:commandButton id="buttonModify" class="searchCommandButton" value="Modifier" onclick="PF('modifyDialog').show();">
-                <p:ajax update="j_idt55:formModify:modifiedLogin"/>
-                <p:ajax update="j_idt55:formModify:modifiedFirstName"/>
-                <p:ajax update="j_idt55:formModify:modifiedLastName"/>
-                <p:ajax update="j_idt55:formModify:modifiedEmail"/>
-                <p:ajax update="j_idt55:formModify:modifiedPhoneNumber"/>
-                <p:ajax update="j_idt55:formModify:modifiedEmail"/>
-                <p:ajax update="j_idt55:formModify:loginMessage"/>
-                <p:ajax update="j_idt55:formModify:phoneMessage"/>
-                <p:ajax update="j_idt55:formModify:emailMessage"/>
-                <p:ajax update="j_idt55:formModify:lastNameMessage"/>
-                <p:ajax update="j_idt55:formModify:firstNameMessage"/>
+                <p:ajax update="tabViewContractor:formModify:modifiedLogin"/>
+                <p:ajax update="tabViewContractor:formModify:modifiedFirstName"/>
+                <p:ajax update="tabViewContractor:formModify:modifiedLastName"/>
+                <p:ajax update="tabViewContractor:formModify:modifiedEmail"/>
+                <p:ajax update="tabViewContractor:formModify:modifiedPhoneNumber"/>
+                <p:ajax update="tabViewContractor:formModify:modifiedEmail"/>
+                <p:ajax update="tabViewContractor:formModify:loginMessage"/>
+                <p:ajax update="tabViewContractor:formModify:phoneMessage"/>
+                <p:ajax update="tabViewContractor:formModify:emailMessage"/>
+                <p:ajax update="tabViewContractor:formModify:lastNameMessage"/>
+                <p:ajax update="tabViewContractor:formModify:firstNameMessage"/>
             </p:commandButton>
             
             <p:commandButton class="searchCommandButton" id="buttonModifyMdp" value="Modifier Mot de passe" onclick="PF('mdpDialog').show();">
-                <p:ajax update="j_idt55:formModifyMdp:confirmationPassword" resetValues="true"/>
-                <p:ajax update="j_idt55:formModifyMdp:password" resetValues="true"/>
+                <p:ajax update="tabViewContractor:formModifyMdp:confirmationPassword" resetValues="true"/>
+                <p:ajax update="tabViewContractor:formModifyMdp:password" resetValues="true"/>
             </p:commandButton> 
         
         </h:form>
@@ -143,7 +143,7 @@
                         <h:message id="phoneMessage" for="modifiedPhoneNumber" errorClass="erreur" /> 
                     </p>
 
-                    <p:commandButton value="Modifier" update="j_idt55:informations" actionListener="#{contractorEditBean.update()}" 
+                    <p:commandButton value="Modifier" update="tabViewContractor:informations" actionListener="#{contractorEditBean.update()}" 
                                                          oncomplete="handleModification(xhr, status, args)" />
                 </h:panelGroup>
               
