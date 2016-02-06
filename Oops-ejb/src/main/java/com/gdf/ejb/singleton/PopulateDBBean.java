@@ -73,7 +73,7 @@ public class PopulateDBBean {
         // TENDERERS
         
         Tenderer tenderer = new Tenderer("Michmich", "michou.dupond@gmail.com", 
-                "password", "Michel", "Dupond", "avatar", "3988937", "01/01/2016");
+                "password", "Michel", "Dupond", "http://goodfilmguide.co.uk/wp-content/uploads/2010/04/avatar12.jpg", "3988937", "01/01/2016");
         tenderer.setId(1);
         tenderer.addReview(review);
         tenderer.addReview(review1);
@@ -81,7 +81,7 @@ public class PopulateDBBean {
         em.persist(tenderer);
         
         tenderer = new Tenderer("Dede", "dede.legrand@gmail.com", "password", "Didier", "Legrand", 
-                "avatar", "9837937", "01/01/2016");
+                "", "9837937", "01/01/2016");
         em.persist(tenderer);
         
         // CONTRACTOR
@@ -114,6 +114,13 @@ public class PopulateDBBean {
         
         em.persist(category);
         em.persist(contractor);
+        
+        category = new Category("Divers", "image"); 
+        em.persist(category);
+        category = new Category("Restauration", "image"); 
+        em.persist(category);
+        category = new Category("Animation", "image"); 
+        em.persist(category);
         
         Moderator moderator = new Moderator();
         moderator.setLogin("SuperModerator");
