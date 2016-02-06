@@ -47,9 +47,7 @@ public class TendererInformationTest {
     public void tearDown() {
     }
 
-    /**
-     * Search without parameters in the url
-     */
+    
     @Test
     public void testNoId() {
         driver.get(baseUrl);        
