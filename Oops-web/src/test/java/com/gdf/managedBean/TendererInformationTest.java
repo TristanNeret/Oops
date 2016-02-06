@@ -70,10 +70,7 @@ public class TendererInformationTest {
         
     }
     
-    /**
-     * Test that success message appeared if the Moderator manage a Review
-     * after have take decision
-     */
+  
     @Test
     public void testSuccessMessageUpdateTenderer() {
         
