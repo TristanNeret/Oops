@@ -30,7 +30,7 @@
                 }
                 else {
                     PF('modifyDialog').hide();
-                    PF('growlError').renderMessage({summary: 'Succes!', detail: 'Vos informations ont été modifiées !', severity: 'info'});
+                    PF('growlError').renderMessage({summary: 'Succès!', detail: 'Vos informations ont été modifiées !', severity: 'info'});
                 }
             }
 
@@ -80,7 +80,7 @@
                 <p:ajax update="j_idt55:formModify:firstNameMessage"/>
             </p:commandButton>
             
-            <p:commandButton class="searchCommandButton"  value="Modifier Mot de passe" onclick="PF('mdpDialog').show();">
+            <p:commandButton class="searchCommandButton" id="buttonModifyMdp" value="Modifier Mot de passe" onclick="PF('mdpDialog').show();">
                 <p:ajax update="j_idt55:formModifyMdp:confirmationPassword" resetValues="true"/>
                 <p:ajax update="j_idt55:formModifyMdp:password" resetValues="true"/>
             </p:commandButton> 
