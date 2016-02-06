@@ -49,12 +49,9 @@ public class TendererInformationTest {
     public void tearDown() {
     }
     
-    /**
-     * Test that error message appeared if the Moderator manage a Review
-     * without take decision
-     */
+    
     @Test
-    public void testErrorMessageManageReview() {
+    public void testErrorMessageManageTenderer() {
         
         // Preparation
         driver.get(baseUrl); 
