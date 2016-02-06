@@ -74,14 +74,12 @@ public class TendererInformationTest {
     @Test
     public void testSuccessMessageUpdateTenderer() {
         
-        // Preparation
         driver.get(baseUrl);    
-        WebElement choiceButton = driver.findElement(By.className("commandButtonChoice"));
-        choiceButton.click();
-        WebElement saveButton = driver.findElement(By.className("commandButtonSaveAdmin"));
+        WebElement closeButton = driver.findElement(By.className("commandButtoncloseupdateTenderer"));
+        closeButton.click();
+        WebElement saveButton = driver.findElement(By.className("commandButtonSaveupdateTenderer"));
         saveButton.click();
 
-        // Test
         WebElement growlTitle = driver.findElement(By.className("ui-growl-title"));
 
         // Verification
