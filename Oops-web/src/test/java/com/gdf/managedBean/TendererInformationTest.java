@@ -8,11 +8,13 @@ package com.gdf.managedBean;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
@@ -46,25 +48,48 @@ public class TendererInformationTest {
     @After
     public void tearDown() {
     }
+    
+    /**
+     * Test that error message appeared if the Moderator manage a Review
+     * without take decision
+     */
+    @Test
+    public void testErrorMessageManageReview() {
+        
+        // Preparation
+        driver.get(baseUrl); 
+        WebElement saveButton = driver.findElement(By.className("commandButtonSaveupdateTenderer"));
+        saveButton.click();
+        WebElement closeButton = driver.findElement(By.className("commandButtoncloseupdateTenderer"));
+        saveButton.click();
 
-    
-    @Test
-    public void testNoId() {
-        driver.get(baseUrl);        
-        driver.findElement(By.xpath("//h2[contains(text(), 'Tenderer introuvable !')]"));      
-    }
-    
-    @Test
-    public void testBadid(){
-        driver.get(baseUrl+"?id=50");        
-        driver.findElement(By.xpath("//h2[contains(text(), 'Tenderer introuvable !')]"));      
-    }
-    
-    @Test
-    public void testGoodid(){
-        driver.get(baseUrl+"?id=4");        
-        driver.findElement(By.xpath("//h2[1][contains(text(), 'Description')]"));      
+        // Test
+        WebElement growlTitle = driver.findElement(By.className("ui-growl-title"));
 
+     
+        
     }
     
+    /**
+     * Test that success message appeared if the Moderator manage a Review
+     * after have take decision
+     */
+    @Test
+    public void testSuccessMessageUpdateTenderer() {
+        
+        // Preparation
+        driver.get(baseUrl);    
+        WebElement choiceButton = driver.findElement(By.className("commandButtonChoice"));
+        choiceButton.click();
+        WebElement saveButton = driver.findElement(By.className("commandButtonSaveAdmin"));
+        saveButton.click();
+
+        // Test
+        WebElement growlTitle = driver.findElement(By.className("ui-growl-title"));
+
+        // Verification
+        assertEquals(growlTitle.getText(), "Tenderer Update avec succès !");
+        
+    }
+
 }
