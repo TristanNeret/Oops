@@ -321,6 +321,14 @@ form#reviewForm {
     font-size: 22px;
 }
 
+.divLoginTitle {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #008B8B;
+    font-weight: 100;
+    font-size: 22px;     
+}
+
 .spanServiceCategory {
     color: #1E90FF;
     font-weight: 600;

@@ -7,6 +7,7 @@ package com.gdf.ejb;
 
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
 import java.util.List;
@@ -156,5 +157,7 @@ public interface SearchBean {
      * @return all countries
      */
     public List<String> getAllCountry();
+
+    public Moderator searchModeratorById(long id);
     
 }
