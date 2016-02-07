@@ -92,6 +92,10 @@ public class ContractorEditBean implements Serializable {
     }
 
     public void update() {
+        
+        if((!isATeamCompanySelected()) && (contractor.getNbEmployees() > 0)) 
+                contractor.setNbEmployees(1);
+        
         cm.update(contractor);
     }
 

@@ -71,6 +71,12 @@
                     <p:ajax update="tabViewContractor:dialogForm:rcsIT"/>
                     <p:ajax update="tabViewContractor:dialogForm:insurranceIT"/>
                     <p:ajax update="tabViewContractor:dialogForm:logoIT"/>
+                    <p:ajax update="tabViewContractor:dialogForm:socialReasonMessage"/>
+                    <p:ajax update="tabViewContractor:dialogForm:sirenMessage"/>
+                    <p:ajax update="tabViewContractor:dialogForm:siretMessage"/>
+                    <p:ajax update="tabViewContractor:dialogForm:rcsMessage"/>
+                    <p:ajax update="tabViewContractor:dialogForm:insurranceMessage"/>
+                    <p:ajax update="tabViewContractor:dialogForm:logoMessage"/>
                 </p:commandButton>
 
             </h:panelGrid>
@@ -87,7 +93,7 @@
 
                     <p>
                         <h:outputLabel for="socialReasonIT" value="Raison sociale :" class="labelModificationForm" />
-                        <p:inputText  id="socialReasonIT" required="true" value="#{contractorEditBean.contractor.socialReason}" >
+                        <p:inputText  id="socialReasonIT"  value="#{contractorEditBean.contractor.socialReason}" >
                             <f:ajax  event="blur" render="socialReasonMessage"/>
                             <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
                         </p:inputText>
@@ -97,7 +103,7 @@
                         <h:outputLabel for="legalFormSOM" value="Forme juridique :" class="labelModificationForm" />
                         <p:selectOneMenu id="legalFormSOM" value="#{contractorEditBean.contractor.legalForm}" >
                             <f:selectItems value="#{contractorEditBean.legalForms}" />
-                            <p:ajax update="tabViewContractor:dialogForm:dialogPanel" />
+                            <p:ajax update="tabViewContractor:dialogForm:dialogPanel"/>
                         </p:selectOneMenu>
                     </p>
                     <p>
@@ -131,25 +137,26 @@
                     </p>
                     <p>
                         <h:outputLabel for="sirenIT" value="N° SIREN : " class="labelModificationForm" />
-                        <p:inputText  id="sirenIT" required="true" value="#{contractorEditBean.contractor.legalInformation.siren}" size="9" 
+                        <p:inputText  id="sirenIT"  value="#{contractorEditBean.contractor.legalInformation.siren}" size="9" 
                                       maxlength="9">
                             <f:ajax  event="blur" render="sirenMessage"/>
-                            <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                            <f:validator validatorId="com.gdf.sirenValidator"/>
                         </p:inputText>
                         <p:message id="sirenMessage" for="sirenIT" />
                     </p>
                     <p>
                         <h:outputLabel for="siretIT" value="N° SIRET : " class="labelModificationForm" />
-                        <p:inputText  id="siretIT" required="true" value="#{contractorEditBean.contractor.legalInformation.siret}" size="14" 
+                        <p:inputText  id="siretIT"  value="#{contractorEditBean.contractor.legalInformation.siret}" size="14" 
                                       maxlength="14">
                             <f:ajax  event="blur" render="siretMessage"/>
-                            <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                            <f:validator validatorId="com.gdf.siretValidator"/>      
                         </p:inputText>
                         <p:message id="siretMessage" for="siretIT" />
                     </p>
                     <p>
                         <h:outputLabel for="rcsIT" value="N° RCS :" class="labelModificationForm" />
-                        <p:inputText  id="rcsIT" required="true" value="#{contractorEditBean.contractor.legalInformation.rcs}">
+                        <p:inputText  id="rcsIT"  value="#{contractorEditBean.contractor.legalInformation.rcs}"
+                                      maxlength="9">
                             <f:ajax  event="blur" render="rcsMessage"/>
                             <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
                         </p:inputText>
@@ -157,7 +164,7 @@
                     </p>
                     <p>
                         <h:outputLabel for="insurranceIT" value="Assurance :" class="labelModificationForm" />
-                        <p:inputText  id="insurranceIT" required="true" value="#{contractorEditBean.contractor.legalInformation.insurrance}">
+                        <p:inputText  id="insurranceIT"  value="#{contractorEditBean.contractor.legalInformation.insurrance}">
                             <f:ajax  event="blur" render="insurranceMessage"/>
                             <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
                         </p:inputText>
@@ -165,9 +172,9 @@
                     </p>
                     <p>
                         <h:outputLabel for="logoIT" value="Logo :" class="labelModificationForm" />
-                        <p:inputText  placeholder="Entrez l'URL du logo" id="logoIT" required="true" value="#{contractorEditBean.contractor.logo}">
+                        <p:inputText id="logoIT" placeholder="Entrez l'URL du logo" value="#{contractorEditBean.contractor.logo}">
                             <f:ajax  event="blur" render="logoMessage"/>
-                            <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                            <f:validator validatorId="com.gdf.urlLogoValidator"/>
                         </p:inputText>
                         <p:message id="logoMessage" for="logoIT" />
                     </p>

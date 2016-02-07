@@ -58,6 +58,7 @@ public class Contractor implements Serializable {
     
     private String email;
     
+    @Size( min = 5, message = "La raison social doit contenir au moins 5 caractères" )
     @NotNull( message = "Veuillez saisir une raison sociale" )
     private String socialReason;
     

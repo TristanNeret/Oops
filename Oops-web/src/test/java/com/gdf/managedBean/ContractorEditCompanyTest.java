@@ -27,7 +27,8 @@ public class ContractorEditCompanyTest {
    
     
      private final By tabBtnXpathExp = By.xpath("//a[contains(@href, 'tabCompany')]"),
-             saveBtnXpathExp = By.xpath("//button[contains(@id, 'editForm:saveButton')]");
+             dialogBtnXpathExp = By.xpath("//button[contains(@id, 'tabViewContractor:viewForm')]"),
+             saveBtnXpathExp = By.xpath("//button[contains(@id, 'tabViewContractor:dialogForm:saveButton')]");
     
     private static WebDriver driver;
     private static String baseUrl;
@@ -62,8 +63,11 @@ public class ContractorEditCompanyTest {
         WebElement tabButton = driver.findElement(tabBtnXpathExp);
         tabButton.click();
         
+        WebElement dialogButton = driver.findElement(dialogBtnXpathExp);
+        dialogButton.click();
+       
         WebElement saveButton = driver.findElement(saveBtnXpathExp); 
-        saveButton.click(); 
+        saveButton.click();
         
         // Test
         WebElement growlTitle = (new WebDriverWait(driver, 10))
