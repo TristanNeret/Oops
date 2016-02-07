@@ -130,6 +130,7 @@ and open the template in the editor.
                         <h:outputLabel id="Message" value="Message :" />
                         <p:inputTextarea id="messageOut" rows="6" cols="33" style="width: 100%;" value="#{adminSearchBean.message}"  required ="true" label="Message">
                             <f:validator validatorId="com.gdf.noBlankSpaceValidator" binding="#{noBlankSpaceValidator}" />
+                            <f:ajax  event="blur" render="msgError"/>
                         </p:inputTextarea>
                         <p:message id="msgError" for="messageOut"/>
       
