@@ -55,7 +55,10 @@ public class MailInvitBean implements Serializable {
         currentTenderer = search.searchTendererById(new Long(stringId));
         this.fillMessage();
     }
-
+    
+    /**
+     * pre fill subject and message
+     */
     private void fillMessage() {
 
         String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userCategory");
@@ -79,7 +82,9 @@ public class MailInvitBean implements Serializable {
                 + body
                 + "Cordialement,\nL'équipe Oops";
     }
-
+    /**
+     * send the message in email
+     */
     public void sendMail() {
         msb.sendEmail(to, subject, message);
         // reset fields
