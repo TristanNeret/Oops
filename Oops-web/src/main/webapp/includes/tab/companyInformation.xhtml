@@ -33,35 +33,84 @@
                 <h:outputLabel value="Aucune image" rendered="#{!contractorEditBean.isLogo()}" />
             </div>
 
-            <h:panelGrid class="panelContractorInformation" columns="2" cellpadding="5">
+            <p:panel id="content" class="panelCompanyInformation">
+                <table id="table">
+                    <tr>
+                        <td class="labelTitleContractorInformation">
+                            <h:outputLabel value="Raison sociale :"/>
+                        </td>
+                        <td>
+                            <h:outputText id="socialReasonOT" value="#{contractorEditBean.contractor.socialReason}"/>
+                        </td>
+                    </tr>     
 
-                <h:outputLabel value="Raison sociale :" class="labelModificationForm" />  
-                <h:outputText  id="socialReasonOT"  value="#{contractorEditBean.contractor.socialReason}" />  
+                    <tr>
+                        <td class="labelTitleContractorInformation">
+                            <h:outputLabel value="Forme juridique :"/>
+                        </td>
+                        <td>
+                            <h:outputText id="legalFormOT" value="#{contractorEditBean.contractor.legalForm}"/>
+                        </td>
+                    </tr> 
 
-                <h:outputLabel value="Forme juridique :" class="labelModificationForm" />
-                <h:outputText  id="legalFormOT" value="#{contractorEditBean.contractor.legalForm}" />  
+                    <c:if test="#{contractorEditBean.isATeamCompanySelected()}">
+                        <tr>
+                            <td class="labelTitleContractorInformation">
+                                <h:outputLabel value="Nombre d'employés :"/>
+                            </td>
+                            <td> 
+                                <h:outputText id="nbEmployeesOT" value="> #{contractorEditBean.contractor.nbEmployees}"/>  
+                            </td>
+                        </tr>
+                    </c:if>
 
-                <h:outputLabel value="Nombres d'employés :"  class="labelModificationForm" 
-                               rendered="#{contractorEditBean.isATeamCompanySelected()}"/>  
-                <h:outputText  id="nbEmployeesOT" value="> #{contractorEditBean.contractor.nbEmployees}" 
-                               rendered="#{contractorEditBean.isATeamCompanySelected()}"/>  
-                
-                <h:outputLabel value="Chiffres d'affaire :"  class="labelModificationForm" />  
-                <h:outputText  id="turnoverOT" value="> #{contractorEditBean.contractor.turnover} €" />  
-                
-                <h:outputLabel value="N° SIREN :" class="labelModificationForm" />  
-                <h:outputText  id="sirenOT" value="#{contractorEditBean.contractor.legalInformation.siren}" />  
+                    <tr>
+                        <td class="labelTitleContractorInformation">
+                            <h:outputLabel value="Chiffre d'affaire :"/>
+                        </td>
+                        <td>
+                            <h:outputText id="turnoverOT" value="> #{contractorEditBean.contractor.turnover} €" />
+                        </td>
+                    </tr>
 
-                <h:outputLabel value="N° SIRET :" class="labelModificationForm" />  
-                <h:outputText  id="siretOT" value="#{contractorEditBean.contractor.legalInformation.siret}" />  
+                    <tr>
+                        <td class="labelTitleContractorInformation">
+                            <h:outputLabel value="N° SIREN :"/>
+                        </td>
+                        <td>
+                            <h:outputText id="sirenOT" value="#{contractorEditBean.contractor.legalInformation.siren}"/>
+                        </td>
+                    </tr>
 
-                <h:outputLabel value="N° RCS :" class="labelModificationForm" />  
-                <h:outputText  id="rcsOT" value="#{contractorEditBean.contractor.legalInformation.rcs}" />  
+                    <tr>
+                        <td class="labelTitleContractorInformation">
+                            <h:outputLabel value="N° SIRET :"/>
+                        </td>
+                        <td>
+                            <h:outputText id="siretOT" value="#{contractorEditBean.contractor.legalInformation.siret}"/>
+                        </td>
+                    </tr>
 
-                <h:outputLabel value="Assurance :" class="labelModificationForm" />  
-                <h:outputText  id="insurranceOT" value="#{contractorEditBean.contractor.legalInformation.insurrance}" />  
+                    <tr>
+                        <td class="labelTitleContractorInformation">
+                            <h:outputLabel value="N° RCS :"/>
+                        </td>
+                        <td>
+                            <h:outputText id="rcsOT" value="#{contractorEditBean.contractor.legalInformation.rcs}"/>
+                        </td>
+                    </tr>
 
-                <p:commandButton  value="Modifier"  onclick="PF('modifDialog').show();">
+                    <tr>
+                        <td class="labelTitleContractorInformation">
+                            <h:outputLabel value="Assurance :"/>
+                        </td>
+                        <td>
+                            <h:outputText id="insurranceOT" value="#{contractorEditBean.contractor.legalInformation.insurrance}"/>
+                        </td>
+                    </tr>                                  
+                </table>
+
+                <p:commandButton id="openUpdateDialogButton" value="Modifier" onclick="PF('modifDialog').show();">
                     <p:ajax update="tabViewContractor:dialogForm:socialReasonIT"/>
                     <p:ajax update="tabViewContractor:dialogForm:legalFormSOM"/>
                     <p:ajax update="tabViewContractor:dialogForm:turnoverSOM"/>
@@ -78,8 +127,7 @@
                     <p:ajax update="tabViewContractor:dialogForm:insurranceMessage"/>
                     <p:ajax update="tabViewContractor:dialogForm:logoMessage"/>
                 </p:commandButton>
-
-            </h:panelGrid>
+            </p:panel>
 
         </o:form>
 
@@ -89,27 +137,26 @@
         <o:form id="dialogForm" includeViewParams="true">
 
             <p:dialog header="Modification informations entreprise" modal="true" widgetVar="modifDialog" resizable="false">
-                <p:outputPanel id="dialogPanel">
 
+                <h:panelGroup id="dialogPanel">
                     <p>
-                        <h:outputLabel for="socialReasonIT" value="Raison sociale :" class="labelModificationForm" />
+                        <h:outputLabel for="socialReasonIT" value="Raison sociale :" class="labelModificationForm"/>
                         <p:inputText  id="socialReasonIT"  value="#{contractorEditBean.contractor.socialReason}" >
                             <f:ajax  event="blur" render="socialReasonMessage"/>
-                            <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                            <f:validator validatorId="com.gdf.notNullnBSValidator"/>
                         </p:inputText>
                         <p:message id="socialReasonMessage" for="socialReasonIT" />
                     </p>
                     <p>
-                        <h:outputLabel for="legalFormSOM" value="Forme juridique :" class="labelModificationForm" />
+                        <h:outputLabel for="legalFormSOM" value="Forme juridique :" class="labelModificationForm"/>
                         <p:selectOneMenu id="legalFormSOM" value="#{contractorEditBean.contractor.legalForm}" >
                             <f:selectItems value="#{contractorEditBean.legalForms}" />
                             <p:ajax update="tabViewContractor:dialogForm:dialogPanel"/>
                         </p:selectOneMenu>
                     </p>
                     <p>
-                        <h:outputLabel id="nbEmployeesOL" for="nbEmployeesSOM" value="Nombres d'employés :" 
-                                       class="labelModificationForm" 
-                                       rendered="#{contractorEditBean.isATeamCompanySelected()}"/>
+                        <h:outputLabel id="nbEmployeesOL" for="nbEmployeesSOM" value="Nombre d'employés :" 
+                                       rendered="#{contractorEditBean.isATeamCompanySelected()}" class="labelModificationForm"/>
                         <p:selectOneMenu id="nbEmployeesSOM" value="#{contractorEditBean.contractor.nbEmployees}"
                                          rendered="#{contractorEditBean.isATeamCompanySelected()}">
                             <f:selectItem itemLabel="> 1" itemValue="1" />
@@ -123,7 +170,7 @@
                         </p:selectOneMenu>
                     </p>
                     <p>
-                        <h:outputLabel for="turnoverSOM" value="Chiffre d'affaire :" class="labelModificationForm" />
+                        <h:outputLabel for="turnoverSOM" value="Chiffre d'affaire :" class="labelModificationForm"/>
                         <p:selectOneMenu id="turnoverSOM" value="#{contractorEditBean.contractor.turnover}">
                             <f:selectItem itemLabel="> 500 €" itemValue="500" />
                             <f:selectItem itemLabel="> 1K €" itemValue="1000" />
@@ -136,7 +183,7 @@
                         </p:selectOneMenu>
                     </p>
                     <p>
-                        <h:outputLabel for="sirenIT" value="N° SIREN : " class="labelModificationForm" />
+                        <h:outputLabel for="sirenIT" value="N° SIREN : " class="labelModificationForm"/>
                         <p:inputText  id="sirenIT"  value="#{contractorEditBean.contractor.legalInformation.siren}" size="9" 
                                       maxlength="9">
                             <f:ajax  event="blur" render="sirenMessage"/>
@@ -145,7 +192,7 @@
                         <p:message id="sirenMessage" for="sirenIT" />
                     </p>
                     <p>
-                        <h:outputLabel for="siretIT" value="N° SIRET : " class="labelModificationForm" />
+                        <h:outputLabel for="siretIT" value="N° SIRET : " class="labelModificationForm"/>
                         <p:inputText  id="siretIT"  value="#{contractorEditBean.contractor.legalInformation.siret}" size="14" 
                                       maxlength="14">
                             <f:ajax  event="blur" render="siretMessage"/>
@@ -154,24 +201,24 @@
                         <p:message id="siretMessage" for="siretIT" />
                     </p>
                     <p>
-                        <h:outputLabel for="rcsIT" value="N° RCS :" class="labelModificationForm" />
+                        <h:outputLabel for="rcsIT" value="N° RCS :" class="labelModificationForm"/>
                         <p:inputText  id="rcsIT"  value="#{contractorEditBean.contractor.legalInformation.rcs}"
-                                      maxlength="9">
+                                      maxlength="20">
                             <f:ajax  event="blur" render="rcsMessage"/>
-                            <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                            <f:validator validatorId="com.gdf.notNullnBSValidator"/>
                         </p:inputText>
                         <p:message id="rcsMessage" for="rcsIT" />
                     </p>
                     <p>
-                        <h:outputLabel for="insurranceIT" value="Assurance :" class="labelModificationForm" />
+                        <h:outputLabel for="insurranceIT" value="Assurance :" class="labelModificationForm"/>
                         <p:inputText  id="insurranceIT"  value="#{contractorEditBean.contractor.legalInformation.insurrance}">
                             <f:ajax  event="blur" render="insurranceMessage"/>
-                            <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
+                            <f:validator validatorId="com.gdf.notNullnBSValidator"/>
                         </p:inputText>
                         <p:message id="insurranceMessage" for="insurranceIT" />
                     </p>
                     <p>
-                        <h:outputLabel for="logoIT" value="Logo :" class="labelModificationForm" />
+                        <h:outputLabel for="logoIT" value="Logo :" class="labelModificationForm"/>
                         <p:inputText id="logoIT" placeholder="Entrez l'URL du logo" value="#{contractorEditBean.contractor.logo}">
                             <f:ajax  event="blur" render="logoMessage"/>
                             <f:validator validatorId="com.gdf.urlLogoValidator"/>
@@ -180,7 +227,7 @@
                     </p>
 
                     <div class="dialogFooter" >
-                        <p:commandButton  value="Enregistrer" id="saveButton" update="tabViewContractor:viewForm"
+                        <p:commandButton  id="updateButton" value="Enregistrer" update="tabViewContractor:viewForm"
                                           actionListener="#{contractorEditBean.update()}"
                                           oncomplete="handleModifCompanyInfosRequest(xhr, status, args)" />
 
@@ -188,7 +235,7 @@
                                           onclick="PF('modifDialog').hide();"/>
                     </div>
 
-                </p:outputPanel>
+                </h:panelGroup>
             </p:dialog>
         </o:form>
     </div>

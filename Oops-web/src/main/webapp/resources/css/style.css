@@ -286,7 +286,27 @@ form#reviewForm {
 
 }
 
+.divContractorLogo {
+    float: left;
+    margin-top: 20px;
+}
 
+.panelCompanyInformation {
+    float: left;
+    margin-left: 20px;
+    border-left-width: 3px !important;
+    border-left-color: darkgray !important;
+    border-left-style: ridge !important;
+}
+
+.labelTitleContractorInformation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #336c6c;
+    height: 35px;
+    font-size: 20px;
+    min-width: 200px;
+}
 
 /*****************************************************************************/
 /***************************** SERVICE MANAGER********************************/
