@@ -116,6 +116,12 @@ public interface SearchBean {
      */
     public List<Tenderer> findAllTenderer();
     
+     /**
+     * Get all the contractor
+     * @return all the contractor
+     */
+    public List<Contractor> findAllContractor();
+    
     /**
      * Return tenderers name begin by the query
      * @param query query the Tenderer name begin
