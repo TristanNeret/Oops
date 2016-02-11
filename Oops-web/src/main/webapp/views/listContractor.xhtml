@@ -54,8 +54,8 @@ and open the template in the editor.
                             <h:graphicImage value="#{contractor.logo}" height="75px" style="float: left;"/>
                             <h:outputText style="font-size: x-large; padding-right: 25px; padding-left: 20px;" 
                                           value="#{contractor.socialReason}"/> 
-                            <h:outputText value="#{contractor.address.town}" /> 
-                            (<h:outputText value="#{contractor.address.zipCode}" />)
+                            <h:outputText value="#{contractor.address.town} (#{contractor.address.zipCode})" /> 
+
                             <div style="float: right;">
                                 <div>
                                     <h:outputText value="Note moyenne : " /> 
@@ -65,12 +65,10 @@ and open the template in the editor.
                                     <h:button class="headerCommandButton" value="Voir #{contractor.socialReason}" 
                                               outcome="/views/contractorInformation?id=#{contractor.id}" />
                                 </div>
-
                             </div>
                         </fieldset> 
                         <h:outputText style="padding-left: 10px; margin-bottom: 20px;" value="#{contractor.description}" /> 
                        </td>
-
                     </tr>
                 </c:forEach>
             </table>

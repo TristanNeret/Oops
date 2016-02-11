@@ -41,11 +41,13 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         this.em.merge(review);
         
         Tenderer attachedTenderer = em.merge(tenderer);
+        // update the number of reviews given by the tenderer and accepted by moderator
+        tenderer.updateNbReviews();
+        
         Contractor attachedContractor = em.merge(contractor);
         
         // Send notification for new Notification to Moderator
         this.sendNotification(review, attachedTenderer, attachedContractor, NotificationType.TO_MODERATOR);
-
     }
     
     public void sendNotification(Review review, Tenderer tenderer, Contractor contractor, NotificationType notificationType) {
@@ -74,6 +76,11 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         if (reviewToRemove != null) {
             
             reviewToRemove.setReviewEnabled(false);
+            
+            // update the number of reviews given by the tenderer and accepted by moderator
+            Tenderer tenderer = em.find(Tenderer.class, tendererId);
+            tenderer.updateNbReviews(); 
+            em.merge(tenderer);
             
             /*
             // Remove the Review from the Contractor Review list

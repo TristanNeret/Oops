@@ -47,12 +47,14 @@ public class Tenderer implements Serializable {
     private String registrationDate, updateDate;
   
     @OneToMany(mappedBy = "tenderer", cascade = {CascadeType.ALL})
-    private List<Review> reviews = new ArrayList<Review>();
+    private List<Review> reviews = new ArrayList<>();
     
     @OneToMany
-    private List<Notification> notifications = new ArrayList<Notification>();
+    private List<Notification> notifications = new ArrayList<>();
     
     public static final String userCategory = "TENDERER";
+    
+    private int nbReviews = 0; // number of reviews given by the tenderer and validated by a moderator
     
     public Tenderer() {
 
@@ -189,6 +191,9 @@ public class Tenderer implements Serializable {
         } 
         this.reviews.get(i).setTenderer(null);
         this.reviews.remove(i);
+        
+        // update the number of reviews given by the tenderer and accepted by moderator
+        updateNbReviews(); 
     }
     
     public void addNotification(Notification n){
@@ -233,5 +238,24 @@ public class Tenderer implements Serializable {
         }
         return true;
     }
-    
+
+    /**
+     * Get the number of reviews given by the tenderer and accepted by moderator
+     * @return the number of reviews given by the tenderer and accepted by moderator
+     */
+    public int getNbReviews() {
+        return nbReviews;
+    }
+
+    /**
+     * Update the number of reviews given by the tenderer and accepted by moderator
+     */
+    public void updateNbReviews(){
+        this.nbReviews = 0;
+        for(Review r : reviews){
+            if(r.getReviewState().equals(ReviewState.ACCEPTED) && r.isReviewEnabled()){
+                this.nbReviews += 1;
+            }
+        }
+    } 
 }

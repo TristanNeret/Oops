@@ -11,7 +11,7 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:o="http://omnifaces.org/ui">
-      
+
     <h:head>
         <title>Tenderer list</title>
         <h:outputStylesheet library="css" name="style.css" />
@@ -40,9 +40,9 @@ and open the template in the editor.
 
         <!-- CONTENT -->
         <div class="divContent">
-            
+
             <p:growl widgetVar="askReviewGrowl" sticky="false" showDetail="true" life="3000" />
-            
+
             <o:form id="askReviewForm" includeViewParams="true">
                 <table  width="100%" style="margin: 0px;">
                     <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
@@ -50,23 +50,40 @@ and open the template in the editor.
                             <td>
 
                                 <fieldset style="margin-top: 10px;">
-                                    <h:outputText style="font-size: x-large; padding-right: 20px" value="#{tend.login}" />
-                                    (<h:outputText value="#{tend.firstname}" style="padding-right: 5px"/>
-                                    <h:outputText value="#{tend.lastname}" />)
-                                    
-                                    <h:panelGrid columns="2" style="float: right;">
 
-                                        <h:button class="headerCommandButton" value="Voir #{tend.login}" 
-                                                  outcome="/views/tendererSearch?id=#{tend.id}" />
+                                    <h:graphicImage value="#{tend.avatar}" height="75px" style="float: left;"/>
+
+                                    <h:outputText value="#{tend.login}"
+                                                  style="font-size: x-large; padding-left: 20px;" />
+                                    
+                                    <c:if test="#{tend.nbReviews lt 2}">
+                                        <h:outputText value="#{tend.nbReviews} avis donné" style="float: right;"/>                                               
+                                    </c:if>
+                                    <c:if test="#{tend.nbReviews gt 1}">
+                                        <h:outputText value="#{tend.nbReviews} avis donnés" style="float: right;"/>                                               
+                                    </c:if>
+                                    
+                                    <br/>
+                                    <h:outputText value="Nom complet : #{tend.firstname} #{tend.lastname}" 
+                                                  style="padding-left: 20px;" />
+
+                                    <div style="float: right;">
 
                                         <p:commandButton id="askReviewBtn" class="headerCommandButton" value="Demander un avis" 
                                                          rendered="#{listTendererBean.display(tend.id)}"
                                                          onclick="PF('askReviewDialog').show();"
                                                          actionListener="#{listTendererBean.setTenderer(tend)}"
                                                          update="askReviewDialogForm:dialogPanel" /> 
-                                    </h:panelGrid>
+                                        <h:button class="headerCommandButton" value="Voir #{tend.login}" 
+                                                  outcome="/views/tendererSearch?id=#{tend.id}" />
 
+                                    </div>   
+
+                                    <br/>
+                                    <h:outputText value="Inscrit le #{tend.registrationDate}" 
+                                                  style="padding-left: 20px;" /> 
                                 </fieldset>
+
                             </td>
                         </tr>
                     </c:forEach>
@@ -75,14 +92,13 @@ and open the template in the editor.
 
             <!-- DIALOG BOX FOR ASKING REVIEWS  -->
             <o:form id="askReviewDialogForm" includeViewParams="true">
-                
+
                 <p:dialog header="Demande d'avis" modal="true" widgetVar="askReviewDialog" resizable="false">
                     <p:outputPanel id="dialogPanel">
                         <h:panelGrid columns="1" cellpadding="5">
 
                             <h:outputLabel id="Infos" value="Soumissionaire : #{listTendererBean.tenderer.login} 
-                                           (#{listTendererBean.tenderer.firstname} 
-                                           #{listTendererBean.tenderer.lastname})" />
+                                           (#{listTendererBean.tenderer.firstname} #{listTendererBean.tenderer.lastname})" />
 
                             <h:outputLabel value="Message :" />
                             <p:inputTextarea id="askReviewMsg" value="#{listTendererBean.message}" 
@@ -96,10 +112,10 @@ and open the template in the editor.
                                              onclick="PF('askReviewGrowl').renderMessage({summary: 'Demande d\'avis envoyée !',
                                                          detail: 'La demande d\'avis à été envoyée', severity: 'info'});" /> 
                         </div>
-                        
+
                     </p:outputPanel>
                 </p:dialog>
-                
+
             </o:form>
 
         </div>
