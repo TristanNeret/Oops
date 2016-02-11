@@ -21,12 +21,12 @@ and open the template in the editor.
         <ui:include src="/includes/headerAdmin.xhtml" />
         
         <!-- TAB -->
-        <p:tabView>
+        <p:tabView id="tabViewAdmin">
             <p:tab title="Avis">
-                <ui:include src="/includes/tab/adminReviewTab.xhtml" />
+                <ui:include id="tabReviews" src="/includes/tab/adminReviewTab.xhtml" />
             </p:tab>
             <p:tab title="Messages">
-                <ui:include src="/includes/tab/adminMessageTab.xhtml" />
+                <ui:include id="tabMessages" src="/includes/tab/adminMessageTab.xhtml" />
             </p:tab>
         </p:tabView>
         

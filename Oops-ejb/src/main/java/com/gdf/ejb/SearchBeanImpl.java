@@ -219,6 +219,16 @@ public class SearchBeanImpl implements SearchBean {
     }
     
     /**
+     * Get all the tenderers
+     * @return all the tenderers
+     */
+    @Override
+    public List<Contractor> findAllContractor() {
+        TypedQuery<Contractor> query = em.createNamedQuery("Contractor.findAll", Contractor.class);
+        return query.getResultList(); 
+    }
+    
+    /**
      * Get all countries
      * @return all countries
      */

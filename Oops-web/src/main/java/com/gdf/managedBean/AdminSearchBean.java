@@ -8,15 +8,12 @@ package com.gdf.managedBean;
 import com.gdf.ejb.AdministratorBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
-import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -39,7 +36,7 @@ public class AdminSearchBean implements Serializable {
     private String type;
     private Contractor contractorSelected;
     private Tenderer tendererSelected;
-  
+    private String targetGroup;
     
     /**
      * Id of the current user connected
@@ -152,7 +149,6 @@ public class AdminSearchBean implements Serializable {
     public void setTendererSelected(Tenderer tendererSelected) {
         this.tendererSelected = tendererSelected;
     }
-    
    
     public void search(){
        
@@ -169,7 +165,6 @@ public class AdminSearchBean implements Serializable {
         }
     }
     
-    
     public void sendMessage(){
           
         if(type.equals("tend"))
@@ -177,12 +172,52 @@ public class AdminSearchBean implements Serializable {
         else
             ab.sendMessageNotificationToContractor(moderatorID, contractorSelected, message);
             
-            
+        // reset
+        tendererSelected = null;
+        contractorSelected = null;
+        message = "";
+    }
+
+    public String getTargetGroup() {
+        return targetGroup;
+    }
+
+    public void setTargetGroup(String targetGroup) {
+        this.targetGroup = targetGroup;
     }
         
-    
-    
-    
-    
-    
+    public void sendGroupMessage(){
+        
+        switch(this.targetGroup){
+            case "TEND":
+                
+                for(Tenderer t : sb.findAllTenderer()) {
+                    ab.sendMessageNotificationToTenderer(moderatorID, t, message);
+                }
+                
+                break;    
+                
+            case "CONT":
+                
+                for(Contractor c : sb.findAllContractor()) {
+                    ab.sendMessageNotificationToContractor(moderatorID, c, message);
+                }
+                
+                break;
+                
+            case "ALL":
+                
+                for(Tenderer t : sb.findAllTenderer()) {
+                    ab.sendMessageNotificationToTenderer(moderatorID, t, message);
+                }
+                for(Contractor c : sb.findAllContractor()) {
+                    ab.sendMessageNotificationToContractor(moderatorID, c, message);
+                }
+                
+                break;
+        }
+        
+        this.message = "";
+        this.targetGroup = "";
+    }
 }

@@ -96,10 +96,11 @@ and open the template in the editor.
                 <p:dialog header="Demande d'avis" modal="true" widgetVar="askReviewDialog" resizable="false">
                     <p:outputPanel id="dialogPanel">
                         <h:panelGrid columns="1" cellpadding="5">
-
-                            <h:outputLabel id="Infos" value="Soumissionaire : #{listTendererBean.tenderer.login} 
+                            
+                            <h:outputText value="Soumissionaire : "/>
+                            <h:outputText value="#{listTendererBean.tenderer.login} 
                                            (#{listTendererBean.tenderer.firstname} #{listTendererBean.tenderer.lastname})" />
-
+                            
                             <h:outputLabel value="Message :" />
                             <p:inputTextarea id="askReviewMsg" value="#{listTendererBean.message}" 
                                              rows="6" cols="33" placeholder="Facultatif" />
