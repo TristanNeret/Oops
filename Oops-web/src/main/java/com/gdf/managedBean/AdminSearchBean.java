@@ -142,7 +142,6 @@ public class AdminSearchBean implements Serializable {
     }
 
     public void setContractorSelected(Contractor contractorSelected) {
-        System.out.println("entre " + contractorSelected.getLogin());
         this.contractorSelected = contractorSelected;
     }
 

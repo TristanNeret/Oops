@@ -92,6 +92,7 @@ public class SearchManagedBean implements Serializable {
     @PostConstruct
     public void setup() {
         
+        type = "cont";
         orders = new LinkedHashMap<>();
         orders.put("Nom", "ALPHABETICAL"); // label, value
         orders.put("Note", "RATINGS");
