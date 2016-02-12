@@ -10,6 +10,8 @@ import com.gdf.persistence.Tenderer;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -23,9 +25,7 @@ public class TendererRegisterBean {
     @EJB
     RegistrationBean rb;
     
-    @Size(min = 4, max = 20, message = "Votre login doit contenir entre 5 et 20 caractères.")
     private String login;
-    @Size(min = 8, max = 20, message = "Le mot de passe doit contenir entre 8 et 20 caractères.")
     private String password; 
     private String passwordConfirm;
     private String email;
@@ -42,9 +42,8 @@ public class TendererRegisterBean {
 
     /**
      * Register a new Tenderer
-     * @return 
      */
-    public String submit(){
+    public void submit(){
        
         Tenderer t = new Tenderer();
         t.setLogin(this.login);
@@ -55,13 +54,11 @@ public class TendererRegisterBean {
         t.setPhone(this.phone);
         t.setAvatar(this.avatar);
 
-        this.rb.register(t);
-
-        return "register";
-        
+        Long id = this.rb.register(t);
+        // Connect the Tenderer
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", id);       
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Tenderer.userCategory);        
     }
-    
-    // GETTER / SETTER
 
     public String getLogin() {
         return login;

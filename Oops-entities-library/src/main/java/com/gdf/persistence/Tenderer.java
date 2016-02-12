@@ -19,6 +19,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
@@ -37,13 +39,28 @@ public class Tenderer implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";
 
+    @NotNull( message = "Veuillez saisir un login" )
+    @Size(min = 4, max = 20, message = "Votre login doit contenir entre 5 et 20 caractères.")
     @Column(unique=true)
     private String login;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    private String email, password, firstname, lastname, avatar, phone;
+    
+    @NotNull( message = "Veuillez saisir un email" )
+    private String email; 
+    @NotNull( message = "Veuillez saisir un mot de passe" )
+    @Size( min = 6, message = "Le mot de passe doit contenir au moins 6 caractères" )
+    private String password; 
+    @NotNull( message = "Veuillez saisir un prénom" )
+    @Size( min = 3, message = "Le prénom doit contenir au moins 3 caractères" )
+    private String firstname; 
+    @NotNull( message = "Veuillez saisir un nom" )
+    @Size( min = 3, message = "Le nom doit contenir au moins 3 caractères" )
+    private String lastname; 
+    private String avatar;
+    private String phone;
+    
     private String registrationDate, updateDate;
   
     @OneToMany(mappedBy = "tenderer", cascade = {CascadeType.ALL})
