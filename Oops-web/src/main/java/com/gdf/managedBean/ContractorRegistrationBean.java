@@ -6,11 +6,18 @@
 package com.gdf.managedBean;
 
 import com.gdf.ejb.RegistrationBean;
+import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
 import javax.validation.constraints.Size;
 
 /**
@@ -21,29 +28,60 @@ import javax.validation.constraints.Size;
 @RequestScoped
 public class ContractorRegistrationBean {
 
-    @Size(min = 4, max = 20, message = "Votre login doit contenir entre 5 et 20 caractères.")
     private String login;
-    @Size(min = 8, max = 20, message = "Le mot de passe doit contenir entre 8 et 20 caractères.")
     private String password;
     private String passwordConfirm;
-    @Size(min = 1, max = 30)
     private String lastname;
-    @Size(min = 1, max = 30)
     private String firstname;
     private String email;
-    @Size(min = 10, max = 15, message = "Le format du numéro de téléphone est incorect.")
     private String phone;
+    
     private String socialReason;
     private String legalForm;
     private int turnover;
     private int nbEmployees;
-    @Size(min = 9, max = 9, message = "Le numéro SIREN doit contenir 9 caractères.")
     private String siren;
-    @Size(min = 14, max = 14, message = "Le numéro SIRET doit contenir 14.")
     private String siret;
+    private String rcs;
+    private String insurrance;
+    private String logo;
     
     @EJB
     RegistrationBean rb;
+    @EJB
+    SearchBean sb;
+    
+    private List<SelectItem> legalForms;
+
+    private final SelectItem[] nonTeamCompanies = new SelectItem[]{
+        new SelectItem("Auto-entrepreneur", "Auto-entrepreneur"),
+        new SelectItem("Entrepreneur individuel", "Entrepreneur individuel"),
+        new SelectItem("EIRL", "EIRL"),
+        new SelectItem("EURL", "EURL"),
+        new SelectItem("SASU", "SASU")
+    };
+
+    private final SelectItem[] teamCompanies = new SelectItem[]{
+        new SelectItem("SNC", "SNC"),
+        new SelectItem("SARL", "SARL"),
+        new SelectItem("SA", "SA"),
+        new SelectItem("SAS", "SAS"),
+        new SelectItem("SCA", "SCA")
+    };
+    
+    @PostConstruct
+    public void init() {
+
+        SelectItemGroup g1 = new SelectItemGroup("Entreprise individuelle");
+        g1.setSelectItems(nonTeamCompanies);
+
+        SelectItemGroup g2 = new SelectItemGroup("Entreprise non-individuelle");
+        g2.setSelectItems(teamCompanies);
+
+        legalForms = new ArrayList<>();
+        legalForms.add(g1);
+        legalForms.add(g2);
+    }
     
     /**
      * Creates a new instance of ContractorRegistrationBean
@@ -52,15 +90,7 @@ public class ContractorRegistrationBean {
         
     }
     
-    /**
-     * Register a new Contractor into DataBase
-     */
-    public void submit(){
-        
-        LegalInformation li = new LegalInformation();
-        li.setSiren(this.siren);
-        li.setSiret(this.siret);
-        
+    public void step1(){
         Contractor c = new Contractor();
         c.setLogin(this.login);
         c.setPassword(this.password);
@@ -68,14 +98,26 @@ public class ContractorRegistrationBean {
         c.setRepresentatorLastname(this.lastname);
         c.setEmail(this.email);
         c.setPhone(this.phone);
-        c.setSocialReason(this.socialReason);
-        c.setLegalForm(this.legalForm);
-        c.setTurnover(this.turnover);
-        c.setNbEmployees(this.nbEmployees);
-        c.setLegalInformation(li);
         
-        this.rb.register(c);
+        Long id = this.rb.register(c);     
+        // Connect the contractor
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", id);       
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Contractor.userCategory);
+    }
+    
+    public void step2(){
+        // Get the connected contractor
+        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
+        Contractor c = sb.searchContractorById(userID);
         
+        c.setLegalForm(legalForm);
+        c.setLogo(logo);
+        c.setSocialReason(socialReason);
+        c.setTurnover(turnover);
+        c.setNbEmployees(nbEmployees);
+        c.setLegalInformation(new LegalInformation(siret, siren, rcs, insurrance));
+        
+        this.rb.update(c); 
     }
     
     public String getLogin() {
@@ -182,4 +224,44 @@ public class ContractorRegistrationBean {
         this.siret = siret;
     }
 
+    public boolean isATeamCompanySelected() {
+        for(SelectItem si : teamCompanies){
+            if(si.getLabel().equals(legalForm)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getRcs() {
+        return rcs;
+    }
+
+    public void setRcs(String rcs) {
+        this.rcs = rcs;
+    }
+
+    public String getInsurrance() {
+        return insurrance;
+    }
+
+    public void setInsurrance(String insurrance) {
+        this.insurrance = insurrance;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public List<SelectItem> getLegalForms() {
+        return legalForms;
+    }
+
+    public void setLegalForms(List<SelectItem> legalForms) {
+        this.legalForms = legalForms;
+    }
 }

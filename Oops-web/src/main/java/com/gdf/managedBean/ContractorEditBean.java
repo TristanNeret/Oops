@@ -8,16 +8,20 @@ package com.gdf.managedBean;
 import com.gdf.ejb.ContractorManagerBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Moderator;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * ContractorEditBean
@@ -56,7 +60,13 @@ public class ContractorEditBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        this.contractor = sb.searchContractorById(10);
+        
+        // Temporary used to connect a Contractor
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", "10");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Contractor.userCategory);
+        
+        String userID = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
+        this.contractor = sb.searchContractorById(Long.parseLong(userID));
 
         SelectItemGroup g1 = new SelectItemGroup("Entreprise individuelle");
         g1.setSelectItems(nonTeamCompanies);
@@ -64,7 +74,7 @@ public class ContractorEditBean implements Serializable {
         SelectItemGroup g2 = new SelectItemGroup("Entreprise non-individuelle");
         g2.setSelectItems(teamCompanies);
 
-        legalForms = new ArrayList<SelectItem>();
+        legalForms = new ArrayList<>();
         legalForms.add(g1);
         legalForms.add(g2);
     }
