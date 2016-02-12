@@ -76,6 +76,10 @@ public class Tenderer implements Serializable {
     public Tenderer() {
 
     }
+
+    public void setNbReviews(int nbReviews) {
+        this.nbReviews = nbReviews;
+    }
     
     public Tenderer(String login, String email, String password, String firstname, String lastname, String avatar, String phone, String registrationDate) {
         this.login = login;
@@ -263,6 +267,8 @@ public class Tenderer implements Serializable {
     public int getNbReviews() {
         return nbReviews;
     }
+    
+    
 
     /**
      * Update the number of reviews given by the tenderer and accepted by moderator
