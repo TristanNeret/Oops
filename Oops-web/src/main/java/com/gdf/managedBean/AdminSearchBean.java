@@ -139,6 +139,7 @@ public class AdminSearchBean implements Serializable {
     }
 
     public void setContractorSelected(Contractor contractorSelected) {
+        this.message = null;
         this.contractorSelected = contractorSelected;
     }
 
@@ -147,14 +148,12 @@ public class AdminSearchBean implements Serializable {
     }
 
     public void setTendererSelected(Tenderer tendererSelected) {
+        this.message = null;
         this.tendererSelected = tendererSelected;
     }
    
     public void search(){
-       
-        /*reinitalise Arayl
-        
-        */
+
         ltd = new ArrayList();
         lc = new ArrayList();
         
@@ -163,6 +162,8 @@ public class AdminSearchBean implements Serializable {
         }else{
             lc = sb.findContractors(keyWord, 0, null, null, "ALPHABETICAL");
         }
+        
+        message = null;
     }
     
     public void sendMessage(){
@@ -185,9 +186,14 @@ public class AdminSearchBean implements Serializable {
     public void setTargetGroup(String targetGroup) {
         this.targetGroup = targetGroup;
     }
+    
+    public void init() {
+        this.targetGroup = null;
+        this.message = null;
+    }
         
     public void sendGroupMessage(){
-        
+                
         switch(this.targetGroup){
             case "TEND":
                 

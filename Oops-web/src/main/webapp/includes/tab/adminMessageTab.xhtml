@@ -52,6 +52,7 @@ and open the template in the editor.
                              value="Recherche" action="#{adminSearchBean.search()}"/>     
              <p:commandButton onclick="PF('sendAllMsgDialog').show();" value="Envoyer un message groupé" 
                               update="tabViewAdmin:sendAllMsgDialogForm:sendAllDialogPanel"
+                              actionListener="#{adminSearchBean.init()}"
                               class="searchCommandButton"/>
         </h:form>
         <br/>
@@ -78,8 +79,7 @@ and open the template in the editor.
                                 <p:commandButton actionListener="#{adminSearchBean.setContractorSelected(contractor)}"
                                                  onclick="PF('sendMsgDialog').show();"
                                                  update="tabViewAdmin:sendMsgDialogForm:dialogPanel"
-                                                 value="Envoyer un message"
-                                                 />
+                                                 value="Envoyer un message"/> 
                             </div>
                         </h:form>    
                     </div>
@@ -110,7 +110,7 @@ and open the template in the editor.
                                              onclick="PF('sendMsgDialog').show();"
                                              update="tabViewAdmin:sendMsgDialogForm:dialogPanel"
                                              value="Envoyer un message"
-                                             /> 
+                                             />
                         </h:form>    
                     </div>
                 </c:forEach>  
@@ -184,13 +184,14 @@ and open the template in the editor.
                                      rows="6" cols="33" style="width: 100%;" value="#{adminSearchBean.message}"  
                                      required ="true" label="Message">
                         <f:validator validatorId="com.gdf.noBlankSpaceValidator" binding="#{noBlankSpaceValidator}" />
-                        <f:ajax  event="blur" render="allMsgError"/>
                     </p:inputTextarea>
                     <p:message id="allMsgError" for="allMessageOut"/>
 
                     <div class="dialogFooter" >
                         <p:commandButton value="Envoyer" action="#{adminSearchBean.sendGroupMessage()}" 
-                                         oncomplete="handleSendAllMessage(xhr, status, args)"/> 
+                                         oncomplete="handleSendAllMessage(xhr, status, args)"
+                                         update="tabViewAdmin:sendAllMsgDialogForm:sendAllDialogPanel" 
+                                         /> 
                         <p:commandButton value="Annuler" oncomplete="PF('sendAllMsgDialog').hide();" />
                     </div> 
                 </p:outputPanel>
