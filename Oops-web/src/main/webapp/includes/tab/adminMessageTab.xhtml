@@ -39,21 +39,22 @@ and open the template in the editor.
 
     <div class="divContent">
 
-        <h:outputText styleClass="labelTitleReviewAdmin" value="Rechercher :"/>
+        <h:outputText style="font-family: Helvetica, sans-serif;margin-left: 10px" styleClass="labelTitleReviewAdmin" value=" Rechercher :"/>
 
-        <h:form id="formResearch">
-            <p:autoComplete  placeholder="Mots-clés" id="queryInputText" class="searchInputText" value="#{adminSearchBean.keyWord}" completeMethod="#{adminSearchBean.completeQuery}"  />
-            <h:selectOneMenu id="listType" value="#{adminSearchBean.type}" style="margin-right: 5px">
-                <f:selectItem  id="tend" itemLabel="Soumissionnaire" itemValue="tend"/>
+        <h:form id="formResearch" style="margin-left: 20px">
+            <p:autoComplete placeholder="Mots-clés" id="queryInputText" class="searchInputText" style="margin-right: 15px;" value="#{adminSearchBean.keyWord}" completeMethod="#{adminSearchBean.completeQuery}"  />
+            <p:selectOneMenu id="listType" value="#{adminSearchBean.type}" style="margin-right: 15px; top:10px">
+                <f:selectItem  id="tend" itemLabel="Soumissionnaire" itemValue="tend" />
                 <f:selectItem id="cont" itemLabel="Prestataire" itemValue="cont"/>
                 <f:ajax render="@form"/>
-            </h:selectOneMenu>
-            <p:commandButton id="searchButton" update="tabViewAdmin:resultResearch"  class="searchCommandButton" 
+            </p:selectOneMenu>
+            <p:commandButton id="searchButton" update="tabViewAdmin:resultResearch" style=" background-color: #336c6c; border-radius: 8px; margin-right: 15px;"   
                              value="Recherche" action="#{adminSearchBean.search()}"/>     
-             <p:commandButton onclick="PF('sendAllMsgDialog').show();" value="Envoyer un message groupé" 
+            <p:commandButton onclick="PF('sendAllMsgDialog').show();" value="Envoyer un message groupé" 
+                              style=" background-color: #336c6c; border-radius: 8px;"
                               update="tabViewAdmin:sendAllMsgDialogForm:sendAllDialogPanel"
                               actionListener="#{adminSearchBean.init()}"
-                              class="searchCommandButton"/>
+                            />
         </h:form>
         <br/>
 
@@ -63,25 +64,33 @@ and open the template in the editor.
                 <h:outputText styleClass="labelTitleReviewAdmin" value="Resultat Recherche (Prestataire)"/>
 
                 <c:forEach items="#{adminSearchBean.lc}" var="contractor">
-                    <div>
+                    <div style="margin-left: 15px">
                         <h:form id="formSendMsg">
+                            
                             <div class="divLoginTitle">
                                 <h:outputText value="#{contractor.login}"/>
                             </div>
-                            <div>
-                                Nom : <h:outputText style="color: #008B8B" value="#{contractor.representatorLastname}   "/>
-                                Prénom : <h:outputText style="color: #008B8B" value="#{contractor.representatorFirstname}   "/>
-                                Email : <h:outputText  style="color: #008B8B" value="#{contractor.email}   "/>
-                                Téléphone : <h:outputText style="color: #008B8B" value=" #{contractor.phone}  "/>
+                            
+                            <div style="margin-left: 20px;margin-bottom: 10px;font-family: Helvetica, sans-serif">
+                                Nom : <h:outputText style="color: #008B8B;margin-right: 15px" value="#{contractor.representatorLastname}   "/>
+                                Prénom : <h:outputText style="color: #008B8B;margin-right: 15px" value="#{contractor.representatorFirstname}   "/>
+                                Email : <h:outputText  style="color: #008B8B;margin-right: 15px" value="#{contractor.email}   "/>
+                                Téléphone : <h:outputText style="color: #008B8B;margin-right: 15px" value=" #{contractor.phone}  "/>
                             </div>
-
+                            
+                            <div style="margin-left: 20px;margin-bottom: 10px;font-family: Helvetica, sans-serif;font-size: x-small">
+                                Date Inscription : <h:outputText value="#{contractor.registrationDate}"/> 
+                            </div>
+                            
                             <div>
-                                <p:commandButton actionListener="#{adminSearchBean.setContractorSelected(contractor)}"
+                                <p:commandButton style=" background-color: #336c6c; border-radius: 8px; margin-left: 20px; margin-bottom: 10px;"
+                                                 class="" actionListener="#{adminSearchBean.setContractorSelected(contractor)}"
                                                  onclick="PF('sendMsgDialog').show();"
                                                  update="tabViewAdmin:sendMsgDialogForm:dialogPanel"
                                                  value="Envoyer un message"/> 
                             </div>
-                        </h:form>    
+                        </h:form> 
+                        <hr/>
                     </div>
                 </c:forEach>               
 
@@ -99,19 +108,28 @@ and open the template in the editor.
                                 <h:outputText value="#{soum.login}"/>
                             </div>
 
-                            <div>
-                                Nom : <h:outputText style="color: #008B8B" value="#{soum.lastname}   "/>
-                                Prénom : <h:outputText style="color: #008B8B" value="#{soum.firstname}   "/>
-                                Email : <h:outputText  style="color: #008B8B" value="#{soum.email}   "/>
-                                Téléphone : <h:outputText style="color: #008B8B" value=" #{soum.phone}  "/>
+                            <div style="margin-left: 20px;margin-bottom: 10px;">
+                                Nom : <h:outputText style="color: #008B8B;margin-right: 15px" value="#{soum.lastname}   "/>
+                                Prénom : <h:outputText style="color: #008B8B;margin-right: 15px" value="#{soum.firstname}   "/>
+                                Email : <h:outputText  style="color: #008B8B;margin-right: 15px" value="#{soum.email}   "/>
+                                Téléphone : <h:outputText style="color: #008B8B;margin-right: 15px" value=" #{soum.phone}  "/>
                             </div>
-
-                            <p:commandButton actionListener="#{adminSearchBean.setTendererSelected(soum)}"
+                            
+                            <div style="margin-left: 20px;margin-bottom: 10px;font-family: Helvetica, sans-serif;font-size: x-small">
+                                Date Inscription : <h:outputText value="#{soum.registrationDate}" style="margin-right: 15px" /> 
+                                Nombre de commentaire validés : <h:outputText value="#{soum.nbReviews}" />
+                            </div>
+                           
+                            <p:commandButton id="firstButtonSoum"
+                                             style=" background-color: #336c6c; border-radius: 8px;margin-left: 20px;  margin-bottom: 10px;"
+                                             actionListener="#{adminSearchBean.setTendererSelected(soum)}"
                                              onclick="PF('sendMsgDialog').show();"
                                              update="tabViewAdmin:sendMsgDialogForm:dialogPanel"
                                              value="Envoyer un message"
                                              />
-                        </h:form>    
+                           
+                        </h:form>
+                        <hr/>
                     </div>
                 </c:forEach>  
 
