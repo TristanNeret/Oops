@@ -224,6 +224,56 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>local_dev</id>
+            <properties>
+                <jdbc.driver>org.apache.derby.jdbc.ClientDataSource</jdbc.driver>
+                <jdbc.name>OopsDB</jdbc.name>
+                <jdbc.username>gdf</jdbc.username>
+                <jdbc.password>gdf</jdbc.password>
+                <jdbc.port>1527</jdbc.port>
+                <jdbc.datasource>jdbc/OopsDatasource</jdbc.datasource>
+                <jdbc.pool>OopsPool</jdbc.pool>
+                <jdbc.connectionURL>jdbc:derby://localhost:1527/OopsDB</jdbc.connectionURL>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.4.2</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>local_test</id>
+            <properties>
+                <jdbc.driver>org.apache.derby.jdbc.ClientDataSource</jdbc.driver>
+                <jdbc.name>OopsDB_Test</jdbc.name>
+                <jdbc.username>gdf</jdbc.username>
+                <jdbc.password>gdf</jdbc.password>
+                <jdbc.port>1527</jdbc.port>
+                <jdbc.datasource>jdbc/OopsTestDatasource</jdbc.datasource>
+                <jdbc.pool>OopsTestPool</jdbc.pool>
+                <jdbc.connectionURL>jdbc:derby://localhost:1527/OopsDB_Test</jdbc.connectionURL>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.4.2</version>
+                        <configuration>
+                            <skipTests>false</skipTests>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
     
 </project>
