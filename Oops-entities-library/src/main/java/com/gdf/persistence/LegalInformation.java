@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -25,15 +26,15 @@ public class LegalInformation implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Size( min = 14, max = 14, message = "Le n° SIRET doit contenir 14 chiffres" )
+    @Pattern(regexp = "[0-9]{14}", message = "Le n° SIRET doit contenir 14 chiffres" )
     @NotNull( message = "Veuillez saisir un numéro de SIRET" )
     private String siret;
     
-    @Size( min = 9, max = 9, message = "Le n° SIREN doit contenir 9 chiffres" )
+    @Pattern(regexp = "[0-9]{9}", message = "Le n° SIREN doit contenir 9 chiffres" )
     @NotNull( message = "Veuillez saisir un numéro de SIREN" )
     private String siren;
     
-    @Size( min = 9, message = "Le n° RCS doit contenir au moins 9 caractères" )
+    @Size(min = 9, message = "Le n° RCS doit contenir au moins 9 caractères" )
     @NotNull( message = "Veuillez saisir un numéro de RCS" )
     private String rcs;
     

@@ -49,15 +49,19 @@ public class Tenderer implements Serializable {
     
     @NotNull( message = "Veuillez saisir un email" )
     private String email; 
+    
     @NotNull( message = "Veuillez saisir un mot de passe" )
     @Size( min = 6, message = "Le mot de passe doit contenir au moins 6 caractères" )
     private String password; 
+    
     @NotNull( message = "Veuillez saisir un prénom" )
     @Size( min = 3, message = "Le prénom doit contenir au moins 3 caractères" )
     private String firstname; 
+    
     @NotNull( message = "Veuillez saisir un nom" )
     @Size( min = 3, message = "Le nom doit contenir au moins 3 caractères" )
     private String lastname; 
+    
     private String avatar;
     private String phone;
     

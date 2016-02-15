@@ -16,35 +16,50 @@ import javax.validation.constraints.Size;
 
 /**
  * Manage Tenderer registration
+ *
  * @author bibo
  */
-@Named(value="tendererRegisterBean")
+@Named(value = "tendererRegistrationBean")
 @RequestScoped
-public class TendererRegisterBean {
+public class TendererRegistrationBean {
 
     @EJB
     RegistrationBean rb;
-    
+
+    @NotNull(message = "Veuillez saisir un login")
+    @Size(min = 4, max = 20, message = "Votre login doit contenir entre 5 et 20 caractères.")
     private String login;
-    private String password; 
-    private String passwordConfirm;
+    
+    @NotNull(message = "Veuillez saisir un mot de passe")
+    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères")
+    private String password;
+    
+    @NotNull(message = "Veuillez saisir un email")
     private String email;
+    
+    @NotNull(message = "Veuillez saisir un prénom")
+    @Size(min = 3, message = "Le prénom doit contenir au moins 3 caractères")
     private String firstname;
+    
+    @NotNull(message = "Veuillez saisir un nom")
+    @Size(min = 3, message = "Le nom doit contenir au moins 3 caractères")
     private String lastname;
+    
+    private String passwordConfirm;  
     private String avatar;
     private String phone;
-        
+
     /**
      * Creates a new instance of TendererRegisterBean
      */
-    public TendererRegisterBean() {
+    public TendererRegistrationBean() {
     }
 
     /**
      * Register a new Tenderer
      */
-    public void submit(){
-       
+    public void submit() {
+
         Tenderer t = new Tenderer();
         t.setLogin(this.login);
         t.setPassword(this.password);
@@ -56,8 +71,8 @@ public class TendererRegisterBean {
 
         Long id = this.rb.register(t);
         // Connect the Tenderer
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", id);       
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Tenderer.userCategory);        
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", id);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Tenderer.userCategory);
     }
 
     public String getLogin() {

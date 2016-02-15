@@ -16,23 +16,19 @@ import javax.faces.validator.ValidatorException;
 
 /**
  *
- * @author aziz 
+ * @author aziz
  */
 @ManagedBean
 @RequestScoped
-@FacesValidator("com.gdf.notNullnBSValidator")
-public class NotNullnBSValidator implements Validator {
-    
-    private static final String MSG = "Veuillez indiquer une valeur";
+@FacesValidator("com.gdf.socialReasonValidator")
+public class SocialReasonValidator implements Validator {
     
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-
-        if (value == null || ((String) value).trim().isEmpty()) {
-            
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, MSG, null));
-
+        if(value == null || ((String) value).trim().isEmpty()) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuiller indiquez la raison sociale", null));     
+        } else if(((String)value).length() < 4) {
+                throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "La raison sociale doit contenir au moins 5 caractères", null));
         }
-
-    }
+    } 
 }

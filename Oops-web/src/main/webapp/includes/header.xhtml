@@ -42,6 +42,24 @@ and open the template in the editor.
             }
             else {
                 PF('contractorDialogStep2').hide();
+                PF('contractorDialogStep3').show();
+            }
+        }
+        function handleContractorStep3Request(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('contractorDialogStep3').jq.effect("shake", {times: 5}, 100);
+            }
+            else {
+                PF('contractorDialogStep3').hide();
+                PF('contractorDialogStep4').show();
+            }
+        }
+        function handleContractorStep4Request(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('contractorDialogStep4').jq.effect("shake", {times: 5}, 100);
+            }
+            else {
+                PF('contractorDialogStep4').hide();
                 PF('registerGrowl').renderMessage({summary: 'Inscription finalisée  !', detail: 'Toutes les informations nécessaires ont été fournies !', severity: 'info'});
             }
         }
@@ -61,73 +79,96 @@ and open the template in the editor.
                     <p:commandButton class="headerCommandButton" value="Inscription" onclick="PF('registerDialog').show();"  type="button">
                         <!-- Reset fields on opening -->
                         <p:ajax update="registerLogin" resetValues="true" />
+                        <p:ajax update="loginMessage" resetValues="true" />
                         <p:ajax update="registerMDP" resetValues="true" />
+                        <!--  <p:ajax update="MDPMessage" resetValues="true" /> -->
                         <p:ajax update="registerConfirmMDP" resetValues="true" />
+                        <!-- <p:ajax update="confirmMDPMessage" resetValues="true" /> -->
                         <p:ajax update="registerMail" resetValues="true" />
+                        <p:ajax update="mailMessage" resetValues="true" />
                         <p:ajax update="registerLastname" resetValues="true" />
+                        <p:ajax update="lastnameMessage" resetValues="true" />
                         <p:ajax update="registerFirstname" resetValues="true" />
+                        <p:ajax update="firstnameMessage" resetValues="true" />
                         <p:ajax update="registerPhoneNumber" resetValues="true" />
+                        <p:ajax update="phoneNumberMessage" resetValues="true" />
                         <p:ajax update="registerAvatar" resetValues="true" />
+                        <p:ajax update="avatarMessage" resetValues="true" />
                     </p:commandButton>
                     <!-- DIALOG BOX FOR TENDERER REGISTRATION -->                   
                     <p:dialog header="Inscription soumissionnaire" modal="true" widgetVar="registerDialog" resizable="false">
                         <div class="dialogTitle">Inscrivez-vous sur le plus grand annuaire de<br/> prestataires du web !</div>
-                        <h:panelGrid columns="2" cellpadding="5">
+                        <h:panelGroup>
 
-                            <h:outputLabel value="Login :" />
-                            <p:inputText id="registerLogin" value="#{tendererBean.login}" label="Login">
-                                <f:ajax event="blur" render="loginMessage"/>
-                                <f:validator validatorId="com.gdf.loginAlreadyExistValidator" />
-                            </p:inputText>
-                            <p:message id="loginMessage" for="registerLogin" />
+                            <p>
+                                <h:outputLabel value="Login :" class="labelModificationForm"/>
+                                <p:inputText id="registerLogin" value="#{tendererRegistrationBean.login}">
+                                    <f:ajax event="blur" render="loginMessage"/>
+                                    <f:validator validatorId="com.gdf.loginAlreadyExistValidator" /> 
+                                </p:inputText>
+                                <p:message id="loginMessage" for="registerLogin" />
+                            </p>
+                            <p>
+                                <h:outputLabel value="Mot de passe :" class="labelModificationForm"/>
+                                <p:password id="registerMDP" value="#{tendererRegistrationBean.password}" 
+                                            match="registerConfirmMDP" feedback="true">
+                                    <!--<f:ajax event="blur" render="MDPMessage"/> -->
+                                </p:password>
+                                <!--  <p:message id="MDPMessage" for="registerMDP" /> -->
+                            </p>
+                            <p>
+                                <h:outputLabel value="Confirmer le mot de passe :" class="labelModificationForm"/>
+                                <p:password id="registerConfirmMDP" value="#{tendererRegistrationBean.passwordConfirm}" 
+                                            feedback="true">
+                                    <!--       <f:ajax event="blur" render="confirmMDPMessage"/> -->
+                                </p:password>
+                                <!--  <p:message id="confirmMDPMessage" for="registerConfirmMDP" /> -->
+                            </p>
+                            <p>
+                                <h:outputLabel value="Adresse mail :" class="labelModificationForm"/>
+                                <p:inputText id="registerMail" value="#{tendererRegistrationBean.email}">
+                                    <f:ajax event="blur" render="mailMessage"/>
+                                    <f:validator validatorId="com.gdf.mailFormatValidator" />
+                                </p:inputText>
+                                <p:message id="mailMessage" for="registerMail" />
+                            </p>
+                            <p>
+                                <h:outputLabel value="Prénom :" class="labelModificationForm"/>
+                                <p:inputText id="registerFirstname" value="#{tendererRegistrationBean.firstname}">
+                                    <f:ajax event="blur" render="firstnameMessage"/>
+                                </p:inputText>
+                                <p:message id="firstnameMessage" for="registerFirstname" />
+                            </p>
+                            <p>
+                                <h:outputLabel value="Nom :" class="labelModificationForm"/>
+                                <p:inputText id="registerLastname" value="#{tendererRegistrationBean.lastname}">
+                                    <f:ajax event="blur" render="lastnameMessage"/>
+                                </p:inputText>
+                                <p:message id="lastnameMessage" for="registerLastname" />
+                            </p>
+                            <p>
+                                <h:outputLabel value="Téléphone :" class="labelModificationForm"/>
+                                <p:inputText id="registerPhoneNumber" value="#{tendererRegistrationBean.phone}">
+                                    <f:ajax event="blur" render="phoneNumberMessage"/>
+                                    <f:validator validatorId="com.gdf.phoneFormatValidator"/>
+                                </p:inputText>
+                                <p:message id="phoneNumberMessage" for="registerPhoneNumber" />
+                            </p>
+                            <p>
+                                <h:outputLabel value="Avatar :" class="labelModificationForm"/>
+                                <p:inputText id="registerAvatar" value="#{tendererRegistrationBean.avatar}">   
+                                    <f:ajax event="blur" render="avatarMessage"/>
+                                    <f:validator validatorId="com.gdf.urlLogoValidator"/>
+                                </p:inputText>
+                                <p:message id="avatarMessage" for="registerAvatar" />
+                            </p>
 
-                            <h:outputLabel value="Mot de passe :" />
-                            <p:password id="registerMDP" value="#{tendererBean.password}" match="registerConfirmMDP" feedback="true" label="Mot de passe" />
-
-                            <h:outputLabel value="Confirmer le mot de passe :" />
-                            <p:password id="registerConfirmMDP" value="#{tendererBean.passwordConfirm}" feedback="true" label="Confirmation du mot de passe" />
-
-                            <h:outputLabel value="Adresse mail :" />
-                            <p:inputText id="registerMail" value="#{tendererBean.email}" label="Mail" >
-                                <f:ajax event="blur" render="emailMessage"/>
-                                <f:validator validatorId="com.gdf.mailFormatValidator" />
-                            </p:inputText>
-                            <p:message id="emailMessage" for="registerMail" />
-
-                            <h:outputLabel value="Prénom :" />
-                            <p:inputText id="registerFirstname" value="#{tendererBean.firstname}" label="Prénom" >
-                                <f:ajax event="blur" render="firstnameMessage"/>
-                                <f:validator validatorId="com.gdf.noBlankSpaceValidator" />
-                            </p:inputText>
-                            <p:message id="firstnameMessage" for="registerFirstname" />
-
-                            <h:outputLabel value="Nom :" />
-                            <p:inputText id="registerLastname" value="#{tendererBean.lastname}" label="Nom" >
-                                <f:ajax event="blur" render="lastnameMessage"/>
-                                <f:validator validatorId="com.gdf.noBlankSpaceValidator" />
-                            </p:inputText>
-                            <p:message id="lastnameMessage" for="registerLastname" />
-
-                            <h:outputLabel value="Téléphone :" />
-                            <p:inputText id="registerPhoneNumber" value="#{tendererBean.phone}">
-                                <f:ajax event="blur" render="phoneNumberMessage"/>
-                                <f:validator validatorId="com.gdf.phoneFormatValidator"/>
-                            </p:inputText>
-                            <p:message id="phoneNumberMessage" for="registerPhoneNumber" />
-
-                            <h:outputLabel value="Avatar :" />
-                            <p:inputText id="registerAvatar" value="#{tendererBean.avatar}">
-                                <f:ajax event="blur" render="avatarMessage"/>
-                                <f:validator validatorId="com.gdf.urlLogoValidator"/>
-                            </p:inputText>
-                            <p:message id="avatarMessage" for="registerAvatar" />
-
-                        </h:panelGrid>
-                        <div class="dialogFooter" >
-                            <p:commandButton value="S'inscrire"
-                                             actionListener="#{tendererBean.submit}" 
-                                             oncomplete="handleRequest(xhr, status, args)" />
-                        </div>
+                            <div class="dialogFooter" >
+                                <p:commandButton value="S'inscrire"
+                                                 actionListener="#{tendererRegistrationBean.submit}" 
+                                                 oncomplete="handleRequest(xhr, status, args)" />
+                            </div>
+                        </h:panelGroup>
                     </p:dialog>
                 </o:form>
 
@@ -144,170 +185,283 @@ and open the template in the editor.
                     </p:commandButton>
                     <!-- DIALOG BOX FOR CONTRACTOR REGISTRATION -->
                     <!-- FIRST STEP -->
-                    <p:dialog header="Incription prestataire" modal="true" widgetVar="contractorDialogStep1" resizable="false">
+                    <p:dialog header="Inscription prestataire - Etape 1/5" modal="true" widgetVar="contractorDialogStep1" resizable="false">
                         <div class="dialogTitle">Enregistrez-vous et donnez à vos prestations<br/> une dimension Internationale !</div>
-                        <h:panelGrid id="contractorDialogStep1Panel" columns="2" cellpadding="5" >
+                        <h:panelGroup id="contractorDialogStep1Panel">
 
-                            <h:outputLabel value="Login :" />
-                            <p:inputText id="contractorLogin" value="#{contractorRegistrationBean.login}" label="Login" >
-                                <f:ajax event="blur" render="contractorLoginMessage"/>
-                                <f:validator validatorId="com.gdf.loginAlreadyExistValidator" />
-                                <f:validator validatorId="com.gdf.noBlankSpaceValidator" />
-                            </p:inputText>
-                            <p:message id="contractorLoginMessage" for="contractorLogin" />
+                            <p>
+                                <h:outputLabel value="Login :" class="labelModificationForm"/>
+                                <p:inputText id="contractorLogin" value="#{contractorRegistrationBean.login}">
+                                    <f:ajax event="blur" render="contractorLoginMessage"/>
+                                    <f:validator validatorId="com.gdf.loginAlreadyExistValidator" />
+                                </p:inputText>
+                                <p:message id="contractorLoginMessage" for="contractorLogin" />
+                            </p>
+                            <p>
+                                <h:outputLabel value="Mot de passe :" class="labelModificationForm"/>
+                                <p:password id="contractorPassword" value="#{contractorRegistrationBean.password}" 
+                                            match="contractorConfirmPassword" feedback="true">
+                                </p:password>
+                            </p>
+                            <p>
+                                <h:outputLabel value="Confirmer le mot de passe :" class="labelModificationForm"/>
+                                <p:password id="contractorConfirmPassword" value="#{contractorRegistrationBean.passwordConfirm}" 
+                                            feedback="true">
+                                </p:password>
+                            </p>
+                            <p>
+                                <h:outputLabel value="Prénom :" class="labelModificationForm"/>
+                                <p:inputText id="contractorFirstname" value="#{contractorRegistrationBean.firstname}">
+                                    <f:ajax event="blur" render="contractorFirstnameMessage"/>
+                                </p:inputText>
+                                <p:message id="contractorFirstnameMessage" for="contractorFirstname" />
+                            </p>
+                            <p>
+                                <h:outputLabel value="Nom :" class="labelModificationForm"/>
+                                <p:inputText id="contractorLastname" value="#{contractorRegistrationBean.lastname}">
+                                    <f:ajax event="blur" render="contractorLastnameMessage"/>
+                                </p:inputText>
+                                <p:message id="contractorLastnameMessage" for="contractorLastname" />
+                            </p>
+                            <p>
+                                <h:outputLabel value="Adresse mail :" class="labelModificationForm"/>
+                                <p:inputText id="contractorEmail" value="#{contractorRegistrationBean.email}" >
+                                    <f:ajax event="blur" render="contractorEmailMessage"/>
+                                    <f:validator validatorId="com.gdf.mailFormatValidator"/>
+                                </p:inputText>
+                                <p:message id="contractorEmailMessage" for="contractorEmail" />
+                            </p>
+                            <p>
+                                <h:outputLabel value="Téléphone :" class="labelModificationForm"/>
+                                <p:inputText id="contractorPhoneNumber" value="#{contractorRegistrationBean.phone}">
+                                    <f:ajax event="blur" render="contractorPhoneNumberMessage"/>
+                                    <f:validator validatorId="com.gdf.phoneFormatValidator"/>
+                                </p:inputText>
+                                <p:message id="contractorPhoneNumberMessage" for="contractorPhoneNumber" />
+                            </p>
 
-                            <h:outputLabel value="Mot de passe :" />
-                            <p:password id="contractorPassword" value="#{contractorRegistrationBean.password}" match="contractorConfirmPassword" feedback="true" label="Mot de passe" />
+                            <div class="dialogFooter" >
+                                <p:commandButton value="Suivant"                                       
+                                                 actionListener="#{contractorRegistrationBean.step1}"
+                                                 oncomplete="handleContractorStep1Request(xhr, status, args)">
 
-                            <h:outputLabel value="Confirmer le mot de passe :" />
-                            <p:password id="contractorConfirmPassword" value="#{contractorRegistrationBean.passwordConfirm}" feedback="true" label="Confirmation du mot de passe" />
+                                    <p:ajax update="registerContractorFormStep2:contractorSocialReason" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep2:contractorLegalForm" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep2:contractorTurnover" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep2:contractorNbEmployees" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep2:contractorSiren" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep2:contractorSiret" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep2:contractorRcs" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep2:contractorInsurrance" resetValues="true" />
 
-                            <h:outputLabel value="Prénom :" />
-                            <p:inputText id="contractorFirstname" value="#{contractorRegistrationBean.firstname}" label="Prénom" >
-                                <f:ajax event="blur" render="contractorFirstnameMessage"/>
-                                <f:validator validatorId="com.gdf.noBlankSpaceValidator"/>
-                            </p:inputText>
-                            <p:message id="contractorFirstnameMessage" for="contractorFirstname" />
-
-                            <h:outputLabel value="Nom :" />
-                            <p:inputText id="contractorLastname" value="#{contractorRegistrationBean.lastname}" label="Nom" >
-                                <f:ajax event="blur" render="contractorLastnameMessage"/>
-                                <f:validator validatorId="com.gdf.noBlankSpaceValidator" />
-                            </p:inputText>
-                            <p:message id="contractorLastnameMessage" for="contractorLastname" />
-
-                            <h:outputLabel value="Adresse mail :" />
-                            <p:inputText id="contractorEmail" value="#{contractorRegistrationBean.email}" label="Mail" >
-                                <f:ajax event="blur" render="contractorEmailMessage"/>
-                                <f:validator validatorId="com.gdf.mailFormatValidator"/>
-                            </p:inputText>
-                            <p:message id="contractorEmailMessage" for="contractorEmail" />
-
-                            <h:outputLabel value="Téléphone :" />
-                            <p:inputText id="contractorPhoneNumber" value="#{contractorRegistrationBean.phone}" label="Téléphone">
-                                <f:ajax event="blur" render="contractorPhoneNumberMessage"/>
-                                <f:validator validatorId="com.gdf.phoneFormatValidator"/>
-                            </p:inputText>
-                            <p:message id="contractorPhoneNumberMessage" for="contractorPhoneNumber" />
-
-                        </h:panelGrid>
-
-                        <div class="dialogFooter" >
-                            <p:commandButton value="Suivant"                                       
-                                             actionListener="#{contractorRegistrationBean.step1}"
-                                             oncomplete="handleContractorStep1Request(xhr, status, args)">
-
-                                <p:ajax update="registerContractorFormStep2:contractorSocialReason" resetValues="true" />
-                                <p:ajax update="registerContractorFormStep2:contractorLegalForm" resetValues="true" />
-                                <p:ajax update="registerContractorFormStep2:contractorTurnover" resetValues="true" />
-                                <p:ajax update="registerContractorFormStep2:contractorNbEmployees" resetValues="true" />
-                                <p:ajax update="registerContractorFormStep2:contractorSiren" resetValues="true" />
-                                <p:ajax update="registerContractorFormStep2:contractorSiret" resetValues="true" />
-                                <p:ajax update="registerContractorFormStep2:contractorRcs" resetValues="true" />
-                                <p:ajax update="registerContractorFormStep2:contractorInsurrance" resetValues="true" />
-                                <p:ajax update="registerContractorFormStep2:contractorLogo" resetValues="true" />
-                            </p:commandButton>
-                        </div>
+                                </p:commandButton>
+                            </div>
+                        </h:panelGroup>
                     </p:dialog>
 
                 </o:form>
                 <o:form id="registerContractorFormStep2" includeViewParams="true">
 
                     <!-- SECOND STEP -->
-                    <p:dialog header="Incription prestataire" modal="true" widgetVar="contractorDialogStep2" resizable="false">
+                    <p:dialog header="Inscription prestataire - Etape 2/5" modal="true" widgetVar="contractorDialogStep2" resizable="false">
                         <div class="dialogTitle">Enregistrez-vous et donnez à vos prestations<br/> une dimension Internationale !</div>
-                        <h:panelGrid id="contractorDialogStep2Panel" columns="2" cellpadding="5" >    
+                        <h:panelGroup id="contractorDialogStep2Panel">    
+                            <p>
+                                <h:outputLabel value="Raison sociale :" class="labelModificationForm"/>
+                                <p:inputText id="contractorSocialReason" value="#{contractorRegistrationBean.socialReason}">
+                                    <f:ajax event="blur" render="contractorSocialReasonMessage"/>
+                                    <f:validator validatorId="com.gdf.socialReasonValidator"/>
+                                </p:inputText>
+                                <p:message id="contractorSocialReasonMessage" for="contractorSocialReason" />
+                            </p>
+                            <p>
+                                <h:outputLabel value="Forme juridique :" class="labelModificationForm"/>                          
+                                <p:selectOneMenu id="contractorLegalForm" value="#{contractorRegistrationBean.legalForm}" >
+                                    <f:selectItems value="#{contractorRegistrationBean.legalForms}" />
+                                    <p:ajax update="registerContractorFormStep2:contractorDialogStep2Panel"/>
+                                </p:selectOneMenu>
+                            </p>
+                            <p>
+                                <h:outputLabel value="Nombre d'employés :" 
+                                               rendered="#{contractorRegistrationBean.isATeamCompanySelected()}"
+                                               class="labelModificationForm"/>
+                                <p:selectOneMenu id="contractorNbEmployees" value="#{contractorRegistrationBean.nbEmployees}"
+                                                 rendered="#{contractorRegistrationBean.isATeamCompanySelected()}">
+                                    <f:selectItem itemLabel="> 1" itemValue="1" />
+                                    <f:selectItem itemLabel="> 5" itemValue="5" />
+                                    <f:selectItem itemLabel="> 10" itemValue="10" />
+                                    <f:selectItem itemLabel="> 50" itemValue="50" />
+                                    <f:selectItem itemLabel="> 100" itemValue="100" />
+                                    <f:selectItem itemLabel="> 500" itemValue="500" />
+                                    <f:selectItem itemLabel="> 1K" itemValue="1000" />
+                                    <f:selectItem itemLabel="> 5K" itemValue="5000" />
+                                </p:selectOneMenu>
+                            </p>
+                            <p>
+                                <h:outputLabel value="Chiffre d'affaire :" class="labelModificationForm"/>
+                                <p:selectOneMenu id="contractorTurnover" value="#{contractorRegistrationBean.turnover}">
+                                    <f:selectItem itemLabel="> 500 €" itemValue="500" />
+                                    <f:selectItem itemLabel="> 1K €" itemValue="1000" />
+                                    <f:selectItem itemLabel="> 5K €" itemValue="5000" />
+                                    <f:selectItem itemLabel="> 10K €" itemValue="10000" />
+                                    <f:selectItem itemLabel="> 50K €" itemValue="50000" />
+                                    <f:selectItem itemLabel="> 100K €" itemValue="100000" />
+                                    <f:selectItem itemLabel="> 500K €" itemValue="500000" />
+                                    <f:selectItem itemLabel="> 1M €" itemValue="1000000" />
+                                </p:selectOneMenu>
+                            </p>
+                            <p>
+                                <h:outputLabel for="contractorSiren" value="N° SIREN :" class="labelModificationForm"/>
+                                <p:inputText  id="contractorSiren"  value="#{contractorRegistrationBean.siren}" size="9" 
+                                              maxlength="9">
+                                    <f:ajax event="blur" render="sirenMessage"/>
+                                    <f:validator validatorId="com.gdf.sirenValidator"/>
+                                </p:inputText>
+                                <p:message id="sirenMessage" for="contractorSiren" />
+                            </p>
+                            <p>
+                                <h:outputLabel for="contractorSiret" value="N° SIRET :" class="labelModificationForm"/>
+                                <p:inputText  id="contractorSiret"  value="#{contractorRegistrationBean.siret}" size="14" 
+                                              maxlength="14">
+                                    <f:ajax event="blur" render="siretMessage"/>
+                                    <f:validator validatorId="com.gdf.siretValidator"/>      
+                                </p:inputText>
+                                <p:message id="siretMessage" for="contractorSiret" />
+                            </p>
+                            <p>
+                                <h:outputLabel for="contractorRcs" value="N° RCS :" class="labelModificationForm"/>
+                                <p:inputText  id="contractorRcs"  value="#{contractorRegistrationBean.rcs}"
+                                              maxlength="20">
+                                    <f:ajax  event="blur" render="rcsMessage"/>                                   
+                                </p:inputText>
+                                <p:message id="rcsMessage" for="contractorRcs" />
+                            </p>
+                            <p>
+                                <h:outputLabel for="contractorInsurrance" value="Assurance :" class="labelModificationForm"/>
+                                <p:inputText  id="contractorInsurrance"  value="#{contractorRegistrationBean.insurrance}">
+                                    <f:ajax  event="blur" render="insurranceMessage"/>
+                                </p:inputText>
+                                <p:message id="insurranceMessage" for="contractorInsurrance" />
+                            </p>
 
-                            <h:outputLabel value="Raison sociale :" />
-                            <p:inputText id="contractorSocialReason" value="#{contractorRegistrationBean.socialReason}" label="Raison sociale" >
-                                <f:ajax event="blur" render="contractorSocialReason"/>
-                                <f:validator validatorId="com.gdf.noBlankSpaceValidator" />
-                            </p:inputText>
-                            <p:message id="contractorSocialReasonMessage" for="contractorSocialReason" />
-
-                            <h:outputLabel value="Forme juridique :" />                          
-                            <p:selectOneMenu id="contractorLegalForm" value="#{contractorRegistrationBean.legalForm}" >
-                                <f:selectItems value="#{contractorRegistrationBean.legalForms}" />
-                                <p:ajax update="registerContractorFormStep2:contractorDialogStep2Panel"/>
-                            </p:selectOneMenu>
-
-                            <h:outputLabel value="Nombre d'employés :" rendered="#{contractorRegistrationBean.isATeamCompanySelected()}"/>
-                            <p:selectOneMenu id="contractorNbEmployees" value="#{contractorRegistrationBean.nbEmployees}"
-                                             rendered="#{contractorRegistrationBean.isATeamCompanySelected()}">
-                                <f:selectItem itemLabel="> 1" itemValue="1" />
-                                <f:selectItem itemLabel="> 5" itemValue="5" />
-                                <f:selectItem itemLabel="> 10" itemValue="10" />
-                                <f:selectItem itemLabel="> 50" itemValue="50" />
-                                <f:selectItem itemLabel="> 100" itemValue="100" />
-                                <f:selectItem itemLabel="> 500" itemValue="500" />
-                                <f:selectItem itemLabel="> 1K" itemValue="1000" />
-                                <f:selectItem itemLabel="> 5K" itemValue="5000" />
-                            </p:selectOneMenu>
-
-                            <h:outputLabel value="Chiffre d'affaire :" />
-                            <p:selectOneMenu id="contractorTurnover" value="#{contractorRegistrationBean.turnover}">
-                                <f:selectItem itemLabel="> 500 €" itemValue="500" />
-                                <f:selectItem itemLabel="> 1K €" itemValue="1000" />
-                                <f:selectItem itemLabel="> 5K €" itemValue="5000" />
-                                <f:selectItem itemLabel="> 10K €" itemValue="10000" />
-                                <f:selectItem itemLabel="> 50K €" itemValue="50000" />
-                                <f:selectItem itemLabel="> 100K €" itemValue="100000" />
-                                <f:selectItem itemLabel="> 500K €" itemValue="500000" />
-                                <f:selectItem itemLabel="> 1M €" itemValue="1000000" />
-                            </p:selectOneMenu>
-
-                            <h:outputLabel for="contractorSiren" value="N° SIREN :" />
-                            <p:inputText  id="contractorSiren"  value="#{contractorRegistrationBean.siren}" size="9" 
-                                          maxlength="9">
-                                <f:ajax event="blur" render="sirenMessage"/>
-                                <f:validator validatorId="com.gdf.sirenValidator"/>
-                            </p:inputText>
-                            <p:message id="sirenMessage" for="contractorSiren" />
-
-                            <h:outputLabel for="contractorSiret" value="N° SIRET :" />
-                            <p:inputText  id="contractorSiret"  value="#{contractorRegistrationBean.siret}" size="14" 
-                                          maxlength="14">
-                                <f:ajax event="blur" render="siretMessage"/>
-                                <f:validator validatorId="com.gdf.siretValidator"/>      
-                            </p:inputText>
-                            <p:message id="siretMessage" for="contractorSiret" />
-
-                            <h:outputLabel for="contractorRcs" value="N° RCS :" />
-                            <p:inputText  id="contractorRcs"  value="#{contractorRegistrationBean.rcs}"
-                                          maxlength="20">
-                                <f:ajax  event="blur" render="rcsMessage"/>
-                                <f:validator validatorId="com.gdf.notNullnBSValidator"/>
-                            </p:inputText>
-                            <p:message id="rcsMessage" for="contractorRcs" />
-
-                            <h:outputLabel for="contractorInsurrance" value="Assurance :" />
-                            <p:inputText  id="contractorInsurrance"  value="#{contractorRegistrationBean.insurrance}">
-                                <f:ajax  event="blur" render="insurranceMessage"/>
-                                <f:validator validatorId="com.gdf.notNullnBSValidator"/>
-                            </p:inputText>
-                            <p:message id="insurranceMessage" for="contractorInsurrance" />
-
-                            <h:outputLabel for="contractorLogo" value="Logo :" />
-                            <p:inputText id="contractorLogo" placeholder="Entrez l'URL du logo" value="#{contractorRegistrationBean.logo}">
-                                <f:ajax  event="blur" render="logoMessage"/>
-                                <f:validator validatorId="com.gdf.urlLogoValidator"/>
-                            </p:inputText>
-                            <p:message id="logoMessage" for="contractorLogo" />
-
-                        </h:panelGrid>
-                        <div class="dialogFooter" >
-                            <p:commandButton value="Suivant"
-                                             actionListener="#{contractorRegistrationBean.step2}" 
-                                             oncomplete="handleContractorStep2Request(xhr, status, args)" />
-                        </div>
+                            <div class="dialogFooter" >
+                                <p:commandButton value="Suivant"
+                                                 actionListener="#{contractorRegistrationBean.step2}" 
+                                                 oncomplete="handleContractorStep2Request(xhr, status, args)">
+                                    <p:ajax update="registerContractorFormStep3:contractorLogo" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep3:logoMessage" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep3:contractorDescription" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep3:descriptionMessage" resetValues="true" />
+                                </p:commandButton>
+                            </div>
+                        </h:panelGroup>
                     </p:dialog>
+                </o:form>
 
+                <o:form id="registerContractorFormStep3" includeViewParams="true">
+
+                    <!-- SECOND STEP -->
+                    <p:dialog header="Inscription prestataire - Etape 3/5" modal="true" widgetVar="contractorDialogStep3" resizable="false">
+                        <div class="dialogTitle">Enregistrez-vous et donnez à vos prestations<br/> une dimension Internationale !</div>
+                        <h:panelGroup id="contractorDialogStep3Panel">    
+
+                            <p>
+                                <h:outputLabel for="contractorLogo" value="Logo :" class="labelModificationForm"/>
+                                <p:inputText id="contractorLogo" placeholder="Entrez l'URL du logo" value="#{contractorRegistrationBean.logo}">
+                                    <f:ajax  event="blur" render="logoMessage"/>
+                                    <f:validator validatorId="com.gdf.urlLogoValidator"/>
+                                </p:inputText>
+                                <p:message id="logoMessage" for="contractorLogo" />
+                            </p>
+
+                            <p>
+                                <h:outputLabel for="contractorDescription" value="Description :" class="labelModificationForm"/>
+                                <p:inputTextarea id="contractorDescription"  value="#{contractorRegistrationBean.description}"
+                                                 rows="6" cols="33" placeholder="Decrivez en quelques mots votre entreprise">
+                                    <f:ajax  event="blur" render="descriptionMessage"/>
+                                </p:inputTextarea>
+                                <p:message id="descriptionMessage" for="contractorDescription" />
+                            </p>
+
+                            <div class="dialogFooter" >
+                                <p:commandButton value="Suivant"
+                                                 actionListener="#{contractorRegistrationBean.step3}" 
+                                                 oncomplete="handleContractorStep3Request(xhr, status, args)">
+                                    <p:ajax update="registerContractorFormStep4:contractorStreetNumber" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep4:streetNumberMessage" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep4:contractorStreet" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep4:streetMessage" resetValues="true" />                             
+                                    <p:ajax update="registerContractorFormStep4:contractorZipCode" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep4:zipCodeMessage" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep4:contractorTown" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep4:townMessage" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep4:contractorCountry" resetValues="true" />
+                                    <p:ajax update="registerContractorFormStep4:countryMessage" resetValues="true" />
+                                </p:commandButton>
+                            </div>
+                        </h:panelGroup>
+                    </p:dialog>
+                </o:form>
+
+                <o:form id="registerContractorFormStep4" includeViewParams="true">
+
+                    <!-- SECOND STEP -->
+                    <p:dialog header="Inscription prestataire - Etape 4/5" modal="true" widgetVar="contractorDialogStep4" resizable="false">
+                        <div class="dialogTitle">Enregistrez-vous et donnez à vos prestations<br/> une dimension Internationale !</div>
+                        <h:panelGroup id="contractorDialogStep4Panel">    
+
+                            <p>
+                                <h:outputLabel for="contractorStreetNumber" value="N° :" class="labelModificationForm"/>
+                                <p:inputText id="contractorStreetNumber" placeholder="Numéro de la rue" value="#{contractorRegistrationBean.streetNumber}">
+                                    <f:ajax  event="blur" render="streetNumberMessage"/>
+                                </p:inputText>
+                                <p:message id="streetNumberMessage" for="contractorStreetNumber" />
+                            </p>
+
+                            <p>
+                                <h:outputLabel for="contractorStreet" value="Rue :" class="labelModificationForm"/>
+                                <p:inputText id="contractorStreet" placeholder="Nom de la rue" value="#{contractorRegistrationBean.street}">
+                                    <f:ajax  event="blur" render="streetMessage"/>
+                                </p:inputText>
+                                <p:message id="streetMessage" for="contractorStreet" />
+                            </p>
+
+                            <p>
+                                <h:outputLabel for="contractorZipCode" value="Code postal :" class="labelModificationForm"/>
+                                <p:inputText id="contractorZipCode" value="#{contractorRegistrationBean.zipCode}">
+                                    <f:ajax  event="blur" render="zipCodeMessage"/>
+                                </p:inputText>
+                                <p:message id="zipCodeMessage" for="contractorZipCode" />
+                            </p>
+
+                            <p>
+                                <h:outputLabel for="contractorTown" value="Ville :" class="labelModificationForm"/>
+                                <p:inputText id="contractorTown" value="#{contractorRegistrationBean.town}">
+                                    <f:ajax  event="blur" render="townMessage"/>
+                                </p:inputText>
+                                <p:message id="townMessage" for="contractorTown" />
+                            </p>
+
+                            <p>
+                                <h:outputLabel for="contractorCountry" value="Pays :" class="labelModificationForm"/>
+                                <p:inputText id="contractorCountry" value="#{contractorRegistrationBean.country}">
+                                    <f:ajax  event="blur" render="countryMessage"/>
+                                </p:inputText>
+                                <p:message id="countryMessage" for="contractorCountry" />
+                            </p>
+
+                            <div class="dialogFooter" >
+                                <p:commandButton value="Suivant"
+                                                 actionListener="#{contractorRegistrationBean.step4}" 
+                                                 oncomplete="handleContractorStep4Request(xhr, status, args)">
+
+                                </p:commandButton>
+                            </div>
+                        </h:panelGroup>
+                    </p:dialog>
                 </o:form>
 
             </p:panelGrid>
         </p:panelGrid>
-
-
     </div>
-
 </ui:composition>
