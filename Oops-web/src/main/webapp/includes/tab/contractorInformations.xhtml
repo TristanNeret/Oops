@@ -93,7 +93,6 @@
     <o:form id="formModify">
 
         <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
-        <<<<<<< HEAD
 
         <p:dialog header="Modification informations personelles :" modal="true" widgetVar="modifyDialog" resizable="false">             
 
@@ -107,7 +106,7 @@
                         <f:validator validatorId="com.gdf.loginAlreadyExistForModificationValidator"/>
                         <f:attribute value="#{contractorEditBean.contractor.id}" name="idContractor"/>
                     </p:inputText>
-                    <p:message id="loginMessage" for="modifiedLogin"/>
+                    <h:message id="loginMessage" for="modifiedLogin" errorClass="erreur" />
                 </p>
 
                 <p>
@@ -115,7 +114,7 @@
                     <p:inputText  id="modifiedFirstName" value="#{contractorEditBean.contractor.representatorFirstname}">
                         <f:ajax  event="blur" render="firstNameMessage"/>
                     </p:inputText>
-                    <p:message id="firstNameMessage" for="modifiedFirstName"/>
+                    <h:message id="firstNameMessage" for="modifiedFirstName" errorClass="erreur"  />
                 </p>
 
                 <p>
@@ -123,7 +122,7 @@
                     <p:inputText  id="modifiedLastName" value="#{contractorEditBean.contractor.representatorLastname}">
                         <f:ajax  event="blur" render="lastNameMessage"/>
                     </p:inputText>
-                    <p:message id="lastNameMessage" for="modifiedLastName"/>
+                    <h:message id="lastNameMessage" for="modifiedLastName" errorClass="erreur" />
                 </p>
 
                 <p>
@@ -132,7 +131,7 @@
                         <f:ajax  event="blur" render="emailMessage"/>
                         <f:validator validatorId="com.gdf.mailFormatValidator"/>
                     </p:inputText>    
-                    <p:message id="emailMessage" for="modifiedEmail"/>
+                    <h:message id="emailMessage" for="modifiedEmail" errorClass="erreur" />
                 </p>
 
                 <p>
@@ -141,76 +140,18 @@
                         <f:validator validatorId="com.gdf.phoneFormatValidator"/>
                         <f:ajax  event="blur" render="phoneMessage"/>
                     </p:inputText>
-                    <p:message id="phoneMessage" for="modifiedPhoneNumber"/> 
+                    <h:message id="phoneMessage" for="modifiedPhoneNumber" errorClass="erreur" /> 
                 </p>
 
                 <p:commandButton value="Modifier" update="tabViewContractor:informations" actionListener="#{contractorEditBean.update()}" 
                                  oncomplete="handleModification(xhr, status, args)" />
             </h:panelGroup>
 
+            <h:form>
+                <p:commandButton class="searchCommandButton"  value="Annuler" actionListener="#{contractorEditBean.undo()}" oncomplete="PF('modifyDialog').hide();"></p:commandButton>  
+            </h:form> 
 
-            =======
-
-            <p:dialog header="Modification informations personelles :" modal="true" widgetVar="modifyDialog" resizable="false">             
-
-
-                <h:panelGroup id="infoc">
-
-                    <p>       
-                        <h:outputLabel for="modifiedLogin" class="labelModificationForm"> Login: </h:outputLabel>
-                        <p:inputText   id="modifiedLogin" value="#{contractorEditBean.contractor.login}">
-                            <f:ajax  event="blur" render="loginMessage"/>
-                            <f:validator validatorId="com.gdf.loginAlreadyExistForModificationValidator"/>
-                            <f:attribute value="#{contractorEditBean.contractor.id}" name="idContractor"/>
-                        </p:inputText>
-                        <h:message id="loginMessage" for="modifiedLogin" errorClass="erreur" />
-                    </p>
-
-                    <p>
-                        <h:outputLabel for="modifiedFirstName" class="labelModificationForm"> Prénom: </h:outputLabel>
-                        <p:inputText  id="modifiedFirstName" value="#{contractorEditBean.contractor.representatorFirstname}">
-                            <f:ajax  event="blur" render="firstNameMessage"/>
-                        </p:inputText>
-                        <h:message id="firstNameMessage" for="modifiedFirstName" errorClass="erreur"  />
-                    </p>
-
-                    <p>
-                        <h:outputLabel for="modifiedLastName" class="labelModificationForm"> Nom: </h:outputLabel>
-                        <p:inputText  id="modifiedLastName" value="#{contractorEditBean.contractor.representatorLastname}">
-                            <f:ajax  event="blur" render="lastNameMessage"/>
-                        </p:inputText>
-                        <h:message id="lastNameMessage" for="modifiedLastName" errorClass="erreur" />
-                    </p>
-
-                    <p>
-                        <h:outputLabel for="modifiedEmail" class="labelModificationForm"> Email : </h:outputLabel>
-                        <p:inputText  id="modifiedEmail" value="#{contractorEditBean.contractor.email}">
-                            <f:ajax  event="blur" render="emailMessage"/>
-                            <f:validator validatorId="com.gdf.mailFormatValidator"/>
-                        </p:inputText>    
-                        <h:message id="emailMessage" for="modifiedEmail" errorClass="erreur" />
-                    </p>
-
-                    <p>
-                        <h:outputLabel for="modifiedPhoneNumber" class="labelModificationForm"> Phone : </h:outputLabel>
-                        <p:inputText  id="modifiedPhoneNumber" value="#{contractorEditBean.contractor.phone}">
-                            <f:validator validatorId="com.gdf.phoneFormatValidator"/>
-                            <f:ajax  event="blur" render="phoneMessage"/>
-                        </p:inputText>
-                        <h:message id="phoneMessage" for="modifiedPhoneNumber" errorClass="erreur" /> 
-                    </p>
-
-                    <p:commandButton value="Modifier" update="tabViewContractor:informations" actionListener="#{contractorEditBean.update()}" 
-                                     oncomplete="handleModification(xhr, status, args)" />
-                </h:panelGroup>
-
-
-                >>>>>>> featureViewNotifications
-                <h:form>
-                    <p:commandButton class="searchCommandButton"  value="Annuler" actionListener="#{contractorEditBean.undo()}" oncomplete="PF('modifyDialog').hide();"></p:commandButton>  
-                </h:form> 
-
-            </p:dialog>
+        </p:dialog>
     </o:form>
 
 

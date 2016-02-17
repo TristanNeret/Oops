@@ -64,6 +64,11 @@ public class ManageNotificationBean implements Serializable {
         // Check if a user is connected
         String userID = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
         String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userCategory");
+        
+        // TEMPORARY : DON'T FORGET TO REMOVE !
+        userID = "1";
+        userCategory = "TENDERER";
+        
         if (userID != null && userCategory != null) {
             if (!userID.isEmpty()) {
 
