@@ -11,6 +11,7 @@ import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Notification;
 import com.gdf.persistence.Tenderer;
+import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -73,18 +74,18 @@ public class ManageNotificationBean implements Serializable {
                 switch (userCategory) {
 
                     case Tenderer.userCategory:
-                        this.notificationsList = this.nb.findUnreadTendererNotification(id);
-                        this.allNotificationsList = this.nb.findAllTendererNotification(id);
+                        this.notificationsList = Lists.reverse(this.nb.findUnreadTendererNotification(id));
+                        this.allNotificationsList = Lists.reverse(this.nb.findAllTendererNotification(id));
                         break;
 
                     case Contractor.userCategory:
-                        this.notificationsList = this.nb.findUnreadContractorNotification(id);
-                        this.allNotificationsList = this.nb.findAllContractorNotification(id);
+                        this.notificationsList = Lists.reverse(this.nb.findUnreadContractorNotification(id));
+                        this.allNotificationsList = Lists.reverse(this.nb.findAllContractorNotification(id));
                         break;
 
                     case Moderator.userCategory:
-                        this.notificationsList = this.nb.findUnreadModeratorNotification(id);
-                        this.allNotificationsList = this.nb.findAllModeratorNotification(id);
+                        this.notificationsList = Lists.reverse(this.nb.findUnreadModeratorNotification(id));
+                        this.allNotificationsList = Lists.reverse(this.nb.findAllModeratorNotification(id));
                         break;
 
                     default:

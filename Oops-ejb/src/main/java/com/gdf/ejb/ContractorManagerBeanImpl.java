@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import java.io.Serializable;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author Tristan
  */
 @Stateless
-public class ContractorManagerBeanImpl implements ContractorManagerBean {
+public class ContractorManagerBeanImpl implements ContractorManagerBean, Serializable {
 
     /**
      * Injected EntityManager giving access to the database

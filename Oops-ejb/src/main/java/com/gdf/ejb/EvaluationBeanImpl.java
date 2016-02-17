@@ -13,6 +13,7 @@ import static com.gdf.persistence.NotificationState.NOT_READ;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,10 +22,11 @@ import javax.persistence.Query;
 
 /**
  * Class supplying methods to manage Reviews
+ *
  * @author aziz
  */
 @Stateless
-public class EvaluationBeanImpl implements EvaluationBean {
+public class EvaluationBeanImpl implements EvaluationBean, Serializable {
 
     /**
      * Injected EntityManager giving access to the database
@@ -32,15 +34,14 @@ public class EvaluationBeanImpl implements EvaluationBean {
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;
 
-
     @Override
     public void addReview(Tenderer tenderer, Contractor contractor, Review review) {
 
         Tenderer attachedTenderer = em.merge(tenderer);
         Contractor attachedContractor = em.merge(contractor);
-        
+
         em.persist(review);
-        
+
         attachedTenderer.addReview(review);
         attachedContractor.addReview(review);
 
@@ -91,43 +92,47 @@ public class EvaluationBeanImpl implements EvaluationBean {
     @Override
     public void updateContractorsAnswer(Review review, String contractorsAnswer) {
 
-        if (contractorsAnswer != null && !contractorsAnswer.equals("")) {
-            
-            review.setContractorAnswer(contractorsAnswer);
-            
-            // Get attached entities concerned
-            Tenderer attachedTenderer = em.merge(review.getTenderer());
-            Contractor attachedContractor = em.merge(review.getContractor());
-            Review attachedReview = em.merge(review);
+        if (contractorsAnswer != null) {
 
-            // Create and persist the new Notification
-            Notification newNotification = new Notification(review, review.getTenderer(), review.getContractor(), TO_TENDERER);
-            newNotification.setDescription(attachedContractor.getRepresentatorFirstname() + " de " + attachedContractor.getSocialReason() + " a répondu à votre avis !");
-            newNotification.setLink("/views/contractorInformation.xhtml?id=" + review.getContractor().getId());
-            em.persist(newNotification);
+            if (!contractorsAnswer.equals("")) {
 
-            // Add the new Notification to others entities
-            attachedTenderer.addNotification(newNotification);
-            attachedReview.addNotification(newNotification);
-            attachedContractor.addNotification(newNotification);
-            em.merge(attachedReview);
-            
-            em.merge(review);
-            
+                review.setContractorAnswer(contractorsAnswer);
+
+                // Get attached entities concerned
+                Tenderer attachedTenderer = em.merge(review.getTenderer());
+                Contractor attachedContractor = em.merge(review.getContractor());
+                Review attachedReview = em.merge(review);
+
+                // Create and persist the new Notification
+                Notification newNotification = new Notification(review, review.getTenderer(), review.getContractor(), TO_TENDERER);
+                newNotification.setDescription(attachedContractor.getRepresentatorFirstname() + " de " + attachedContractor.getSocialReason() + " a répondu à votre avis !");
+                newNotification.setLink("/views/contractorInformation.xhtml?id=" + review.getContractor().getId());
+                em.persist(newNotification);
+
+                // Add the new Notification to others entities
+                attachedTenderer.addNotification(newNotification);
+                attachedReview.addNotification(newNotification);
+                attachedContractor.addNotification(newNotification);
+                em.merge(attachedReview);
+
+                em.merge(review);
+
+            }
+
         }
 
-        
     }
 
     @Override
     public void deleteContractorsAnswer(Review review) {
-       
+
         review.setContractorAnswer(null);
         em.merge(review);
-    }   
+    }
 
     @Override
     public void askForReview(Long contractorID, Long tendererID, String message) {
+        
         Notification n = new Notification();
         java.util.Date date = new java.util.Date();
         n.setDate(new java.sql.Date(date.getTime()));
@@ -137,25 +142,28 @@ public class EvaluationBeanImpl implements EvaluationBean {
         n.setContractor(contractor);
         Tenderer tenderer = em.find(Tenderer.class, tendererID);
         n.setTenderer(tenderer);
-        if(message == null){
-            message = contractor.getLogin()+" de "+contractor.getSocialReason()+" souhaiterait que vous donniez votre avis sur une des ses prestations.";
+        String newMessage = message;
+        if (newMessage == null) {
+            newMessage = contractor.getLogin() + " de " + contractor.getSocialReason() + " souhaiterait que vous donniez votre avis sur une des ses prestations.";
         }
-        n.setDescription(message);
+        n.setDescription(newMessage);
         em.persist(n);
+        
     }
-    
+
     @Override
-    public Notification getLastNotificationSent(Long contractorID, Long tendererID){
+    public Notification getLastNotificationSent(Long contractorID, Long tendererID) {
         Query q = em.createNamedQuery("Notification.findByContractorAndTenderer", Notification.class);
         Contractor contractor = em.find(Contractor.class, contractorID);
         Tenderer tenderer = em.find(Tenderer.class, tendererID);
         q.setParameter(1, contractor);
         q.setParameter(2, tenderer);
         List<Notification> ln = q.getResultList();
-        if(!ln.isEmpty())
+        if (!ln.isEmpty()) {
             return ln.get(0);
-        else
-            return null;                   
+        } else {
+            return null;
+        }
     }
-    
+
 }

@@ -7,6 +7,7 @@ package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Service;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -19,7 +20,7 @@ import javax.persistence.TypedQuery;
  * @author bibo
  */
 @Stateless
-public class ServiceBeanImpl implements ServiceBean{
+public class ServiceBeanImpl implements ServiceBean, Serializable {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

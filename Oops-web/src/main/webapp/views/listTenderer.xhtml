@@ -11,7 +11,7 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:o="http://omnifaces.org/ui">
-      
+
     <h:head>
         <title>Tenderer list</title>
         <h:outputStylesheet library="css" name="style.css" />
@@ -40,42 +40,37 @@ and open the template in the editor.
 
         <!-- CONTENT -->
         <div class="divContent">
-            
+
             <p:growl widgetVar="askReviewGrowl" sticky="false" showDetail="true" life="3000" />
-            
+
             <o:form id="askReviewForm" includeViewParams="true">
-                <table  width="100%" style="margin: 0px;">
-                    <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
-                        <tr>
-                            <td>
+                <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
+                    <div class="divContentPadding">
+                        <fieldset style="margin-top: 10px;">
+                            <h:outputText style="font-size: x-large; padding-right: 20px" value="#{tend.login}" />
+                            (<h:outputText value="#{tend.firstname}" style="padding-right: 5px"/>
+                            <h:outputText value="#{tend.lastname}" />)
 
-                                <fieldset style="margin-top: 10px;">
-                                    <h:outputText style="font-size: x-large; padding-right: 20px" value="#{tend.login}" />
-                                    (<h:outputText value="#{tend.firstname}" style="padding-right: 5px"/>
-                                    <h:outputText value="#{tend.lastname}" />)
-                                    
-                                    <h:panelGrid columns="2" style="float: right;">
+                            <h:panelGrid columns="2" style="float: right;">
 
-                                        <h:button class="headerCommandButton" value="Voir #{tend.login}" 
-                                                  outcome="/views/tendererSearch?id=#{tend.id}" />
+                                <h:button class="headerCommandButton" value="Voir #{tend.login}" 
+                                          outcome="/views/tendererSearch?id=#{tend.id}" />
 
-                                        <p:commandButton id="askReviewBtn" class="headerCommandButton" value="Demander un avis" 
-                                                         rendered="#{listTendererBean.display(tend.id)}"
-                                                         onclick="PF('askReviewDialog').show();"
-                                                         actionListener="#{listTendererBean.setTenderer(tend)}"
-                                                         update="askReviewDialogForm:dialogPanel" /> 
-                                    </h:panelGrid>
+                                <p:commandButton id="askReviewBtn" class="headerCommandButton" value="Demander un avis" 
+                                                 rendered="#{listTendererBean.display(tend.id)}"
+                                                 onclick="PF('askReviewDialog').show();"
+                                                 actionListener="#{listTendererBean.setTenderer(tend)}"
+                                                 update="askReviewDialogForm:dialogPanel" /> 
+                            </h:panelGrid>
 
-                                </fieldset>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>         
+                        </fieldset>
+                    </div>
+                </c:forEach>       
             </o:form>
 
             <!-- DIALOG BOX FOR ASKING REVIEWS  -->
             <o:form id="askReviewDialogForm" includeViewParams="true">
-                
+
                 <p:dialog header="Demande d'avis" modal="true" widgetVar="askReviewDialog" resizable="false">
                     <p:outputPanel id="dialogPanel">
                         <h:panelGrid columns="1" cellpadding="5">
@@ -96,10 +91,10 @@ and open the template in the editor.
                                              onclick="PF('askReviewGrowl').renderMessage({summary: 'Demande d\'avis envoyée !',
                                                          detail: 'La demande d\'avis à été envoyée', severity: 'info'});" /> 
                         </div>
-                        
+
                     </p:outputPanel>
                 </p:dialog>
-                
+
             </o:form>
 
         </div>

@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Address;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -13,11 +14,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * AddressBeanImpl
  * @author bibo
  */
 @Stateless
-public class AddressBeanImpl implements AddressBean {
+public class AddressBeanImpl implements AddressBean, Serializable {
     
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;

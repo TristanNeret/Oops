@@ -11,6 +11,7 @@ import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -24,7 +25,7 @@ import javax.persistence.TypedQuery;
  * @author nicolas
  */
 @Stateless
-public class SearchBeanImpl implements SearchBean {
+public class SearchBeanImpl implements SearchBean, Serializable {
 
     /**
      * Injected EntityManager giving access to the database

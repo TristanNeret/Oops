@@ -6,6 +6,7 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.LegalInformation;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -13,11 +14,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * LegalInformationBeanImpl
  * @author bibo
  */
 @Stateless
-public class LegalInformationBeanImpl implements LegalInformationBean{
+public class LegalInformationBeanImpl implements LegalInformationBean, Serializable {
 
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;

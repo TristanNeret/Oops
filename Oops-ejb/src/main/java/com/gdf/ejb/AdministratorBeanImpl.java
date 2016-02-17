@@ -15,6 +15,7 @@ import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import static com.gdf.persistence.ReviewState.ACCEPTED;
 import com.gdf.persistence.Tenderer;
+import java.io.Serializable;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,7 +25,7 @@ import javax.persistence.PersistenceContext;
  * @author aziz
  */
 @Stateless
-public class AdministratorBeanImpl implements AdministratorBean {
+public class AdministratorBeanImpl implements AdministratorBean, Serializable {
 
     /**
      * Injected EntityManager giving access to the database
@@ -94,6 +95,8 @@ public class AdministratorBeanImpl implements AdministratorBean {
             case NOT_ACCEPTED:
                 newNotification.setDescription("Votre avis sur " + review.getContractor().getSocialReason() + " a été rejeté !");
                 newNotification.setLink("/views/tendererManagement.xhtml?tabIndex=1");
+                break;
+            default:
                 break;
         }
         em.persist(newNotification);

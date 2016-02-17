@@ -11,6 +11,7 @@ import com.gdf.persistence.NotificationType;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,7 +24,7 @@ import javax.persistence.PersistenceContext;
  * @author Tristan
  */
 @Stateless
-public class TendererManagerBeanImpl implements TendererManagerBean {
+public class TendererManagerBeanImpl implements TendererManagerBean, Serializable {
     
     /**
      * Injected EntityManager giving access to the database
@@ -82,31 +83,6 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         if (reviewToRemove != null) {
             
             reviewToRemove.setReviewEnabled(false);
-            
-            /*
-            // Remove the Review from the Contractor Review list
-            Contractor contractorToUpdate = em.find(Contractor.class, reviewToRemove.getContractor().getId());
-            contractorToUpdate.removeNotificationByReviewId(reviewToRemove.getId());
-            contractorToUpdate.removeReview(reviewToRemove);
-            
-            // Remove the Review from the Tenderer Review list
-            Tenderer tendererToUpdate = em.find(Tenderer.class, tendererId);
-            tendererToUpdate.removeNotificationByReviewId(reviewToRemove.getId());
-            tendererToUpdate.removeReview(reviewToRemove);
-            
-            // Remove Notifications from the Review to remove
-            reviewToRemove.removeNotificationByReviewId(reviewToRemove.getId());
-            
-            // Remove Notification containing the Review
-            Query queryNotification = em.createNamedQuery("Notification.deleteByReviewId");
-            queryNotification.setParameter(1, reviewToRemove.getId());
-            queryNotification.executeUpdate();
-            
-            // Remove the Review
-            Query queryReview = em.createNamedQuery("Review.deleteReviewById");
-            queryReview.setParameter(1, reviewToRemove.getId());
-            queryReview.executeUpdate();
-            */
                     
         }
         

@@ -11,6 +11,7 @@ import com.gdf.persistence.Notification;
 import com.gdf.persistence.NotificationState;
 import com.gdf.persistence.NotificationType;
 import com.gdf.persistence.Tenderer;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -22,7 +23,7 @@ import javax.persistence.PersistenceContext;
  * @author Tristan
  */
 @Stateless
-public class NotificationBeanImpl implements NotificationBean {
+public class NotificationBeanImpl implements NotificationBean, Serializable {
 
     /**
      * Injected EntityManager giving access to the database

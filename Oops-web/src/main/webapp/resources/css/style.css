@@ -1,6 +1,10 @@
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    float: left;
 }
 
 fieldset {
@@ -22,11 +26,15 @@ h2 {
 }
 
 .divContent {
-    padding-left: 30px;
-    padding-right: 30px;
     padding-bottom: 30px;
     float: left;
-    width: 95%;
+    width: 100%;
+    min-height: 100%;
+}
+
+.divContentPadding {
+    padding-right: 30px;
+    padding-left: 30px;
 }
 
 /*****************************************************************************/
@@ -65,9 +73,9 @@ table.panelHeader td.ui-panelgrid-cell {
 
 table.panelHeader td.ui-panelgrid-cell a.headerTitle {
     color: #ffffff;
-    font-size: 40px;
+    font-size: 48px;
     font-weight: bold;
-    margin-left: 50px;
+    margin-left: 30px;
     color: #ffffff;
     text-decoration:none;
 }
@@ -75,48 +83,13 @@ table.panelHeader td.ui-panelgrid-cell a.headerTitle {
 table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     font-size: 20px;
     font-weight: 100;
-    margin-left: 18px;
     color: #ffffff;
     text-decoration:none;
 }
 
-
-
 .formNotificationHeader {
     margin-right: 10px;
 }
-
-#divHeaderTitleAdmin {
-    float: left;
-}
-
-#linkTitleAdmin {
-    color: white; 
-    text-decoration: none; 
-    font-size: 44px; 
-    margin-left: 20px;
-}
-
-#linkSubtitleAdmin {
-    color: white; 
-    text-decoration: none; 
-    font-size: 22px; 
-    margin-left: 30px; 
-    font-weight: 200;
-}
-
-.divHeaderButtonAdmin {
-    float: right;
-}
-
-#divHeaderNotificationAdmin {
-    float: right; 
-    margin-top: 6px; 
-    margin-right: 10px;
-}
-
-
-
 
 .commandButtonNotificationImage {
     height: 40px;
@@ -334,6 +307,10 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     float: left; 
     margin-right: 20px;
     margin-bottom: 20px;
+    border-bottom-color: black;
+    border-bottom-style: ridge;
+    border-bottom-width: 1px;
+    padding-bottom: 20px;
 }
 
 .diveRateReview {
