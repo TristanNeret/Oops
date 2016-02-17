@@ -7,7 +7,6 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.RegistrationBean;
 import com.gdf.ejb.SearchBean;
-import com.gdf.ejb.ServiceBean;
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Service;
@@ -31,9 +30,6 @@ public class ServiceAddBean implements Serializable {
 
     @EJB
     private SearchBean searchBean;
-    
-    @EJB
-    private ServiceBean serviceBean;
     
     @EJB
     private RegistrationBean rb;

@@ -7,6 +7,7 @@ package com.gdf.ejb;
 
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
@@ -49,6 +50,27 @@ public class SearchBeanImpl implements SearchBean {
             contractor.getReviews().size();
         } 
         return contractor;
+        
+    }
+    
+      
+    /**
+     * Search a Moderator by his id
+     * @param id the id of the Moderator
+     * @return the Moderator identified by the id if any or null if he doesn't exist
+     */
+   
+    @Override
+    public Moderator searchModeratorById(long id) {
+        
+        Moderator moderator =  em.find(Moderator.class, id);
+        
+        if(moderator  != null) {  
+            //The lazy relationships must be traversed before exiting the scope of the JPA Session to avoid the Exception.
+            moderator.getNotifications();
+        
+        } 
+        return moderator ;
         
     }
     
@@ -181,7 +203,7 @@ public class SearchBeanImpl implements SearchBean {
     @Override
     public List<Tenderer> searchTendererByKeyWord(String keyWord) {
         TypedQuery<Tenderer> query;
-        query = em.createQuery("SELECT t FROM Tenderer t WHERE t.login LIKE :word OR t.email LIKE :word Or t.firstname LIKE :word Or t.lastname LIKE :word Or t.phone LIKE :word",Tenderer.class);
+        query = em.createQuery("SELECT t FROM Tenderer t WHERE t.login LIKE :word OR t.email LIKE :word Or t.firstname LIKE :word Or t.lastname LIKE :word",Tenderer.class);
         query.setParameter("word","%" + keyWord + "%");
         return query.getResultList();   
     }
@@ -193,6 +215,16 @@ public class SearchBeanImpl implements SearchBean {
     @Override
     public List<Tenderer> findAllTenderer() {
         TypedQuery<Tenderer> query = em.createNamedQuery("Tenderer.findAll", Tenderer.class);
+        return query.getResultList(); 
+    }
+    
+    /**
+     * Get all the tenderers
+     * @return all the tenderers
+     */
+    @Override
+    public List<Contractor> findAllContractor() {
+        TypedQuery<Contractor> query = em.createNamedQuery("Contractor.findAll", Contractor.class);
         return query.getResultList(); 
     }
     

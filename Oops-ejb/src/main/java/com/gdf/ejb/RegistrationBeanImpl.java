@@ -30,7 +30,7 @@ public class RegistrationBeanImpl implements RegistrationBean {
     private EntityManager em; 
     
     @Override
-    public void register(Contractor c) {
+    public Long register(Contractor c) {
         
         // Get current date 
         Calendar cal = Calendar.getInstance();
@@ -39,11 +39,12 @@ public class RegistrationBeanImpl implements RegistrationBean {
         c.setUpdateDate(dateFormat.format(cal.getTime()));
         
         em.persist(c);
-        
+ 
+        return em.merge(c).getId();
     }
     
     @Override
-    public void register(Tenderer t) {
+    public Long register(Tenderer t) {
         
         // Get current date 
         Calendar cal = Calendar.getInstance();
@@ -53,6 +54,7 @@ public class RegistrationBeanImpl implements RegistrationBean {
         
         em.persist(t);
 
+        return em.merge(t).getId();
     }
     
     

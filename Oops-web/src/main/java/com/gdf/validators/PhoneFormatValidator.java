@@ -19,9 +19,8 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("com.gdf.phoneFormatValidator")
 public class PhoneFormatValidator implements Validator {
     
-    private static final String BAD_PHONE_FORMAT = "Le numéro de téléphone ne doit contenir que des chiffres";
-    private static final String BAD_SIZE = "Le numéro de téléphone ne doit contenir en moins 6 chiffres";
-    private static final String EMPTY = "Merci d'indiquer une numéro de téléphone";
+    private static final String FORMAT = "Le numéro de téléphone doit contenir 10 chiffres";
+    private static final String EMPTY = "Veuillez saisir un numéro de téléphone";
 
     /**
      * Creates a new instance of MailFormatValidator
@@ -36,11 +35,9 @@ public class PhoneFormatValidator implements Validator {
          if ( value != null ) {
 
             String telephone = value.toString();   
-            if ( !telephone.matches( "^\\d+$" ) ) {
-                        throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, BAD_PHONE_FORMAT, null));
-            } else if ( telephone.length() < 4 ) {
-                    throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, BAD_SIZE, null));
-            }
+            if ( !telephone.matches( "[0-9]{10}" ) ) {
+                        throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, FORMAT, null));
+            } 
 
         } else {
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, EMPTY, null));

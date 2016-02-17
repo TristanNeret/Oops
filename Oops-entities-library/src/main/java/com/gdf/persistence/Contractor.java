@@ -23,6 +23,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
@@ -56,15 +57,18 @@ public class Contractor implements Serializable {
     @Column(unique=true)
     private String login;
     
+    @NotNull( message = "Veuillez saisir un email" )
     private String email;
     
-    @NotNull( message = "Veuillez saisir une raison sociale" )
-    private String socialReason;
+    private String description;
     
-    @NotNull( message = "Veuillez saisir une forme juridique" )
-    private String legalForm;
+    @NotNull( message = "Veuillez saisir un numéro de téléphone" )
+    private String phone;
     
-    private String description, phone, logo;
+    private String logo;
+    
+    private String socialReason, legalForm; // fileds which can be null (2 steps registration) 
+    
     private int turnover, nbEmployees, rating;  
     private String registrationDate, updateDate;
     

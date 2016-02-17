@@ -81,10 +81,10 @@ public class ListTendererBean implements Serializable {
     @PostConstruct
     public void initBean() {
         // Temporary used to connect a Contractor
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", Long.parseLong("10"));
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", "10");
         FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userCategory", Contractor.userCategory);          
         
-        userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
+        userID = Long.parseLong((String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID"));
         userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");
         
         //System.out.println(userID+" ------------------------------------ "+userCategory);

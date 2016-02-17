@@ -84,6 +84,8 @@ public class AdministratorBeanImpl implements AdministratorBean {
         Notification newNotification = new Notification(attachedReview, attachedTenderer, attachedModerator, notificationType);
         switch(review.getReviewState()) {
             case ACCEPTED:
+                // update the number of reviews given by the tenderer and accepted by moderator
+                attachedTenderer.updateNbReviews(); 
                 newNotification.setDescription("Votre avis sur " + review.getContractor().getSocialReason() + " a été validé !");
                 break;
             case TO_BE_MODIFIED:
@@ -126,6 +128,45 @@ public class AdministratorBeanImpl implements AdministratorBean {
         attachedModerator.addNotification(newNotification);
         attachedReview.addNotification(newNotification);
         
+    }
+    
+    @Override
+    public void sendMessageNotificationToContractor(long idModerator,Contractor contractor,String message){
+       
+        // Get attached entities concerned
+        Moderator attachedModerator = em.find(Moderator.class, idModerator);
+        Contractor attachedContractor = em.merge(contractor);
+        
+        
+        // Create and persist the new Notification
+        Notification newNotification = new Notification(attachedContractor,attachedModerator ,message);
+        newNotification.setCategory(NotificationType.TO_CONTRACTOR);
+        em.persist(newNotification);
+        
+        // Add the new Notification to others entities
+        attachedContractor.addNotification(newNotification);
+        attachedModerator.addNotification(newNotification);     
+    }
+    
+        
+    @Override
+    public void sendMessageNotificationToTenderer(long idModerator,Tenderer tenderer,String message){
+       
+        
+        System.out.println("entre ou il faut");
+        // Get attached entities concerned
+        Moderator attachedModerator = em.find(Moderator.class, idModerator);
+        Tenderer attachedTenderer  = em.merge(tenderer);
+        
+        
+        // Create and persist the new Notification
+        Notification newNotification = new Notification(attachedTenderer,attachedModerator,message);
+        newNotification.setCategory(NotificationType.TO_TENDERER);
+        em.persist(newNotification);
+        
+        // Add the new Notification to others entities
+        attachedTenderer.addNotification(newNotification);
+        attachedModerator.addNotification(newNotification);     
     }
     
 }

@@ -21,6 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
@@ -30,7 +31,7 @@ import javax.faces.model.SelectItem;
  * @author nicolas
  */
 @Named(value = "searchManagedBean")
-@ApplicationScoped
+@SessionScoped
 public class SearchManagedBean implements Serializable {
     
     /**
@@ -91,6 +92,7 @@ public class SearchManagedBean implements Serializable {
     @PostConstruct
     public void setup() {
         
+        type = "cont";
         orders = new LinkedHashMap<>();
         orders.put("Nom", "ALPHABETICAL"); // label, value
         orders.put("Note", "RATINGS");
@@ -239,5 +241,7 @@ public class SearchManagedBean implements Serializable {
     public void setOrders(Map<String, String> orders) {
         this.orders = orders;
     }
+    
+ 
 
 }

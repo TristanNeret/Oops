@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <script type="text/javascript">
+        function handleRequest(xhr, status, args) {
+            if (args.validationFailed) {
+
+            }
+            else {
+                PF('registerGrowl').renderMessage({summary: 'Inscription réussie !',
+                    detail: 'Bienvenue sur Oops !', severity: 'info'});
+                // GO HOME
+                setTimeout(function () { window.location.href = "/Oops-web"; }, 3000);
+            }
+        }
+    </script>
+
+    <h:head>
+        <title>Oops</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="style.css" />
+
+    </h:head>
+
+    <h:body>
+
+        <!-- HEADER -->
+        <ui:include src="/includes/header.xhtml" />
+
+        <!-- SEARCH -->
+        <ui:include src="/includes/search.xhtml" />
+
+        <!-- CONTENT -->
+        <div class="divContent">
+
+            <p:growl widgetVar="registerGrowl" sticky="false" showDetail="false" life="3000" />
+
+            <o:form id="registerTendererForm" includeViewParams="true">
+
+                <p:fieldset rendered="#{tendererRegistrationBean.step == 1}">
+
+                    <h2>Soumissionnaire, inscrivez-vous sur le plus grand annuaire de<br/> prestataires du web !</h2>
+
+                    <h:panelGrid id="grid" columns="3" cellpadding="5">
+
+                        <h:outputLabel value="Login :"  class="labelModificationForm"/>
+                        <p:inputText id="registerLogin" value="#{tendererRegistrationBean.login}">
+                            <f:validator validatorId="com.gdf.loginAlreadyExistValidator" /> 
+                        </p:inputText>
+                        <p:message id="loginMessage" for="registerLogin" />
+
+
+                        <h:outputLabel value="Mot de passe :" class="labelModificationForm"/>
+                        <p:password id="registerPassword" value="#{tendererRegistrationBean.password}" 
+                                    match="registerConfirmPassword" feedback="true">
+                        </p:password>
+                        <p:message id="passwordMessage" for="registerPassword" />
+
+
+                        <h:outputLabel value="Confirmer le mot de passe :" class="labelModificationForm"/>
+                        <p:password id="registerConfirmPassword" value="#{tendererRegistrationBean.passwordConfirm}" 
+                                    feedback="true">
+                        </p:password>
+                        <p:message id="confirmPasswordMessage" for="registerConfirmPassword" />
+
+
+                        <h:outputLabel value="Prénom :" class="labelModificationForm"/>
+                        <p:inputText id="registerFirstname" value="#{tendererRegistrationBean.firstname}">
+                        </p:inputText>
+                        <p:message id="firstnameMessage" for="registerFirstname" />
+
+
+                        <h:outputLabel value="Nom :" class="labelModificationForm"/>
+                        <p:inputText id="registerLastname" value="#{tendererRegistrationBean.lastname}">
+                        </p:inputText>
+                        <p:message id="lastnameMessage" for="registerLastname" />
+
+                        <h:outputLabel value="Adresse mail :" class="labelModificationForm"/>
+                        <p:inputText id="registerMail" value="#{tendererRegistrationBean.email}">
+                            <f:validator validatorId="com.gdf.mailFormatValidator" />
+                        </p:inputText>
+                        <p:message id="mailMessage" for="registerMail" />
+
+                        <h:outputLabel value="Téléphone :" class="labelModificationForm"/>
+                        <p:inputText id="registerPhoneNumber" value="#{tendererRegistrationBean.phone}"
+                                     placeholder="Facultatif">
+                        </p:inputText>
+                        <p:message id="phoneNumberMessage" for="registerPhoneNumber" />
+
+
+                        <h:outputLabel value="URL de l'avatar :" class="labelModificationForm"/>
+                        <p:inputText id="registerAvatar" value="#{tendererRegistrationBean.avatar}"
+                                     placeholder="Facultatif">   
+                            <f:validator validatorId="com.gdf.urlLogoValidator"/>
+                        </p:inputText>
+                        <p:message id="avatarMessage" for="registerAvatar" />
+
+
+                        <p:commandButton id="tenderRegisterButton"
+                                         value="S'inscrire"
+                                         action="#{tendererRegistrationBean.submit()}" 
+                                         oncomplete="handleRequest(xhr, status, args)"
+                                         update="registerTendererForm"/>
+                    </h:panelGrid>
+                </p:fieldset>
+
+                <p:fieldset rendered="#{tendererRegistrationBean.step == 2}">
+                    <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
+                        Redirection en cours...
+                    </div>
+                </p:fieldset>
+
+            </o:form>
+
+        </div>
+
+        <!-- FOOTER -->
+        <ui:include src="/includes/footer.xhtml"/>
+
+    </h:body> 
+
+</html>

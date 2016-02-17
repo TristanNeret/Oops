@@ -131,6 +131,7 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     font-size: 12px;
 }
 
+
 .sortBar{
     padding: 10px;
     margin-bottom: 10px;
@@ -286,7 +287,27 @@ form#reviewForm {
 
 }
 
+.divContractorLogo {
+    float: left;
+    margin-top: 20px;
+}
 
+.panelCompanyInformation {
+    float: left;
+    margin-left: 20px;
+    border-left-width: 3px !important;
+    border-left-color: darkgray !important;
+    border-left-style: ridge !important;
+}
+
+.labelTitleContractorInformation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #336c6c;
+    height: 35px;
+    font-size: 20px;
+    min-width: 200px;
+}
 
 /*****************************************************************************/
 /***************************** SERVICE MANAGER********************************/
@@ -319,6 +340,16 @@ form#reviewForm {
     color: #66cccc;
     font-weight: 100;
     font-size: 22px;
+}
+
+.divLoginTitle {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #008B8B;
+    font-weight: 100;
+    font-size: 22px;
+    margin-left: 20px;
+    font-weight: bold
 }
 
 .spanServiceCategory {
@@ -633,6 +664,7 @@ form .updateButtonContractorReview {
     background-color: #666666;
 }
 
+
 .commandButtonChoice {
     background-color: #66cccc;
     color: #336c6c;
@@ -654,9 +686,7 @@ form .updateButtonContractorReview {
     padding: 10px;
     text-align: center;
     border: none;
-    cursor: pointer;
-
-    
+    cursor: pointer   
 }
 
 form .deleteButtonContractorReview {
@@ -987,4 +1017,16 @@ form .updateButtonContractorReview {
   margin: 80px 0 0 10px;
   text-align: left;
 }
+
+.styled-select selectTypeAdmin {
+   background: transparent;
+   width: 268px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;
+   }
 
