@@ -26,7 +26,7 @@ import javax.faces.validator.ValidatorException;
 public class MailFormatValidator implements Validator {
     
     private static final String BAD_MAIL_FORMAT = "Le format de l'addresse mail est incorrect.";  
-    private static final String NULL_MAIL = "Le mail est requis";
+    private static final String NULL_MAIL = "Veuillez saisir une addresse mail";
     
     /**
      * Creates a new instance of MailFormatValidator

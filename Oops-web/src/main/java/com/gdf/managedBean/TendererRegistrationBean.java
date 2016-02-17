@@ -12,6 +12,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -45,10 +46,17 @@ public class TendererRegistrationBean {
     @Size(min = 3, message = "Le nom doit contenir au moins 3 caractères")
     private String lastname;
     
+    @NotNull(message = "Veuillez saisir une confirmation de mot de passe")
     private String passwordConfirm;  
+    
+    // there is already a validator
     private String avatar;
+    
+    @Pattern(regexp = "[0-9]{10}", message = "Le numéro de téléphone doit contenir 10 chiffres")
     private String phone;
 
+    private int step = 1;
+    
     /**
      * Creates a new instance of TendererRegisterBean
      */
@@ -73,6 +81,8 @@ public class TendererRegistrationBean {
         // Connect the Tenderer
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", id);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Tenderer.userCategory);
+        
+        this.step = 2;
     }
 
     public String getLogin() {
@@ -139,4 +149,11 @@ public class TendererRegistrationBean {
         this.phone = phone;
     }
 
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
+    }
 }

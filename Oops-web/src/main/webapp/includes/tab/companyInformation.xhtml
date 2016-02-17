@@ -216,8 +216,8 @@
                         <p:message id="insurranceMessage" for="insurranceIT" />
                     </p>
                     <p>
-                        <h:outputLabel for="logoIT" value="Logo :" class="labelModificationForm"/>
-                        <p:inputText id="logoIT" placeholder="Entrez l'URL du logo" value="#{contractorEditBean.contractor.logo}">
+                        <h:outputLabel for="logoIT" value="URL du logo :" class="labelModificationForm"/>
+                        <p:inputText id="logoIT" placeholder="Facultatif" value="#{contractorEditBean.contractor.logo}">
                             <f:ajax  event="blur" render="logoMessage"/>
                             <f:validator validatorId="com.gdf.urlLogoValidator"/>
                         </p:inputText>

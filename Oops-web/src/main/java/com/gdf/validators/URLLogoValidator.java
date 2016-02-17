@@ -23,11 +23,11 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("com.gdf.urlLogoValidator")
 public class URLLogoValidator implements Validator {
 
-    private static final String URL_FORMAT = "L'URL du logo n'est pas au bon format";
+    private static final String URL_FORMAT = "L'URL de l'image n'est pas au bon format";
     
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        if(value == null || !value.toString().matches("(http(s?):/)(/[^/]+)+\\.(?:jpg|gif|png)")) {
+        if(value != null && !value.toString().matches("(http(s?):/)(/[^/]+)+\\.(?:jpg|gif|png)")) {
             
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, URL_FORMAT, null));
             
