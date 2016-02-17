@@ -5,12 +5,97 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Tenderer informations</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+        <h:outputStylesheet library="css" name="style.css" />
+    </h:head>
+
+    <h:body>
+
+        <f:metadata>
+            <o:viewParam name ="id" value="#{tendererInformationsBean.id}" />
+            <f:viewAction action="#{tendererInformationsBean.init()}" />
+        </f:metadata>
+
+        <!-- HEADER -->
+        <ui:include src="/includes/header.xhtml" />
+
+        <!-- CONTENT -->
+        <div class="divContent">
+            <c:if test="#{tendererInformationsBean.tenderer == null}" >
+                <h2>Soumissionnaire introuvable !</h2> 
+            </c:if>
+
+            <c:if test="#{tendererInformationsBean.tenderer != null}" >
+
+                <div id="divPresentation">
+                    <div id="divImagePresentation">
+                        <h:graphicImage value="#{tendererInformationsBean.tenderer.avatar}" styleClass="imageLogo" />
+                    </div>
+                    <div id="divDetailsPresentation">
+                        <h:outputLabel value="#{tendererInformationsBean.tenderer.login}" />
+                        <div id="divInformationsPresentation">
+                            <b>Email : </b> <h:outputText value="#{tendererInformationsBean.tenderer.email}" />
+                            <b style="margin-left: 20px;">Téléphone : </b> <h:outputText value="#{tendererInformationsBean.tenderer.phone}" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="divFullName">
+                    <h2>Nom complet</h2>
+                    <h:outputText value="#{tendererInformationsBean.tenderer.firstname} #{tendererInformationsBean.tenderer.lastname}"/>
+                </div>
+
+                <div id="divRegistrationDate">
+                    <h2>Date d'inscription</h2>
+                    <h:outputText value="#{tendererInformationsBean.tenderer.registrationDate}"/>
+                </div>
+                
+                <div id="divReviews">
+                    <h2>Avis</h2>
+                    <h3>Nombre d'avis donnés : #{tendererInformationsBean.tenderer.reviews.size()}</h3>
+                </div>
+
+                 <div>
+                    <c:forEach items="#{tendererInformationsBean.tenderer.reviews}" var="review" >
+                        <div class="divReviews">
+                            <h:outputLabel style="font-size: 20px;" value="#{review.appreciation}"/><h:outputLabel style="font-size: 14px; color: #999999;" value=" pour #{review.contractor.login} le #{review.date}" />
+                            <br/>
+                            <h:outputText value="#{review.content}" />
+                            <br/>
+                            <div class="diveRateReview">
+                                <b id="starsTxt2" style="float:left;">Note : </b> 
+                                <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
+                            </div>
+                            <br/>
+                            <c:if test="#{review.contractorAnswer != null}" >
+                                <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
+                            </c:if>
+                            <c:if test="#{review.contractorAnswer == null}" >
+                                <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
+                            </c:if>
+                        </div>
+                    </c:forEach>
+                    <c:if test="#{tendererInformationsBean.tenderer.reviews.size() == 0}">
+                        <h:outputLabel value="Il n'existe aucun avis pour ce soumissionnaire." />
+                    </c:if>
+                </div>
+                
+            </c:if>
+        </div>
+
+        <!-- FOOTER -->
+        <ui:include src="/includes/footer.xhtml" />
+
+    </h:body> 
+
 </html>
