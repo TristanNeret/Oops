@@ -15,6 +15,7 @@ import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import static com.gdf.persistence.ReviewState.ACCEPTED;
 import com.gdf.persistence.Tenderer;
+import java.io.Serializable;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,7 +25,7 @@ import javax.persistence.PersistenceContext;
  * @author aziz
  */
 @Stateless
-public class AdministratorBeanImpl implements AdministratorBean {
+public class AdministratorBeanImpl implements AdministratorBean, Serializable {
 
     /**
      * Injected EntityManager giving access to the database
@@ -87,12 +88,17 @@ public class AdministratorBeanImpl implements AdministratorBean {
                 // update the number of reviews given by the tenderer and accepted by moderator
                 attachedTenderer.updateNbReviews(); 
                 newNotification.setDescription("Votre avis sur " + review.getContractor().getSocialReason() + " a été validé !");
+                newNotification.setLink("/views/contractorInformation.xhtml?id=" + review.getContractor().getId());
                 break;
             case TO_BE_MODIFIED:
                 newNotification.setDescription("Vous devez modifier avis sur " + review.getContractor().getSocialReason() + ".");
+                newNotification.setLink("/views/tendererManagement.xhtml?tabIndex=1");
                 break;
             case NOT_ACCEPTED:
                 newNotification.setDescription("Votre avis sur " + review.getContractor().getSocialReason() + " a été rejeté !");
+                newNotification.setLink("/views/tendererManagement.xhtml?tabIndex=1");
+                break;
+            default:
                 break;
         }
         em.persist(newNotification);
@@ -121,6 +127,7 @@ public class AdministratorBeanImpl implements AdministratorBean {
         // Create and persist the new Notification
         Notification newNotification = new Notification(attachedReview, attachedContractor, attachedModerator, notificationType);
         newNotification.setDescription("Votre avez reçu un nouvel avis !");
+        newNotification.setLink("/views/contractorManagement.xhtml?tabIndex=3");
         em.persist(newNotification);
         
         // Add the new Notification to others entities

@@ -11,6 +11,7 @@ import com.gdf.persistence.NotificationType;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,7 +24,7 @@ import javax.persistence.PersistenceContext;
  * @author Tristan
  */
 @Stateless
-public class TendererManagerBeanImpl implements TendererManagerBean {
+public class TendererManagerBeanImpl implements TendererManagerBean, Serializable {
     
     /**
      * Injected EntityManager giving access to the database
@@ -50,6 +51,13 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         this.sendNotification(review, attachedTenderer, attachedContractor, NotificationType.TO_MODERATOR);
     }
     
+    /**
+     * Send notification to Moderator for new Review
+     * @param review Review to manage
+     * @param tenderer Tenderer who wrote the Review
+     * @param contractor Contractor concerned by the Review
+     * @param notificationType type of the Notification
+     */
     public void sendNotification(Review review, Tenderer tenderer, Contractor contractor, NotificationType notificationType) {
 
         // Get attached entities concerned
@@ -60,6 +68,7 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         // Create and persist the new Notification
         Notification newNotification = new Notification(attachedReview, attachedTenderer, attachedContractor, notificationType);
         newNotification.setDescription("Un nouvel avis en attente de traitement !");
+        newNotification.setLink("/views/adminManager.xhtml");
         em.persist(newNotification);
 
         // Add the new Notification to others entities
@@ -76,36 +85,11 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         if (reviewToRemove != null) {
             
             reviewToRemove.setReviewEnabled(false);
-            
-            // update the number of reviews given by the tenderer and accepted by moderator
+
+            // Update the number of reviews given by the tenderer and accepted by moderator
             Tenderer tenderer = em.find(Tenderer.class, tendererId);
             tenderer.updateNbReviews(); 
             em.merge(tenderer);
-            
-            /*
-            // Remove the Review from the Contractor Review list
-            Contractor contractorToUpdate = em.find(Contractor.class, reviewToRemove.getContractor().getId());
-            contractorToUpdate.removeNotificationByReviewId(reviewToRemove.getId());
-            contractorToUpdate.removeReview(reviewToRemove);
-            
-            // Remove the Review from the Tenderer Review list
-            Tenderer tendererToUpdate = em.find(Tenderer.class, tendererId);
-            tendererToUpdate.removeNotificationByReviewId(reviewToRemove.getId());
-            tendererToUpdate.removeReview(reviewToRemove);
-            
-            // Remove Notifications from the Review to remove
-            reviewToRemove.removeNotificationByReviewId(reviewToRemove.getId());
-            
-            // Remove Notification containing the Review
-            Query queryNotification = em.createNamedQuery("Notification.deleteByReviewId");
-            queryNotification.setParameter(1, reviewToRemove.getId());
-            queryNotification.executeUpdate();
-            
-            // Remove the Review
-            Query queryReview = em.createNamedQuery("Review.deleteReviewById");
-            queryReview.setParameter(1, reviewToRemove.getId());
-            queryReview.executeUpdate();
-            */
                     
         }
         

@@ -13,7 +13,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 
 /**
- *
+ * ReviewBean
  * @author Tristan
  */
 @Named(value = "reviewBean")

@@ -11,6 +11,7 @@ import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -24,7 +25,7 @@ import javax.persistence.TypedQuery;
  * @author nicolas
  */
 @Stateless
-public class SearchBeanImpl implements SearchBean {
+public class SearchBeanImpl implements SearchBean, Serializable {
 
     /**
      * Injected EntityManager giving access to the database
@@ -266,7 +267,6 @@ public class SearchBeanImpl implements SearchBean {
     }
 
     // TENDERER
-
     
     @Override
     public Tenderer searchTendererById(Long id) {
@@ -296,6 +296,22 @@ public class SearchBeanImpl implements SearchBean {
             return (Tenderer) query.getSingleResult();
             
         }
+        
+    }
+    
+    // MODERATOR
+    
+    @Override
+    public Moderator searchModeratorById(Long id) {
+        
+        Moderator moderator =  em.find(Moderator.class, id);
+        
+        if(moderator != null) {  
+            // The lazy relationships must be traversed before exiting the scope of the JPA Session to avoid the Exception.
+            moderator.getReviews().size();
+        } 
+        
+        return moderator;
         
     }
     
@@ -365,8 +381,7 @@ public class SearchBeanImpl implements SearchBean {
     
     /**
      * For unit test
-     * */
-
+     */
     void setEm(EntityManager em) {
         this.em = em;
     }

@@ -112,22 +112,30 @@ public class ManageReviewBean implements Serializable {
         // Check if connected user is a Moderator
         String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userCategory");
 
-        if(userID != null && !userID.equals("") && userCategory.equals(Moderator.userCategory)) {
+        // TEMPORARY : DON'T FORGET TO REMOVE IT !
+        userID = "1";
+        userCategory = "MODERATOR";
+        
+        if(userID != null) {
             
-            if(this.decisionReview.get(id) != null) {
-                
-                this.ab.manageReview(id, Long.parseLong(userID), this.decisionReview.get(id), this.contentReview.get(id));
-            
-                // Update the waiting Reviews list
-                this.updateWaitingReviews();
-                FacesContext.getCurrentInstance().addMessage("growlReviewContractor", new FacesMessage("Avis traité avec succès !", ""));
-                
-            } else {
-                
-                // Moderator must take a decision
-                FacesContext.getCurrentInstance().addMessage("growlReviewContractor", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Vous devez prendre une décision !", ""));
-                
-            } 
+            if(!userID.equals("") && userCategory.equals(Moderator.userCategory)) {
+
+                if(this.decisionReview.get(id) != null) {
+
+                    this.ab.manageReview(id, Long.parseLong(userID), this.decisionReview.get(id), this.contentReview.get(id));
+
+                    // Update the waiting Reviews list
+                    this.updateWaitingReviews();
+                    FacesContext.getCurrentInstance().addMessage("growlReviewContractor", new FacesMessage("Avis traité avec succès !", ""));
+
+                } else {
+
+                    // Moderator must take a decision
+                    FacesContext.getCurrentInstance().addMessage("growlReviewContractor", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Vous devez prendre une décision !", ""));
+
+                } 
+
+            }
         
         }
         

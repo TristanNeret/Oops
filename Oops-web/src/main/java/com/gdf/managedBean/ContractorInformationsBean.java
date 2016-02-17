@@ -42,13 +42,6 @@ public class ContractorInformationsBean implements Serializable {
     private SearchBean searchBean;
     
     /**
-     * Create en instance of ContractorInformationsBean
-     */
-    public ContractorInformationsBean() {
-        
-    }
-    
-    /**
      * Initialize Contractor informations
      */
     public void init() {

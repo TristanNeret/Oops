@@ -46,32 +46,31 @@ and open the template in the editor.
 
         <!-- CONTENT -->
         <div class="divContent">
-            <table width="100%" style="margin: 0px;">
-                <c:forEach items="#{searchManagedBean.lc}" var="contractor" rendered="#{not empty searchManagedBean.lc}">
-                    <tr>
-                       <td>
-                        <fieldset id="listContractor" style="margin-top: 10px;"> 
-                            <h:graphicImage value="#{contractor.logo}" height="75px" style="float: left;"/>
-                            <h:outputText style="font-size: x-large; padding-right: 25px; padding-left: 20px;" 
-                                          value="#{contractor.socialReason}"/> 
-                            <h:outputText value="#{contractor.address.town} (#{contractor.address.zipCode})" /> 
-
-                            <div style="float: right;">
-                                <div>
+            <c:forEach items="#{searchManagedBean.lc}" var="contractor" rendered="#{not empty searchManagedBean.lc}">
+                <div class="divContentPadding">
+                    <fieldset id="listContractor" style="margin-top: 10px;"> 
+                        <h:graphicImage value="#{contractor.logo}" height="75px" style="float: left;"/>
+                        <h:outputText style="font-size: x-large; padding-right: 25px; padding-left: 20px;" 
+                                      value="#{contractor.socialReason}"/> 
+                        <h:outputText value="#{contractor.address.town} (#{contractor.address.zipCode})" /> 
+                        <div style="float: right;">
+                            <div style="float: right; margin-right: 10px;">
+                                <div style="float: left;">
                                     <h:outputText value="Note moyenne : " /> 
+                                </div>
+                                <div style="float: right; margin-left: 10px; margin-top: 2px;">
                                     <p:rating id="stars1" value="#{contractor.rating}" stars="5" readonly="true"/>
                                 </div>
-                                <div>
-                                    <h:button class="headerCommandButton" value="Voir #{contractor.socialReason}" 
-                                              outcome="/views/contractorInformation?id=#{contractor.id}" />
-                                </div>
                             </div>
-                        </fieldset> 
-                        <h:outputText style="padding-left: 10px; margin-bottom: 20px;" value="#{contractor.description}" /> 
-                       </td>
-                    </tr>
-                </c:forEach>
-            </table>
+                            <div>
+                                <h:button class="headerCommandButton" value="Voir #{contractor.socialReason}" 
+                                          outcome="/views/contractorInformation?id=#{contractor.id}" />
+                            </div>
+                        </div>
+                    </fieldset> 
+                    <h:outputText style="padding-left: 10px; margin-bottom: 20px;" value="#{contractor.description}" /> 
+                </div>
+            </c:forEach>
         </div>
 
     </h:body>

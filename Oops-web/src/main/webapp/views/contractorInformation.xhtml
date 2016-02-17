@@ -30,7 +30,7 @@ and open the template in the editor.
     </h:head>
 
     <h:body>
-        
+
         <f:metadata>
             <o:viewParam name ="id" value="#{contractorInformationsBean.id}" />
             <f:viewAction action="#{contractorInformationsBean.init()}" />
@@ -41,111 +41,116 @@ and open the template in the editor.
 
         <!-- CONTENT -->
         <div class="divContent">
-            <c:if test="#{contractorInformationsBean.contractor == null}" >
-                <h2>Prestataire introuvable !</h2> 
-            </c:if>
+            <div class="divContentPadding">
 
-            <c:if test="#{contractorInformationsBean.contractor != null}" >
+                <c:if test="#{contractorInformationsBean.contractor == null}" >
+                    <h2>Prestataire introuvable !</h2> 
+                </c:if>
 
-                <div id="divPresentation">
-                    <div id="divImagePresentation">
-                        <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" styleClass="imageLogo" />
-                    </div>
-                    <div id="divDetailsPresentation">
-                        <h:outputLabel value="#{contractorInformationsBean.contractor.socialReason}" />
-                        <div id="divInformationsPresentation">
-                            <b>Email : </b> <h:outputText value="#{contractorInformationsBean.contractor.email}" />
-                            <b style="margin-left: 20px;">Téléphone : </b> <h:outputText value="#{contractorInformationsBean.contractor.phone}" />
+                <c:if test="#{contractorInformationsBean.contractor != null}" >
+
+                    <div id="divPresentation">
+                        <div id="divImagePresentation">
+                            <h:graphicImage value="#{contractorInformationsBean.contractor.logo}" styleClass="imageLogo" />
                         </div>
-                    </div>
-                </div>
-                <div id="divSubPresentation">
-                    <div style="float: right;">
-                        <b>Localisation : </b> <h:outputText value="#{contractorInformationsBean.contractor.address.town}" /> <h:outputText value="(#{contractorInformationsBean.contractor.address.country})" /> 
-                        <b style="margin-left: 20px;">Note moyenne : </b> <p:rating id="stars1" value="#{contractorInformationsBean.contractor.rating}" stars="5" readonly="true" />
-                    </div>
-                </div>
-                
-                <div id="divDescription">
-                    <h2>Description</h2>
-                    <h:outputText value="#{contractorInformationsBean.contractor.description}"/>
-                </div>
-
-                <div id="divPrestations">
-                    <h2>Prestations</h2>
-                    <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
-                        <div class="divDetailsPrestations">
-                            <fieldset>
-                                <h:outputText value="#{service.title}"/> (<h:outputText value="#{service.category.name}"/>)
-                            </fieldset>
-                            <h:outputText value="#{service.description}"/> <br/>
-                            <b>Tarif horraire : <h:outputText style="color: #1E90FF;" value="#{service.price} €" /></b>
-                        </div>
-                    </c:forEach> 
-                </div>
-
-                <div id="rating">   
-                    <!-- DIALOG BOX FOR RATING -->
-                    <o:form id="reviewForm" includeViewParams="true">
-                        <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputLabel styleClass="ratingH2" value="Avis"></h:outputLabel>
-                            <p:commandButton id="reviewBtn" value="Donner votre avis" onclick="if (#{reviewBean.isTendererConnected()}) {
-                                    PF('reviewDialog').show();
-                                } else {
-                                    PF('growlError').renderMessage({summary: 'Vous devez vous connecter !', detail: 'Coonectez-vous en tant que soumissionnaire pour évaluer un prestataire.', severity: 0});
-                                }" type="button">
-                                <!-- Reset fields on opening -->
-                                <p:ajax update="reviewAppreciation" resetValues="true" />
-                                <p:ajax update="reviewContent" resetValues="true" />
-                                <p:ajax update="reviewRate" resetValues="true" />
-                            </p:commandButton>
-                        </h:panelGrid>
-                        <p:growl id="growl" sticky="false" showDetail="false" life="3000" />
-                        <p:dialog header="Donner votre avis :" modal="true" widgetVar="reviewDialog" resizable="false">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputLabel value="Titre :" />
-                                <p:inputText id="reviewAppreciation" value="#{reviewBean.reviewAppreciation}" required="true" label="Titre" />
-
-                                <h:outputLabel value="Description :" />
-                                <p:inputTextarea id="reviewContent" rows="6" cols="33" value="#{reviewBean.reviewContent}" required="true" label="Description" />
-
-                                <h:outputLabel value="Note moyenne :" />
-                                <p:rating id="reviewRate" value="#{reviewBean.reviewRating}" required="true" />
-
-                                <f:facet name="footer">
-                                    <p:commandButton value="Soumettre l'avis" update="growl"  actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
-                                                     oncomplete="handleReviewRequest(xhr, status, args)" />
-                                </f:facet>  
-                            </h:panelGrid>
-                        </p:dialog>
-                    </o:form>
-                </div>
-                <div>
-                    <c:forEach items="#{contractorInformationsBean.reviews}" var="review" >
-                        <div class="divReviews">
-                            <h:outputLabel style="font-size: 20px;" value="#{review.appreciation}"/><h:outputLabel style="font-size: 14px; color: #999999;" value=" par #{review.tenderer.login} le #{review.date}" />
-                            <br/>
-                            <h:outputText value="#{review.content}" />
-                            <br/>
-                            <div class="diveRateReview">
-                                <b id="starsTxt2" style="float:left;">Note : </b> 
-                                <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
+                        <div id="divDetailsPresentation">
+                            <h:outputLabel value="#{contractorInformationsBean.contractor.socialReason}" />
+                            <div id="divInformationsPresentation">
+                                <b>Email : </b> <h:outputText value="#{contractorInformationsBean.contractor.email}" />
+                                <b style="margin-left: 20px;">Téléphone : </b> <h:outputText value="#{contractorInformationsBean.contractor.phone}" />
                             </div>
-                            <br/>
-                            <c:if test="#{review.contractorAnswer != null}" >
-                                <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
-                            </c:if>
-                            <c:if test="#{review.contractorAnswer == null}" >
-                                <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
-                            </c:if>
                         </div>
-                    </c:forEach>
-                    <c:if test="#{contractorInformationsBean.reviews.size() == 0}">
-                        <h:outputLabel value="Il n'existe aucun avis pour ce prestataire." />
-                    </c:if>
-                </div>
-            </c:if>
+                    </div>
+                    <div id="divSubPresentation">
+                        <div style="float: right;">
+                            <b>Localisation : </b> <h:outputText value="#{contractorInformationsBean.contractor.address.town}" /> <h:outputText value="(#{contractorInformationsBean.contractor.address.country})" /> 
+                            <b style="margin-left: 20px;">Note moyenne : </b> <p:rating id="stars1" value="#{contractorInformationsBean.contractor.rating}" stars="5" readonly="true" />
+                        </div>
+                    </div>
+
+                    <div id="divDescription">
+                        <h2>Description</h2>
+                        <h:outputText value="#{contractorInformationsBean.contractor.description}"/>
+                    </div>
+
+                    <div id="divPrestations">
+                        <h2>Prestations</h2>
+                        <c:forEach items="#{contractorInformationsBean.contractor.services}" var="service" >
+                            <div class="divDetailsPrestations">
+                                <fieldset>
+                                    <h:outputText value="#{service.title}"/> (<h:outputText value="#{service.category.name}"/>)
+                                </fieldset>
+                                <h:outputText value="#{service.description}"/> <br/>
+                                <b>Tarif horraire : <h:outputText style="color: #1E90FF;" value="#{service.price} €" /></b>
+                            </div>
+                        </c:forEach> 
+                    </div>
+
+                    <div id="rating">   
+                        <!-- DIALOG BOX FOR RATING -->
+                        <o:form id="reviewForm" includeViewParams="true">
+                            <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel styleClass="ratingH2" value="Avis"></h:outputLabel>
+                                <p:commandButton id="reviewBtn" value="Donner votre avis" onclick="if (#{reviewBean.isTendererConnected()}) {
+                    PF('reviewDialog').show();
+                                } else {
+                PF('growlError').renderMessage({summary: 'Vous devez vous connecter !', detail: 'Coonectez-vous en tant que soumissionnaire pour évaluer un presta
+                taire.', severity: 0});
+                                }" type="button">
+                                    <!-- Reset fields on opening -->
+                                    <p:ajax update="reviewAppreciation" resetValues="true" />
+                                    <p:ajax update="reviewContent" resetValues="true" />
+                                    <p:ajax update="reviewRate" resetValues="true" />
+                                </p:commandButton>
+                            </h:panelGrid>
+                            <p:growl id="growl" sticky="false" showDetail="false" life="3000" />
+                            <p:dialog header="Donner votre avis :" modal="true" widgetVar="reviewDialog" resizable="false">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputLabel value="Titre :" />
+                                    <p:inputText id="reviewAppreciation" value="#{reviewBean.reviewAppreciation}" required="true" label="Titre" />
+
+                                    <h:outputLabel value="Description :" />
+                                    <p:inputTextarea id="reviewContent" rows="6" cols="33" value="#{reviewBean.reviewContent}" required="true" label="Description" />
+
+                                    <h:outputLabel value="Note moyenne :" />
+                                    <p:rating id="reviewRate" value="#{reviewBean.reviewRating}" required="true" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton value="Soumettre l'avis" update="growl"  actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
+                                                         oncomplete="handleReviewRequest(xhr, status, args)" />
+                                    </f:facet>  
+                                </h:panelGrid>
+                            </p:dialog>
+                        </o:form>
+                    </div>
+                    <div id="divReviewsContractorInformations">
+                        <c:forEach items="#{contractorInformationsBean.reviews}" var="review" >
+                            <div class="divReviews">
+                                <h:outputLabel style="font-size: 20px;" value="#{review.appreciation}"/><h:outputLabel style="font-size: 14px; color: #999999;" value=" par #{review.tenderer.login} le #{review.date}" />
+                                <br/>
+                                <h:outputText value="#{review.content}" />
+                                <br/>
+                                <div class="diveRateReview">
+                                    <b id="starsTxt2" style="float:left;">Note : </b> 
+                                    <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
+                                </div>
+                                <br/>
+                                <c:if test="#{review.contractorAnswer != null}" >
+                                    <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
+                                </c:if>
+                                <c:if test="#{review.contractorAnswer == null}" >
+                                    <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
+                                </c:if>
+                            </div>
+                        </c:forEach>
+                        <c:if test="#{contractorInformationsBean.reviews.size() == 0}">
+                            <h:outputLabel value="Il n'existe aucun avis pour ce prestataire." />
+                        </c:if>
+                    </div>
+                </c:if>
+
+            </div>
         </div>
 
         <!-- FOOTER -->
