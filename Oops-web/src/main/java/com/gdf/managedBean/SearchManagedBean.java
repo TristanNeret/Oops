@@ -6,14 +6,11 @@
 package com.gdf.managedBean;
 
 
-import com.gdf.ejb.EvaluationBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
-import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +18,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 

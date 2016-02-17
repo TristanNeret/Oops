@@ -13,6 +13,7 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
     @NamedQuery(name = "Tenderer.findAll", query = "SELECT t FROM Tenderer t ORDER BY t.login ASC"),
     @NamedQuery(name = "Tenderer.findByLogin", query = "SELECT t FROM Tenderer t WHERE t.login=?1"),
     @NamedQuery(name = "Tenderer.findByEmail", query = "SELECT t FROM Tenderer t WHERE t.email=?1"),
-    @NamedQuery(name= "Tenderer.beginBy", query = "SELECT t.login from Tenderer t WHERE t.login LIKE ?1")    
+    @NamedQuery(name = "Tenderer.beginBy", query = "SELECT t.login FROM Tenderer t WHERE t.login LIKE ?1")
 })
 public class Tenderer implements Serializable {
     
@@ -46,11 +47,11 @@ public class Tenderer implements Serializable {
     private String email, password, firstname, lastname, avatar, phone;
     private String registrationDate, updateDate;
   
-    @OneToMany(mappedBy = "tenderer", cascade = {CascadeType.ALL})
-    private List<Review> reviews = new ArrayList<Review>();
+    @OneToMany(mappedBy = "tenderer", fetch = EAGER, cascade = {CascadeType.ALL})
+    private List<Review> reviews = new ArrayList<>();
     
-    @OneToMany
-    private List<Notification> notifications = new ArrayList<Notification>();
+    @OneToMany(fetch = EAGER)
+    private List<Notification> notifications = new ArrayList<>();
     
     public static final String userCategory = "TENDERER";
     
@@ -228,10 +229,7 @@ public class Tenderer implements Serializable {
             return false;
         }
         final Tenderer other = (Tenderer) obj;
-        if (!Objects.equals(this.login, other.login)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.login, other.login);
     }
     
 }

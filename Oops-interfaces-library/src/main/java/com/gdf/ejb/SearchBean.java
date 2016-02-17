@@ -9,6 +9,7 @@ import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
+import com.gdf.persistence.Moderator;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -77,6 +78,15 @@ public interface SearchBean {
      */
     public Tenderer searchTendererByLogin(String login);
 
+    // MODERATOR
+    
+    /**
+     * Search a Moderator by his id
+     * @param id id of the Moderator
+     * @return the Moderator identified by the id if any or null if he doesn't exist
+     */
+    public Moderator searchModeratorById(Long id);
+    
     // REVIEW
     
     /**

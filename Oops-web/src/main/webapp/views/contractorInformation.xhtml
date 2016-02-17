@@ -121,7 +121,7 @@ and open the template in the editor.
                         </p:dialog>
                     </o:form>
                 </div>
-                <div>
+                <div id="divReviewsContractorInformations">
                     <c:forEach items="#{contractorInformationsBean.reviews}" var="review" >
                         <div class="divReviews">
                             <h:outputLabel style="font-size: 20px;" value="#{review.appreciation}"/><h:outputLabel style="font-size: 14px; color: #999999;" value=" par #{review.tenderer.login} le #{review.date}" />

@@ -48,6 +48,13 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
 
     }
     
+    /**
+     * Send notification to Moderator for new Review
+     * @param review Review to manage
+     * @param tenderer Tenderer who wrote the Review
+     * @param contractor Contractor concerned by the Review
+     * @param notificationType type of the Notification
+     */
     public void sendNotification(Review review, Tenderer tenderer, Contractor contractor, NotificationType notificationType) {
 
         // Get attached entities concerned
@@ -58,6 +65,7 @@ public class TendererManagerBeanImpl implements TendererManagerBean {
         // Create and persist the new Notification
         Notification newNotification = new Notification(attachedReview, attachedTenderer, attachedContractor, notificationType);
         newNotification.setDescription("Un nouvel avis en attente de traitement !");
+        newNotification.setLink("/views/adminManager.xhtml");
         em.persist(newNotification);
 
         // Add the new Notification to others entities

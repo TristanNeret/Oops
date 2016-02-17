@@ -80,7 +80,7 @@ and open the template in the editor.
                     </div>
                     <div class="rightPanelAdmin">
                         <div class="buttonsRightPanelAdmin">
-                            <h:form>
+                            <h:form class="formManageReview">
                                 <div class="divButtonsRightPanelAdmin">
                                     <div class="divButtonsLeftRightPanelAdmin">
                                         <h:commandButton id="buttonModify" style="height: 65px; width: 100%;"  value="Modifier" styleClass="commandButtonChoice" onclick="choiceSelected(this);" action="#{manageReviewBean.modifyReview(review.id)}" >
@@ -97,7 +97,7 @@ and open the template in the editor.
                             </h:form>
                         </div>
                         <div class="inputLeftPanelAdmin" >
-                            <h:form>
+                            <h:form class="formSendManageReview">
                                 <p:growl id="growlReviewAdmin" sticky="false" showDetail="false" life="3000" /> 
                                 <p:inputTextarea id="reviewContent" styleClass="inputReviewAdmin" rows="6" cols="20" value="#{manageReviewBean.contentReview[review.id]}" required="false" label="Facultatif" />
                                 <h:commandButton value="Envoyer" styleClass="commandButtonSaveAdmin" action="#{manageReviewBean.manageReview(review.id)}" />

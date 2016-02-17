@@ -14,7 +14,6 @@ import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -79,6 +78,7 @@ public class EvaluationBeanImpl implements EvaluationBean {
         // Create and persist the new Notification
         Notification newNotification = new Notification(attachedReview, attachedTenderer, attachedContractor, notificationType);
         newNotification.setDescription("Un nouvel avis en attente de traitement !");
+        newNotification.setLink("/views/adminManager.xhtml");
         em.persist(newNotification);
 
         // Add the new Notification to others entities
@@ -103,11 +103,13 @@ public class EvaluationBeanImpl implements EvaluationBean {
             // Create and persist the new Notification
             Notification newNotification = new Notification(review, review.getTenderer(), review.getContractor(), TO_TENDERER);
             newNotification.setDescription(attachedContractor.getRepresentatorFirstname() + " de " + attachedContractor.getSocialReason() + " a répondu à votre avis !");
+            newNotification.setLink("/views/contractorInformation.xhtml?id=" + review.getContractor().getId());
             em.persist(newNotification);
 
             // Add the new Notification to others entities
             attachedTenderer.addNotification(newNotification);
             attachedReview.addNotification(newNotification);
+            attachedContractor.addNotification(newNotification);
             em.merge(attachedReview);
             
             em.merge(review);
@@ -124,14 +126,6 @@ public class EvaluationBeanImpl implements EvaluationBean {
         em.merge(review);
     }   
 
-
-    /**
-     * Send a request for review given by a contractor to a tenderer
-     * @param contractorID  the id of the contractor who asked the tenderer to give the review
-     * @param tendererID  the id of the tenderer who have been asked to give the review
-     * @param message a message given by the contractor to the tenderer
-     */
-    
     @Override
     public void askForReview(Long contractorID, Long tendererID, String message) {
         Notification n = new Notification();
@@ -150,13 +144,6 @@ public class EvaluationBeanImpl implements EvaluationBean {
         em.persist(n);
     }
     
-    /**
-     * Get the last notification exchanged between a contractor and a tenderer
-     * @param contractorID the id of the contractor
-     * @param tendererID the id of the tenderer
-     * @return the last notification exchanged between a contractor and a tenderer
-     */
-
     @Override
     public Notification getLastNotificationSent(Long contractorID, Long tendererID){
         Query q = em.createNamedQuery("Notification.findByContractorAndTenderer", Notification.class);

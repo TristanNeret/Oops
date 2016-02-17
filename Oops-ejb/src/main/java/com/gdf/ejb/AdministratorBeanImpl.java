@@ -85,12 +85,15 @@ public class AdministratorBeanImpl implements AdministratorBean {
         switch(review.getReviewState()) {
             case ACCEPTED:
                 newNotification.setDescription("Votre avis sur " + review.getContractor().getSocialReason() + " a été validé !");
+                newNotification.setLink("/views/contractorInformation.xhtml?id=" + review.getContractor().getId());
                 break;
             case TO_BE_MODIFIED:
                 newNotification.setDescription("Vous devez modifier avis sur " + review.getContractor().getSocialReason() + ".");
+                newNotification.setLink("/views/tendererManagement.xhtml?tabIndex=1");
                 break;
             case NOT_ACCEPTED:
                 newNotification.setDescription("Votre avis sur " + review.getContractor().getSocialReason() + " a été rejeté !");
+                newNotification.setLink("/views/tendererManagement.xhtml?tabIndex=1");
                 break;
         }
         em.persist(newNotification);
@@ -119,6 +122,7 @@ public class AdministratorBeanImpl implements AdministratorBean {
         // Create and persist the new Notification
         Notification newNotification = new Notification(attachedReview, attachedContractor, attachedModerator, notificationType);
         newNotification.setDescription("Votre avez reçu un nouvel avis !");
+        newNotification.setLink("/views/contractorManagement.xhtml?tabIndex=3");
         em.persist(newNotification);
         
         // Add the new Notification to others entities

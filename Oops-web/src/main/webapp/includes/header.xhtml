@@ -24,7 +24,6 @@ and open the template in the editor.
                 PF('registerGrowlError').renderMessage({summary: 'Inscription réussie !', detail: 'Bienvenue sur Oops !', severity: 'info'});
             }
         }
-
         function handleContractorRegisterRequest(xhr, status, args) {
             if (args.validationFailed) {
                 PF('contractorRegisterDialog').jq.effect("shake", {times: 5}, 100);
@@ -37,17 +36,44 @@ and open the template in the editor.
     </script>
 
     <div id="divHeader">
-        
-            <p:growl widgetVar="registerGrowlError" sticky="false" showDetail="true" life="3000" />
-            <p:growl widgetVar="contractorRegisterGrowlError" sticky="false" showDetail="true" life="3000" />
-            
-            <p:panelGrid styleClass="panelHeader" columns="3">
-                <h:link styleClass="headerTitle" value="Oops" outcome="/index.xhtml"/>
-                <h:link styleClass="headerSubtitle" value="Opinion on providers of services" outcome="/index.xhtml"/>
 
-                <p:panelGrid styleClass="panelHeaderButton" columns="3">
-                    <h:button class="headerCommandButton" value="Connexion" />
-                    <o:form id="registerForm" includeViewParams="true">
+        <p:growl widgetVar="registerGrowlError" sticky="false" showDetail="true" life="3000" />
+        <p:growl widgetVar="contractorRegisterGrowlError" sticky="false" showDetail="true" life="3000" />
+
+        <p:panelGrid styleClass="panelHeader" columns="3">
+
+            <h:link styleClass="headerTitle" value="Oops" outcome="/index.xhtml"/>
+            <h:link styleClass="headerSubtitle" value="Opinion on providers of services" outcome="/index.xhtml"/>
+
+            <p:panelGrid styleClass="panelHeaderButton" columns="6">
+
+                <!-- NOTIFICATION -->
+                <h:form class="formNotificationHeader">
+                    <p:commandLink id="commandButtonNotifications" >
+                        <h:graphicImage library="default" height="40px" onmouseover="this.src = '#{manageNotificationBean.getNotificationImageURL(0)}';" onmouseout="this.src = '#{manageNotificationBean.getNotificationImageURL(1)}'" name="#{manageNotificationBean.notificationImageName}" />
+                    </p:commandLink>
+                    <p:overlayPanel id="notificationPanel" styleClass="overlayPanelNotification" appendToBody="true" for="commandButtonNotifications" dynamic="false">
+                        <div id="divTitleNotification">
+                            Notifications
+                        </div>
+                        <div id="divNotificationList">
+                            <h:outputLabel styleClass="titlePanelReviewAdmin" value="Pas de nouvelles notifiactions." rendered="#{!manageNotificationBean.unreadNotifications}" /> 
+                            <div class="divNotification">
+                                <c:forEach items="#{manageNotificationBean.notificationsList}" var="notification" rendered="#{manageNotificationBean.unreadNotifications}" >
+                                    <p:commandButton class="commandButtonClickNotification" styleClass="commandButtonClickNotification" value="#{notification.description}&#10;#{notification.date}" update="@form" action="#{manageNotificationBean.clickOnNotification(notification)}">
+                                    </p:commandButton>
+                                </c:forEach>
+                            </div>
+                            <div class="divNotification">
+                                <p:commandButton id="commandButtonClearNotifications" styleClass="commandButtonClearNotification" value="Tout marquer comme lu" action="#{manageNotificationBean.markAsRead()}" update="@form" rendered="#{manageNotificationBean.unreadNotifications}">
+                                </p:commandButton>
+                            </div>
+                        </div>
+                    </p:overlayPanel>
+                </h:form>
+
+                <h:button class="headerCommandButton" value="Connexion" />
+                <o:form id="registerForm" includeViewParams="true">
                     <p:commandButton class="headerCommandButton" value="Inscription" onclick="PF('registerDialog').show();"  type="button">
                         <!-- Reset fields on opening -->
                         <p:ajax update="registerLogin" resetValues="true" />
@@ -100,12 +126,12 @@ and open the template in the editor.
                         </h:panelGrid>
                         <div class="dialogFooter" >
                             <p:commandButton value="S'inscrire" update="registerGrowl"  actionListener="#{tendererRegisterBean.submit}" 
-                                                 oncomplete="handleRegisterRequest(xhr, status, args)" />
+                                             oncomplete="handleRegisterRequest(xhr, status, args)" />
                         </div>
                     </p:dialog>
-                    </o:form>
-                    
-                    <o:form id="registerContractorForm" includeViewParams="true">
+                </o:form>
+
+                <o:form id="registerContractorForm" includeViewParams="true">
                     <p:commandButton class="headerCommandButton" value="Prestatire ? Inscrivez-vous ici !" onclick="PF('contractorRegisterDialog').show();"  type="button">
                         <!-- Reset fields on opening -->
                         <p:ajax update="contractorRegisterLogin" resetValues="true" />
@@ -186,15 +212,15 @@ and open the template in the editor.
                         </h:panelGrid>
                         <div class="dialogFooter" >
                             <p:commandButton value="S'inscrire" update="contractorRegisterGrowl"  actionListener="#{contractorRegistrationBean.submit}" 
-                                                 oncomplete="handleContractorRegisterRequest(xhr, status, args)" />
+                                             oncomplete="handleContractorRegisterRequest(xhr, status, args)" />
                         </div>
                     </p:dialog>
-                    </o:form>
-                    
-                </p:panelGrid>
+                </o:form>
+
             </p:panelGrid>
-            
-            
+        </p:panelGrid>
+
+
     </div>
 
 </ui:composition>

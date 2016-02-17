@@ -12,6 +12,7 @@ import java.util.ListIterator;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,10 +37,10 @@ public class Moderator implements Serializable {
     private String login;
     private String password;
     
-    @OneToMany(mappedBy = "moderator")
+    @OneToMany(mappedBy = "moderator", fetch = EAGER)
     private List<ModeratorReview> reviews = new ArrayList<>();
     
-    @OneToMany
+    @OneToMany(fetch = EAGER)
     private List<Notification> notifications = new ArrayList<>();
     
     public static final String userCategory = "MODERATOR";

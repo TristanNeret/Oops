@@ -11,7 +11,7 @@ import java.util.Calendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,18 +41,21 @@ public class Notification implements Serializable {
     private Date date;
     @Column(name = "NOTIFICATION_STATE")
     private NotificationState state;
+    
     private NotificationType category;
     
-    @ManyToOne(cascade = {CascadeType.ALL})
+    private String link;
+    
+    @ManyToOne(fetch = EAGER, cascade = {CascadeType.MERGE})
     private Contractor contractor;
     
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = EAGER, cascade = {CascadeType.MERGE})
     private Tenderer tenderer;
     
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = EAGER, cascade = {CascadeType.MERGE})
     private Moderator moderator;
     
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(fetch = EAGER, cascade = {CascadeType.MERGE})
     private Review review;
 
     /**
@@ -185,6 +188,14 @@ public class Notification implements Serializable {
 
     public void setModerator(Moderator moderator) {
         this.moderator = moderator;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
     
 }
