@@ -12,6 +12,7 @@ import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
 import com.gdf.persistence.Service;
+import com.gdf.singleton.PopulateDB;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +43,11 @@ public class ContractorRegistrationBean implements Serializable {
     private RegistrationBean rb;
     @EJB
     private SearchBean sb;
+    @EJB
+    private PopulateDB pdb;
 
     private Contractor contractor;
+    private boolean code;
     
     private int step = 1;
 
@@ -127,6 +131,12 @@ public class ContractorRegistrationBean implements Serializable {
     private double priceService = 0.0;
     private List<Category> categories;
     private Service editService;
+    
+    /**
+     * All countries available for the registration
+     */
+    private  List<SelectItem> allCountry;
+    private  List<SelectItem> allTown;
 
     @PostConstruct
     public void init() {
@@ -136,6 +146,8 @@ public class ContractorRegistrationBean implements Serializable {
 
         SelectItemGroup g2 = new SelectItemGroup("Entreprise non-individuelle");
         g2.setSelectItems(teamCompanies);
+        
+        code = false;
 
         legalForms = new ArrayList<>();
         legalForms.add(g1);
@@ -309,6 +321,14 @@ public class ContractorRegistrationBean implements Serializable {
         return false;
     }
 
+    public boolean isCode() {
+        return code;
+    }
+
+    public void setCode(boolean code) {
+        this.code = code;
+    }
+    
     public String getRcs() {
         return rcs;
     }
@@ -362,6 +382,8 @@ public class ContractorRegistrationBean implements Serializable {
     }
 
     public void setZipCode(int zipCode) {
+        System.out.println("entre");
+        this.code = true;
         this.zipCode = zipCode;
     }
 
@@ -381,14 +403,41 @@ public class ContractorRegistrationBean implements Serializable {
         this.town = town;
     }
 
-    public String getCountry() {
-        return country;
+    public List<SelectItem> getAllCountry() {
+        List<String> lcountries = pdb.getAllCountries();
+        
+        List<SelectItem> li = new ArrayList<>();
+        
+        for(String country : lcountries)
+                li.add(new SelectItem(country)); 
+        
+        return li;
+    }
+    
+    
+     public List<SelectItem> getAllTown() {
+        List<String> ltowns = pdb.getAllTown(Integer.toString(this.zipCode));
+        
+        List<SelectItem> li = new ArrayList<>();
+        
+        for(String town : ltowns)
+                li.add(new SelectItem(town)); 
+        
+        return li;
     }
 
+    public void setAllCountry(List<SelectItem> allCountry) {
+        this.allCountry = allCountry;
+    }
+    
     public void setCountry(String country) {
         this.country = country;
     }
 
+    public String getCountry() {
+        return country;
+    }
+    
     public int getStep() {
         return step;
     }

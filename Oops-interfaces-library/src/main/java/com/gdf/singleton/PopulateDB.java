@@ -14,5 +14,7 @@ import java.util.List;
 public interface PopulateDB {
     
     public List<String> getAllCountries();
+
+    public List<String> getAllTown(String country);
     
 }

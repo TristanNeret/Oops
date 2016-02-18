@@ -19,6 +19,10 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -28,6 +32,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.core.UriBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -44,6 +49,8 @@ public class PopulateDBBean implements PopulateDB {
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;  
     
+    private final static String[] ignoredCountry = {"","Samoa américaines","Géorgie du Sud-et-les Îles Sandwich du Sud", "Åland","Samoa américaines","Territoire britannique de l'océan Indien","Îles mineures éloignées des États-Unis", "Terres australes et antarctiques françaises","Géorgie du Sud-et-les Îles Sandwich du Sud"};
+    
     /**
      * Populate the database for the selenium tests
      */
@@ -53,9 +60,7 @@ public class PopulateDBBean implements PopulateDB {
         this.allCountries = new ArrayList();
     }
     
-    
-    
-    
+     
     @PostConstruct
     private void populateDatabase(){
         
@@ -174,11 +179,11 @@ public class PopulateDBBean implements PopulateDB {
                 JSONArray jsonArray = (JSONArray) obj;
             
                 for (Object jo : jsonArray){
-                          JSONObject infoCoutryJSON =  (JSONObject)jo;
-                          JSONObject  allTranslationNameCountry = (JSONObject) infoCoutryJSON.get("translations");
-                          String nameCountryFrench = (String) allTranslationNameCountry.get("fr");
-                          System.out.println("" + nameCountryFrench); 
-                          allCountries.add(nameCountryFrench);
+                    JSONObject infoCoutryJSON =  (JSONObject)jo;
+                    JSONObject  allTranslationNameCountry = (JSONObject) infoCoutryJSON.get("translations");
+                    String nameCountryFrench = (String) allTranslationNameCountry.get("fr");
+                    if( nameCountryFrench == null || !this.belongToIgnoredCountry(nameCountryFrench))
+                        allCountries.add(nameCountryFrench);
                 }
             
             }catch (ParseException ex) {
@@ -188,10 +193,57 @@ public class PopulateDBBean implements PopulateDB {
             Logger.getLogger(PopulateDBBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private boolean belongToIgnoredCountry(String name){
+        
+        for(String country : ignoredCountry){
+            if(country.equals(name)){
+                return true;
+            }
+        }                   
+        return false;
+    }
 
     @Override
     public List<String> getAllCountries() {
         return this.allCountries;
+    }
+
+    @Override
+    public List<String> getAllTown(String code) {
+        
+        System.out.println("code = " + code);
+        ClientConfig config = new DefaultClientConfig();
+        Client client = Client.create(config);
+        WebResource service = client.resource(
+        UriBuilder.fromUri("http://api.zippopotam.us/fr/").build());
+        String response = service.path(code).get(String.class);
+
+        
+             List<String> lt = new ArrayList();
+            JSONParser parser=new JSONParser();
+            Object obj;
+            
+            try {
+                
+               
+                obj = parser.parse(response);
+                JSONObject jsonObject = (JSONObject) obj;
+                JSONArray list =  (JSONArray) jsonObject.get("places");
+                
+                for (Object jo : list){
+                    JSONObject placesObject =  (JSONObject)jo;
+                    String nameTown = (String) placesObject.get("place name");
+                    lt.add(nameTown);
+                }  
+                  
+               
+            
+            }catch (ParseException ex) {
+                Logger.getLogger(PopulateDBBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        return lt;
     }
     
 }
