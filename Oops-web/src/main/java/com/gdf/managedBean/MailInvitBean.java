@@ -18,7 +18,7 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
 /**
- *
+ * MailInvitBean
  * @author chris
  */
 @Named
@@ -46,13 +46,13 @@ public class MailInvitBean implements Serializable {
     @PostConstruct
     private void init() {
         // Temporary used to connect an user and kwow what user it is
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", "1");
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", new Long("1"));
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Tenderer.userCategory);
-        String stringId = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
+        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
 
         // WTF ? la fonction search ne trouve pas le prestataire alors que le soumissionnaire oui
-        currentContractor = search.searchContractorById(new Long(stringId));
-        currentTenderer = search.searchTendererById(new Long(stringId));
+        currentContractor = search.searchContractorById(userID);
+        currentTenderer = search.searchTendererById(userID);
         this.fillMessage();
     }
     

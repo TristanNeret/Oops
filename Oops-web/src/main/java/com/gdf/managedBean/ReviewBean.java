@@ -30,7 +30,7 @@ public class ReviewBean {
     public ReviewBean() {
         
         // Temporary used to connect a Tenderer
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", "1");
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", new Long("1"));
         FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userCategory", Tenderer.userCategory);
         
     }
@@ -45,8 +45,8 @@ public class ReviewBean {
         if (this.isTendererConnected()) {
 
             // Add the new Review
-            String userID = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
-            eb.addReview(new Long(userID), contractorID, reviewAppreciation, reviewContent, reviewRating);
+            Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
+            eb.addReview(userID, contractorID, reviewAppreciation, reviewContent, reviewRating);
 
         }
     }
@@ -58,11 +58,11 @@ public class ReviewBean {
     public Boolean isTendererConnected() {
         
         // Check if a user is connected
-        String userID = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
+        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
         // Check if connected user is a Tenderer
         String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");
         
-        return userID != null && !userID.equals("") && userCategory.equals(Tenderer.userCategory);
+        return userID != null && userCategory.equals(Tenderer.userCategory);
         
     }
 

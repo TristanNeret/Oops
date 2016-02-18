@@ -8,18 +8,19 @@ package com.gdf.managedBean;
 import com.gdf.ejb.AdministratorBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
 /**
+ * AdminSearchBean
  *
  * @author nicolas
  */
@@ -27,50 +28,47 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 public class AdminSearchBean implements Serializable {
 
-    /**
-     * Creates a new instance of AdminSearchBean
-     */
-    
     private String message;
     private String keyWord;
     private String type;
     private Contractor contractorSelected;
     private Tenderer tendererSelected;
     private String targetGroup;
-    
+
     /**
      * Id of the current user connected
      */
     private long moderatorID;
-    
-  
+
     /**
      * List of the contractors resulting of the search
      */
     private List<Contractor> lc;
-    
+
     /**
      * List of the tenderers resulting of the search
      */
     private List<Tenderer> ltd;
-    
+
     @EJB
     private SearchBean sb;
-    
+
     @EJB
     private AdministratorBean ab;
-    
-       @PostConstruct
+
+    @PostConstruct
     public void initBean() {
-        // Temporary used to connect a Contractor
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("moderatorID", Long.parseLong("1"));
-        moderatorID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("moderatorID");
         
-        //System.out.println(userID+" ------------------------------------ "+userCategory);
+        // Temporary used to connect a Moderator
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", new Long("1"));
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Moderator.userCategory);
+
+        moderatorID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
+
     }
- 
+
     public AdminSearchBean() {
-         // Temporary used to connect a Tenderer
+        // Temporary used to connect a Tenderer
         ltd = new ArrayList();
         lc = new ArrayList();
     }
@@ -98,24 +96,24 @@ public class AdminSearchBean implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
-    
+
     public List<String> completeQuery(String query) {
-       
+
         List<String> results;
-       
+
         /*
-            In the initial Case, a tenderer is searched
-        */
-        if(type==null){
-            type="tend";
+         In the initial Case, a tenderer is searched
+         */
+        if (type == null) {
+            type = "tend";
         }
-        
-        if(type.equals("tend")){
+
+        if (type.equals("tend")) {
             results = sb.findTendererBeginBy(query);
-        }else{
+        } else {
             results = sb.findContractorBeginBy(query);
         }
-        return results;   
+        return results;
     }
 
     public String getKeyWord() {
@@ -151,28 +149,29 @@ public class AdminSearchBean implements Serializable {
         this.message = null;
         this.tendererSelected = tendererSelected;
     }
-   
-    public void search(){
+
+    public void search() {
 
         ltd = new ArrayList();
         lc = new ArrayList();
-        
-        if(type.equals("tend")){
+
+        if (type.equals("tend")) {
             ltd = sb.findTenderers(keyWord);
-        }else{
+        } else {
             lc = sb.findContractors(keyWord, 0, null, null, "ALPHABETICAL");
         }
-        
+
         message = null;
     }
-    
-    public void sendMessage(){
-          
-        if(type.equals("tend"))
+
+    public void sendMessage() {
+
+        if (type.equals("tend")) {
             ab.sendMessageNotificationToTenderer(moderatorID, tendererSelected, message);
-        else
+        } else {
             ab.sendMessageNotificationToContractor(moderatorID, contractorSelected, message);
-            
+        }
+
         // reset
         tendererSelected = null;
         contractorSelected = null;
@@ -186,43 +185,43 @@ public class AdminSearchBean implements Serializable {
     public void setTargetGroup(String targetGroup) {
         this.targetGroup = targetGroup;
     }
-    
+
     public void init() {
         this.targetGroup = null;
         this.message = null;
     }
-        
-    public void sendGroupMessage(){
-                
-        switch(this.targetGroup){
+
+    public void sendGroupMessage() {
+
+        switch (this.targetGroup) {
             case "TEND":
-                
-                for(Tenderer t : sb.findAllTenderer()) {
+
+                for (Tenderer t : sb.findAllTenderer()) {
                     ab.sendMessageNotificationToTenderer(moderatorID, t, message);
                 }
-                
-                break;    
-                
-            case "CONT":
-                
-                for(Contractor c : sb.findAllContractor()) {
-                    ab.sendMessageNotificationToContractor(moderatorID, c, message);
-                }
-                
+
                 break;
-                
-            case "ALL":
-                
-                for(Tenderer t : sb.findAllTenderer()) {
-                    ab.sendMessageNotificationToTenderer(moderatorID, t, message);
-                }
-                for(Contractor c : sb.findAllContractor()) {
+
+            case "CONT":
+
+                for (Contractor c : sb.findAllContractor()) {
                     ab.sendMessageNotificationToContractor(moderatorID, c, message);
                 }
-                
+
+                break;
+
+            case "ALL":
+
+                for (Tenderer t : sb.findAllTenderer()) {
+                    ab.sendMessageNotificationToTenderer(moderatorID, t, message);
+                }
+                for (Contractor c : sb.findAllContractor()) {
+                    ab.sendMessageNotificationToContractor(moderatorID, c, message);
+                }
+
                 break;
         }
-        
+
         this.message = "";
         this.targetGroup = "";
     }
