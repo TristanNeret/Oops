@@ -26,6 +26,7 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
  * Tenderer
+ *
  * @author aziz
  */
 @Entity
@@ -36,52 +37,52 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
     @NamedQuery(name = "Tenderer.beginBy", query = "SELECT t.login FROM Tenderer t WHERE t.login LIKE ?1")
 })
 public class Tenderer implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";
 
-    @NotNull( message = "Veuillez saisir un login" )
+    @NotNull(message = "Veuillez saisir un login")
     @Size(min = 4, max = 20, message = "Votre login doit contenir entre 5 et 20 caractères.")
-    @Column(unique=true)
+    @Column(unique = true)
     private String login;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
-    @NotNull( message = "Veuillez saisir un email" )
-    private String email; 
-    
-    @NotNull( message = "Veuillez saisir un mot de passe" )
-    @Size( min = 6, message = "Le mot de passe doit contenir au moins 6 caractères" )
-    private String password; 
-    
-    @NotNull( message = "Veuillez saisir un prénom" )
-    @Size( min = 3, message = "Le prénom doit contenir au moins 3 caractères" )
-    private String firstname; 
-    
-    @NotNull( message = "Veuillez saisir un nom" )
-    @Size( min = 3, message = "Le nom doit contenir au moins 3 caractères" )
-    private String lastname; 
-    
+
+    @NotNull(message = "Veuillez saisir un email")
+    private String email;
+
+    @NotNull(message = "Veuillez saisir un mot de passe")
+    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères")
+    private String password;
+
+    @NotNull(message = "Veuillez saisir un prénom")
+    @Size(min = 3, message = "Le prénom doit contenir au moins 3 caractères")
+    private String firstname;
+
+    @NotNull(message = "Veuillez saisir un nom")
+    @Size(min = 3, message = "Le nom doit contenir au moins 3 caractères")
+    private String lastname;
+
     private String avatar;
     private String phone;
-    
+
     private String registrationDate, updateDate;
 
     @OneToMany(mappedBy = "tenderer", fetch = EAGER, cascade = {CascadeType.ALL})
     private List<Review> reviews = new ArrayList<>();
-    
+
     @OneToMany(fetch = EAGER)
     private List<Notification> notifications = new ArrayList<>();
-    
+
     public static final String userCategory = "TENDERER";
-    
+
     private int nbReviews = 0; // number of reviews given by the tenderer and validated by a moderator
-    
+
     public Tenderer() {
 
     }
-    
+
     public Tenderer(String login, String email, String password, String firstname, String lastname, String avatar, String phone, String registrationDate) {
         this.login = login;
         this.email = email;
@@ -92,7 +93,7 @@ public class Tenderer implements Serializable {
         this.phone = phone;
         this.registrationDate = registrationDate;
     }
-    
+
     public String getLogin() {
         return login;
     }
@@ -166,7 +167,11 @@ public class Tenderer implements Serializable {
     public List<Notification> getNotifications() {
         List<Notification> returnNotifications = new ArrayList<>();
         for (Notification notification : this.notifications) {
-            if (notification.getReview().isReviewEnabled()) {
+            if (notification.getReview() != null) {
+                if (notification.getReview().isReviewEnabled()) {
+                    returnNotifications.add(notification);
+                }
+            } else {
                 returnNotifications.add(notification);
             }
         }
@@ -176,7 +181,7 @@ public class Tenderer implements Serializable {
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
-        
+
     public long getId() {
         return id;
     }
@@ -200,45 +205,45 @@ public class Tenderer implements Serializable {
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
     }
-    
+
     public void addReview(Review r) {
         this.reviews.add(r);
         r.setTenderer(this);
     }
-    
+
     public void removeReview(Review r) {
         int i = 0;
         while (i < this.reviews.size() && !this.reviews.get(i).getId().equals(r.getId())) {
             i++;
-        } 
+        }
         this.reviews.get(i).setTenderer(null);
         this.reviews.remove(i);
-        
+
         // update the number of reviews given by the tenderer and accepted by moderator
-        updateNbReviews(); 
+        updateNbReviews();
     }
-    
-    public void addNotification(Notification n){
+
+    public void addNotification(Notification n) {
         this.notifications.add(n);
         n.setTenderer(this);
     }
-    
+
     public void removeNotificationByReviewId(long reviewId) {
-        for (ListIterator<Notification> iter = this.notifications.listIterator(); iter.hasNext(); ) {
+        for (ListIterator<Notification> iter = this.notifications.listIterator(); iter.hasNext();) {
             Notification n = iter.next();
             if (n.getReview().getId().equals(reviewId)) {
                 iter.remove();
             }
         }
     }
-    
-    private String encryptPassword(String password){
+
+    private String encryptPassword(String password) {
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
-        passwordEncryptor.setAlgorithm( ENCRYPTION_ALGORITHM );
-        passwordEncryptor.setPlainDigest( true );
+        passwordEncryptor.setAlgorithm(ENCRYPTION_ALGORITHM);
+        passwordEncryptor.setPlainDigest(true);
         return passwordEncryptor.encryptPassword(password);
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -260,26 +265,29 @@ public class Tenderer implements Serializable {
 
     /**
      * Get the number of reviews given by the tenderer and accepted by moderator
-     * @return the number of reviews given by the tenderer and accepted by moderator
+     *
+     * @return the number of reviews given by the tenderer and accepted by
+     * moderator
      */
     public int getNbReviews() {
         return nbReviews;
     }
-    
+
     public void setNbReviews(int nbReviews) {
         this.nbReviews = nbReviews;
     }
-    
+
     /**
-     * Update the number of reviews given by the tenderer and accepted by moderator
+     * Update the number of reviews given by the tenderer and accepted by
+     * moderator
      */
-    public void updateNbReviews(){
+    public void updateNbReviews() {
         this.nbReviews = 0;
-        for(Review r : reviews){
-            if(r.getReviewState().equals(ReviewState.ACCEPTED) && r.isReviewEnabled()){
+        for (Review r : reviews) {
+            if (r.getReviewState().equals(ReviewState.ACCEPTED) && r.isReviewEnabled()) {
                 this.nbReviews += 1;
             }
         }
-    } 
-    
+    }
+
 }

@@ -148,6 +148,7 @@ public class AdministratorBeanImpl implements AdministratorBean, Serializable {
         // Create and persist the new Notification
         Notification newNotification = new Notification(attachedContractor,attachedModerator ,message);
         newNotification.setCategory(NotificationType.TO_CONTRACTOR);
+        newNotification.setLink("/views/contractorManagement.xhtml?tabIndex=4");
         em.persist(newNotification);
         
         // Add the new Notification to others entities
@@ -169,6 +170,7 @@ public class AdministratorBeanImpl implements AdministratorBean, Serializable {
         // Create and persist the new Notification
         Notification newNotification = new Notification(attachedTenderer,attachedModerator,message);
         newNotification.setCategory(NotificationType.TO_TENDERER);
+        newNotification.setLink("/views/tendererManagement.xhtml?tabIndex=2");
         em.persist(newNotification);
         
         // Add the new Notification to others entities

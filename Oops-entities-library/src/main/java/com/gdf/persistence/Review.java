@@ -174,7 +174,11 @@ public class Review implements Serializable {
     public List<Notification> getNotifications() {
         List<Notification> returnNotifications = new ArrayList();
         for (Notification notification : this.notifications) {
-            if (notification.getReview().isReviewEnabled()) {
+            if (notification.getReview() != null) {
+                if (notification.getReview().isReviewEnabled()) {
+                    returnNotifications.add(notification);
+                }
+            } else {
                 returnNotifications.add(notification);
             }
         }
