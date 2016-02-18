@@ -14,11 +14,24 @@ import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
+import com.gdf.singleton.PopulateDB;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * Class used to populate the database for selenium tests
@@ -26,7 +39,7 @@ import javax.persistence.PersistenceContext;
  */
 @Singleton
 @Startup
-public class PopulateDBBean {
+public class PopulateDBBean implements PopulateDB {
 
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;  
@@ -34,11 +47,22 @@ public class PopulateDBBean {
     /**
      * Populate the database for the selenium tests
      */
+    private List<String> allCountries;
+
+    public PopulateDBBean() {
+        this.allCountries = new ArrayList();
+    }
+    
+    
+    
+    
     @PostConstruct
     private void populateDatabase(){
         
         // REVIEWS
         
+        this.retrieveAllWorldCoutries();
+                
         Review review = new Review();
         review.setAppreciation("Très professionel");
         review.setContent("Travail réalisé dans les temps et de qualité !");
@@ -128,6 +152,46 @@ public class PopulateDBBean {
         
         em.persist(moderator);
         
+    }
+    
+    private void retrieveAllWorldCoutries(){
+        
+        
+        try {
+            // These code snippets use an open-source library. http://unirest.io/java
+            HttpResponse<JsonNode> response = Unirest.get("https://restcountries-v1.p.mashape.com/all")
+                    .header("X-Mashape-Key", "IYf0SsPkx6mshsdvXDW6JC2Pt65up1NAEDejsnyT9Ot96YT0tC")
+                    .header("Accept", "application/json")
+                    .asJson();
+            
+            String rep = response.getBody().toString();
+            JSONParser parser=new JSONParser();
+            Object obj;
+            
+            try {
+                
+                obj = parser.parse(rep);
+                JSONArray jsonArray = (JSONArray) obj;
+            
+                for (Object jo : jsonArray){
+                          JSONObject infoCoutryJSON =  (JSONObject)jo;
+                          JSONObject  allTranslationNameCountry = (JSONObject) infoCoutryJSON.get("translations");
+                          String nameCountryFrench = (String) allTranslationNameCountry.get("fr");
+                          System.out.println("" + nameCountryFrench); 
+                          allCountries.add(nameCountryFrench);
+                }
+            
+            }catch (ParseException ex) {
+                Logger.getLogger(PopulateDBBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (UnirestException ex) {
+            Logger.getLogger(PopulateDBBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public List<String> getAllCountries() {
+        return this.allCountries;
     }
     
 }
