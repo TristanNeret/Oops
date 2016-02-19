@@ -12,9 +12,11 @@ import java.util.ListIterator;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
@@ -36,10 +38,10 @@ public class Moderator implements Serializable {
     private String login;
     private String password;
     
-    @OneToMany(mappedBy = "moderator")
+    @OneToMany(mappedBy = "moderator", fetch = EAGER)
     private List<ModeratorReview> reviews = new ArrayList<>();
     
-    @OneToMany
+    @OneToMany(fetch = EAGER)
     private List<Notification> notifications = new ArrayList<>();
     
     public static final String userCategory = "MODERATOR";
@@ -85,7 +87,11 @@ public class Moderator implements Serializable {
     public List<Notification> getNotifications() {
         List<Notification> returnNotifications = new ArrayList<>();
         for (Notification notification : this.notifications) {
-            if (notification.getReview().isReviewEnabled()) {
+            if (notification.getReview() != null) {
+                if (notification.getReview().isReviewEnabled()) {
+                    returnNotifications.add(notification);
+                }
+            } else {
                 returnNotifications.add(notification);
             }
         }

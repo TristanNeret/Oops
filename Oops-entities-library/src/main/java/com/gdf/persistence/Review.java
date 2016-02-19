@@ -15,6 +15,7 @@ import java.util.ListIterator;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,12 +30,11 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-
     @NamedQuery(name = "Review.findWaitingReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.DELIVERED AND r.reviewEnabled=true"),
-    @NamedQuery(name = "Review.findAcceptedReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1 AND r.reviewEnabled=true"),
+    @NamedQuery(name = "Review.findAcceptedContractorReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1 AND r.reviewEnabled=true"),
+    @NamedQuery(name = "Review.findAcceptedTendererReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.tenderer.id=?1 AND r.reviewEnabled=true"),
     @NamedQuery(name = "Review.findTendererReviews", query = "SELECT r FROM Review r WHERE r.tenderer.id=?1 AND r.reviewEnabled=true"),
     @NamedQuery(name = "Review.deleteReviewById", query = "DELETE FROM Review r WHERE r.id=?1")
-
 })
 public class Review implements Serializable {
     
@@ -50,17 +50,17 @@ public class Review implements Serializable {
     private ReviewState reviewState;
     private boolean reviewEnabled;
     
-    @ManyToOne
+    @ManyToOne(fetch = EAGER)
     private Tenderer tenderer;
     
-    @ManyToOne
+    @ManyToOne(fetch = EAGER)
     private Contractor contractor;
     
-    @OneToMany(mappedBy = "review")
-    private List<ModeratorReview> moderatorReviews = new ArrayList<ModeratorReview>();
+    @OneToMany(mappedBy = "review", fetch = EAGER)
+    private List<ModeratorReview> moderatorReviews = new ArrayList<>();
     
-    @OneToMany
-    private List<Notification> notifications = new ArrayList<Notification>();
+    @OneToMany(fetch = EAGER)
+    private List<Notification> notifications = new ArrayList<>();
     
     /**
      * Create an instance of a Review
@@ -175,7 +175,11 @@ public class Review implements Serializable {
     public List<Notification> getNotifications() {
         List<Notification> returnNotifications = new ArrayList();
         for (Notification notification : this.notifications) {
-            if (notification.getReview().isReviewEnabled()) {
+            if (notification.getReview() != null) {
+                if (notification.getReview().isReviewEnabled()) {
+                    returnNotifications.add(notification);
+                }
+            } else {
                 returnNotifications.add(notification);
             }
         }

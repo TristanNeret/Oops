@@ -8,20 +8,16 @@ package com.gdf.managedBean;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 /**
- *
+ * TendererInformationBeanTest
  * @author bibo
  */
 public class TendererInformationBeanTest {
@@ -36,7 +32,7 @@ public class TendererInformationBeanTest {
     public static void setUpClass() {
         
         driver = new FirefoxDriver();
-        baseUrl = "http://localhost:8080/Oops-web/views/tendererSearch.xhtml";
+        baseUrl = "http://localhost:8080/Oops-web/views/tendererInformations.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         
     }
@@ -80,18 +76,9 @@ public class TendererInformationBeanTest {
     @Test
     public void testGoodid(){
         
-        driver.get(baseUrl+"?id=1");        
-        driver.findElement(By.xpath("//h2[1][contains(text(), 'Nom complet')]"));      
+        driver.get(baseUrl+"?id=1");    
+        driver.findElement(By.xpath("//label[1][contains(text(), 'Michmich')]"));      
 
     }
-    
-    @Test
-    public void testGoodid2(){
-        
-        driver.get(baseUrl+"?id=4");        
-        driver.findElement(By.xpath("//h2[1][contains(text(), 'Nom complet')]"));      
 
-    }
-    
-    
 }

@@ -47,16 +47,16 @@ public class ContractorReviewBean implements Serializable {
     public void initBean() {
         
         // Temporary used to connect a Contractor
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", "50");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", new Long("50"));
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Contractor.userCategory);
         
         // Check if a user is connected
-        String userID = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
+        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
       
-        if (userID != null && !userID.isEmpty()) {
+        if (userID != null) {
 
             // DELETE AND MODIFY WHEN WE WILL HAVE A CURRENT CONTRACTROR CONNECTED
-            this.reviews = this.searchBean.searchAcceptedReviews(Long.parseLong(userID));
+            this.reviews = this.searchBean.searchAcceptedContratorReviews(userID);
             this.answersReview = new HashMap<>();
             for(Review r : this.reviews) {
                 this.answersReview.put(r.getId(), r.getContractorAnswer());

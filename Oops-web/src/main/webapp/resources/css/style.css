@@ -1,6 +1,10 @@
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    float: left;
 }
 
 fieldset {
@@ -22,11 +26,15 @@ h2 {
 }
 
 .divContent {
-    padding-left: 30px;
-    padding-right: 30px;
     padding-bottom: 30px;
     float: left;
-    width: 95%;
+    width: 100%;
+    min-height: 100%;
+}
+
+.divContentPadding {
+    padding-right: 30px;
+    padding-left: 30px;
 }
 
 /*****************************************************************************/
@@ -48,6 +56,7 @@ h2 {
     background-color: #666666;
     color: #ffffff;
     font-size: 12px !important;
+    cursor: pointer;
 }
 
 table.panelHeaderButton {
@@ -65,9 +74,9 @@ table.panelHeader td.ui-panelgrid-cell {
 
 table.panelHeader td.ui-panelgrid-cell a.headerTitle {
     color: #ffffff;
-    font-size: 40px;
+    font-size: 48px;
     font-weight: bold;
-    margin-left: 50px;
+    margin-left: 30px;
     color: #ffffff;
     text-decoration:none;
 }
@@ -75,9 +84,61 @@ table.panelHeader td.ui-panelgrid-cell a.headerTitle {
 table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     font-size: 20px;
     font-weight: 100;
-    margin-left: 18px;
     color: #ffffff;
     text-decoration:none;
+}
+
+.formNotificationHeader {
+    margin-right: 10px;
+}
+
+.commandButtonNotificationImage {
+    height: 40px;
+    width: 40px;
+    margin-right: 20px;
+}
+
+.overlayPanelNotification .ui-overlaypanel-content {
+    padding: 0em !important;
+    max-width: 550px;
+}
+
+.overlayPanelNotification .ui-overlaypanel-content .commandButtonClickNotification {
+    background-color: white;
+    border-bottom-style: solid;
+    border-bottom-color: darkslategray;
+    color: #555555;
+    white-space: pre;
+    text-align: left;
+    font-size: 18px;
+}
+
+.overlayPanelNotification .ui-overlaypanel-content .commandButtonClearNotification {
+    margin-top: 10px;
+    background-color: #666666;
+}
+
+#divTitleNotification {
+    margin: 0px; 
+    padding-top: 5px; 
+    padding-bottom: 5px; 
+    background-color: #008080; 
+    font-size: 20px; 
+    color: #FFFFFF; 
+    width: 100%; 
+    text-align: center;
+}
+
+#divNotificationList {
+    margin-left: 20px; 
+    margin-right: 20px; 
+    margin-top: 10px; 
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.divNotification {
+    width: 100%;
 }
 
 /*****************************************************************************/
@@ -130,6 +191,7 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     color: #333333;
     font-size: 12px;
 }
+
 
 .sortBar{
     padding: 10px;
@@ -187,7 +249,7 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 }
 
 .divReviews {
-    width: 100%;
+    width: 48%;
     float: left; 
     margin-right: 20px;
     margin-bottom: 20px;
@@ -247,6 +309,10 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     float: left; 
     margin-right: 20px;
     margin-bottom: 20px;
+    border-bottom-color: black;
+    border-bottom-style: ridge;
+    border-bottom-width: 1px;
+    padding-bottom: 20px;
 }
 
 .diveRateReview {
@@ -283,10 +349,29 @@ label.ratingH2 {
 form#reviewForm {
     width: 100%;
     margin-left: -2px;
-
 }
 
+.divContractorLogo {
+    float: left;
+    margin-top: 20px;
+}
 
+.panelCompanyInformation {
+    float: left;
+    margin-left: 20px;
+    border-left-width: 3px !important;
+    border-left-color: darkgray !important;
+    border-left-style: ridge !important;
+}
+
+.labelTitleContractorInformation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #336c6c;
+    height: 35px;
+    font-size: 20px;
+    min-width: 200px;
+}
 
 /*****************************************************************************/
 /***************************** SERVICE MANAGER********************************/
@@ -321,11 +406,21 @@ form#reviewForm {
     font-size: 22px;
 }
 
+.divLoginTitle {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #008B8B;
+    font-weight: 100;
+    font-size: 22px;
+    margin-left: 20px;
+    font-weight: bold
+}
+
 .spanServiceCategory {
     color: #1E90FF;
     font-weight: 600;
 }
- 
+
 .divServiceButton {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -335,7 +430,7 @@ form#reviewForm {
     float: left;
     margin-top: 10px;
 }
- 
+
 .rightServiceButton{
     float: right;
 }
@@ -429,6 +524,13 @@ form#reviewForm {
     font-size: 14px;
 }
 
+.divReviewsTenderer {
+    width: 100%;
+    float: left; 
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
 /*****************************************************************************/
 /*************************** CONTRACTOR MANAGER ******************************/
 /*****************************************************************************/
@@ -508,6 +610,11 @@ form .updateButtonContractorReview {
     float: top; 
     background-color: #336c6c !important; 
     color: #66cccc !important;
+}
+
+#divReviewsContractorInformations {
+    width: 100%;
+    float: left;
 }
 
 /* Moderator */
@@ -655,8 +762,6 @@ form .updateButtonContractorReview {
     text-align: center;
     border: none;
     cursor: pointer;
-
-    
 }
 
 form .deleteButtonContractorReview {
@@ -709,8 +814,6 @@ form .updateButtonContractorReview {
     float: left;
     color: #008080;
 }
-
-
 
 .divImageReviewAdmin {
     width: 50px; 
@@ -834,6 +937,37 @@ form .updateButtonContractorReview {
 }
 
 /*****************************************************************************/
+/******************************* NOTIFICATION ********************************/
+/*****************************************************************************/
+
+.divNotificationList {
+    margin-top: 20px;
+}
+
+.divNotificationHistoric {
+    width: 100%; 
+    float: left; 
+    margin-bottom: 20px;
+}
+
+.labelNotificationDate {
+    width: 100%; 
+    font-size: 16px; 
+    float: left; 
+    color: dimgray;
+}
+
+.labelNotificationDescription {
+    width: 100%; 
+    font-size: 20px; 
+    float: left;
+}
+
+.commandButtonClickNotification {
+    width: 100% !important;
+}
+
+/*****************************************************************************/
 /************************** PRIMEFACES REDEFINTION ***************************/
 /*****************************************************************************/
 
@@ -884,7 +1018,7 @@ form .updateButtonContractorReview {
     border-left-style: none;
     border-right-width: 0px;
     border-right-style: none;
-   
+
 }
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a {
@@ -954,37 +1088,56 @@ form .updateButtonContractorReview {
     color: dimgrey;
 }
 
-
-
 .erreur {
     color: #900;
+}
 
 /*****************************************************************************/
 /******************************** TAB STYLE **********************************/
 /*****************************************************************************/
 
 .tabs .tab-content {
-  z-index: 2;
-  display: none;
-  overflow: hidden;
-  width: 100%;
-  font-size: 17px;
-  line-height: 25px;
-  padding: 25px;
-  position: absolute;
-  top: 53px;
-  left: 0;
-  background: #612e76;
+    z-index: 2;
+    display: none;
+    overflow: hidden;
+    width: 100%;
+    font-size: 17px;
+    line-height: 25px;
+    padding: 25px;
+    position: absolute;
+    top: 53px;
+    left: 0;
+    background: #612e76;
 
 }
 
- 
 .tabs {
-  width: 650px;
-  float: none;
-  list-style: none;
-  position: relative;
-  margin: 80px 0 0 10px;
-  text-align: left;
+    width: 650px;
+    float: none;
+    list-style: none;
+    position: relative;
+    margin: 80px 0 0 10px;
+    text-align: left;
+}
+
+.ui-widget-header {
+    border: none; 
+    background: none;
+    border-top-style: solid !important;
+    border-top-color: #666666 !important;
+    border-top-width: 1px !important;
+    padding-top: 10px !important;
+}
+
+.styled-select selectTypeAdmin {
+    background: transparent;
+    width: 268px;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1;
+    border: 0;
+    border-radius: 0;
+    height: 34px;
+    -webkit-appearance: none;
 }
 

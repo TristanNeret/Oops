@@ -21,14 +21,16 @@ public interface RegistrationBean {
     /**
      * Register a Contractor 
      * @param c the Contractor to register
+     * @return the id of the contractor
      */
-    public void register(Contractor c); 
+    public Long register(Contractor c); 
     
     /**
      * Register a Tenderer
      * @param t the Tenderer to register
+     * @return the id of the tenderer
      */
-    public void register(Tenderer t);
+    public Long register(Tenderer t);
     
     /**
      * Update a Contractor

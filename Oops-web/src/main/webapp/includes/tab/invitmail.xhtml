@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <div class="divContent">
+        <o:form id="mailForm" includeViewParams="true" >
+
+            <p:growl id="updateGrowl" widgetVar="updateGrowl" sticky="false" showDetail="false" life="3000" />
+            <h:panelGrid columns="2" cellpadding="5" >
+               
+                <h:outputLabel value="Objet :" />
+                <p:inputText id="object" value="#{mailInvitBean.subject}" required="true" label="Objet" size="40"/>
+
+                <h:outputLabel value="E-mail de la personne à inviter :" />
+                <p:inputText id="email" value="#{mailInvitBean.to}" required="true" label="E-mail" size="40">
+                    <f:validator validatorId="com.gdf.mailFormatValidator" binding="#{mailFormatValidator}" />
+                </p:inputText>
+
+                <h:outputLabel value="Message :" />
+                <p:inputTextarea id="message" value="#{mailInvitBean.message}" autoResize="true" cols="50" rows="10" required="true" label="Message"/>
+
+                <p:commandButton id="send" value="Envoyer" action="#{mailInvitBean.sendMail()}" 
+                                update="updateGrowl @form" />
+            </h:panelGrid>
+        </o:form>
+    </div>
+
+
+</ui:composition>

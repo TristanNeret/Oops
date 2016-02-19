@@ -6,8 +6,9 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Category;
-import com.gdf.persistence.Review;
+import com.gdf.persistence.Contractor;
 import com.gdf.persistence.ReviewState;
+import com.gdf.persistence.Tenderer;
 import javax.ejb.Remote;
 
 /**
@@ -32,6 +33,10 @@ public interface AdministratorBean {
      * @param content optional content for the Tenderer who wrote the Review
      */
     public void manageReview(long reviewId, long moderatorId, ReviewState reviewState, String content);
+
+    public void sendMessageNotificationToTenderer(long moderatorID, Tenderer tendererSelected, String message);
+
+    public void sendMessageNotificationToContractor(long moderatorID, Contractor contractorSelected, String message);
     
     
 }

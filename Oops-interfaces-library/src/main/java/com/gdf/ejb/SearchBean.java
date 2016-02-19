@@ -7,8 +7,10 @@ package com.gdf.ejb;
 
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
+import com.gdf.persistence.Moderator;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -77,6 +79,15 @@ public interface SearchBean {
      */
     public Tenderer searchTendererByLogin(String login);
 
+    // MODERATOR
+    
+    /**
+     * Search a Moderator by his id
+     * @param id id of the Moderator
+     * @return the Moderator identified by the id if any or null if he doesn't exist
+     */
+    public Moderator searchModeratorById(Long id);
+    
     // REVIEW
     
     /**
@@ -90,8 +101,14 @@ public interface SearchBean {
      * @param id id of the Contractor
      * @return the accepted Reviews List of the Contractor
      */
-    public List<Review> searchAcceptedReviews(long id);
+    public List<Review> searchAcceptedContratorReviews(long id);
     
+    /**
+     * Search accepted Reviews for a Tenderer
+     * @param id id of the Tenderer
+     * @return the accepted Reviews List of the Tenderer
+     */
+    public List<Review> searchAcceptedTendererReviews(long id);
 
     // SEARCH
     
@@ -114,6 +131,12 @@ public interface SearchBean {
      * @return all the tenderers
      */
     public List<Tenderer> findAllTenderer();
+    
+     /**
+     * Get all the contractor
+     * @return all the contractor
+     */
+    public List<Contractor> findAllContractor();
     
     /**
      * Return tenderers name begin by the query
@@ -156,5 +179,7 @@ public interface SearchBean {
      * @return all countries
      */
     public List<String> getAllCountry();
+
+    public Moderator searchModeratorById(long id);
     
 }

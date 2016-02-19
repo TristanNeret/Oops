@@ -8,16 +8,43 @@
         <title>Mon compte</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="style.css" />
+        <script type="text/javascript">
+
+            // Get tab if from url parameter
+            function get() {
+                
+                 var indexParam = location.search.split('tabIndex=')[1];
+                 if (typeof indexParam === 'undefined') {
+                     
+                     return 0;
+                     
+                 }
+                 return indexParam;
+                
+            };
+
+            window.onload = function () {
+
+                // Redirect to well parameter
+                PF("tabViewContractor").select(get("tabIndex"));
+
+            };
+
+        </script>
     </h:head>
+    
     <h:body>
+        
+        <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
+        
         <!-- TAB -->
-        <p:tabView id="tabViewContractor">
+        <p:tabView id="tabViewContractor" widgetVar="tabViewContractor">
             <p:tab title="Mes Informations">
                 <ui:include src="/includes/tab/contractorInformations.xhtml" />
             </p:tab>
             <p:tab id="tabCompany" title="Mon Entreprise">
-                <ui:include src="" />
+                <ui:include src="/includes/tab/companyInformation.xhtml" />
             </p:tab>
             <p:tab id="tabServices" title="Mes Préstations">
                 <ui:include src="/includes/tab/contractorServices.xhtml" />
@@ -25,11 +52,18 @@
             <p:tab id="tabReviews" title="Mes Avis">
                 <ui:include src="/includes/tab/contractorReviewTab.xhtml" />
             </p:tab>
+            <p:tab title="Mes Notifications">
+                <ui:include src="/includes/tab/historicNotificationTab.xhtml" />
+            </p:tab>
             <p:tab id="tabInvites" title="Invitations">
-                <ui:include src="" />
+                <ui:include src="/includes/tab/invitmail.xhtml" />
             </p:tab>
         </p:tabView>
+        
+        <!-- FOOTER -->
         <ui:include src="/includes/footer.xhtml"/>
+        
     </h:body>
+    
 </html>
 

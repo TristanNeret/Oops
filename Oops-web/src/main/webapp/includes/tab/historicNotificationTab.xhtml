@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <div class="divContent">
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Historique des notifications :" rendered="#{manageNotificationBean.allNotificationsList.size() > 0}" />
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Vous n'avez pas encore reçu de notifications." rendered="#{manageNotificationBean.allNotificationsList.size() == 0}" /> 
+
+        <p:panel id="notificationsList" rendered="#{manageNotificationBean.allNotificationsList.size() > 0}">
+            <div class="divNotificationList">
+                <h:form id="formNotification">
+                    <p:dataGrid var="notification" value="#{manageNotificationBean.allNotificationsList}" columns="1" layout="grid" rows="10" 
+                                paginator="true" paginatorPosition="bottom" id="reviews"
+                                paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,16">
+
+                        <!-- NOTIFICATION -->
+                        <div class="divNotificationHistoric">
+                            <div style="float: left;">
+                                <p:commandButton class="commandButtonClickNotification" styleClass="commandButtonClickNotification" value="Voir" action="#{manageNotificationBean.clickOnNotification(notification)}">
+                                </p:commandButton>
+                            </div>
+                            <div style="width: 80%; float: left; margin-left: 20px;">
+                                <h:outputLabel class="labelNotificationDescription">#{notification.description}</h:outputLabel>
+                                <h:outputLabel class="labelNotificationDate">#{notification.date}</h:outputLabel>
+                            </div>
+                        </div>
+
+                    </p:dataGrid>
+                </h:form>
+            </div>
+        </p:panel>
+    </div>
+
+</ui:composition>

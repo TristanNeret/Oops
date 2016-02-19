@@ -6,22 +6,18 @@
 package com.gdf.managedBean;
 
 
-import com.gdf.ejb.EvaluationBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
-import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
-import javax.faces.context.FacesContext;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -30,7 +26,7 @@ import javax.faces.model.SelectItem;
  * @author nicolas
  */
 @Named(value = "searchManagedBean")
-@ApplicationScoped
+@SessionScoped
 public class SearchManagedBean implements Serializable {
     
     /**
@@ -91,6 +87,7 @@ public class SearchManagedBean implements Serializable {
     @PostConstruct
     public void setup() {
         
+        type = "cont";
         orders = new LinkedHashMap<>();
         orders.put("Nom", "ALPHABETICAL"); // label, value
         orders.put("Note", "RATINGS");
@@ -206,12 +203,12 @@ public class SearchManagedBean implements Serializable {
         if(type.equals("tend"))
         {
             ltd =  sb.findTenderers(keyWord);
-            return "/views/listTenderer.xhtml?faces-redirect=true";
+            return "/views/tendererSearch.xhtml?faces-redirect=true";
         }
         else
         {
             lc = sb.findContractors(keyWord,rating,country,category, order);  
-            return "/views/listContractor.xhtml?faces-redirect=true";       
+            return "/views/contractorSearch.xhtml?faces-redirect=true";       
         }        
     }
     
@@ -239,5 +236,7 @@ public class SearchManagedBean implements Serializable {
     public void setOrders(Map<String, String> orders) {
         this.orders = orders;
     }
+    
+ 
 
 }

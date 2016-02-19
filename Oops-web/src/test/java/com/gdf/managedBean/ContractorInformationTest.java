@@ -31,7 +31,7 @@ public class ContractorInformationTest {
     public static void setUpClass() {
         
         driver = new FirefoxDriver();
-        baseUrl = "http://localhost:8080/Oops-web/views/contractorInformation.xhtml";
+        baseUrl = "http://localhost:8080/Oops-web/views/contractorInformations.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         
     }
@@ -76,7 +76,7 @@ public class ContractorInformationTest {
     public void testGoodid(){
         
         driver.get(baseUrl+"?id=50");        
-        driver.findElement(By.xpath("//h2[1][contains(text(), 'Description')]"));      
+        driver.findElement(By.xpath("//label[1][contains(text(), 'IT Contractor Inc.')]"));      
 
     }
     

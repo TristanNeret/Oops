@@ -9,6 +9,7 @@ import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,7 +22,7 @@ import javax.persistence.PersistenceContext;
  * @author aziz
  */
 @Stateless
-public class RegistrationBeanImpl implements RegistrationBean {
+public class RegistrationBeanImpl implements RegistrationBean, Serializable {
 
     /**
      * Injected EntityManager giving access to the database
@@ -29,21 +30,24 @@ public class RegistrationBeanImpl implements RegistrationBean {
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em; 
     
+    private final String dateMode = "dd/MM/yyyy HH:mm:ss";
+    
     @Override
-    public void register(Contractor c) {
+    public Long register(Contractor c) {
         
         // Get current date 
         Calendar cal = Calendar.getInstance();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat(dateMode);
         c.setRegistrationDate(dateFormat.format(cal.getTime()));
         c.setUpdateDate(dateFormat.format(cal.getTime()));
         
         em.persist(c);
-        
+ 
+        return em.merge(c).getId();
     }
     
     @Override
-    public void register(Tenderer t) {
+    public Long register(Tenderer t) {
         
         // Get current date 
         Calendar cal = Calendar.getInstance();
@@ -53,6 +57,7 @@ public class RegistrationBeanImpl implements RegistrationBean {
         
         em.persist(t);
 
+        return em.merge(t).getId();
     }
     
     

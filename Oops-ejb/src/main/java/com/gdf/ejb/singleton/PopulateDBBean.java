@@ -78,6 +78,7 @@ public class PopulateDBBean {
         tenderer.addReview(review);
         tenderer.addReview(review1);
         tenderer.addReview(review2);
+        tenderer.updateNbReviews();
         em.persist(tenderer);
         
         tenderer = new Tenderer("Dede", "dede.legrand@gmail.com", "password", "Didier", "Legrand", 
@@ -88,10 +89,10 @@ public class PopulateDBBean {
         
         Category category = new Category("Informatique", "image"); 
         Contractor contractor = new Contractor("ITContractor", "contact@itcontractor.com", "password", "IT Contractor Inc.",
-        "Société de service", "Nous sommes ITContractor nous vous offront different types de services IT,"
+        "SA", "Nous sommes ITContractor nous vous offront different types de services IT,"
                 + " n'hesitez pas a nous contacter pour plus d'informations.", 
-                "937937820", "http://www.ut-capitole.fr/medias/photo/it-128_1413288947855-png", "ITContractor", "Representant", 309293, 18, 3,
-        new Address(3, "beans street", 2648, "New York", "USA"), new LegalInformation("siret", "siren", "rcs", "assurance"));
+                "937937820", "http://www.ut-capitole.fr/medias/photo/it-128_1413288947855-png", "ITContractor", "Representant", 100000, 100, 3,
+        new Address(3, "beans street", 2648, "New York", "USA"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         Service service = new Service("Developpement Informatique", "Nous developpons vos projets informatique, sous forme d'applications "
                 + "web et mobiles.", 500.0, contractor, category);
         contractor.setId(50);
@@ -105,10 +106,10 @@ public class PopulateDBBean {
         
         category = new Category("Batiment", "image"); 
         contractor = new Contractor("FranceBTP", "contact@francebtp.com", "password", "FranceBTP Sarl",
-        "Societe", "Nous sommes FranceBTP nous vous offront different services dans le domaine de la construction et du batiment,"
+        "SARL", "Nous sommes FranceBTP nous vous offront different services dans le domaine de la construction et du batiment,"
                 + " n'hesitez pas a nous contacter pour plus d'informations."
-                , "937937820", "http://www.cibtp.fr/fileadmin/templates/portail/img/logo_charte_qualite.png", "FranceBTP", "Representant", 309293, 18, 2,
-        new Address(3, "rue des haricots", 2648, "Paris", "France"), new LegalInformation("siret", "siren", "rcs", "assurance"));
+                , "937937820", "http://www.cibtp.fr/fileadmin/templates/portail/img/logo_charte_qualite.png", "FranceBTP", "Representant", 500000, 500, 2,
+        new Address(3, "rue des haricots", 2648, "Paris", "France"), new LegalInformation("12345678903987", "126456789", "RCSITC113456789", "Assurancetoutrix"));
         service = new Service("Démolition", "Nous réalisons vos travaux de démolition", 100.0, contractor, category);
         contractor.addService(service);  
         

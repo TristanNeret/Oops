@@ -6,61 +6,150 @@
 package com.gdf.managedBean;
 
 import com.gdf.ejb.RegistrationBean;
+import com.gdf.ejb.SearchBean;
+import com.gdf.persistence.Address;
+import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
+import com.gdf.persistence.Service;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.faces.model.SelectItemGroup;
+import javax.faces.view.ViewScoped;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
  * Manage Contrator registration
+ *
  * @author borui
  */
 @Named(value = "contractorRegistrationBean")
-@RequestScoped
-public class ContractorRegistrationBean {
+@ViewScoped
+public class ContractorRegistrationBean implements Serializable {
 
-    @Size(min = 4, max = 20, message = "Votre login doit contenir entre 5 et 20 caractères.")
+    @EJB
+    private RegistrationBean rb;
+    @EJB
+    private SearchBean sb;
+
+    private Contractor contractor;
+    
+    private int step = 1;
+
+    // STEP 1 -----------------------------------------------------------------------------------
+    @NotNull(message = "Veuillez saisir un login")
+    @Size(min = 5, message = "Le login doit contenir au moins 5 caractères")
     private String login;
-    @Size(min = 8, max = 20, message = "Le mot de passe doit contenir entre 8 et 20 caractères.")
+    @NotNull(message = "Veuillez saisir un mot de passe")
+    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères")
     private String password;
+    @NotNull(message = "Veuillez saisir une confirmation de mot de passe")
     private String passwordConfirm;
-    @Size(min = 1, max = 30)
-    private String lastname;
-    @Size(min = 1, max = 30)
+    @NotNull(message = "Veuillez saisir un prénom")
+    @Size(min = 3, message = "Le prénom doit contenir au moins 3 caractères")
     private String firstname;
+    @NotNull(message = "Veuillez saisir un nom")
+    @Size(min = 3, message = "Le nom doit contenir au moins 3 caractères")
+    private String lastname;
+    @NotNull(message = "Veuillez saisir un email")
     private String email;
-    @Size(min = 10, max = 15, message = "Le format du numéro de téléphone est incorect.")
+    @NotNull(message = "Veuillez saisir un numéro de téléphone")
     private String phone;
+
+    // STEP 2 -----------------------------------------------------------------------------------
     private String socialReason;
     private String legalForm;
     private int turnover;
     private int nbEmployees;
-    @Size(min = 9, max = 9, message = "Le numéro SIREN doit contenir 9 caractères.")
+    @Pattern(regexp = "[0-9]{9}", message = "Le n° SIREN doit contenir 9 chiffres")
+    @NotNull(message = "Veuillez saisir un numéro de SIREN")
     private String siren;
-    @Size(min = 14, max = 14, message = "Le numéro SIRET doit contenir 14.")
+    @Pattern(regexp = "[0-9]{14}", message = "Le n° SIRET doit contenir 14 chiffres")
+    @NotNull(message = "Veuillez saisir un numéro de SIRET")
     private String siret;
-    
-    @EJB
-    RegistrationBean rb;
-    
+    @Size(min = 9, message = "Le n° RCS doit contenir au moins 9 caractères")
+    @NotNull(message = "Veuillez saisir un numéro de RCS")
+    private String rcs;
+    @Size(min = 5, message = "L'assurance doit contenir au moins 5 caractères")
+    @NotNull(message = "Veuillez saisir une assurance")
+    private String insurrance;
+
+    private int streetNumber, zipCode;
+    @Size(min = 5, message = "La rue doit contenir au moins 5 caractères")
+    @NotNull(message = "Veuillez saisir une rue")
+    private String street;
+    @Size(min = 4, message = "La ville doit contenir au moins 4 caractères")
+    @NotNull(message = "Veuillez saisir une ville")
+    private String town;
+    @Size(min = 5, message = "Le pays doit contenir au moins 5 caractères")
+    @NotNull(message = "Veuillez saisir un pays")
+    private String country;
+
+    private List<SelectItem> legalForms;
+
+    private final SelectItem[] nonTeamCompanies = new SelectItem[]{
+        new SelectItem("Auto-entrepreneur", "Auto-entrepreneur"),
+        new SelectItem("Entrepreneur individuel", "Entrepreneur individuel"),
+        new SelectItem("EIRL", "EIRL"),
+        new SelectItem("EURL", "EURL"),
+        new SelectItem("SASU", "SASU")
+    };
+
+    private final SelectItem[] teamCompanies = new SelectItem[]{
+        new SelectItem("SNC", "SNC"),
+        new SelectItem("SARL", "SARL"),
+        new SelectItem("SA", "SA"),
+        new SelectItem("SAS", "SAS"),
+        new SelectItem("SCA", "SCA")
+    };
+
+    // STEP 3 -----------------------------------------------------------------------------------
+    private String logo;
+    @NotNull(message = "Veuillez saisir une description")
+    @Size(min = 30, message = "La description doit contenir au moins 30 caractères")
+    private String description;
+
+    // STEP 4 -----------------------------------------------------------------------------------
+    private String titleService;
+    private String descriptionService;
+    private long idCategoryService;
+    private double priceService = 0.0;
+    private List<Category> categories;
+    private Service editService;
+
+    @PostConstruct
+    public void init() {
+
+        SelectItemGroup g1 = new SelectItemGroup("Entreprise individuelle");
+        g1.setSelectItems(nonTeamCompanies);
+
+        SelectItemGroup g2 = new SelectItemGroup("Entreprise non-individuelle");
+        g2.setSelectItems(teamCompanies);
+
+        legalForms = new ArrayList<>();
+        legalForms.add(g1);
+        legalForms.add(g2);
+
+        this.setCategories(sb.getCategories());
+    }
+
     /**
      * Creates a new instance of ContractorRegistrationBean
      */
     public ContractorRegistrationBean() {
-        
+
     }
-    
-    /**
-     * Register a new Contractor into DataBase
-     */
-    public void submit(){
-        
-        LegalInformation li = new LegalInformation();
-        li.setSiren(this.siren);
-        li.setSiret(this.siret);
-        
+
+    public void step1() {
         Contractor c = new Contractor();
         c.setLogin(this.login);
         c.setPassword(this.password);
@@ -68,16 +157,43 @@ public class ContractorRegistrationBean {
         c.setRepresentatorLastname(this.lastname);
         c.setEmail(this.email);
         c.setPhone(this.phone);
-        c.setSocialReason(this.socialReason);
-        c.setLegalForm(this.legalForm);
-        c.setTurnover(this.turnover);
-        c.setNbEmployees(this.nbEmployees);
-        c.setLegalInformation(li);
-        
-        this.rb.register(c);
-        
+
+        Long id = this.rb.register(c);
+        // Connect the contractor
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", id);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Contractor.userCategory);
+
+        this.contractor = sb.searchContractorById(id); // the contractor with the id setted
+
+        this.step = 2;
     }
-    
+
+    public void step2() {
+
+        contractor.setLegalForm(legalForm);
+        contractor.setLogo(logo);
+        contractor.setSocialReason(socialReason);
+        contractor.setTurnover(turnover);
+        contractor.setNbEmployees(nbEmployees);
+        contractor.setLegalInformation(new LegalInformation(siret, siren, rcs, insurrance));
+
+        contractor.setAddress(new Address(streetNumber, street, zipCode, town, country));
+
+        this.rb.update(contractor);
+
+        this.step = 3;
+    }
+
+    public void step3() {
+
+        contractor.setLogo(logo);
+        contractor.setDescription(description);
+
+        this.rb.update(contractor);
+
+        this.step = 4;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -182,4 +298,212 @@ public class ContractorRegistrationBean {
         this.siret = siret;
     }
 
+    public boolean isATeamCompanySelected() {
+        for (SelectItem si : teamCompanies) {
+            if (si.getLabel().equals(legalForm)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getRcs() {
+        return rcs;
+    }
+
+    public void setRcs(String rcs) {
+        this.rcs = rcs;
+    }
+
+    public String getInsurrance() {
+        return insurrance;
+    }
+
+    public void setInsurrance(String insurrance) {
+        this.insurrance = insurrance;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public List<SelectItem> getLegalForms() {
+        return legalForms;
+    }
+
+    public void setLegalForms(List<SelectItem> legalForms) {
+        this.legalForms = legalForms;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(int streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
+    }
+
+    /**
+     * Test if the Contractor has Services
+     *
+     * @return True if the Contractor has Service, or False
+     */
+    public boolean areServices() {
+
+        return !this.contractor.getServices().isEmpty();
+
+    }
+
+    /**
+     * Add a new Service
+     */
+    public void addService() { // step 4 add services
+       
+
+        Service service = new Service();
+        service.setTitle(getTitleService());
+        service.setDescription(getDescriptionService());
+        if (this.getPriceService() != 0.0) {
+            service.setPrice(getPriceService());
+        }
+        service.setCategory(this.sb.searchCategoryById(this.idCategoryService));
+        contractor.addService(service);
+        rb.update(contractor);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre prestation a été ajoutée avec succès !", ""));
+
+         if(areServices()) this.step = 5;
+    }
+
+    /**
+     * Delete a Contractor's Service
+     *
+     * @param service Service to Remove
+     */
+    public void deleteService(Service service) {
+
+        contractor.removeService(service);
+        rb.update(contractor);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre prestation a été supprimé avec succès !", ""));
+
+        if(!areServices()) this.step = 4;
+    }
+
+    /**
+     * Uppdate a Contractor's Service
+     */
+    public void updateService() {
+
+        rb.update(this.editService);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre prestation a été modifiée avec succès !", ""));
+
+    }
+
+    public String getTitleService() {
+        return titleService;
+    }
+
+    public void setTitleService(String titleService) {
+        this.titleService = titleService;
+    }
+
+    public String getDescriptionService() {
+        return descriptionService;
+    }
+
+    public void setDescriptionService(String descriptionService) {
+        this.descriptionService = descriptionService;
+    }
+
+    public long getIdCategoryService() {
+        return idCategoryService;
+    }
+
+    public void setIdCategoryService(long idCategoryService) {
+        this.idCategoryService = idCategoryService;
+    }
+
+    public double getPriceService() {
+        return priceService;
+    }
+
+    public void setPriceService(double priceService) {
+        this.priceService = priceService;
+    }
+
+    public Contractor getContractor() {
+        return contractor;
+    }
+
+    public void setContractor(Contractor contractor) {
+        this.contractor = contractor;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public Service getEditService() {
+        return editService;
+    }
+
+    public void setEditService(Service editService) {
+        this.editService = editService;
+    }
 }
