@@ -9,26 +9,20 @@ import com.gdf.ejb.EvaluationBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Notification;
 import com.gdf.persistence.Tenderer;
-import java.io.IOException;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * TendererSearchBean
  * @author nicolas
  */
-@Named(value = "listTendererBean")
+@Named(value = "tendererSearchBean")
 @ViewScoped
-public class ListTendererBean implements Serializable {
+public class TendererSearchBean implements Serializable {
     
     @EJB
     private EvaluationBean ebi;
@@ -58,7 +52,7 @@ public class ListTendererBean implements Serializable {
      */
     private String userCategory; 
 
-    public ListTendererBean() {
+    public TendererSearchBean() {
         
     }
     
@@ -80,14 +74,14 @@ public class ListTendererBean implements Serializable {
     
     @PostConstruct
     public void initBean() {
+        
         // Temporary used to connect a Contractor
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", "10");
+        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", new Long("10"));
         FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userCategory", Contractor.userCategory);          
         
-        userID = Long.parseLong((String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID"));
+        userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
         userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");
         
-        //System.out.println(userID+" ------------------------------------ "+userCategory);
     }
     
     /**
@@ -97,7 +91,7 @@ public class ListTendererBean implements Serializable {
      */
     private Boolean isContractorConnected() {
         // Check if connected user is a contrator
-        return userID != null && !userID.equals("") && userCategory.equals(Contractor.userCategory);
+        return userID != null && userCategory.equals(Contractor.userCategory);
     }
 
     /**

@@ -13,7 +13,7 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
-        <title>Contractor list</title>
+        <title>Prestataires</title>
         <h:outputStylesheet library="css" name="style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
@@ -26,10 +26,11 @@ and open the template in the editor.
         <!-- SEARCH -->
         <ui:include src="/includes/search.xhtml" />
 
-        <div style="width : 50%; margin : auto; ">
-            <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de recherche !" 
-                          rendered="#{empty searchManagedBean.lc}"/>
-        </div>
+        <p:fieldset rendered="#{empty searchManagedBean.lc}">
+            <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
+                <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de recherche !"/> 
+            </div>
+        </p:fieldset>
 
         <h:panelGroup rendered ="#{searchManagedBean.lc.size() ge 2}">
 
@@ -64,7 +65,7 @@ and open the template in the editor.
                             </div>
                             <div>
                                 <h:button class="headerCommandButton" value="Voir #{contractor.socialReason}" 
-                                          outcome="/views/contractorInformation?id=#{contractor.id}" />
+                                          outcome="/views/contractorInformations?id=#{contractor.id}" />
                             </div>
                         </div>
                     </fieldset> 

@@ -6,100 +6,125 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:o="http://omnifaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:o="http://omnifaces.org/ui">
+
     <h:head>
-        <title>Tenderer informations</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Soumissionnaires</title>
         <h:outputStylesheet library="css" name="style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script type="text/javascript">
+            function handleAskReviewRequest(xhr, status, args) {
+                PF('askReviewDialog').hide();
+            }
+        </script>
+
     </h:head>
 
     <h:body>
 
-        <f:metadata>
-            <o:viewParam name ="id" value="#{tendererInformationsBean.id}" />
-            <f:viewAction action="#{tendererInformationsBean.init()}" />
-        </f:metadata>
 
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
 
+        <!-- SEARCH -->
+        <ui:include src="/includes/search.xhtml" />
+
+        <p:fieldset rendered="#{empty searchManagedBean.ltd}">
+            <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
+                <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de recherche !"/>
+            </div>
+        </p:fieldset>
+
         <!-- CONTENT -->
         <div class="divContent">
-            <div class="divContentPadding">
 
-                <c:if test="#{tendererInformationsBean.tenderer == null}" >
-                    <h2>Soumissionnaire introuvable !</h2> 
-                </c:if>
+            <p:growl widgetVar="askReviewGrowl" sticky="false" showDetail="true" life="3000" />
 
-                <c:if test="#{tendererInformationsBean.tenderer != null}" >
+            <o:form id="askReviewForm" includeViewParams="true">
+                <table  width="100%" style="margin: 0px;">
+                    <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
+                        <tr>
+                            <td>
 
-                    <div id="divPresentation">
-                        <div id="divImagePresentation">
-                            <h:graphicImage value="#{tendererInformationsBean.tenderer.avatar}" styleClass="imageLogo" />
+                                <fieldset style="margin-top: 10px;">
+
+                                    <h:graphicImage value="#{tend.avatar}" height="75px" style="float: left;"/>
+
+                                    <h:outputText value="#{tend.login}"
+                                                  style="font-size: x-large; padding-left: 20px;" />
+
+                                    <c:if test="#{tend.nbReviews lt 2}">
+                                        <h:outputText value="#{tend.nbReviews} avis donné" style="float: right;"/>                                               
+                                    </c:if>
+                                    <c:if test="#{tend.nbReviews gt 1}">
+                                        <h:outputText value="#{tend.nbReviews} avis donnés" style="float: right;"/>                                               
+                                    </c:if>
+
+                                    <br/>
+                                    <h:outputText value="Nom complet : #{tend.firstname} #{tend.lastname}" 
+                                                  style="padding-left: 20px;" />
+
+                                    <div style="float: right;">
+
+                                        <p:commandButton id="askReviewBtn" class="headerCommandButton" value="Demander un avis" 
+                                                         rendered="#{tendererSearchBean.display(tend.id)}"
+                                                         onclick="PF('askReviewDialog').show();"
+                                                         actionListener="#{tendererSearchBean.setTenderer(tend)}"
+                                                         update="askReviewDialogForm:dialogPanel" /> 
+                                        <h:button class="headerCommandButton" value="Voir #{tend.login}" 
+                                                  outcome="/views/tendererInformations?id=#{tend.id}" />
+
+                                    </div>   
+
+                                    <br/>
+                                    <h:outputText value="Inscrit le #{tend.registrationDate}" 
+                                                  style="padding-left: 20px;" /> 
+                                </fieldset>
+
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>         
+            </o:form>
+
+            <!-- DIALOG BOX FOR ASKING REVIEWS  -->
+            <o:form id="askReviewDialogForm" includeViewParams="true">
+
+                <p:dialog header="Demande d'avis" modal="true" widgetVar="askReviewDialog" resizable="false">
+                    <p:outputPanel id="dialogPanel">
+                        <h:panelGrid columns="1" cellpadding="5">
+
+                            <h:outputText value="Soumissionaire : "/>
+                            <h:outputText value="#{tendererSearchBean.tenderer.login} 
+                                          (#{tendererSearchBean.tenderer.firstname} #{tendererSearchBean.tenderer.lastname})" />
+
+                            <h:outputLabel value="Message :" />
+                            <p:inputTextarea id="askReviewMsg" value="#{tendererSearchBean.message}" 
+                                             rows="6" cols="33" placeholder="Facultatif" />
+
+                        </h:panelGrid>
+                        <div class="dialogFooter" >
+                            <p:commandButton id="sendAskReviewBtn" update="askReviewForm"
+                                             value="Envoyer" actionListener="#{tendererSearchBean.askReview()}"                                                          
+                                             oncomplete="handleAskReviewRequest(xhr, status, args)" 
+                                             onclick="PF('askReviewGrowl').renderMessage({summary: 'Demande d\'avis envoyée !',
+                                                         detail: 'La demande d\'avis à été envoyée', severity: 'info'});" /> 
                         </div>
-                        <div id="divDetailsPresentation">
-                            <h:outputLabel value="#{tendererInformationsBean.tenderer.login}" />
-                            <div id="divInformationsPresentation">
-                                <b>Email : </b> <h:outputText value="#{tendererInformationsBean.tenderer.email}" />
-                                <b style="margin-left: 20px;">Téléphone : </b> <h:outputText value="#{tendererInformationsBean.tenderer.phone}" />
-                            </div>
-                        </div>
-                    </div>
 
+                    </p:outputPanel>
+                </p:dialog>
 
-                    <div id="divFullName">
-                        <h2>Nom complet</h2>
-                        <h:outputText value="#{tendererInformationsBean.tenderer.firstname} #{tendererInformationsBean.tenderer.lastname}"/>
-                    </div>
+            </o:form>
 
-                    <div id="divRegistrationDate">
-                        <h2>Date d'inscription</h2>
-                        <h:outputText value="#{tendererInformationsBean.tenderer.registrationDate}"/>
-                    </div>
-
-                    <div id="divReviews">
-                        <h2>Avis</h2>
-                        <h3>Nombre d'avis donnés : #{tendererInformationsBean.tenderer.reviews.size()}</h3>
-                    </div>
-
-                    <div>
-                        <c:forEach items="#{tendererInformationsBean.tenderer.reviews}" var="review" >
-                            <div class="divReviews">
-                                <h:outputLabel style="font-size: 20px;" value="#{review.appreciation}"/><h:outputLabel style="font-size: 14px; color: #999999;" value=" pour #{review.contractor.login} le #{review.date}" />
-                                <br/>
-                                <h:outputText value="#{review.content}" />
-                                <br/>
-                                <div class="diveRateReview">
-                                    <b id="starsTxt2" style="float:left;">Note : </b> 
-                                    <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
-                                </div>
-                                <br/>
-                                <c:if test="#{review.contractorAnswer != null}" >
-                                    <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
-                                </c:if>
-                                <c:if test="#{review.contractorAnswer == null}" >
-                                    <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
-                                </c:if>
-                            </div>
-                        </c:forEach>
-                        <c:if test="#{tendererInformationsBean.tenderer.reviews.size() == 0}">
-                            <h:outputLabel value="Il n'existe aucun avis pour ce soumissionnaire." />
-                        </c:if>
-                    </div>
-
-                </c:if>
-
-            </div>
         </div>
 
-        <!-- FOOTER -->
-        <ui:include src="/includes/footer.xhtml" />
+    </h:body>
 
-    </h:body> 
+    <!-- FOOTER -->
+    <ui:include src="/includes/footer.xhtml" />
 
 </html>

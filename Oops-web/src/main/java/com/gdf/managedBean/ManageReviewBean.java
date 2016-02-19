@@ -52,7 +52,7 @@ public class ManageReviewBean implements Serializable {
     public void initBean() {
         
         // Temporary used to connect a Moderator
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", "1");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", new Long("1"));
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Moderator.userCategory);
         
         this.updateWaitingReviews();
@@ -108,21 +108,21 @@ public class ManageReviewBean implements Serializable {
     public void manageReview(Long id) {
         
         // Check if a user is connected
-        String userID = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
+        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
         // Check if connected user is a Moderator
         String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userCategory");
 
         // TEMPORARY : DON'T FORGET TO REMOVE IT !
-        userID = "1";
+        userID = new Long(1);
         userCategory = "MODERATOR";
         
         if(userID != null) {
             
-            if(!userID.equals("") && userCategory.equals(Moderator.userCategory)) {
+            if(userCategory.equals(Moderator.userCategory)) {
 
                 if(this.decisionReview.get(id) != null) {
 
-                    this.ab.manageReview(id, Long.parseLong(userID), this.decisionReview.get(id), this.contentReview.get(id));
+                    this.ab.manageReview(id, userID, this.decisionReview.get(id), this.contentReview.get(id));
 
                     // Update the waiting Reviews list
                     this.updateWaitingReviews();

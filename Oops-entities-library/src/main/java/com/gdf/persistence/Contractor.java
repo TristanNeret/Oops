@@ -7,8 +7,6 @@ package com.gdf.persistence;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import static java.util.Collections.list;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
@@ -24,7 +22,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
@@ -242,7 +239,11 @@ public class Contractor implements Serializable {
     public List<Notification> getNotifications() {
         List<Notification> returnNotifications = new ArrayList<>();
         for (Notification notification : this.notifications) {
-            if (notification.getReview().isReviewEnabled()) {
+            if (notification.getReview() != null) {
+                if (notification.getReview().isReviewEnabled()) {
+                    returnNotifications.add(notification);
+                }
+            } else {
                 returnNotifications.add(notification);
             }
         }

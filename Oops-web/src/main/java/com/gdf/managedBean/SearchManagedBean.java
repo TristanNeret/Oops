@@ -203,12 +203,12 @@ public class SearchManagedBean implements Serializable {
         if(type.equals("tend"))
         {
             ltd =  sb.findTenderers(keyWord);
-            return "/views/listTenderer.xhtml?faces-redirect=true";
+            return "/views/tendererSearch.xhtml?faces-redirect=true";
         }
         else
         {
             lc = sb.findContractors(keyWord,rating,country,category, order);  
-            return "/views/listContractor.xhtml?faces-redirect=true";       
+            return "/views/contractorSearch.xhtml?faces-redirect=true";       
         }        
     }
     

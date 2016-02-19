@@ -46,7 +46,7 @@ public class ContractorInformationsBean implements Serializable {
      */
     public void init() {
         this.contractor = this.searchBean.searchContractorById(id);
-        this.reviews = this.searchBean.searchAcceptedReviews(this.id);
+        this.reviews = this.searchBean.searchAcceptedContratorReviews(this.id);
     }
     
     /**

@@ -21,16 +21,17 @@ import javax.persistence.NamedQuery;
 
 /**
  * Notification
+ *
  * @author aziz
  */
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Notification.deleteByReviewId", query = "DELETE FROM Notification n WHERE n.review.id=?1"),
     @NamedQuery(name = "Notification.findByContractorAndTenderer", query = "Select n FROM Notification n WHERE n.contractor=?1 "
-                    + "AND n.tenderer=?2 ORDER BY n.date DESC")
+            + "AND n.tenderer=?2 ORDER BY n.date DESC")
 })
 public class Notification implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,20 +42,20 @@ public class Notification implements Serializable {
     private Date date;
     @Column(name = "NOTIFICATION_STATE")
     private NotificationState state;
-    
+
     private NotificationType category;
-    
+
     private String link;
-    
+
     @ManyToOne(fetch = EAGER, cascade = {CascadeType.MERGE})
     private Contractor contractor;
-    
+
     @ManyToOne(fetch = EAGER, cascade = {CascadeType.MERGE})
     private Tenderer tenderer;
-    
+
     @ManyToOne(fetch = EAGER, cascade = {CascadeType.MERGE})
     private Moderator moderator;
-    
+
     @ManyToOne(fetch = EAGER, cascade = {CascadeType.MERGE})
     private Review review;
 
@@ -63,69 +64,73 @@ public class Notification implements Serializable {
      */
     public Notification() {
     }
-    
+
     /**
      * Create a new Notification with parameters
+     *
      * @param review the Review concerned by the Notification
      * @param tenderer the Tenderer concerned by the Notification
      * @param contractor the Contractor concerned by the Notification
      * @param notificationType type of the new Notification
      */
     public Notification(Review review, Tenderer tenderer, Contractor contractor, NotificationType notificationType) {
-        
+
         this.review = review;
         this.tenderer = tenderer;
         this.contractor = contractor;
         this.category = notificationType;
         this.state = NotificationState.NOT_READ;
         this.date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        
+
     }
-    
+
     /**
      * Create a new Notification with parameters
+     *
      * @param review the Review concerned by the Notification
      * @param tenderer the Tenderer concerned by the Notification
      * @param moderator the Moderator concerned by the Notification
      * @param notificationType type of the new Notification
      */
     public Notification(Review review, Tenderer tenderer, Moderator moderator, NotificationType notificationType) {
-        
+
         this.review = review;
         this.tenderer = tenderer;
         this.moderator = moderator;
         this.category = notificationType;
         this.state = NotificationState.NOT_READ;
         this.date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        
+
     }
-    
+
     /**
      * Create a new Notification with parameters
+     *
      * @param review the Review concerned by the Notification
      * @param contractor the Contrcator concerned by the Notification
      * @param moderator the Moderator concerned by the Notification
      * @param notificationType type of the new Notification
      */
     public Notification(Review review, Contractor contractor, Moderator moderator, NotificationType notificationType) {
-        
+
         this.review = review;
         this.contractor = contractor;
         this.moderator = moderator;
         this.category = notificationType;
         this.state = NotificationState.NOT_READ;
         this.date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        
+
     }
-    
-      /**
+
+    /**
      * Create a new Notification with parameters
-     * @param message the content of the message sent to the contractor from the Moderator
+     *
+     * @param message the content of the message sent to the contractor from the
+     * Moderator
      * @param contractor the Contrcator concerned by the Notification
      * @param moderator the Moderator concerned by the Notification
-     * @param notificationType type of the new Notification
      */
-    public Notification(Contractor contractor, Moderator moderator, String message){
+    public Notification(Contractor contractor, Moderator moderator, String message) {
         this.contractor = contractor;
         this.moderator = moderator;
         this.description = message;
@@ -141,7 +146,6 @@ public class Notification implements Serializable {
         this.date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
     }
 
-  
     public Long getId() {
         return id;
     }
@@ -221,5 +225,5 @@ public class Notification implements Serializable {
     public void setLink(String link) {
         this.link = link;
     }
-    
+
 }
