@@ -52,7 +52,8 @@ public class TendererInformationsBean implements Serializable {
      * Initialize Tenderer informations
      */
     public void init() {
-        this.tenderer = this.searchBean.searchTendererById(id);
+        this.tenderer = this.searchBean.searchTendererById(this.id);
+        this.reviews = this.searchBean.searchAcceptedTendererReviews(this.id);
     }
     
     /**

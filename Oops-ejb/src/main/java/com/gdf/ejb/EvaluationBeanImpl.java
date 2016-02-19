@@ -106,7 +106,7 @@ public class EvaluationBeanImpl implements EvaluationBean, Serializable {
                 // Create and persist the new Notification
                 Notification newNotification = new Notification(review, review.getTenderer(), review.getContractor(), TO_TENDERER);
                 newNotification.setDescription(attachedContractor.getRepresentatorFirstname() + " de " + attachedContractor.getSocialReason() + " a répondu à votre avis !");
-                newNotification.setLink("/views/contractorInformation.xhtml?id=" + review.getContractor().getId());
+                newNotification.setLink("/views/contractorInformations.xhtml?id=" + review.getContractor().getId());
                 em.persist(newNotification);
 
                 // Add the new Notification to others entities

@@ -56,7 +56,7 @@ public class ContractorsReviewBean implements Serializable {
         if (userID != null) {
 
             // DELETE AND MODIFY WHEN WE WILL HAVE A CURRENT CONTRACTROR CONNECTED
-            this.reviews = this.searchBean.searchAcceptedReviews(userID);
+            this.reviews = this.searchBean.searchAcceptedContratorReviews(userID);
             this.answersReview = new HashMap<>();
             for(Review r : this.reviews) {
                 this.answersReview.put(r.getId(), r.getContractorAnswer());

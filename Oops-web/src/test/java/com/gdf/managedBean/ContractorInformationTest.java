@@ -31,7 +31,7 @@ public class ContractorInformationTest {
     public static void setUpClass() {
         
         driver = new FirefoxDriver();
-        baseUrl = "http://localhost:8080/Oops-web/views/contractorInformation.xhtml";
+        baseUrl = "http://localhost:8080/Oops-web/views/contractorInformations.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         
     }

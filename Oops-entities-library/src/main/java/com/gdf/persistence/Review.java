@@ -31,7 +31,8 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Review.findWaitingReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.DELIVERED AND r.reviewEnabled=true"),
-    @NamedQuery(name = "Review.findAcceptedReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1 AND r.reviewEnabled=true"),
+    @NamedQuery(name = "Review.findAcceptedContractorReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.contractor.id=?1 AND r.reviewEnabled=true"),
+    @NamedQuery(name = "Review.findAcceptedTendererReviews", query = "SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED AND r.tenderer.id=?1 AND r.reviewEnabled=true"),
     @NamedQuery(name = "Review.findTendererReviews", query = "SELECT r FROM Review r WHERE r.tenderer.id=?1 AND r.reviewEnabled=true"),
     @NamedQuery(name = "Review.deleteReviewById", query = "DELETE FROM Review r WHERE r.id=?1")
 })

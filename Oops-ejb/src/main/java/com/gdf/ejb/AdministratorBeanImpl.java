@@ -88,7 +88,7 @@ public class AdministratorBeanImpl implements AdministratorBean, Serializable {
                 // update the number of reviews given by the tenderer and accepted by moderator
                 attachedTenderer.updateNbReviews(); 
                 newNotification.setDescription("Votre avis sur " + review.getContractor().getSocialReason() + " a été validé !");
-                newNotification.setLink("/views/contractorInformation.xhtml?id=" + review.getContractor().getId());
+                newNotification.setLink("/views/contractorInformations.xhtml?id=" + review.getContractor().getId());
                 break;
             case TO_BE_MODIFIED:
                 newNotification.setDescription("Vous devez modifier avis sur " + review.getContractor().getSocialReason() + ".");

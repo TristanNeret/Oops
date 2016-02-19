@@ -17,12 +17,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 /**
- * ListTendererBean
+ * TendererSearchBean
  * @author nicolas
  */
-@Named(value = "listTendererBean")
+@Named(value = "tendererSearchBean")
 @ViewScoped
-public class ListTendererBean implements Serializable {
+public class TendererSearchBean implements Serializable {
     
     @EJB
     private EvaluationBean ebi;
@@ -52,7 +52,7 @@ public class ListTendererBean implements Serializable {
      */
     private String userCategory; 
 
-    public ListTendererBean() {
+    public TendererSearchBean() {
         
     }
     

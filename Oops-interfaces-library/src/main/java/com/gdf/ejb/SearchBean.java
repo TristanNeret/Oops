@@ -101,8 +101,14 @@ public interface SearchBean {
      * @param id id of the Contractor
      * @return the accepted Reviews List of the Contractor
      */
-    public List<Review> searchAcceptedReviews(long id);
+    public List<Review> searchAcceptedContratorReviews(long id);
     
+    /**
+     * Search accepted Reviews for a Tenderer
+     * @param id id of the Tenderer
+     * @return the accepted Reviews List of the Tenderer
+     */
+    public List<Review> searchAcceptedTendererReviews(long id);
 
     // SEARCH
     

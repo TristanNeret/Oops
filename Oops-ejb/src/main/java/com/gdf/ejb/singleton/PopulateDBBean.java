@@ -78,6 +78,7 @@ public class PopulateDBBean {
         tenderer.addReview(review);
         tenderer.addReview(review1);
         tenderer.addReview(review2);
+        tenderer.updateNbReviews();
         em.persist(tenderer);
         
         tenderer = new Tenderer("Dede", "dede.legrand@gmail.com", "password", "Didier", "Legrand", 
