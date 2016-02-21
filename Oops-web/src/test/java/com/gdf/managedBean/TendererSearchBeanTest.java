@@ -21,10 +21,10 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * ListTendererBeanTest
+ * TendererSearchBeanTest
  * @author aziz
  */
-public class ListTendererBeanTest {
+public class TendererSearchBeanTest {
     
     private final By searchButtonXpathExp = By.xpath("//input[contains(@id, 'searchButton')]"),
              typeListXpathExp = By.xpath("//select[contains(@id, 'listType')]"),
@@ -34,7 +34,7 @@ public class ListTendererBeanTest {
     private static WebDriver driver;
     private static String baseUrl;
     
-    public ListTendererBeanTest() {
+    public TendererSearchBeanTest() {
         
     }
     

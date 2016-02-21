@@ -15,23 +15,24 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+
 /**
- * ContractorInformationTest
- * @author nicolas
+ *
+ * @author bibo
  */
-public class ContractorInformationTest {
+public class TendererInformationBeanTest {
     
     private static WebDriver driver;
     private static String baseUrl;
 
-    public ContractorInformationTest() {
+    public TendererInformationBeanTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
         
         driver = new FirefoxDriver();
-        baseUrl = "http://localhost:8080/Oops-web/views/contractorInformations.xhtml";
+        baseUrl = "http://localhost:8080/Oops-web/views/tendererInformations.xhtml";
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         
     }
@@ -60,24 +61,23 @@ public class ContractorInformationTest {
     public void testNoId() {
         
         driver.get(baseUrl);        
-        driver.findElement(By.xpath("//h2[contains(text(), 'Prestataire introuvable !')]"));   
+        driver.findElement(By.xpath("//h2[contains(text(), 'Soumissionnaire introuvable !')]"));   
         
     }
     
     @Test
     public void testBadid(){
         
-        driver.get(baseUrl+"?id=500");        
-        driver.findElement(By.xpath("//h2[contains(text(), 'Prestataire introuvable !')]"));     
+        driver.get(baseUrl+"?id=21");        
+        driver.findElement(By.xpath("//h2[contains(text(), 'Soumissionnaire introuvable !')]"));     
         
     }
     
     @Test
     public void testGoodid(){
         
-        driver.get(baseUrl+"?id=50");        
-        driver.findElement(By.xpath("//label[1][contains(text(), 'IT Contractor Inc.')]"));      
+        driver.get(baseUrl+"?id=1");        
+        driver.findElement(By.xpath("//label[1][contains(text(), 'Michmich')]"));      
 
     }
-    
 }

@@ -43,7 +43,7 @@ public class SearchBeanImplTest {
 
     @Before 
     public void setUp() {
-        searchBeanImpl.setEm(mockedEntityManager);
+        searchBeanImpl.em = mockedEntityManager;
     }
 
     @Test

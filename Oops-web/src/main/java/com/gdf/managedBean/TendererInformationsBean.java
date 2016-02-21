@@ -6,8 +6,6 @@
 package com.gdf.managedBean;
 
 import com.gdf.ejb.SearchBean;
-import com.gdf.persistence.Tenderer;
-import static com.gdf.persistence.Notification_.tenderer;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
@@ -54,7 +52,8 @@ public class TendererInformationsBean implements Serializable {
      * Initialize Tenderer informations
      */
     public void init() {
-        this.tenderer = this.searchBean.searchTendererById(id);
+        this.tenderer = this.searchBean.searchTendererById(this.id);
+        this.reviews = this.searchBean.searchAcceptedTendererReviews(this.id);
     }
     
     /**

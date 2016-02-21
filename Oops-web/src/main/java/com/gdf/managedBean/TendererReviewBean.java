@@ -61,15 +61,15 @@ public class TendererReviewBean implements Serializable {
     public void initBean() {
         
         // Temporary used to connect a Contractor
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", "1");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", new Long("1"));
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Tenderer.userCategory);
         
         // Check if a user is connected
-        String userID = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
+        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
       
-        if (userID != null && !userID.isEmpty()) {
+        if (userID != null) {
 
-            this.id = new Long(userID);
+            this.id = userID;
             this.reviews = null;
             this.reviews = this.searchBean.searchTendererById(this.id).getReviews();
         

@@ -8,10 +8,8 @@ package com.gdf.managedBean;
 import com.gdf.ejb.ContractorManagerBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
-import com.gdf.persistence.Moderator;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -20,12 +18,9 @@ import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * ContractorEditBean
- *
  * @author bibo
  */
 @Named(value = "contractorEditBean")
@@ -62,11 +57,11 @@ public class ContractorEditBean implements Serializable {
     public void init() {
         
         // Temporary used to connect a Contractor
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", "10");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", new Long("10"));
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Contractor.userCategory);
         
-        String userID = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
-        this.contractor = sb.searchContractorById(Long.parseLong(userID));
+        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
+        this.contractor = sb.searchContractorById(userID);
 
         SelectItemGroup g1 = new SelectItemGroup("Entreprise individuelle");
         g1.setSelectItems(nonTeamCompanies);

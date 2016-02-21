@@ -19,9 +19,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
@@ -174,7 +172,7 @@ public class ContractorRegistrationBean implements Serializable {
 
         Long id = this.rb.register(c);
         // Connect the contractor
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", id + "");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", id);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Contractor.userCategory);
 
         this.contractor = sb.searchContractorById(id); // the contractor with the id setted

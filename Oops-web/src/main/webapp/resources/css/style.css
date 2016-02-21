@@ -56,6 +56,7 @@ h2 {
     background-color: #666666;
     color: #ffffff;
     font-size: 12px !important;
+    cursor: pointer;
 }
 
 table.panelHeaderButton {
