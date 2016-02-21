@@ -148,7 +148,7 @@ public class PopulateDBBean implements PopulateDB {
         "SARL", "Nous sommes FranceBTP nous vous offront different services dans le domaine de la construction et du batiment,"
                 + " n'hesitez pas a nous contacter pour plus d'informations."
                 , "937937820", "http://www.cibtp.fr/fileadmin/templates/portail/img/logo_charte_qualite.png", "FranceBTP", "Representant", 500000, 500, 2,
-        new Address(3, "rue des haricots", 2648, "Paris", "France"), new LegalInformation("12345678903987", "126456789", "RCSITC113456789", "Assurancetoutrix"));
+        new Address(3, "rue des haricots", 2648, "Paris", "France","ile-de-france"), new LegalInformation("12345678903987", "126456789", "RCSITC113456789", "Assurancetoutrix"));
         service = new Service("Démolition", "Nous réalisons vos travaux de démolition", 100.0, contractor, category);
         contractor.addService(service);  
         

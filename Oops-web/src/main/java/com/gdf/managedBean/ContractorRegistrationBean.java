@@ -183,6 +183,7 @@ public class ContractorRegistrationBean implements Serializable {
 
     public void step2() {
 
+        
         contractor.setLegalForm(legalForm);
         contractor.setLogo(logo);
         contractor.setSocialReason(socialReason);
@@ -190,7 +191,13 @@ public class ContractorRegistrationBean implements Serializable {
         contractor.setNbEmployees(nbEmployees);
         contractor.setLegalInformation(new LegalInformation(siret, siren, rcs, insurrance));
 
-        contractor.setAddress(new Address(streetNumber, street, zipCode, town, country));
+        Address contractorAdress = new Address(streetNumber, street, zipCode, town, country);
+        
+        if(region != null)
+            contractorAdress.setRegion(region);
+        
+                
+        contractor.setAddress(contractorAdress);
 
         this.rb.update(contractor);
 
@@ -201,7 +208,6 @@ public class ContractorRegistrationBean implements Serializable {
 
         contractor.setLogo(logo);
         contractor.setDescription(description);
-
         this.rb.update(contractor);
 
         this.step = 4;
