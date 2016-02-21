@@ -1089,8 +1089,8 @@ form .updateButtonContractorReview {
 }
 
 .erreur {
-    color: #900;
 }
+
 
 /*****************************************************************************/
 /******************************** TAB STYLE **********************************/
@@ -1141,3 +1141,64 @@ form .updateButtonContractorReview {
     -webkit-appearance: none;
 }
 
+
+
+/*****************************************************************************/
+/********************************* LOGIN ************************************/
+/*****************************************************************************/
+
+.divLogin {
+    background-color: #66cccc;
+    color: #333333;
+    font-size:20px;
+    font-weight: 200;
+    height: 50px;
+    padding: 10px;
+    text-align: center;
+    border-color: #666666;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.LoginConnexionButton {
+    border: 1px #333333 solid;
+    height: 30px;
+    margin: 10px;
+    background-color: #cccccc;
+    color: #333333;
+    font-size: 12px;
+}
+
+.LoginInputText {
+    border: 1px #666666 solid;
+    height: 26px;
+    margin: 10px;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 12px;
+}
+
+.PaswordInputText {
+    border: 1px #666666 solid;
+    height: 26px;
+    margin: 10px;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 12px;
+}
+
+.divloginDetails{
+    margin: auto; 
+    width: 350px; 
+    height: 50px;
+    text-align: center; 
+    padding-top: 100px;
+    background-color: #66cccc;
+    color: #333333;
+    font-size:20px;
+    font-weight: 200;
+    padding: 10px;
+    border-color: #666666;
+    border-width: 1px;
+    border-style: solid;
+}

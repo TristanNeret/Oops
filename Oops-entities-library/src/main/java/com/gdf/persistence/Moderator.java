@@ -16,6 +16,7 @@ import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import org.jasypt.util.password.ConfigurablePasswordEncryptor;
@@ -24,7 +25,16 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
  * Moderator
  * @author aziz
  */
+
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Moderator.findAll",
+            query = "select m from Moderator m order by m.login ASC"),
+    @NamedQuery(name = "Moderator.findByLoginAndPwd",
+            query = "select m from Moderator m where m.login=?1 and m.password=?2"),
+    @NamedQuery(name = "Moderator.findByLogin",
+            query = "select m from Moderator m where m.login=?1")
+    })
 public class Moderator implements Serializable {
     
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";
