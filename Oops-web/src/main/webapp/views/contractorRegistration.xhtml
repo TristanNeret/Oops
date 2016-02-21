@@ -118,7 +118,7 @@ and open the template in the editor.
                         <p:message id="contractorPhoneNumberMessage" for="contractorPhoneNumber" />
 
                         <p:commandButton id="contractorNext1Button"
-                                         value="Suivant"  update="registerContractorForm1 registerContractorForm2 progressionForm"                                     
+                                         value="Suivant"  update="registerContractorForm1 registerContractorForm2 progressionForm registerContractorFormAdress"                                     
                                          action="#{contractorRegistrationBean.step1()}"
                                          oncomplete="handleContractorStep1Request(xhr, status, args)"/>
                     </h:panelGrid>
@@ -138,7 +138,9 @@ and open the template in the editor.
 
 
             <o:form id="registerContractorForm2" includeViewParams="true">
+
                 <p:fieldset rendered="#{contractorRegistrationBean.step == 2}">
+
                     <h:panelGrid id="grid2" columns="1" cellpadding="5">
 
                         <h:panelGrid columns="1" cellpadding="0">
@@ -219,19 +221,29 @@ and open the template in the editor.
                             </h:panelGrid>
 
                         </h:panelGrid>
+                            
+                        </h:panelGrid>
+                        
+                    </p:fieldset>
 
-                        <!-- -->
-                        <hr/>
-
-                        <h:panelGrid columns="3" cellpadding="5" id="infoAdress">
+                </o:form>
+                    
+            
+                <!-- -->
+                <hr/> 
+                
+                <o:form id="registerContractorFormAdress" includeViewParams="true">
+                    
+                    <p:fieldset rendered="#{contractorRegistrationBean.step == 2}">
+                              
+                        <h:panelGrid columns="3" cellpadding="5">
                                 
                             <h:outputLabel for="listCountries" value="Pays :" class="labelModificationForm"/>
                             <h:selectOneMenu  id="listCountries"  value="#{contractorRegistrationBean.country}" style="margin-right: 5px">
                                 <f:selectItems value="#{contractorRegistrationBean.allCountry}"/>
                                 <f:ajax render ="@form"/>
                             </h:selectOneMenu>
-                       
-                            
+                              
                             <h:panelGroup rendered="#{contractorRegistrationBean.country != 'France'}">
                             
                                 <h:outputLabel for="contractorStreetNumber" value="N° :" class="labelModificationForm"/>
@@ -251,9 +263,9 @@ and open the template in the editor.
                             
                             </h:panelGroup>
                             
-                            <h:panelGroup  rendered="#{contractorRegistrationBean.country == 'France'}">
+                            <h:panelGroup id ="adress" rendered="#{contractorRegistrationBean.country == 'France'}">
              
-                                <h:form>
+                                <h:form >
                                     
                                     <h:outputLabel for="zipCode" value="Code postal :" class="labelModificationForm"/>
                                     <h:inputText  id="zipCode" value="#{contractorRegistrationBean.zipCode}">
@@ -262,14 +274,12 @@ and open the template in the editor.
                                     </h:inputText>
                                     <p:message id="zipCodeMessageFr" for="zipCode" />
 
-
                                     <h:panelGroup rendered="#{contractorRegistrationBean.isCode()}">
 
                                         <h:outputLabel for="contractorRegionFr" value="Region :" class="labelModificationForm"/>
                                         <h:outputText id="contractorRegionFr" value="#{contractorRegistrationBean.region}"/>
                                         <p:message id="regionMessageFr" for="contractorRegionFr" />
 
-                                
                                         <h:outputLabel for="contractorTownFr" value="Ville :" class="labelModificationForm"/>
                                         <h:selectOneMenu id="contractorTownFr"   value="#{contractorRegistrationBean.town}" style="margin-right: 5px">
                                             <f:selectItems   value="#{contractorRegistrationBean.allTown}"/>
@@ -293,9 +303,7 @@ and open the template in the editor.
                             </h:panelGroup>
                         
                         </h:panelGrid>
-
-                    </h:panelGrid>
-
+                                          
                     <p:commandButton id="contractorNext2Button"
                                      value="Suivant" update="registerContractorForm2 registerContractorForm3 progressionForm" 
                                      action="#{contractorRegistrationBean.step2()}"/>
