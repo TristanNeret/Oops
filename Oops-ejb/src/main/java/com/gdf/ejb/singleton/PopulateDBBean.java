@@ -20,6 +20,7 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
@@ -48,14 +49,17 @@ public class PopulateDBBean implements PopulateDB {
 
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;  
-    
+  
     private final static String[] ignoredCountry = {"","Samoa américaines","Géorgie du Sud-et-les Îles Sandwich du Sud", "Åland","Samoa américaines","Territoire britannique de l'océan Indien","Îles mineures éloignées des États-Unis", "Terres australes et antarctiques françaises","Géorgie du Sud-et-les Îles Sandwich du Sud"};
+    private List<String> allCountries;
+    private ClientConfig config;
+    private Client client; 
+    private WebResource service; 
+    
     
     /**
      * Populate the database for the selenium tests
      */
-    private List<String> allCountries;
-
     public PopulateDBBean() {
         this.allCountries = new ArrayList();
     }
@@ -66,7 +70,13 @@ public class PopulateDBBean implements PopulateDB {
         
         // REVIEWS
         
+        /*
+            Retrieve all countries of the world for the registration of a contractor (with API rest com.mashape.unirest) 
+        */
         this.retrieveAllWorldCoutries();
+        
+        config = new DefaultClientConfig();
+        client = Client.create(config);
                 
         Review review = new Review();
         review.setAppreciation("Très professionel");
@@ -160,10 +170,14 @@ public class PopulateDBBean implements PopulateDB {
         
     }
     
+    
+    /*
+     for retrieve all countries with unirest API
+    */
     private void retrieveAllWorldCoutries(){
         
-        
         try {
+        
             // These code snippets use an open-source library. http://unirest.io/java
             HttpResponse<JsonNode> response = Unirest.get("https://restcountries-v1.p.mashape.com/all")
                     .header("X-Mashape-Key", "IYf0SsPkx6mshsdvXDW6JC2Pt65up1NAEDejsnyT9Ot96YT0tC")
@@ -183,24 +197,28 @@ public class PopulateDBBean implements PopulateDB {
                     JSONObject infoCoutryJSON =  (JSONObject)jo;
                     JSONObject  allTranslationNameCountry = (JSONObject) infoCoutryJSON.get("translations");
                     String nameCountryFrench = (String) allTranslationNameCountry.get("fr");
-                    if( nameCountryFrench == null || !this.belongToIgnoredCountry(nameCountryFrench))
+                    if( nameCountryFrench != null && !this.belongToIgnoredCountry(nameCountryFrench))
                         allCountries.add(nameCountryFrench);
                 }
             
             }catch (ParseException ex) {
                 Logger.getLogger(PopulateDBBean.class.getName()).log(Level.SEVERE, null, ex);
             }
+        
         } catch (UnirestException ex) {
             Logger.getLogger(PopulateDBBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    
     }
     
+    /*
+    For delete some countries (the small countries for exemple)
+    */
     private boolean belongToIgnoredCountry(String name){
         
         for(String country : ignoredCountry){
-            if(country.equals(name)){
-                return true;
-            }
+            if(country.equals(name))
+                return true; 
         }                   
         return false;
     }
@@ -210,41 +228,78 @@ public class PopulateDBBean implements PopulateDB {
         return this.allCountries;
     }
 
+    
+    /*
+    For retrieve all towns which correspond to a zipcode 
+    */
     @Override
     public List<String> getAllTown(String code) {
-        
-        System.out.println("code = " + code);
-        ClientConfig config = new DefaultClientConfig();
-        Client client = Client.create(config);
-        WebResource service = client.resource(
+
+   
+        service = client.resource(
         UriBuilder.fromUri("http://api.zippopotam.us/fr/").build());
-        String response = service.path(code).get(String.class);
-
+        String response;
         
-             List<String> lt = new ArrayList();
-            JSONParser parser=new JSONParser();
-            Object obj;
-            
-            try {
-                
-               
-                obj = parser.parse(response);
-                JSONObject jsonObject = (JSONObject) obj;
-                JSONArray list =  (JSONArray) jsonObject.get("places");
-                
-                for (Object jo : list){
-                    JSONObject placesObject =  (JSONObject)jo;
-                    String nameTown = (String) placesObject.get("place name");
-                    lt.add(nameTown);
-                }  
-                  
-               
-            
-            }catch (ParseException ex) {
-                Logger.getLogger(PopulateDBBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try{
+            response = service.path(code).get(String.class);
+        }catch(UniformInterfaceException ue){
+            return null; // if the postal code is null, it doesn't exist dans erro will be display to the customer
+        }
+        
+        List<String> lt = new ArrayList();
+        JSONParser parser=new JSONParser();
+        Object obj;
+        
+        try {
 
+            obj = parser.parse(response);
+            JSONObject jsonObject = (JSONObject) obj;
+            JSONArray list =  (JSONArray) jsonObject.get("places");
+
+            for (Object jo : list){
+                JSONObject placesObject =  (JSONObject)jo;
+                String nameTown = (String) placesObject.get("place name");
+                lt.add(nameTown);
+            }  
+
+        }catch (ParseException ex) {
+            return null;
+        }
+        
         return lt;
+    }
+    
+    @Override
+    public String getRegion(String code) {
+
+        service = client.resource(
+        UriBuilder.fromUri("http://api.zippopotam.us/fr/").build());
+        
+        String response;
+        
+        try{
+            response = service.path(code).get(String.class);
+        }catch(UniformInterfaceException ue){
+            return null; // if the postal code is null, it doesn't exist dans erro will be display to the customer
+        }
+ 
+        String region = "";
+        JSONParser parser=new JSONParser();
+        Object obj;
+        
+        try {
+ 
+            obj = parser.parse(response);
+            JSONObject jsonObject = (JSONObject) obj;
+            JSONArray list =  (JSONArray) jsonObject.get("places");
+            JSONObject regionJSON =  (JSONObject) list.get(0);
+            region =  (String) regionJSON.get("state");
+
+        }catch (ParseException ex) {
+            return null;
+        }
+
+        return region;
     }
     
 }

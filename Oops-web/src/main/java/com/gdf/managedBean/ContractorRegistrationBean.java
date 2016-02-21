@@ -68,6 +68,7 @@ public class ContractorRegistrationBean implements Serializable {
     private String email;
     @NotNull(message = "Veuillez saisir un numéro de téléphone")
     private String phone;
+    private String region;
 
     // STEP 2 -----------------------------------------------------------------------------------
     private String socialReason;
@@ -380,9 +381,9 @@ public class ContractorRegistrationBean implements Serializable {
     }
 
     public void setZipCode(int zipCode) {
-        System.out.println("entre");
         this.code = true;
         this.zipCode = zipCode;
+        this.region = pdb.getRegion(Integer.toString(zipCode));
     }
 
     public String getStreet() {
@@ -401,13 +402,24 @@ public class ContractorRegistrationBean implements Serializable {
         this.town = town;
     }
 
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+    
+    
     public List<SelectItem> getAllCountry() {
         List<String> lcountries = pdb.getAllCountries();
         
         List<SelectItem> li = new ArrayList<>();
         
-        for(String country : lcountries)
-                li.add(new SelectItem(country)); 
+        for(String country : lcountries){
+            if(country != null)
+                li.add(new SelectItem(country));
+        }        
         
         return li;
     }

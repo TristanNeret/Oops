@@ -15,6 +15,8 @@ public interface PopulateDB {
     
     public List<String> getAllCountries();
 
-    public List<String> getAllTown(String country);
+    public List<String> getAllTown(String code);
+    
+    public String getRegion(String code);
     
 }

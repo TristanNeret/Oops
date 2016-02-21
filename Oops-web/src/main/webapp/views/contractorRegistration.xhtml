@@ -221,34 +221,77 @@ and open the template in the editor.
                         </h:panelGrid>
 
                         <!-- -->
+                        <hr/>
 
-                        <h:panelGrid columns="3" cellpadding="5">
+                        <h:panelGrid columns="3" cellpadding="5" id="infoAdress">
+                                
+                            <h:outputLabel for="listCountries" value="Pays :" class="labelModificationForm"/>
+                            <h:selectOneMenu  id="listCountries"  value="#{contractorRegistrationBean.country}" style="margin-right: 5px">
+                                <f:selectItems value="#{contractorRegistrationBean.allCountry}"/>
+                                <f:ajax render ="@form"/>
+                            </h:selectOneMenu>
+                       
+                            
+                            <h:panelGroup rendered="#{contractorRegistrationBean.country != 'France'}">
+                            
+                                <h:outputLabel for="contractorStreetNumber" value="N° :" class="labelModificationForm"/>
+                                <p:inputText id="contractorStreetNumber" placeholder="Numéro de la rue" value="#{contractorRegistrationBean.streetNumber}">
+                                </p:inputText>
+                                <p:message id="streetNumberMessage" for="contractorStreetNumber" />
 
-                            <h:outputLabel for="contractorStreetNumber" value="N° :" class="labelModificationForm"/>
-                            <p:inputText id="contractorStreetNumber" placeholder="Numéro de la rue" value="#{contractorRegistrationBean.streetNumber}">
-                            </p:inputText>
-                            <p:message id="streetNumberMessage" for="contractorStreetNumber" />
+                                <h:outputLabel for="contractorStreet" value="Rue :" class="labelModificationForm"/>
+                                <p:inputText id="contractorStreet" value="#{contractorRegistrationBean.street}">
+                                </p:inputText>
+                                <p:message id="streetMessage" for="contractorStreet" />
 
-                            <h:outputLabel for="contractorStreet" value="Rue :" class="labelModificationForm"/>
-                            <p:inputText id="contractorStreet" value="#{contractorRegistrationBean.street}">
-                            </p:inputText>
-                            <p:message id="streetMessage" for="contractorStreet" />
+                                <h:outputLabel for="contractorZipCode" value="Code postal :" class="labelModificationForm"/>
+                                <p:inputText id="contractorZipCode" value="#{contractorRegistrationBean.zipCode}">
+                                </p:inputText>
+                                <p:message id="zipCodeMessage" for="contractorZipCode" />
+                            
+                            </h:panelGroup>
+                            
+                            <h:panelGroup  rendered="#{contractorRegistrationBean.country == 'France'}">
+             
+                                <h:form>
+                                    
+                                    <h:outputLabel for="zipCode" value="Code postal :" class="labelModificationForm"/>
+                                    <h:inputText  id="zipCode" value="#{contractorRegistrationBean.zipCode}">
+                                        <f:ajax render="@form" event="blur"/>
+                                        <f:validator validatorId="com.gdf.zipValidator"/>
+                                    </h:inputText>
+                                    <p:message id="zipCodeMessageFr" for="zipCode" />
 
-                            <h:outputLabel for="contractorZipCode" value="Code postal :" class="labelModificationForm"/>
-                            <p:inputText id="contractorZipCode" value="#{contractorRegistrationBean.zipCode}">
-                            </p:inputText>
-                            <p:message id="zipCodeMessage" for="contractorZipCode" />
 
-                            <h:outputLabel for="contractorTown" value="Ville :" class="labelModificationForm"/>
-                            <p:inputText id="contractorTown" value="#{contractorRegistrationBean.town}">
-                            </p:inputText>
-                            <p:message id="townMessage" for="contractorTown" />
-               
-                            <h:outputLabel for="contractorCountry" value="Pays :" class="labelModificationForm"/>
-                            <p:inputText id="contractorCountry" value="#{contractorRegistrationBean.country}">
-                            </p:inputText>
-                            <p:message id="countryMessage" for="contractorCountry" />
+                                    <h:panelGroup rendered="#{contractorRegistrationBean.isCode()}">
 
+                                        <h:outputLabel for="contractorRegionFr" value="Region :" class="labelModificationForm"/>
+                                        <h:outputText id="contractorRegionFr" value="#{contractorRegistrationBean.region}"/>
+                                        <p:message id="regionMessageFr" for="contractorRegionFr" />
+
+                                
+                                        <h:outputLabel for="contractorTownFr" value="Ville :" class="labelModificationForm"/>
+                                        <h:selectOneMenu id="contractorTownFr"   value="#{contractorRegistrationBean.town}" style="margin-right: 5px">
+                                            <f:selectItems   value="#{contractorRegistrationBean.allTown}"/>
+                                        </h:selectOneMenu>
+                                        <p:message id="townMessageFr" for="contractorTownFr" />
+
+                                        <h:outputLabel for="contractorStreetNumberFr" value="N° :" class="labelModificationForm"/>
+                                        <p:inputText id="contractorStreetNumberFr" placeholder="Numéro de la rue" value="#{contractorRegistrationBean.streetNumber}">
+                                        </p:inputText>
+                                        <p:message id="streetNumberMessageFr" for="contractorStreetNumberFr" />
+
+                                        <h:outputLabel for="contractorStreet" value="Rue :" class="labelModificationForm"/>
+                                        <p:inputText id="contractorStreetFr" value="#{contractorRegistrationBean.street}">
+                                        </p:inputText>
+                                        <p:message id="streetMessageFr" for="contractorStreetFr" />
+                                    
+                                    </h:panelGroup> 
+                                
+                                </h:form>
+                                    
+                            </h:panelGroup>
+                        
                         </h:panelGrid>
 
                     </h:panelGrid>
