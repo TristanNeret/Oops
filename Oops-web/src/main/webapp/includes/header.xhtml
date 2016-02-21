@@ -7,11 +7,10 @@ and open the template in the editor.
 <!DOCTYPE html>
 <ui:composition 
     xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    xmlns:b="http://bootsfaces.net/ui"
     xmlns:p="http://primefaces.org/ui"
-    xmlns:o="http://omnifaces.org/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <div id="divHeader">
@@ -30,7 +29,7 @@ and open the template in the editor.
                             Notifications
                         </div>
                         <div id="divNotificationList">
-                            <h:outputLabel styleClass="titlePanelReviewAdmin" value="Pas de nouvelles notifiactions." rendered="#{!manageNotificationBean.unreadNotifications}" /> 
+                            <h:outputLabel styleClass="titlePanelReviewAdmin" value="Pas de nouvelles notifiactions." rendered="#{!manageNotificationBean.unreadNotifications}" />
                             <div class="divNotification">
                                 <c:forEach items="#{manageNotificationBean.notificationsList}" var="notification" rendered="#{manageNotificationBean.unreadNotifications}" >
                                     <p:commandButton class="commandButtonClickNotification" styleClass="commandButtonClickNotification" value="#{notification.description}&#10;#{notification.date}" update="@form" action="#{manageNotificationBean.clickOnNotification(notification)}">
@@ -45,11 +44,12 @@ and open the template in the editor.
                     </p:overlayPanel>
                 </h:form>
                 <h:button class="headerCommandButton" value="Connexion" />
-                <h:button class="headerCommandButton" value="Inscription" 
+                <h:button class="headerCommandButton" value="Inscription"
                           outcome="/views/tendererRegistration.xhtml?faces-redirect=true"/>
-                <h:button class="headerCommandButton" value="Prestataire ? Inscrivez-vous ici !" 
-                          outcome="/views/contractorRegistration.xhtml?faces-redirect=true"/>      
+                <h:button class="headerCommandButton" value="Prestataire ? Inscrivez-vous ici !"
+                          outcome="/views/contractorRegistration.xhtml?faces-redirect=true"/>
             </p:panelGrid>
         </p:panelGrid>
     </div>
+
 </ui:composition>
