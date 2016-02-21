@@ -13,43 +13,31 @@ and open the template in the editor.
     xmlns:p="http://primefaces.org/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <div id="divHeader">
-        <p:panelGrid styleClass="panelHeader" columns="3">
-            <h:link styleClass="headerTitle" value="Oops" outcome="/index.xhtml"/>
-            <h:link styleClass="headerSubtitle" value="Opinion on providers of services" outcome="/index.xhtml"/>
-
-            <p:panelGrid styleClass="panelHeaderButton" columns="6">
-                <!-- NOTIFICATION -->
-                <h:form class="formNotificationHeader">
-                    <p:commandLink id="commandButtonNotifications" >
-                        <h:graphicImage library="default" height="40px" onmouseover="this.src = '#{manageNotificationBean.getNotificationImageURL(0)}';" onmouseout="this.src = '#{manageNotificationBean.getNotificationImageURL(1)}'" name="#{manageNotificationBean.notificationImageName}" />
-                    </p:commandLink>
-                    <p:overlayPanel id="notificationPanel" styleClass="overlayPanelNotification" appendToBody="true" for="commandButtonNotifications" dynamic="false">
-                        <div id="divTitleNotification">
-                            Notifications
-                        </div>
-                        <div id="divNotificationList">
-                            <h:outputLabel styleClass="titlePanelReviewAdmin" value="Pas de nouvelles notifiactions." rendered="#{!manageNotificationBean.unreadNotifications}" />
-                            <div class="divNotification">
-                                <c:forEach items="#{manageNotificationBean.notificationsList}" var="notification" rendered="#{manageNotificationBean.unreadNotifications}" >
-                                    <p:commandButton class="commandButtonClickNotification" styleClass="commandButtonClickNotification" value="#{notification.description}&#10;#{notification.date}" update="@form" action="#{manageNotificationBean.clickOnNotification(notification)}">
-                                    </p:commandButton>
-                                </c:forEach>
-                            </div>
-                            <div class="divNotification">
-                                <p:commandButton id="commandButtonClearNotifications" styleClass="commandButtonClearNotification" value="Tout marquer comme lu" action="#{manageNotificationBean.markAsRead()}" update="@form" rendered="#{manageNotificationBean.unreadNotifications}">
-                                </p:commandButton>
-                            </div>
-                        </div>
-                    </p:overlayPanel>
-                </h:form>
-                <h:button class="headerCommandButton" value="Connexion" />
-                <h:button class="headerCommandButton" value="Inscription"
-                          outcome="/views/tendererRegistration.xhtml?faces-redirect=true"/>
-                <h:button class="headerCommandButton" value="Prestataire ? Inscrivez-vous ici !"
-                          outcome="/views/contractorRegistration.xhtml?faces-redirect=true"/>
-            </p:panelGrid>
-        </p:panelGrid>
-    </div>
+    <b:navBar brand="Brand" brandHref="#" inverse="true" fixed="top">
+            <b:navbarLinks>
+                <b:navLink value="Link" href="#"></b:navLink>
+                <b:navLink value="Link" href="#"></b:navLink>
+                <b:dropMenu value="Dropdown">
+                    <b:navLink value="Action" href="#"></b:navLink>
+                    <b:navLink value="Another action" href="#"></b:navLink>
+                    <b:navLink value="Something else here" href="#"></b:navLink>
+                    <b:navLink></b:navLink>
+                    <b:navLink header="Nav header"></b:navLink>
+                    <b:navLink value="Separated link" href="#"></b:navLink>
+                    <b:navLink value="One more separated link" href="#"></b:navLink>
+                </b:dropMenu>
+            </b:navbarLinks>
+            <h:form styleClass="navbar-form navbar-right">
+                <div class="form-group">
+                    <b:inputText placeholder="Email" fieldSize="sm"/>
+                    <!--input type="text" class="form-control" placeholder="Search"/-->
+                </div>
+                <div class="form-group">
+                    <b:inputText placeholder="Password" fieldSize="sm"/>
+                </div> 
+                #{' '}
+                <b:commandButton action="a" value="Sign in" look="success" icon="chevron-right" iconAlign="right"/>
+            </h:form>
+        </b:navBar>
 
 </ui:composition>

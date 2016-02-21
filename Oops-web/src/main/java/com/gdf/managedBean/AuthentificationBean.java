@@ -84,6 +84,63 @@ public class AuthentificationBean implements Serializable {
         }
         
     }
+    
+    /**
+     * Test if a Tenderer is connected
+     * @return True is a Tenderer is connected, or False
+     */
+    public boolean isTendererConnected() {
+        
+        String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");
+        if (userCategory != null) {
+            if (userCategory.equals(Tenderer.userCategory)) {
+                
+                return true;
+                
+            } 
+        } 
+        
+        return false;
+        
+    }
+    
+    /**
+     * Test if a Contractor is connected
+     * @return True is a Tenderer is connected, or False
+     */
+    public boolean isContractorConnected() {
+        
+        String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");
+        if (userCategory != null) {
+            if (userCategory.equals(Contractor.userCategory)) {
+                
+                return true;
+                
+            } 
+        } 
+        
+        return false;
+        
+    }
+    
+    /**
+     * Test if a Moderator is connected
+     * @return True is a Moderator is connected, or False
+     */
+    public boolean isModeratorConnected() {
+        
+        String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");
+        if (userCategory != null) {
+            if (userCategory.equals(Moderator.userCategory)) {
+                
+                return true;
+                
+            } 
+        } 
+        
+        return false;
+        
+    }
  
     /**
      * Logout the user
@@ -95,6 +152,24 @@ public class AuthentificationBean implements Serializable {
         
         return "index?faces-redirect=true";
         
+    }
+    
+    // GETTER/SETTER
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
     
 }
