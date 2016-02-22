@@ -448,6 +448,7 @@ public class ContractorRegistrationBean implements Serializable {
     
     public void setCountry(String country) {
         this.country = country;
+        this.zipCode = 0;
     }
 
     public String getCountry() {
