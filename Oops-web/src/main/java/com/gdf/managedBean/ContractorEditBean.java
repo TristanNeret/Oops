@@ -8,6 +8,7 @@ package com.gdf.managedBean;
 import com.gdf.ejb.ContractorManagerBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
+import com.gdf.singleton.PopulateDB;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.inject.Named;
 
 /**
  * ContractorEditBean
+ *
  * @author bibo
  */
 @Named(value = "contractorEditBean")
@@ -47,6 +49,12 @@ public class ContractorEditBean implements Serializable {
         new SelectItem("SCA", "SCA")
     };
 
+    private boolean code;
+    @EJB
+    private PopulateDB pdb;
+    private List<SelectItem> allCountry;
+    private List<SelectItem> allTown;
+
     @EJB
     SearchBean sb;
 
@@ -55,11 +63,11 @@ public class ContractorEditBean implements Serializable {
 
     @PostConstruct
     public void init() {
-        
+
         // Temporary used to connect a Contractor
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", new Long("10"));
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Contractor.userCategory);
-        
+
         Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
         this.contractor = sb.searchContractorById(userID);
 
@@ -72,6 +80,8 @@ public class ContractorEditBean implements Serializable {
         legalForms = new ArrayList<>();
         legalForms.add(g1);
         legalForms.add(g2);
+
+        code = false;
     }
 
     /**
@@ -97,10 +107,11 @@ public class ContractorEditBean implements Serializable {
     }
 
     public void update() {
-        
-        if((!isATeamCompanySelected()) && (contractor.getNbEmployees() > 0)) 
-                contractor.setNbEmployees(1);
-        
+
+        if ((!isATeamCompanySelected()) && (contractor.getNbEmployees() > 0)) {
+            contractor.setNbEmployees(1);
+        }
+
         cm.update(contractor);
     }
 
@@ -113,11 +124,64 @@ public class ContractorEditBean implements Serializable {
     }
 
     public boolean isATeamCompanySelected() {
-        for(SelectItem si : teamCompanies){
-            if(si.getLabel().equals(contractor.getLegalForm())){
+        for (SelectItem si : teamCompanies) {
+            if (si.getLabel().equals(contractor.getLegalForm())) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean isCode() {
+        return code;
+    }
+
+    public void setZipCode(int zipCode) {
+        this.code = true;
+        this.contractor.getAddress().setZipCode(zipCode);
+        this.contractor.getAddress().setRegion(pdb.getRegion(Integer.toString(zipCode)));
+    }
+
+    public int getZipCode() {
+        return this.contractor.getAddress().getZipCode();
+    }
+
+    public void setCountry(String country) {
+        this.contractor.getAddress().setCountry(country);
+        this.contractor.getAddress().setZipCode(0);
+    }
+
+    public String getCountry() {
+        return this.contractor.getAddress().getCountry();
+    }
+
+    public List<SelectItem> getAllCountry() {
+        List<String> lcountries = pdb.getAllCountries();
+
+        List<SelectItem> li = new ArrayList<>();
+
+        for (String country : lcountries) {
+            if (country != null) {
+                li.add(new SelectItem(country));
+            }
+        }
+
+        return li;
+    }
+
+    public void setAllCountry(List<SelectItem> allCountry) {
+        this.allCountry = allCountry;
+    }
+
+    public List<SelectItem> getAllTown() {
+        List<String> ltowns = pdb.getAllTown(Integer.toString(this.contractor.getAddress().getZipCode()));
+
+        List<SelectItem> li = new ArrayList<>();
+
+        for (String town : ltowns) {
+            li.add(new SelectItem(town));
+        }
+
+        return li;
     }
 }
