@@ -197,9 +197,9 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     margin: 0px; 
     padding-top: 5px; 
     padding-bottom: 5px; 
-    background-color: #444444; 
+    background-color: #222222; 
     font-size: 20px; 
-    color: #66cc00; 
+    color: white; 
     width: 100%; 
     text-align: center;
 }
