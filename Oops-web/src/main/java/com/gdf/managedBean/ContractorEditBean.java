@@ -9,6 +9,7 @@ import com.gdf.ejb.ContractorManagerBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.session.SessionBean;
+import com.gdf.singleton.PopulateDB;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
