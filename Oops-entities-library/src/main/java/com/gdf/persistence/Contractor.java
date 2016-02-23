@@ -358,6 +358,8 @@ public class Contractor implements Serializable {
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
     }
+    
+    
 
     private String encryptPassword(String password){
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();

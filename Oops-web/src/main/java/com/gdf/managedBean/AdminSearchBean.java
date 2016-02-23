@@ -153,7 +153,7 @@ public class AdminSearchBean implements Serializable {
         if (type.equals("tend")) {
             ltd = sb.findTenderers(keyWord);
         } else {
-            lc = sb.findContractors(keyWord, 0, null, null, "ALPHABETICAL");
+            lc = sb.findContractors(keyWord, 0, null, null, "ALPHABETICAL",null);
         }
 
         message = null;

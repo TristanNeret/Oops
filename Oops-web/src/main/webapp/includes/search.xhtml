@@ -19,7 +19,7 @@ and open the template in the editor.
             <h:panelGrid columns="6" style="margin: auto;">
 
                 <b:inputText id="queryInputText" placeholder="Mots-clés" value="#{searchManagedBean.keyWord}" autocomplete="on"></b:inputText>
-                
+
                 <b:selectOneMenu id="listType" value="#{searchManagedBean.type}" onchange="this.form.submit()" styleClass="menuSearchField">
                     <f:selectItem id="cont" itemLabel="Prestataire" itemValue="cont" />
                     <f:selectItem  id="tend" itemLabel="Soumissionnaire" itemValue="tend" />
@@ -38,9 +38,15 @@ and open the template in the editor.
                     <f:selectItems value="#{searchManagedBean.allCountry}"/>
                 </b:selectOneMenu>
 
+                <b:selectOneMenu  id="listTowns"  value="#{searchManagedBean.region}" rendered="#{searchManagedBean.country == 'France'}" style="margin-right: 5px">
+                    <f:selectItem itemLabel="Régions" itemValue=""/>
+                    <f:selectItems value="#{searchManagedBean.allRegions}"/>
+                </b:selectOneMenu>
+
                 <b:selectOneMenu id="listCategories" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.category}" style="margin-right: 5px">
                     <f:selectItem itemLabel="Catégorie" itemValue=""/>
                     <f:selectItems value="#{searchManagedBean.allCategory}"/>
+
                 </b:selectOneMenu>
 
                 <b:commandButton id="searchButton" look="primary" value="Recherche" action="#{searchManagedBean.search()}"></b:commandButton>      

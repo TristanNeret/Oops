@@ -32,7 +32,7 @@ public class Address implements Serializable {
     private Long id;
 
     private int streetNumber, zipCode;
-    private String street, town, country;
+    private String street, town, country,region;
 
     public Address() {
     }
@@ -44,6 +44,17 @@ public class Address implements Serializable {
         this.town = town;
         this.country = country;
     }
+
+    public Address(int streetNumber,String street, int zipCode,  String town, String country, String region) {
+        this.streetNumber = streetNumber;
+        this.zipCode = zipCode;
+        this.street = street;
+        this.town = town;
+        this.country = country;
+        this.region = region;
+    }
+    
+    
     
     public Long getId() {
         return id;
@@ -93,6 +104,15 @@ public class Address implements Serializable {
         this.country = country;
     }
 
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+    
+   
     @Override
     public int hashCode() {
         int hash = 3;

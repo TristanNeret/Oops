@@ -133,7 +133,7 @@ public class SearchBeanImpl implements SearchBean, Serializable {
      * @return the list of contractors
      */
     @Override
-    public List<Contractor> findContractors(String keyWord, int rating, String country, String category, String order) {
+    public List<Contractor> findContractors(String keyWord, int rating, String country, String category, String order,String region) {
 
         boolean first = true;
         String requete;
@@ -163,6 +163,17 @@ public class SearchBeanImpl implements SearchBean, Serializable {
             }
             requete = requete + " c.address.country = :country ";
         }
+        
+        
+        if (country != null && country.equals("France") && region != null) {
+            if (first) {
+                requete = requete + " WHERE ";
+                first = false;
+            } else {
+                requete = requete + " AND ";
+            }
+            requete = requete + " c.address.region = :region ";
+        }
 
         switch (order) {
             case "ALPHABETICAL":
@@ -182,6 +193,10 @@ public class SearchBeanImpl implements SearchBean, Serializable {
 
         if (country != null) {
             query.setParameter("country", country);
+        }
+        
+        if (region != null && country.equals("France")) {
+            query.setParameter("region", region);
         }
 
         if (keyWord != null) {
@@ -258,6 +273,18 @@ public class SearchBeanImpl implements SearchBean, Serializable {
     public List<String> getAllCountry() {
         TypedQuery<String> query;
         query = em.createQuery("SELECT DISTINCT c.address.country FROM Contractor c ", String.class);
+        return query.getResultList();
+    }
+    
+      /**
+     * Get all countries
+     *
+     * @return all countries
+     */
+    @Override
+    public List<String> getAllStates() {
+        TypedQuery<String> query;
+        query = em.createQuery("SELECT DISTINCT c.address.region FROM Contractor c ", String.class);
         return query.getResultList();
     }
 

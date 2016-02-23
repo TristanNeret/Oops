@@ -58,9 +58,10 @@ public interface SearchBean {
      * @param country the country of the contractor
      * @param category the category of service given by the contractor
      * @param order the order used to display the results
+     * @param region
      * @return the list of contractors
      */
-    public List<Contractor> findContractors(String keyWord,int rating, String country, String category, String order);
+    public List<Contractor> findContractors(String keyWord,int rating, String country, String category, String order, String region);
 
     // TENDERER
     
@@ -187,4 +188,10 @@ public interface SearchBean {
      */
     public List<String> getAllCountry();
 
+    /**
+     * Get all states
+     * @return all states
+     */
+    public List<String> getAllStates(); 
+    
 }

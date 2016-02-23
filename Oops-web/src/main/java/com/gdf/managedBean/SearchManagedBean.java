@@ -42,6 +42,8 @@ public class SearchManagedBean implements Serializable {
      */
     private int rating;
     
+    private String region;
+    
     /**
      * Country of the contractor
      */
@@ -61,6 +63,13 @@ public class SearchManagedBean implements Serializable {
      * List of the tenderers resulting of the search
      */
     private List<Tenderer> ltd;
+    
+       
+    /**
+     * All countries of the contractors
+     */
+    private  List<SelectItem> allRegions;
+    
     
     /**
      * All countries of the contractors
@@ -86,6 +95,7 @@ public class SearchManagedBean implements Serializable {
     @PostConstruct
     public void setup() {
         
+        region = null;
         this.type = "cont";
         this.order = "ALPHABETICAL";
         this.listC = sb.getAllCategory();
@@ -178,13 +188,27 @@ public class SearchManagedBean implements Serializable {
         return li;
     }
 
+    public List<SelectItem> getAllRegions() {
+        List<String> listR = sb.getAllStates();
+        List<SelectItem> li = new ArrayList<>();
+        
+        for(String localRegion : listR){
+            if(localRegion != null)
+                li.add(new SelectItem(localRegion)); 
+        }        
+        
+        return li;
+    }
+
+    public void setAllRegions(List<SelectItem> allRegions) {
+        this.allRegions = allRegions;
+    }
+    
     public void setAllCountry(List<SelectItem> allCountry) {
         this.allCountry = allCountry;
     }
 
     public List<SelectItem> getAllCategory() {
-        
-        List<String> listC = sb.getAllCategory();   
         List<SelectItem> li = new ArrayList<>();
         
         for(String localCategory : listC)
@@ -221,6 +245,14 @@ public class SearchManagedBean implements Serializable {
         this.order = order;
     }
 
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+    
     /**
      * Starts the search given all the criterias
      * @return the view where the results will be displayed
@@ -234,7 +266,7 @@ public class SearchManagedBean implements Serializable {
         }
         else
         {
-            lc = sb.findContractors(keyWord,rating,country,category, order);  
+            lc = sb.findContractors(keyWord,rating,country,category, order,region);  
             return "/views/contractorSearch.xhtml?faces-redirect=true";       
         }        
     }
