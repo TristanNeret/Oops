@@ -7,6 +7,7 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.TendererManagerBean;
 import com.gdf.persistence.Tenderer;
+import com.gdf.session.SessionBean;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -44,15 +45,8 @@ public class TendererInfoMngBean implements Serializable {
     @PostConstruct
     public void initBean() {
         
-        // Temporary used to connect a Contractor
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", new Long("1"));
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Tenderer.userCategory);
-        
-        // Check if a user is connected
-        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
-      
-        // get the current tenderer connected from database
-        tenderer = tmb.getTendererById(userID);
+        // Get the current tenderer connected from database
+        tenderer = tmb.getTendererById(SessionBean.getUserId());
         
     }
     

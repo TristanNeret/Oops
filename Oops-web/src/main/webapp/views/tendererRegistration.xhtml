@@ -39,13 +39,15 @@ and open the template in the editor.
     <h:body>
 
         <!-- HEADER -->
-        <ui:include src="/includes/header.xhtml" />
-
-        <!-- SEARCH -->
-        <ui:include src="/includes/search.xhtml" />
+        <c:if test="#{!authentificationBean.moderatorConnected}">
+            <ui:include src="/includes/header.xhtml" />
+        </c:if>
+        <c:if test="#{authentificationBean.moderatorConnected}">
+            <ui:include src="/includes/headerAdmin.xhtml" />
+        </c:if>
 
         <!-- CONTENT -->
-        <div class="divContent">
+        <div class="container">
 
             <p:growl widgetVar="registerGrowl" sticky="false" showDetail="false" life="3000" />
 

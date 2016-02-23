@@ -7,10 +7,10 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.EvaluationBean;
 import com.gdf.persistence.Tenderer;
+import com.gdf.session.SessionBean;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 
 /**
  * ReviewBean
@@ -27,14 +27,6 @@ public class ReviewBean {
     private String reviewContent;
     private int reviewRating;
     
-    public ReviewBean() {
-        
-        // Temporary used to connect a Tenderer
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", new Long("1"));
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userCategory", Tenderer.userCategory);
-        
-    }
-    
     /**
      * Submitting the review
      * @param contractorID id of the Contractor concerning by the Review
@@ -45,10 +37,10 @@ public class ReviewBean {
         if (this.isTendererConnected()) {
 
             // Add the new Review
-            Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
-            eb.addReview(userID, contractorID, reviewAppreciation, reviewContent, reviewRating);
+            eb.addReview(SessionBean.getUserId(), contractorID, reviewAppreciation, reviewContent, reviewRating);
 
         }
+        
     }
     
     /**
@@ -57,12 +49,16 @@ public class ReviewBean {
      */
     public Boolean isTendererConnected() {
         
-        // Check if a user is connected
-        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
-        // Check if connected user is a Tenderer
-        String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");
+        String userCategory = SessionBean.getUserCategory();
+        if (userCategory != null) {
+            if (userCategory.equals(Tenderer.userCategory)) {
+                
+                return true;
+                
+            }
+        }
         
-        return userID != null && userCategory.equals(Tenderer.userCategory);
+        return false;
         
     }
 

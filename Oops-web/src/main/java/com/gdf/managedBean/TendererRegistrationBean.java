@@ -6,11 +6,14 @@
 package com.gdf.managedBean;
 
 import com.gdf.ejb.RegistrationBean;
+import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Tenderer;
+import com.gdf.session.SessionBean;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -79,8 +82,11 @@ public class TendererRegistrationBean {
 
         Long id = this.rb.register(t);
         // Connect the Tenderer
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", id);
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Tenderer.userCategory);
+        HttpSession session = SessionBean.getSession();
+        session.setAttribute("userID", id);
+        session.setAttribute("userCategory", Tenderer.userCategory);
+        session.setAttribute("userName", t.getLogin());
+        session.setAttribute("userAvatar", t.getAvatar());
         
         this.step = 2;
     }

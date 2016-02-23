@@ -7,8 +7,8 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.EvaluationBean;
 import com.gdf.ejb.SearchBean;
-import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Review;
+import com.gdf.session.SessionBean;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -46,22 +46,11 @@ public class ContractorReviewBean implements Serializable {
     @PostConstruct
     public void initBean() {
         
-        // Temporary used to connect a Contractor
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", new Long("50"));
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Contractor.userCategory);
-        
-        // Check if a user is connected
-        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
-      
-        if (userID != null) {
-
-            // DELETE AND MODIFY WHEN WE WILL HAVE A CURRENT CONTRACTROR CONNECTED
-            this.reviews = this.searchBean.searchAcceptedContratorReviews(userID);
-            this.answersReview = new HashMap<>();
-            for(Review r : this.reviews) {
-                this.answersReview.put(r.getId(), r.getContractorAnswer());
-            }
-        
+        // DELETE AND MODIFY WHEN WE WILL HAVE A CURRENT CONTRACTROR CONNECTED
+        this.reviews = this.searchBean.searchAcceptedContratorReviews(SessionBean.getUserId());
+        this.answersReview = new HashMap<>();
+        for(Review r : this.reviews) {
+            this.answersReview.put(r.getId(), r.getContractorAnswer());
         }
         
     }

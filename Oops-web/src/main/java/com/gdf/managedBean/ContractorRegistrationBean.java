@@ -12,6 +12,7 @@ import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
 import com.gdf.persistence.Service;
+import com.gdf.session.SessionBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -160,8 +162,11 @@ public class ContractorRegistrationBean implements Serializable {
 
         Long id = this.rb.register(c);
         // Connect the contractor
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", id);
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Contractor.userCategory);
+        HttpSession session = SessionBean.getSession();
+        session.setAttribute("userID", id);
+        session.setAttribute("userCategory", Contractor.userCategory);
+        session.setAttribute("userName", c.getSocialReason());
+        session.setAttribute("userAvatar", c.getLogo());
 
         this.contractor = sb.searchContractorById(id); // the contractor with the id setted
 

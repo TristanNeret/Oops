@@ -12,6 +12,7 @@ and open the template in the editor.
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:p="http://primefaces.org/ui"
     xmlns:o="http://omnifaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <script type="text/javascript">
@@ -26,49 +27,62 @@ and open the template in the editor.
         }
     </script>
 
-    <div id="divHeader">
+    <h:outputScript library="javax.faces" name="jsf.js" target="head" />
+    <h:outputScript library="omnifaces" name="fixviewstate.js" target="head" />
+    <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+    <h:outputScript library="omnifaces" name="fixviewstate.js" target="head" />
+    
+    <b:navBar id="headerBarAdmin" brand="Oops" brandHref="/Oops-web/" inverse="true" fixed="top">
+        
+        <!-- TITLES -->
+        <b:navbarLinks>
+            <b:navLink value="Opinion on providers of services" href="/Oops-web/"></b:navLink>
+        </b:navbarLinks>
 
-        <p:growl widgetVar="registerGrowlError" sticky="false" showDetail="true" life="3000" />
-        <p:growl widgetVar="contractorRegisterGrowlError" sticky="false" showDetail="true" life="3000" />
-
-        <p:panelGrid styleClass="panelHeader" columns="3">
-
-            <h:link styleClass="headerTitle" value="Oops" outcome="/admin.xhtml"/>
-            <h:link styleClass="headerSubtitle" value="Opinion on providers of services" outcome="/admin.xhtml"/>
-
-            <p:panelGrid styleClass="panelHeaderButton" columns="3">
-
-                <!-- NOTIFICATION -->
-                <h:form class="formNotificationHeader">
-                    <p:commandLink id="commandButtonNotifications" >
-                        <h:graphicImage library="default" height="40px" onmouseover="this.src = '#{manageNotificationBean.getNotificationImageURL(0)}';" onmouseout="this.src = '#{manageNotificationBean.getNotificationImageURL(1)}'" name="#{manageNotificationBean.notificationImageName}" />
-                    </p:commandLink>
-                    <p:overlayPanel id="notificationPanel" styleClass="overlayPanelNotification" appendToBody="true" for="commandButtonNotifications" dynamic="false">
-                        <div id="divTitleNotification">
-                            Notifications
-                        </div>
-                        <div id="divNotificationList">
-                            <h:outputLabel styleClass="titlePanelReviewAdmin" value="Pas de nouvelles notifiactions." rendered="#{!manageNotificationBean.unreadNotifications}" /> 
-                            <div class="divNotification">
-                                <c:forEach items="#{manageNotificationBean.notificationsList}" var="notification" rendered="#{manageNotificationBean.unreadNotifications}" >
-                                    <p:commandButton class="commandButtonClickNotification" styleClass="commandButtonClickNotification" value="#{notification.description}&#10;#{notification.date}" update="@form" action="#{manageNotificationBean.clickOnNotification(notification)}">
-                                    </p:commandButton>
-                                </c:forEach>
-                            </div>
-                            <div class="divNotification">
-                                <p:commandButton id="commandButtonClearNotifications" styleClass="commandButtonClearNotification" value="Tout marquer comme lu" action="#{manageNotificationBean.markAsRead()}" update="@form" rendered="#{manageNotificationBean.unreadNotifications}">
-                                </p:commandButton>
-                            </div>
-                        </div>
-                    </p:overlayPanel>
-                </h:form>
-
-                <h:button class="headerCommandButton" value="Connexion (Modérateurs)" />
-
-            </p:panelGrid>
-
-        </p:panelGrid>
-
-    </div>
+        <!-- CONNECTION -->
+        <h:form styleClass="navbar-form navbar-right" rendered="#{!authentificationBean.moderatorConnected}">
+            <p:growl widgetVar="growlAuthentification" sticky="false" showDetail="true" life="3000" />
+            <div class="form-group">
+                <b:inputText placeholder="Login" value="#{authentificationBean.userName}" fieldSize="sm" />
+            </div>
+            <div class="form-group">
+                <b:inputSecret placeholder="Mot de passe" value="#{authentificationBean.userPassword}" fieldSize="sm" />
+            </div> 
+            #{' '}
+            <b:commandButton action="#{authentificationBean.validateModeratorAuthentification()}" update="@form :headerBarAdmin" value="Connexion" look="success" icon="chevron-right" iconAlign="right" >
+            </b:commandButton>
+        </h:form>
+        
+        <!-- NOTIFICATION | USER ACCOUNT | DE-CONNECTION -->
+        <h:form styleClass="navbar-form navbar-right" rendered="#{authentificationBean.moderatorConnected}">
+            <p:commandLink id="commandButtonNotifications" >
+                <h:graphicImage library="default" height="32px" onmouseover="this.src = '#{manageNotificationBean.getNotificationImageURL(0)}';" onmouseout="this.src = '#{manageNotificationBean.getNotificationImageURL(1)}'" name="#{manageNotificationBean.notificationImageName}" />
+            </p:commandLink>
+            <p:overlayPanel id="notificationPanel" styleClass="overlayPanelNotification" for="commandButtonNotifications" dynamic="false">
+                <div id="divTitleNotification">
+                    Notifications
+                </div>
+                <div id="divNotificationList">
+                    <h:outputLabel styleClass="titlePanelReviewAdmin" value="Pas de nouvelles notifiactions." rendered="#{!manageNotificationBean.unreadNotifications}" /> 
+                    <div class="divNotification">
+                        <c:forEach items="#{manageNotificationBean.notificationsList}" var="notification" rendered="#{manageNotificationBean.unreadNotifications}" >
+                            <b:commandButton actionListener="#{manageNotificationBean.clickOnNotification(notification)}" styleClass="commandButtonNotification" update="@form :headerBar" value="#{notification.description}&#10;#{notification.date}" look="link" >
+                            </b:commandButton>
+                        </c:forEach>
+                    </div>
+                    <div class="divNotification">
+                        <b:commandButton actionListener="#{manageNotificationBean.markAsRead()}" update="@form :headerBar" value="Tout marquer comme lu" look="danger" rendered="#{manageNotificationBean.unreadNotifications}" >
+                        </b:commandButton>
+                    </div>
+                </div>
+            </p:overlayPanel>
+            #{' '}
+            <b:commandButton action="#{authentificationBean.goToAccount()}" value="Administration" look="link" iconAlign="right"/>
+            #{' '}
+            <b:commandButton action="#{authentificationBean.logout()}" update="@form :headerBarAdmin" value="Se déconnecter" look="danger" iconAlign="right" >
+            </b:commandButton>
+        </h:form>
+        
+    </b:navBar>
 
 </ui:composition>

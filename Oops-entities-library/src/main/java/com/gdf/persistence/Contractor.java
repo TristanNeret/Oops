@@ -102,7 +102,7 @@ public class Contractor implements Serializable {
     public Contractor(String login, String email, String password, String socialReason, String legalForm, String description, String phone, String logo, String representatorFirstname, String representatorLastname, int turnover, int nbEmployees, int rating, Address address, LegalInformation legalInformation) {
         this.login = login;
         this.email = email;
-        this.password = password;
+        this.password = this.encryptPassword(password);
         this.socialReason = socialReason;
         this.legalForm = legalForm;
         this.description = description;

@@ -8,14 +8,13 @@ package com.gdf.managedBean;
 import com.gdf.ejb.AdministratorBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
-import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Tenderer;
+import com.gdf.session.SessionBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -58,12 +57,8 @@ public class AdminSearchBean implements Serializable {
 
     @PostConstruct
     public void initBean() {
-        
-        // Temporary used to connect a Moderator
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", new Long("1"));
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Moderator.userCategory);
-
-        moderatorID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
+      
+        moderatorID = SessionBean.getUserId();
 
     }
 

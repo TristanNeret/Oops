@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Oops</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="style.css" />
+
+    </h:head>
+
+    <h:body>
+
+        <!-- HEADER -->
+        <c:if test="#{!authentificationBean.moderatorConnected}">
+            <ui:include src="/includes/header.xhtml" />
+        </c:if>
+        <c:if test="#{authentificationBean.moderatorConnected}">
+            <ui:include src="/includes/headerAdmin.xhtml" />
+        </c:if>
+
+        <!-- SEARCH -->
+        <ui:include src="/includes/search.xhtml" />
+
+        <div id="divError" class="container">
+            <b:image value="/resources/default/img/404.png" name="404" />
+            <br/>
+            <b:button look="success" value="Retour à l'accueil" styleClass="buttonDivError" outcome="/index.xhtml" />
+        </div>
+
+        <!-- FOOTER -->
+        <ui:include src="/includes/footer.xhtml" />
+
+    </h:body> 
+
+</html>

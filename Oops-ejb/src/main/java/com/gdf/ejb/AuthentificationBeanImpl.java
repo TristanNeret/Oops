@@ -6,12 +6,13 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Tenderer;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
  * AuthentificationBeanImpl
@@ -31,7 +32,7 @@ public class AuthentificationBeanImpl implements AuthentificationBean {
         
         Query query = em.createNamedQuery("Tenderer.authentification", Tenderer.class);
         query.setParameter(1, userName);
-        query.setParameter(2, userPassword);
+        query.setParameter(2, this.encryptPassword(userPassword));
         
         if (query.getResultList().isEmpty()) {
             
@@ -48,9 +49,9 @@ public class AuthentificationBeanImpl implements AuthentificationBean {
     @Override
     public Long isContractorValid(String userName, String userPassword) {
         
-        Query query = em.createNamedQuery("Contractor.authentification", Tenderer.class);
+        Query query = em.createNamedQuery("Contractor.authentification", Contractor.class);
         query.setParameter(1, userName);
-        query.setParameter(2, userPassword);
+        query.setParameter(2, this.encryptPassword(userPassword));
         
         if (query.getResultList().isEmpty()) {
             
@@ -67,9 +68,9 @@ public class AuthentificationBeanImpl implements AuthentificationBean {
     @Override
     public Long isModeratorValid(String userName, String userPassword) {
         
-        Query query = em.createNamedQuery("Moderator.authentification", Tenderer.class);
+        Query query = em.createNamedQuery("Moderator.authentification", Moderator.class);
         query.setParameter(1, userName);
-        query.setParameter(2, userPassword);
+        query.setParameter(2, this.encryptPassword(userPassword));
         
         if (query.getResultList().isEmpty()) {
             
@@ -83,4 +84,19 @@ public class AuthentificationBeanImpl implements AuthentificationBean {
         
     }
     
+    /**
+     * Return encrypted password 
+     * @param password password to encrypt
+     * @return the password encrypted
+     */
+    public String encryptPassword(String password) {
+        
+        ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
+        passwordEncryptor.setAlgorithm("SHA-256");
+        passwordEncryptor.setPlainDigest( true );
+        
+        return passwordEncryptor.encryptPassword(password);
+        
+    } 
+               
 }

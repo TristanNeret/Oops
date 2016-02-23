@@ -8,17 +8,15 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 /**
@@ -80,21 +78,36 @@ public class SearchManagedBean implements Serializable {
     @EJB
     private SearchBean sb;
 
-    private Map<String,String> orders;
-    
-    private String order = "ALPHABETICAL"; // default value
+    private String order;
+    private String categoryParam;
+    private List<Review> reviewsToShow;
+    private List<String> listC;
     
     @PostConstruct
     public void setup() {
         
-        type = "cont";
-        orders = new LinkedHashMap<>();
-        orders.put("Nom", "ALPHABETICAL"); // label, value
-        orders.put("Note", "RATINGS");
-
+        this.type = "cont";
+        this.order = "ALPHABETICAL";
+        this.listC = sb.getAllCategory();
+        this.reviewsToShow = this.sb.getThreeReviewsToShow();
+        
     }
-
-    public SearchManagedBean() {
+    
+    /**
+     * Launch category search from url if param not null
+     */
+    public void serachCategory() {
+        
+        if (this.categoryParam != null) {
+            
+            if (this.listC.contains(this.categoryParam)) {
+                
+                this.setCategory(this.categoryParam);
+                this.search();
+                
+            }
+            
+        }
         
     }
     
@@ -140,13 +153,27 @@ public class SearchManagedBean implements Serializable {
         this.category = category;
     }
 
+    public String getCategoryParam() {
+        return categoryParam;
+    }
+
+    public void setCategoryParam(String categoryParam) {
+        this.categoryParam = categoryParam;
+    }
+
+    public List<Review> getReviewsToShow() {
+        return reviewsToShow;
+    }
+
+    public void setReviewsToShow(List<Review> reviewsToShow) {
+        this.reviewsToShow = reviewsToShow;
+    }
+
     public List<SelectItem> getAllCountry() {
-        
-        List<String> listC = sb.getAllCountry();
         List<SelectItem> li = new ArrayList<>();
         
-        for(String country : listC)
-                li.add(new SelectItem(country)); 
+        for(String localCountry : listC)
+                li.add(new SelectItem(localCountry)); 
         
         return li;
     }
@@ -160,8 +187,8 @@ public class SearchManagedBean implements Serializable {
         List<String> listC = sb.getAllCategory();   
         List<SelectItem> li = new ArrayList<>();
         
-        for(String category : listC)
-                li.add(new SelectItem(category)); 
+        for(String localCategory : listC)
+                li.add(new SelectItem(localCategory)); 
                  
         return li;
     }
@@ -199,7 +226,7 @@ public class SearchManagedBean implements Serializable {
      * @return the view where the results will be displayed
      */
     public String search(){
-  
+        
         if(type.equals("tend"))
         {
             ltd =  sb.findTenderers(keyWord);
@@ -224,19 +251,8 @@ public class SearchManagedBean implements Serializable {
         return results;   
     }
     
-    public void valueChangeMethod(ValueChangeEvent e){
-        order = e.getNewValue().toString();
+    public void valueChangeMethod(){
 	search();
     }
-
-    public Map<String, String> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(Map<String, String> orders) {
-        this.orders = orders;
-    }
-    
- 
 
 }

@@ -87,7 +87,7 @@ public class Tenderer implements Serializable {
     public Tenderer(String login, String email, String password, String firstname, String lastname, String avatar, String phone, String registrationDate) {
         this.login = login;
         this.email = email;
-        this.password = password;
+        this.password = this.encryptPassword(password);
         this.firstname = firstname;
         this.lastname = lastname;
         this.avatar = avatar;

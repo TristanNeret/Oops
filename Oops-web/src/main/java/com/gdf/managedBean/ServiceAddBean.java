@@ -10,6 +10,7 @@ import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Service;
+import com.gdf.session.SessionBean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class ServiceAddBean implements Serializable {
     @PostConstruct
     public void init() {
 
-        this.setContractor(searchBean.searchContractorById(50));
+        this.setContractor(searchBean.searchContractorById(SessionBean.getUserId()));
         categories = new ArrayList<>();
         this.setCategories(searchBean.getCategories());
         

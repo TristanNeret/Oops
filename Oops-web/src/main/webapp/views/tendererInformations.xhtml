@@ -29,81 +29,79 @@ and open the template in the editor.
         <ui:include src="/includes/header.xhtml" />
 
         <!-- CONTENT -->
-        <div class="divContent">
-            <div class="divContentPadding">
+        <div class="container">
 
-                <c:if test="#{tendererInformationsBean.tenderer == null}" >
-                    <h2>Soumissionnaire introuvable !</h2> 
-                </c:if>
+            <c:if test="#{tendererInformationsBean.tenderer == null}" >
+                <h2>Soumissionnaire introuvable !</h2> 
+            </c:if>
 
-                <c:if test="#{tendererInformationsBean.tenderer != null}" >
+            <c:if test="#{tendererInformationsBean.tenderer != null}" >
 
-                    <div id="divPresentation">
-                        <div id="divImagePresentation">
-                            <h:graphicImage value="#{tendererInformationsBean.tenderer.avatar}" styleClass="imageLogo" />
-                        </div>
-                        <div id="divDetailsPresentation">
-                            <h:outputLabel value="#{tendererInformationsBean.tenderer.login}" />
-                            <div id="divInformationsPresentation">
-                                <b>Email : </b> <h:outputText value="#{tendererInformationsBean.tenderer.email}" />
-                                <b style="margin-left: 20px;">Téléphone : </b> <h:outputText value="#{tendererInformationsBean.tenderer.phone}" />
-                            </div>
+                <div id="divPresentation">
+                    <div id="divImagePresentation">
+                        <h:graphicImage value="#{tendererInformationsBean.tenderer.avatar}" styleClass="imageLogo" />
+                    </div>
+                    <div id="divDetailsPresentation">
+                        <h:outputLabel value="#{tendererInformationsBean.tenderer.login}" />
+                        <div id="divInformationsPresentation">
+                            <b>Email : </b> <h:outputText value="#{tendererInformationsBean.tenderer.email}" />
+                            <b style="margin-left: 20px;">Téléphone : </b> <h:outputText value="#{tendererInformationsBean.tenderer.phone}" />
                         </div>
                     </div>
+                </div>
 
-                    <br/>
-                    <h:panelGrid columns="2" cellspacing="5">
+                <br/>
+                <h:panelGrid columns="2" cellspacing="5">
 
-                        <b>Nom complet :</b> 
-                        <h:outputText value="#{tendererInformationsBean.tenderer.firstname} 
-                                      #{tendererInformationsBean.tenderer.lastname}"/>
+                    <b>Nom complet :</b> 
+                    <h:outputText value="#{tendererInformationsBean.tenderer.firstname} 
+                                  #{tendererInformationsBean.tenderer.lastname}"/>
 
-                        <b>Date d'inscription :</b>
-                        <h:outputText value="#{tendererInformationsBean.tenderer.registrationDate}"/>
+                    <b>Date d'inscription :</b>
+                    <h:outputText value="#{tendererInformationsBean.tenderer.registrationDate}"/>
 
-                        <b>Avis donnés :</b> 
-                        <c:if test="#{tendererInformationsBean.reviews.size() gt 0}">   
-                            <h:outputText value="#{tendererInformationsBean.reviews.size()}"/>
-                        </c:if>
-                        <c:if test="#{tendererInformationsBean.reviews.size() eq 0}">
-                            <h:outputText value="aucun"/>
-                        </c:if>
-
-                    </h:panelGrid>
-
-                    <c:if test="#{tendererInformationsBean.reviews.size() gt 0}">
-
-                        <div id="divReviews">
-
-                            <h2>Avis</h2>
-
-                            <c:forEach items="#{tendererInformationsBean.reviews}" var="review" >
-                                <div class="divReviews">
-                                    <h:outputLabel style="font-size: 20px;" value="#{review.appreciation}"/><h:outputLabel style="font-size: 14px; color: #999999;" value=" pour #{review.contractor.login} le #{review.date}" />
-                                    <br/>
-                                    <h:outputText value="#{review.content}" />
-                                    <br/>
-                                    <div class="diveRateReview">
-                                        <b id="starsTxt2" style="float:left;">Note : </b> 
-                                        <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
-                                    </div>
-                                    <br/>
-                                    <c:if test="#{review.contractorAnswer != null}" >
-                                        <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
-                                    </c:if>
-                                    <c:if test="#{review.contractorAnswer == null}" >
-                                        <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
-                                    </c:if>
-                                </div>
-                            </c:forEach>
-                            
-                        </div>
-
+                    <b>Avis donnés :</b> 
+                    <c:if test="#{tendererInformationsBean.reviews.size() gt 0}">   
+                        <h:outputText value="#{tendererInformationsBean.reviews.size()}"/>
                     </c:if>
+                    <c:if test="#{tendererInformationsBean.reviews.size() eq 0}">
+                        <h:outputText value="aucun"/>
+                    </c:if>
+
+                </h:panelGrid>
+
+                <c:if test="#{tendererInformationsBean.reviews.size() gt 0}">
+
+                    <div id="divReviews">
+
+                        <h2>Avis</h2>
+
+                        <c:forEach items="#{tendererInformationsBean.reviews}" var="review" >
+                            <div class="divReviews">
+                                <h:outputLabel style="font-size: 20px;" value="#{review.appreciation}"/><h:outputLabel style="font-size: 14px; color: #999999;" value=" pour #{review.contractor.login} le #{review.date}" />
+                                <br/>
+                                <h:outputText value="#{review.content}" />
+                                <br/>
+                                <div class="diveRateReview">
+                                    <b id="starsTxt2" style="float:left;">Note : </b> 
+                                    <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
+                                </div>
+                                <br/>
+                                <c:if test="#{review.contractorAnswer != null}" >
+                                    <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
+                                </c:if>
+                                <c:if test="#{review.contractorAnswer == null}" >
+                                    <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
+                                </c:if>
+                            </div>
+                        </c:forEach>
+
+                    </div>
 
                 </c:if>
 
-            </div>
+            </c:if>
+
         </div>
 
         <!-- FOOTER -->
