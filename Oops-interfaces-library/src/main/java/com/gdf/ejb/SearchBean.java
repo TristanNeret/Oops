@@ -7,7 +7,6 @@ package com.gdf.ejb;
 
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
-import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
 import com.gdf.persistence.Moderator;
@@ -89,6 +88,8 @@ public interface SearchBean {
      */
     public Moderator searchModeratorById(Long id);
     
+    public Moderator searchModeratorById(long id);
+    
     // REVIEW
     
     /**
@@ -110,6 +111,12 @@ public interface SearchBean {
      * @return the accepted Reviews List of the Tenderer
      */
     public List<Review> searchAcceptedTendererReviews(long id);
+    
+    /**
+     * Search three Reviews to show on main screen
+     * @return list of three Reviews to show
+     */
+    public List<Review> getThreeReviewsToShow();
 
     // SEARCH
     
@@ -181,8 +188,10 @@ public interface SearchBean {
      */
     public List<String> getAllCountry();
 
-    public Moderator searchModeratorById(long id);
-    
+    /**
+     * Get all states
+     * @return all states
+     */
     public List<String> getAllStates(); 
     
 }

@@ -9,63 +9,53 @@ and open the template in the editor.
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:b="http://bootsfaces.net/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
-    
+
     <div id="divSearch">
 
-        <h:form>
-            
-            <p:autoComplete  placeholder="Mots-clés" id="queryInputText" class="searchInputText" value="#{searchManagedBean.keyWord}" completeMethod="#{searchManagedBean.completeQuery}"  />
-                
-            <h:outputText style="margin-right: 5px; color: white"/>
-            <h:selectOneMenu id="listType" value="#{searchManagedBean.type}" style="margin-right: 5px">
-                <f:selectItem id="cont" itemLabel="Prestataire" itemValue="cont"/>
-                <f:selectItem  id="tend" itemLabel="Soumissionnaire" itemValue="tend"/>
-                <f:ajax render ="@form"/>
-            </h:selectOneMenu>
+        <h:form onsubmit="#{searchManagedBean.search()}">
+            <h:panelGrid columns="6" style="margin: auto;">
 
-            
-            <h:panelGroup id="contSearch">
-                <h:panelGroup rendered ="#{searchManagedBean.type == 'cont'}">
+                <b:inputText id="queryInputText" placeholder="Mots-clés" value="#{searchManagedBean.keyWord}" autocomplete="on"></b:inputText>
 
-                    <h:selectOneMenu id ="listRating" value="#{searchManagedBean.rating}" style="margin-right: 5px">
-                        <f:selectItem itemLabel="Note moyenne" itemValue=""/>
-                        <f:selectItem itemLabel=">=4" itemValue="4"/>
-                        <f:selectItem itemLabel=">=3" itemValue="3"/>
-                        <f:selectItem itemLabel=">=2" itemValue="2"/>
-                        <f:selectItem itemLabel=">=1" itemValue="1"/>
-                    </h:selectOneMenu>
+                <b:selectOneMenu id="listType" value="#{searchManagedBean.type}" onchange="this.form.submit()" styleClass="menuSearchField">
+                    <f:selectItem id="cont" itemLabel="Prestataire" itemValue="cont" />
+                    <f:selectItem  id="tend" itemLabel="Soumissionnaire" itemValue="tend" />
+                </b:selectOneMenu>
 
-                    <h:selectOneMenu  id="listCountries"  value="#{searchManagedBean.country}" style="margin-right: 5px">
-                        <f:selectItem itemLabel="Pays" itemValue=""/>
-                        <f:selectItems value="#{searchManagedBean.allCountry}"/>
-                        <f:ajax render="@form"/>
-                    </h:selectOneMenu>
-                    
-                    <h:panelGroup rendered="#{searchManagedBean.country == 'France'}">
-          
-                        <h:selectOneMenu  id="listTowns"  value="#{searchManagedBean.region}" style="margin-right: 5px">
-                            <f:selectItem itemLabel="Regions" itemValue=""/>
-                            <f:selectItems value="#{searchManagedBean.allRegions}"/>
-                        </h:selectOneMenu>
-                  
-                    </h:panelGroup>
+                <b:selectOneMenu id ="listRating" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.rating}" style="margin-right: 5px">
+                    <f:selectItem itemLabel="Note moyenne" itemValue=""/>
+                    <f:selectItem itemLabel=">=4" itemValue="4"/>
+                    <f:selectItem itemLabel=">=3" itemValue="3"/>
+                    <f:selectItem itemLabel=">=2" itemValue="2"/>
+                    <f:selectItem itemLabel=">=1" itemValue="1"/>
+                </b:selectOneMenu>
 
-                    <h:selectOneMenu id="listCategories" value="#{searchManagedBean.category}" style="margin-right: 5px">
-                        <f:selectItem itemLabel="Catégorie" itemValue=""/>
-                        <f:selectItems value="#{searchManagedBean.allCategory}"/>
-                    </h:selectOneMenu>
+                <b:selectOneMenu id="listCountries" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.country}" style="margin-right: 5px">
+                    <f:selectItem itemLabel="Pays" itemValue=""/>
+                    <f:selectItems value="#{searchManagedBean.allCountry}"/>
+                </b:selectOneMenu>
 
-                </h:panelGroup>
-            </h:panelGroup>              
+                <b:selectOneMenu  id="listTowns"  value="#{searchManagedBean.region}" rendered="#{searchManagedBean.country == 'France'}" style="margin-right: 5px">
+                    <f:selectItem itemLabel="Régions" itemValue=""/>
+                    <f:selectItems value="#{searchManagedBean.allRegions}"/>
+                </b:selectOneMenu>
 
-            <h:commandButton id="searchButton" class="searchCommandButton" value="Recherche" action="#{searchManagedBean.search()}"></h:commandButton>      
-        
+                <b:selectOneMenu id="listCategories" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.category}" style="margin-right: 5px">
+                    <f:selectItem itemLabel="Catégorie" itemValue=""/>
+                    <f:selectItems value="#{searchManagedBean.allCategory}"/>
+
+                </b:selectOneMenu>
+
+                <b:commandButton id="searchButton" look="primary" value="Recherche" action="#{searchManagedBean.search()}"></b:commandButton>      
+
+            </h:panelGrid>
         </h:form> 
-        
+
     </div>
-   
+
 </ui:composition>
 
 

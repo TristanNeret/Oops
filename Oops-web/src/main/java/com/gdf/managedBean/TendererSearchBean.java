@@ -9,11 +9,11 @@ import com.gdf.ejb.EvaluationBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Notification;
 import com.gdf.persistence.Tenderer;
+import com.gdf.session.SessionBean;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 /**
@@ -47,40 +47,18 @@ public class TendererSearchBean implements Serializable {
      */
     private Long userID;
     
-    /**
-     * Category of the current user connected
-     */
-    private String userCategory; 
-
-    public TendererSearchBean() {
-        
-    }
-    
-    public Tenderer getTenderer() { 
-        return tenderer;
-    }
-
-    public void setTenderer(Tenderer tenderer) { 
-        this.tenderer = tenderer;
-    }
-    
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    
     @PostConstruct
     public void initBean() {
         
-        // Temporary used to connect a Contractor
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", new Long("10"));
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userCategory", Contractor.userCategory);          
-        
-        userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userID");
-        userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("userCategory");
+        if (SessionBean.getUserCategory() != null) {
+            
+            if (SessionBean.getUserCategory().equals(Contractor.userCategory)) {
+                
+                userID = SessionBean.getUserId();
+                
+            }
+            
+        }
         
     }
     
@@ -90,8 +68,19 @@ public class TendererSearchBean implements Serializable {
      * @return true if the id of the connected user is a contractor
      */
     private Boolean isContractorConnected() {
+        
         // Check if connected user is a contrator
-        return userID != null && userCategory.equals(Contractor.userCategory);
+        if (SessionBean.getUserCategory() != null) {
+            
+            if (SessionBean.getUserCategory().equals(Contractor.userCategory)) {
+                
+                return true;
+                
+            }
+            
+        }
+        return false;
+        
     }
 
     /**
@@ -115,7 +104,8 @@ public class TendererSearchBean implements Serializable {
      * @param tendererID the id of the tenderer
      * @return true if the  contractor can send a request for review to the tenderer
      */
-    private boolean isValidAskReview(Long contractorID, Long tendererID){
+    private boolean isValidAskReview(Long contractorID, Long tendererID) {
+        
         Notification n = ebi.getLastNotificationSent(contractorID, tendererID); 
         if(n != null){
             java.util.Date date = new java.util.Date();
@@ -123,6 +113,7 @@ public class TendererSearchBean implements Serializable {
             return n.getDate().getTime()+INTERVAL <=  current;
         }
         return true;
+        
     }
     
     /**
@@ -130,7 +121,28 @@ public class TendererSearchBean implements Serializable {
      * @param tendererID the id of the tenderer concerned by the request
      * @return true if the "Demander un avis" button can be displayed
      */
-    public boolean display(Long tendererID){
+    public boolean display(Long tendererID) {
+        
         return isContractorConnected() && isValidAskReview(userID, tendererID);
+        
     }
+    
+    // GETTER/SETTER
+    
+    public Tenderer getTenderer() { 
+        return tenderer;
+    }
+
+    public void setTenderer(Tenderer tenderer) { 
+        this.tenderer = tenderer;
+    }
+    
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    
 }

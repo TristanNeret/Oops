@@ -9,11 +9,9 @@ import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Review;
-import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -434,4 +432,12 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         return em.find(Category.class, idCategory);
 
     }
+
+    @Override
+    public List<Review> getThreeReviewsToShow() {
+        
+        return em.createQuery("SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED ", Review.class).setFirstResult(0).setMaxResults(3).getResultList();
+        
+    }
+    
 }

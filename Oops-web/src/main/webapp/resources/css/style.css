@@ -2,9 +2,9 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     margin: 0;
     padding: 0;
-    height: 100%;
     width: 100%;
     float: left;
+    background: none !important;
 }
 
 fieldset {
@@ -25,17 +25,88 @@ h2 {
     color: #1E90FF;     
 }
 
-.divContent {
-    padding-bottom: 30px;
-    float: left;
-    width: 100%;
-    min-height: 100%;
+td {
+    padding-left: 15px !important;
 }
 
-.divContentPadding {
-    padding-right: 30px;
-    padding-left: 30px;
+.panelSimple {
+    border-radius: 0 !important;
+    border-width: 0px !important;
+    background-color: #666666 !important;
+    color: white !important;
+    font-size: 16px !important;
+    font-weight: 200 !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
 }
+
+.panelSimple .panel-body {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.containerCarroussel {
+    /*background: linear-gradient(white, #97c857);*/
+    background-color: #97c857; 
+    color: #444444;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding-bottom: 50px;
+}
+
+.containerCarrousselItem {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#divError {
+    text-align: center; 
+    padding-top: 50px; 
+    padding-bottom: 50px;
+}
+
+.buttonDivError {
+    margin-top: 30px;
+}
+
+/******************************** CATEGORY ***********************************/
+
+#columnImageBatiment .panel-heading {
+    background-color: #9966ff !important;
+}
+
+#columnImageRestauration .panel-heading {
+    background-color: #ff6666 !important;
+}
+
+#columnImageInformatique .panel-heading {
+    background-color: #18abff !important;
+}
+
+#columnImageAnimation .panel-heading {
+    background-color: #cc0099 !important;
+}
+
+#columnImageDivers .panel-heading {
+    background-color: #97c857 !important;
+}
+
+.columnImageCategory .panel-body {
+    padding: 0px !important;
+    font-weight: 200 !important;
+}
+
+.imageCategory {
+    width: 100%;
+    opacity: 0.4;
+    cursor: pointer;
+}
+
+.imageCategory:hover {
+    opacity: 0.8;
+}
+
 
 /*****************************************************************************/
 /********************************* HEADER ************************************/
@@ -98,6 +169,10 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     margin-right: 20px;
 }
 
+.overlayPanelNotification {
+    top: 60px !important;
+}
+
 .overlayPanelNotification .ui-overlaypanel-content {
     padding: 0em !important;
     max-width: 550px;
@@ -122,9 +197,9 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     margin: 0px; 
     padding-top: 5px; 
     padding-bottom: 5px; 
-    background-color: #008080; 
+    background-color: #222222; 
     font-size: 20px; 
-    color: #FFFFFF; 
+    color: white; 
     width: 100%; 
     text-align: center;
 }
@@ -139,6 +214,10 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 
 .divNotification {
     width: 100%;
+}
+
+.commandButtonNotification {
+    color: #666666 !important;
 }
 
 /*****************************************************************************/
@@ -162,12 +241,13 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 /*****************************************************************************/
 
 #divSearch {
-    background-color: #66cccc;
+    background-color: #97c857;
     color: #333333;
     font-size:20px;
     font-weight: 200;
-    height: 50px;
     padding: 10px;
+    padding-bottom: 20px;
+    padding-top: 20px;
     text-align: center;
     border-color: #666666;
     border-width: 1px;
@@ -203,6 +283,13 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     -moz-border-radius:7px;
     -webkit-border-radius:7px;
     border-radius:7px;   
+}
+
+.fieldsetNoResult {
+    text-align: center; 
+    width: 100%; 
+    margin-top: 50px; 
+    font-size: 18px;
 }
 
 /*****************************************************************************/
@@ -615,6 +702,7 @@ form .updateButtonContractorReview {
 
 .titlePanelReviewAdmin {
     font-size: 22px;
+    font-weight: 200;
 }
 
 .panelReviewAdmin {
@@ -1044,6 +1132,34 @@ form .updateButtonContractorReview {
     position: inherit !important;
 }
 
+.ui-growl {
+    top: 65px !important;
+    width: 350px !important;
+}
+
+div.ui-growl-item {
+    background-color: whitesmoke !important;
+    color: #333333 !important;
+    text-shadow: 0px 0px 0px #333333 !important;
+}
+
+div.ui-growl-message {
+    width: 85% !important;
+    font-size: 14px !important;
+    padding-top: 7px !important;
+}
+
+.ui-growl-item-container {
+    opacity: 1.0 !important;
+    border: none !important;
+}
+
+.ratingCenter {
+    max-width: 80px;
+    margin-left: auto;
+    margin-right: auto; 
+}
+
 /*****************************************************************************/
 /********************************* DIALOG ************************************/
 /*****************************************************************************/
@@ -1084,6 +1200,98 @@ form .updateButtonContractorReview {
 
 .erreur {
     color: #900;
+}
+
+/*****************************************************************************/
+/*************************** BOOTFACES REDEFINTION ***************************/
+/*****************************************************************************/
+
+.navbar {
+    width: 100% !important;
+    margin-bottom: 0px !important;
+    position: relative !important;
+}
+
+.navbar-fixed-top {
+    border-color: #666666 !important;
+    border-width: 0 0 8px !important;  
+} 
+
+.navbar-nav {
+    font-size: 20px !important;
+    font-weight: 200 !important;
+    margin-top: 3px !important;
+}
+
+a.navbar-brand {
+    font-size: 32px !important;
+    color: #ffffff !important;
+}
+
+a.navbar-brand:hover {
+    color: #ccffcc !important;
+}
+
+.navbar-inverse {
+    background-color: #222222 !important;
+}
+
+.navbar-inverse .btn-link {
+    color: #ffffff !important;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: #ccffcc !important;
+    background-color: transparent !important;
+}
+
+footer.footer {
+    position: absolute !important;
+    color: #ffffff !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 50px !important;
+    padding-top: 12px !important;
+    background-color: #222222 !important;
+    text-align: center !important;
+    font-weight: 200 !important;
+    border-color: #666666 !important;
+    border-width: 8px 0 0 !important;
+    border-style: solid !important;
+}
+
+.form-group {
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+
+.panelHeaderBootsfaces .panel-heading {
+    background-color: #2FA4E7 !important;
+    color: white !important;
+}
+
+.panelHeaderBootsfaces .panel-heading .outputTextTitle {
+    margin-left: 20px;
+    font-size: 24px;
+    font-weight: 300;
+    vertical-align: middle;
+    color: whitesmoke;
+}
+
+.panelHeaderBootsfaces .panel-heading .outputTextRating {
+    font-size: 18px;
+    font-weight: 200;
+    float: right;
+}
+
+.panelHeaderBootsfaces .panel-heading .rating {
+    margin-top: 5px;
+    float: right;
+    margin-left: 10px;
+}
+
+.columnRating {
+    margin-top: -10px;
 }
 
 /*****************************************************************************/

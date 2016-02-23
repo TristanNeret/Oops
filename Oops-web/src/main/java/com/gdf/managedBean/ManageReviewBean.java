@@ -9,6 +9,7 @@ import com.gdf.ejb.AdministratorBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Moderator;
 import com.gdf.persistence.ReviewState;
+import com.gdf.session.SessionBean;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -50,10 +51,6 @@ public class ManageReviewBean implements Serializable {
      */
     @PostConstruct
     public void initBean() {
-        
-        // Temporary used to connect a Moderator
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", new Long("1"));
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Moderator.userCategory);
         
         this.updateWaitingReviews();
         
@@ -107,38 +104,21 @@ public class ManageReviewBean implements Serializable {
      */
     public void manageReview(Long id) {
         
-        // Check if a user is connected
-        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
-        // Check if connected user is a Moderator
-        String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userCategory");
+        if(this.decisionReview.get(id) != null) {
 
-        // TEMPORARY : DON'T FORGET TO REMOVE IT !
-        userID = new Long(1);
-        userCategory = "MODERATOR";
-        
-        if(userID != null) {
-            
-            if(userCategory.equals(Moderator.userCategory)) {
+            this.ab.manageReview(id, SessionBean.getUserId(), this.decisionReview.get(id), this.contentReview.get(id));
 
-                if(this.decisionReview.get(id) != null) {
+            // Update the waiting Reviews list
+            this.updateWaitingReviews();
+            FacesContext.getCurrentInstance().addMessage("growlReviewContractor", new FacesMessage("Avis traité avec succès !", ""));
 
-                    this.ab.manageReview(id, userID, this.decisionReview.get(id), this.contentReview.get(id));
+        } else {
 
-                    // Update the waiting Reviews list
-                    this.updateWaitingReviews();
-                    FacesContext.getCurrentInstance().addMessage("growlReviewContractor", new FacesMessage("Avis traité avec succès !", ""));
+            // Moderator must take a decision
+            FacesContext.getCurrentInstance().addMessage("growlReviewContractor", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Vous devez prendre une décision !", ""));
 
-                } else {
+        } 
 
-                    // Moderator must take a decision
-                    FacesContext.getCurrentInstance().addMessage("growlReviewContractor", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Vous devez prendre une décision !", ""));
-
-                } 
-
-            }
-        
-        }
-        
     }
     
     // GETTER/SETTER

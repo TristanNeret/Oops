@@ -97,6 +97,18 @@ public class PopulateDBBean implements PopulateDB {
         review2.setRating(5);
         review2.setContractorAnswer(null);
         review2.setReviewState(ReviewState.DELIVERED);
+        
+        Review review3 = new Review();
+        review3.setAppreciation("Pas mal..");
+        review3.setContent("Résultat satisfaisant qui mériterait plus d'attention.");
+        review3.setRating(3);
+        review3.setReviewState(ReviewState.ACCEPTED);
+        
+        Review review4 = new Review();
+        review4.setAppreciation("Parfait !");
+        review4.setContent("Excellent travail ! Mon application est top !");
+        review4.setRating(5);
+        review4.setReviewState(ReviewState.ACCEPTED);
  
         String format = "dd/MM/yy H:mm:ss";
         java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
@@ -104,10 +116,14 @@ public class PopulateDBBean implements PopulateDB {
         review.setDate(formater.format(date));
         review1.setDate(formater.format(date));
         review2.setDate(formater.format(date));
+        review3.setDate(formater.format(date));
+        review4.setDate(formater.format(date));
         
         em.persist(review);
         em.persist(review1);
         em.persist(review2);
+        em.persist(review3);
+        em.persist(review4);
         
         // TENDERERS
         
@@ -139,6 +155,7 @@ public class PopulateDBBean implements PopulateDB {
         contractor.addReview(review);
         contractor.addReview(review1);
         contractor.addReview(review2);
+        contractor.addReview(review4);
 
         em.persist(category);
         em.persist(contractor);
@@ -150,7 +167,8 @@ public class PopulateDBBean implements PopulateDB {
                 , "937937820", "http://www.cibtp.fr/fileadmin/templates/portail/img/logo_charte_qualite.png", "FranceBTP", "Representant", 500000, 500, 2,
         new Address(3, "rue des haricots", 2648, "Paris", "France","ile-de-france"), new LegalInformation("12345678903987", "126456789", "RCSITC113456789", "Assurancetoutrix"));
         service = new Service("Démolition", "Nous réalisons vos travaux de démolition", 100.0, contractor, category);
-        contractor.addService(service);  
+        contractor.addService(service); 
+        contractor.addReview(review3);
         
         em.persist(category);
         em.persist(contractor);
@@ -164,6 +182,7 @@ public class PopulateDBBean implements PopulateDB {
         
         Moderator moderator = new Moderator();
         moderator.setLogin("SuperModerator");
+        moderator.setPassword("admin");
         moderator.setId((long)1);
         
         em.persist(moderator);
