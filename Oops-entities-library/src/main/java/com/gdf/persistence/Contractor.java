@@ -58,14 +58,17 @@ public class Contractor implements Serializable {
     @NotNull( message = "Veuillez saisir un email" )
     private String email;
     
+    @NotNull(message = "Veuillez saisir une description")
+    @Size(min = 30, message = "La description doit contenir au moins 30 caractères")
     private String description;
     
     @NotNull( message = "Veuillez saisir un numéro de téléphone" )
     private String phone;
     
+    @NotNull(message = "Veuillez saisir un logo")
     private String logo;
     
-    private String socialReason, legalForm; // fileds which can be null (2 steps registration) 
+    private String socialReason, legalForm;
     
     private int turnover, nbEmployees, rating;  
     private String registrationDate, updateDate;

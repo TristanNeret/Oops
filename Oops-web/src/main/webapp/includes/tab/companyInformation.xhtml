@@ -56,23 +56,21 @@
 
                 <o:form id="viewForm1" includeViewParams="true">
 
+
                     <p:panel id="content">
-                        <table id="table" cellpadding="10px">
+                        <table id="table">
                             <tr>
                                 <td>
-                                    <div>
-                                        <h:graphicImage value="#{contractorEditBean.contractor.logo}" height="150px" rendered="#{contractorEditBean.isLogo()}" />
+                                    <div class="divContractorLogo">
+                                        <h:graphicImage value="#{contractorEditBean.contractor.logo}" height="150px" 
+                                                        rendered="#{contractorEditBean.isLogo()}" />
                                         <h:outputLabel value="Aucune image" rendered="#{!contractorEditBean.isLogo()}" />
                                     </div>
                                 </td>
                                 <td>
                                     <h:outputText value="#{contractorEditBean.contractor.description}"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>              
-                                </td>
-                                <td>
+
+                                    <br/><br/><br/>
                                     <p:commandButton value="Modifier" onclick="PF('modifDialog1').show();">
                                         <p:ajax update="tabViewContractor:accordionPanel:dialogForm1:contractorLogo"/>
                                         <p:ajax update="tabViewContractor:accordionPanel:dialogForm1:logoMessage"/>
@@ -83,7 +81,6 @@
                             </tr>
                         </table>
 
-
                     </p:panel>
                 </o:form>
 
@@ -92,32 +89,30 @@
                     <p:dialog header="Modification description"  modal="true" widgetVar="modifDialog1" resizable="false">
 
                         <h:panelGroup id="dialogPanel">
-                            <h:panelGrid id="grid3" columns="3" cellpadding="5">
-
+                            <p>
                                 <h:outputLabel for="contractorLogo" value="URL du logo :" class="labelModificationForm"/>
-                                <p:inputText id="contractorLogo" placeholder="Facultatif" value="#{contractorEditBean.contractor.logo}">
+                                <p:inputText id="contractorLogo" size="70" value="#{contractorEditBean.contractor.logo}">
                                     <f:validator validatorId="com.gdf.urlLogoValidator"/>
                                 </p:inputText>
                                 <p:message id="logoMessage" for="contractorLogo" />
-
+                            </p>
+                            <p>
                                 <h:outputLabel for="contractorDescription" value="Description :" class="labelModificationForm"/>
                                 <p:inputTextarea id="contractorDescription"  value="#{contractorEditBean.contractor.description}"
                                                  rows="7" cols="70" placeholder="Decrivez en quelques mots votre entreprise">
                                 </p:inputTextarea>
                                 <p:message id="descriptionMessage" for="contractorDescription" />
+                            </p>
 
-                            </h:panelGrid>
+                            <div class="dialogFooter" >
+                                <p:commandButton  id="updateButton" value="Enregistrer" update="tabViewContractor:accordionPanel:viewForm1"
+                                                  actionListener="#{contractorEditBean.update()}"
+                                                  oncomplete="handleModifCompanyInfosRequest1(xhr, status, args)" />
+
+                                <p:commandButton  value="Annuler" id="cancelButton" 
+                                                  onclick="PF('modifDialog1').hide();"/>
+                            </div>
                         </h:panelGroup>
-
-                        <div class="dialogFooter" >
-                            <p:commandButton  id="updateButton" value="Enregistrer" update="tabViewContractor:accordionPanel:viewForm1"
-                                              actionListener="#{contractorEditBean.update()}"
-                                              oncomplete="handleModifCompanyInfosRequest1(xhr, status, args)" />
-
-                            <p:commandButton  value="Annuler" id="cancelButton" 
-                                              onclick="PF('modifDialog1').hide();"/>
-                        </div>
-
                     </p:dialog>
                 </o:form>
 
@@ -204,6 +199,7 @@
                             </tr>                                  
                         </table>
 
+                        <br/>
                         <p:commandButton id="openUpdateDialogButton" value="Modifier" onclick="PF('modifDialog2').show();">
                             <p:ajax update="tabViewContractor:accordionPanel:dialogForm2:socialReasonIT"/>
                             <p:ajax update="tabViewContractor:accordionPanel:dialogForm2:legalFormSOM"/>
@@ -362,8 +358,21 @@
                             </tr> 
                         </table>
 
+                        <br/>
                         <p:commandButton value="Modifier" onclick="PF('modifDialog3').show();">
-
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:contractorZipCode"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:zipCodeMessage"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:contractorStreetNumber"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:streetNumberMessage"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:contractorStreet"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:streetMessage"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:zipCode"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:zipCodeMessageFr"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:townMessageFr"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:contractorStreetNumberFr"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:streetNumberMessageFr"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:contractorStreetFr"/>
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:streetMessageFr"/>
                         </p:commandButton>
                     </p:panel>
                 </o:form>

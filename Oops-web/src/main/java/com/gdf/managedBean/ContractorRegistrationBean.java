@@ -118,6 +118,7 @@ public class ContractorRegistrationBean implements Serializable {
     };
 
     // STEP 3 -----------------------------------------------------------------------------------
+    @NotNull(message = "Veuillez saisir un logo")
     private String logo;
     @NotNull(message = "Veuillez saisir une description")
     @Size(min = 30, message = "La description doit contenir au moins 30 caractères")

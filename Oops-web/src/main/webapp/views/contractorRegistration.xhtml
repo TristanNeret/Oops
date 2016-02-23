@@ -326,7 +326,7 @@ and open the template in the editor.
                     <h:panelGrid id="grid3" columns="3" cellpadding="5">
 
                         <h:outputLabel for="contractorLogo" value="URL du logo :" class="labelModificationForm"/>
-                        <p:inputText id="contractorLogo" placeholder="Facultatif" value="#{contractorRegistrationBean.logo}">
+                        <p:inputText id="contractorLogo" size="70"value="#{contractorRegistrationBean.logo}">
                             <f:validator validatorId="com.gdf.urlLogoValidator"/>
                         </p:inputText>
                         <p:message id="logoMessage" for="contractorLogo" />

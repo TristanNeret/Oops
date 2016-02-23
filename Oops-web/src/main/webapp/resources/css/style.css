@@ -352,16 +352,10 @@ form#reviewForm {
 }
 
 .divContractorLogo {
-    float: left;
-    margin-top: 20px;
-}
-
-.panelCompanyInformation {
-    float: left;
-    margin-left: 20px;
-    border-left-width: 3px !important;
-    border-left-color: darkgray !important;
-    border-left-style: ridge !important;
+    margin-right: 20px;
+    border-right-width: 2px !important;
+    border-right-color: darkgray !important;
+    border-right-style: ridge !important;
 }
 
 .labelTitleContractorInformation {
