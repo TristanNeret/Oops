@@ -220,6 +220,10 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     color: #666666 !important;
 }
 
+.commandButtonAsReadNotification {
+    margin-top: 10px;
+}
+
 /*****************************************************************************/
 /********************************* FOOTER ************************************/
 /*****************************************************************************/
@@ -1088,48 +1092,47 @@ form .updateButtonContractorReview {
 }
 
 .ui-tabs .ui-tabs-nav {
-    background-color: #66cccc;
-    background: #66cccc;
+    background-color: #97c857;
+    background: #97c857;
     border-bottom-color: #666666;
-    border-bottom-width: 2px;
+    border-bottom-width: 1px;
     border-bottom-style: solid;
-    border-top-color: #666666;
-    border-top-width: 2px;
+    border-top-width: 0px;
     border-top-style: solid;
     border-left-width: 0px;
     border-left-style: none;
     border-right-width: 0px;
     border-right-style: none;
-
 }
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a {
-    background-color: #336c6c;
-    color: #66cccc;
+    background-color: #3a6e28;
+    color: #97c857;
     cursor: pointer !important;
     text-shadow: none;
     font-weight: 100;
     font-size: 22px;
-    border-style: solid;
-    border-color: #666666;
-    border-width: 2px;
+    height: 100%;
 }
 
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a {
-    background-color: #66cccc;
-    color: #336c6c;
+    background-color: #97c857;
+    color: #3a6e28;
     text-shadow: none;
-    font-weight: 100;
+    font-weight: lighter;
     font-size: 22px;
-    border-style: solid;
-    border-color: #666666;
-    border-width: 2px;
-    margin: -2px;
+    border: none;
 }
 
 .ui-tabs .ui-tabs-nav li {
     margin: 0em !important;
     position: inherit !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right-color: #666666;
+    border-right-width: 1px;
+    border-right-style: solid;
 }
 
 .ui-growl {

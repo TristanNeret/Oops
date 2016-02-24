@@ -73,7 +73,7 @@ and open the template in the editor.
                         </c:forEach>
                     </div>
                     <div class="divNotification">
-                        <b:commandButton actionListener="#{manageNotificationBean.markAsRead()}" update="@form :headerBar" value="Tout marquer comme lu" look="danger" rendered="#{manageNotificationBean.unreadNotifications}" >
+                        <b:commandButton actionListener="#{manageNotificationBean.markAsRead()}" update="@form :headerBar" styleClass="commandButtonAsReadNotification" value="Tout marquer comme lu" look="danger" rendered="#{manageNotificationBean.unreadNotifications}" >
                         </b:commandButton>
                     </div>
                 </div>

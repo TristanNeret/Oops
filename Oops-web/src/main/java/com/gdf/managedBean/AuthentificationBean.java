@@ -235,7 +235,7 @@ public class AuthentificationBean implements Serializable {
 
         }
 
-        return "#";
+        return "/views/adminManager.xhtml";
 
     }
 
