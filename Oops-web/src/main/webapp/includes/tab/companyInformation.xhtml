@@ -86,9 +86,13 @@
 
                 <o:form id="dialogForm1" includeViewParams="true">
 
-                    <p:dialog header="Modification description"  modal="true" widgetVar="modifDialog1" resizable="false">
+                    <p:dialog header="Modification presentation"  modal="true" widgetVar="modifDialog1" resizable="false">
 
                         <h:panelGroup id="dialogPanel">
+                            
+                            <!-- <p:message /> doesn't work on this dialog -->
+                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                            
                             <p>
                                 <h:outputLabel for="contractorLogo" value="URL du logo :" class="labelModificationForm"/>
                                 <p:inputText id="contractorLogo" size="70" value="#{contractorEditBean.contractor.logo}">
