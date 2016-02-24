@@ -100,7 +100,7 @@ public class SearchManagedBean implements Serializable {
         this.order = "ALPHABETICAL";
         this.listC = sb.getAllCategory();
         this.reviewsToShow = this.sb.getThreeReviewsToShow();
-        
+  
     }
     
     /**
@@ -181,8 +181,9 @@ public class SearchManagedBean implements Serializable {
 
     public List<SelectItem> getAllCountry() {
         List<SelectItem> li = new ArrayList<>();
-        
-        for(String localCountry : listC)
+        List<String> listCountry = sb.getAllCountry();
+
+        for(String localCountry : listCountry)
                 li.add(new SelectItem(localCountry)); 
         
         return li;

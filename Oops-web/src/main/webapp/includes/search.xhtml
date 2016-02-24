@@ -15,8 +15,8 @@ and open the template in the editor.
 
     <div id="divSearch">
 
-        <h:form onsubmit="#{searchManagedBean.search()}">
-            <h:panelGrid columns="6" style="margin: auto;">
+        <h:form id="formSearch" onsubmit="#{searchManagedBean.search()}">
+            <h:panelGrid columns="7" style="margin: auto;">
 
                 <b:inputText id="queryInputText" placeholder="Mots-clés" value="#{searchManagedBean.keyWord}" autocomplete="on"></b:inputText>
 
@@ -36,17 +36,19 @@ and open the template in the editor.
                 <b:selectOneMenu id="listCountries" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.country}" style="margin-right: 5px">
                     <f:selectItem itemLabel="Pays" itemValue=""/>
                     <f:selectItems value="#{searchManagedBean.allCountry}"/>
+                    <f:ajax event="change" render ="formSearch:listRegions"/>
                 </b:selectOneMenu>
 
-                <b:selectOneMenu  id="listTowns"  value="#{searchManagedBean.region}" rendered="#{searchManagedBean.country == 'France'}" style="margin-right: 5px">
-                    <f:selectItem itemLabel="Régions" itemValue=""/>
-                    <f:selectItems value="#{searchManagedBean.allRegions}"/>
-                </b:selectOneMenu>
+                <h:panelGroup id="listRegions" >
+                    <b:selectOneMenu value="#{searchManagedBean.region}" rendered="#{searchManagedBean.country == 'France'}" style="margin-right: 5px">
+                        <f:selectItem itemLabel="Régions" itemValue=""/>
+                        <f:selectItems value="#{searchManagedBean.allRegions}"/>
+                    </b:selectOneMenu>
+                </h:panelGroup>
 
                 <b:selectOneMenu id="listCategories" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.category}" style="margin-right: 5px">
                     <f:selectItem itemLabel="Catégorie" itemValue=""/>
                     <f:selectItems value="#{searchManagedBean.allCategory}"/>
-
                 </b:selectOneMenu>
 
                 <b:commandButton id="searchButton" look="primary" value="Recherche" action="#{searchManagedBean.search()}"></b:commandButton>      
