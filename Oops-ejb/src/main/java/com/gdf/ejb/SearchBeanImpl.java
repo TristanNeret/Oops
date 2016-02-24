@@ -195,7 +195,7 @@ public class SearchBeanImpl implements SearchBean, Serializable {
             query.setParameter("country", country);
         }
         
-        if (region != null && country.equals("France")) {
+        if (region != null && country != null && country.equals("France")) {
             query.setParameter("region", region);
         }
 
