@@ -16,6 +16,7 @@ import com.gdf.persistence.ReviewState;
 import static com.gdf.persistence.ReviewState.ACCEPTED;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -38,6 +39,17 @@ public class AdministratorBeanImpl implements AdministratorBean, Serializable {
         
         em.persist(category);
     
+    }
+    
+    private int calculateRate(List<Review> reviews) {
+        int rate = 0;
+        for (Review r : reviews) {
+            if (r.isReviewEnabled()) {
+                rate += r.getRating();
+            }
+        }
+        rate = rate / reviews.size();
+        return rate;
     }
 
     @Override
@@ -64,6 +76,9 @@ public class AdministratorBeanImpl implements AdministratorBean, Serializable {
             this.sendNotificationToContractor(moderator, review, contractor, NotificationType.TO_CONTRACTOR);
         }
         
+        int rate = this.calculateRate(contractor.getReviews());
+        contractor.setRating(rate);
+        em.merge(contractor);
         
     }
     
