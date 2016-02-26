@@ -10,7 +10,9 @@ and open the template in the editor.
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:o="http://omnifaces.org/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
         <title>Soumissionnaires</title>
@@ -26,69 +28,67 @@ and open the template in the editor.
 
     <h:body>
 
-
         <!-- HEADER -->
-        <ui:include src="/includes/header.xhtml" />
+        <c:if test="#{!authentificationBean.moderatorConnected}">
+            <ui:include src="/includes/header.xhtml" />
+        </c:if>
+        <c:if test="#{authentificationBean.moderatorConnected}">
+            <ui:include src="/includes/headerAdmin.xhtml" />
+        </c:if>
 
         <!-- SEARCH -->
         <ui:include src="/includes/search.xhtml" />
 
-        <p:fieldset rendered="#{empty searchManagedBean.ltd}">
-            <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
-                <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de recherche !"/>
-            </div>
-        </p:fieldset>
-
         <!-- CONTENT -->
-        <div class="divContent">
+        <div class="container">
+            
+            <p:fieldset rendered="#{empty searchManagedBean.ltd}" styleClass="fieldsetNoResult">
+                <h:outputText id="noResultOutputText" styleClass="fieldsetNoResult" value="Aucun résultat ne correspond aux critères de recherche."/> 
+            </p:fieldset>
 
             <p:growl widgetVar="askReviewGrowl" sticky="false" showDetail="true" life="3000" />
 
             <o:form id="askReviewForm" includeViewParams="true">
-                <table  width="100%" style="margin: 0px;">
-                    <c:forEach items="#{searchManagedBean.ltd}" var="tend" rendered="#{not empty searchManagedBean.ltd}">
-                        <tr>
-                            <td>
 
-                                <fieldset style="margin-top: 10px;">
+                <p:dataGrid var="tend" value="#{searchManagedBean.ltd}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+                            paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="6,12,16" rendered="#{not empty searchManagedBean.ltd}" style="margin-top: 20px;">
 
-                                    <h:graphicImage value="#{tend.avatar}" height="75px" style="float: left;"/>
+                    <b:panel collapsible="false" styleClass="panelHeaderBootsfaces">
+                        <f:facet name="heading">
+                            <b:row styleClass="show-grid">
+                                <b:column>
+                                    <h:graphicImage value="#{tend.avatar}" height="50px" />
+                                    <h:outputText value="#{tend.login}" styleClass="outputTextTitle" />
+                                </b:column>
+                                <b:column styleClass="columnRating">
+                                    <h:outputText value="#{tend.nbReviews} avis donné" styleClass="outputTextRating" rendered="#{tend.nbReviews lt 2}" />                                               
+                                    <h:outputText value="#{tend.nbReviews} avis donnés" styleClass="outputTextRating" rendered="#{tend.nbReviews gt 1}" />                                               
+                                </b:column>
+                            </b:row>
+                        </f:facet>
+                        <b:container fluid="true">
+                            <b:row styleClass="show-grid">
+                                <b:column>
+                                    <b><h:outputText value="Nom complet : " /></b>
+                                    <h:outputText value="#{tend.firstname} #{tend.lastname}" />
+                                    <b><h:outputText value="Inscrit le " style="padding-left: 20px;" /></b>
+                                    <h:outputText value="#{tend.registrationDate}" />
+                                </b:column>
+                                <b:column>
+                                    <b:commandButton id="askReviewBtn" look="success" value="Demander un avis" 
+                                                     rendered="#{tendererSearchBean.display(tend.id)}"
+                                                     onclick="PF('askReviewDialog').show();"
+                                                     actionListener="#{tendererSearchBean.setTenderer(tend)}"
+                                                     update="askReviewDialogForm:dialogPanel" style="float: right; margin-top: 5px;" /> 
+                                    <b:button look="primary" value="Voir #{tend.login}" outcome="/views/tendererInformations?id=#{tend.id}" style="float: right; margin-top: 5px;" />
+                                </b:column>
+                            </b:row>
+                        </b:container>
+                    </b:panel>
 
-                                    <h:outputText value="#{tend.login}"
-                                                  style="font-size: x-large; padding-left: 20px;" />
+                </p:dataGrid>
 
-                                    <c:if test="#{tend.nbReviews lt 2}">
-                                        <h:outputText value="#{tend.nbReviews} avis donné" style="float: right;"/>                                               
-                                    </c:if>
-                                    <c:if test="#{tend.nbReviews gt 1}">
-                                        <h:outputText value="#{tend.nbReviews} avis donnés" style="float: right;"/>                                               
-                                    </c:if>
-
-                                    <br/>
-                                    <h:outputText value="Nom complet : #{tend.firstname} #{tend.lastname}" 
-                                                  style="padding-left: 20px;" />
-
-                                    <div style="float: right;">
-
-                                        <p:commandButton id="askReviewBtn" class="headerCommandButton" value="Demander un avis" 
-                                                         rendered="#{tendererSearchBean.display(tend.id)}"
-                                                         onclick="PF('askReviewDialog').show();"
-                                                         actionListener="#{tendererSearchBean.setTenderer(tend)}"
-                                                         update="askReviewDialogForm:dialogPanel" /> 
-                                        <h:button class="headerCommandButton" value="Voir #{tend.login}" 
-                                                  outcome="/views/tendererInformations?id=#{tend.id}" />
-
-                                    </div>   
-
-                                    <br/>
-                                    <h:outputText value="Inscrit le #{tend.registrationDate}" 
-                                                  style="padding-left: 20px;" /> 
-                                </fieldset>
-
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>         
             </o:form>
 
             <!-- DIALOG BOX FOR ASKING REVIEWS  -->

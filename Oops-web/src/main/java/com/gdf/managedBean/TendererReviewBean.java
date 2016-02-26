@@ -10,6 +10,7 @@ import com.gdf.ejb.TendererManagerBean;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Tenderer;
+import com.gdf.session.SessionBean;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -60,20 +61,9 @@ public class TendererReviewBean implements Serializable {
     @PostConstruct
     public void initBean() {
         
-        // Temporary used to connect a Contractor
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userID", new Long("1"));
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Tenderer.userCategory);
-        
-        // Check if a user is connected
-        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
-      
-        if (userID != null) {
-
-            this.id = userID;
-            this.reviews = null;
-            this.reviews = this.searchBean.searchTendererById(this.id).getReviews();
-        
-        }
+        this.id = SessionBean.getUserId();
+        this.reviews = null;
+        this.reviews = this.searchBean.searchTendererById(this.id).getReviews();
         
     }
     

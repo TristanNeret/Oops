@@ -7,6 +7,7 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
@@ -14,12 +15,12 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="style.css" />
     </h:head>
-    
+
     <h:body>
-        
+
         <!-- HEADER -->
         <ui:include src="/includes/headerAdmin.xhtml" />
-        
+
         <!-- TAB -->
         <p:tabView id="tabViewAdmin">
             <p:tab id="tabReviews" title="Avis">
@@ -32,10 +33,10 @@ and open the template in the editor.
                 <ui:include src="/includes/tab/adminMessageTab.xhtml" />
             </p:tab>
         </p:tabView>
-        
+
         <!-- FOOTER -->
         <ui:include src="/includes/footer.xhtml" />
-    
+
     </h:body> 
-      
+
 </html>

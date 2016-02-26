@@ -45,9 +45,11 @@ and open the template in the editor.
         }
     </script>
     
-    <div class="divContent">
+    <div class="container">
+        
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis en attente de traitement :" rendered="#{!manageReviewBean.areReviews}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Il n'y a aucun avis en attente de traitement." rendered="#{manageReviewBean.areReviews}" /> 
+        
         <p:panel>
             <c:forEach items="#{manageReviewBean.reviewList}" var="review" >
                 <div class="panelReviewAdmin">

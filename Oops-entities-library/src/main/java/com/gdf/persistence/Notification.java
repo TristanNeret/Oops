@@ -27,8 +27,9 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Notification.deleteByReviewId", query = "DELETE FROM Notification n WHERE n.review.id=?1"),
-    @NamedQuery(name = "Notification.findByContractorAndTenderer", query = "Select n FROM Notification n WHERE n.contractor=?1 "
-            + "AND n.tenderer=?2 ORDER BY n.date DESC")
+    @NamedQuery(name = "Notification.findByContractorAndTenderer", query = "Select n FROM Notification n WHERE n.contractor=?1 " + "AND n.tenderer=?2 ORDER BY n.date DESC"),
+    @NamedQuery(name = "Notification.findForModerator", query = "SELECT n FROM Notification n WHERE n.category=com.gdf.persistence.NotificationType.TO_MODERATOR"),
+    @NamedQuery(name = "Notification.findUnreadForModerator", query = "SELECT n FROM Notification n WHERE n.state=com.gdf.persistence.NotificationState.NOT_READ AND n.category=com.gdf.persistence.NotificationType.TO_MODERATOR")
 })
 public class Notification implements Serializable {
 

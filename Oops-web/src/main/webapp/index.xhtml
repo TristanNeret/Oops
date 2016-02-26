@@ -7,26 +7,85 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Oops</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <h:outputStylesheet library="css" name="style.css" />
-     
+
     </h:head>
-    
+
     <h:body>
-        
+
         <!-- HEADER -->
-        <ui:include src="/includes/header.xhtml" />
-        
+        <c:if test="#{!authentificationBean.moderatorConnected}">
+            <ui:include src="/includes/header.xhtml" />
+        </c:if>
+        <c:if test="#{authentificationBean.moderatorConnected}">
+            <ui:include src="/includes/headerAdmin.xhtml" />
+        </c:if>
+
         <!-- SEARCH -->
         <ui:include src="/includes/search.xhtml" />
-        
-        <div class="divContent" style="text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">Bienvenue sur Oops ! Le plus grand annuaire de prestataires du web !</div>
-        
+
+        <b:container fluid="true">
+            <b:row styleClass="show-grid" style="margin-top: 30px;">
+                <b:column span="1"></b:column>
+                <b:column span="2">
+                    <b:panel id="columnImageBatiment" title="BÂTIMENT" look="primary" collapsible="false" styleClass="columnImageCategory" style="background-color: #9966ff;">
+                        <a href="/Oops-web/views/contractorSearch.xhtml?category=Batiment"><b:image value="/resources/default/img/batiment.jpg" styleClass="imageCategory" name="Bâtiment" /></a>
+                    </b:panel>
+                </b:column>
+                <b:column span="2">
+                    <b:panel id="columnImageRestauration" title="RESTAURATION" look="primary" collapsible="false" styleClass="columnImageCategory" style="background-color: #ff6666">
+                        <a href="/Oops-web/views/contractorSearch.xhtml?category=Restauration"><b:image value="/resources/default/img/restauration.jpg" styleClass="imageCategory" name="Restauration" /></a>
+                    </b:panel>
+                </b:column>
+                <b:column span="2">
+                    <b:panel id="columnImageInformatique" title="INFORMATIQUE" look="primary" collapsible="false" styleClass="columnImageCategory" style="background-color: #18abff">
+                        <a href="/Oops-web/views/contractorSearch.xhtml?category=Informatique"><b:image value="/resources/default/img/informatique.jpg" styleClass="imageCategory" name="Informatique" /></a>
+                    </b:panel>
+                </b:column>
+                <b:column span="2">
+                    <b:panel id="columnImageAnimation" title="ANIMATION" look="primary" collapsible="false" styleClass="columnImageCategory" style="background-color: #cc0099">
+                        <a href="/Oops-web/views/contractorSearch.xhtml?category=Animation"><b:image value="/resources/default/img/animation.jpg" styleClass="imageCategory" name="Animation" /></a>
+                    </b:panel>
+                </b:column>
+                <b:column span="2">
+                    <b:panel id="columnImageDivers" title="DIVERS" look="primary" collapsible="false" styleClass="columnImageCategory" style="background-color: #97c857">
+                        <a href="/Oops-web/views/contractorSearch.xhtml?category=Divers"><b:image value="/resources/default/img/divers.jpg" styleClass="imageCategory" name="Divers" /></a>
+                    </b:panel>
+                </b:column>
+                <b:column span="1"></b:column>
+            </b:row>
+        </b:container>
+
+        <!-- REVIEW CARROUSSEL -->
+        <b:container fluid="true" styleClass="containerCarroussel">
+            <b:row styleClass="show-grid">
+                <c:forEach items="#{searchManagedBean.reviewsToShow}" var="review">
+                    <b:column span="4" styleClass="containerCarrousselItem">
+                        <b:row styleClass="show-grid" style="text-align: center;">
+                            <h:outputText value='"#{review.content}"' />
+                        </b:row>
+                        <b:row styleClass="show-grid" style="text-align: center;">
+                            <h:graphicImage url="#{review.contractor.logo}" title="Logo" height="30px" />
+                            <b><h:outputText value="#{review.contractor.socialReason}" style="margin-left: 5px;" /></b>
+                        </b:row>
+                        <b:row styleClass="show-grid" style="text-align: center;">
+                            <p:rating styleClass="ratingCenter" value="#{review.rating}" stars="5" readonly="true" />
+                        </b:row>
+                    </b:column>
+                </c:forEach>
+            </b:row>
+        </b:container>
+
+        <!-- FOOTER -->
         <ui:include src="/includes/footer.xhtml" />
-    
+
     </h:body> 
-      
+
 </html>

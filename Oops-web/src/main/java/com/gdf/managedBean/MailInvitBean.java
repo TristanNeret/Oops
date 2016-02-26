@@ -9,6 +9,7 @@ import com.gdf.ejb.MailServiceBean;
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Tenderer;
+import com.gdf.session.SessionBean;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -37,39 +38,31 @@ public class MailInvitBean implements Serializable {
     private Tenderer currentTenderer;
     private Contractor currentContractor;
 
-    /**
-     * Creates a new instance of MailInvitBean
-     */
-    public MailInvitBean() {
-    }
-
     @PostConstruct
     private void init() {
-        // Temporary used to connect an user and kwow what user it is
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", new Long("1"));
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userCategory", Tenderer.userCategory);
-        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
-
-        // WTF ? la fonction search ne trouve pas le prestataire alors que le soumissionnaire oui
-        currentContractor = search.searchContractorById(userID);
-        currentTenderer = search.searchTendererById(userID);
+        
+        if (SessionBean.getUserCategory().equals(Tenderer.userCategory)) {
+            currentTenderer = search.searchTendererById(SessionBean.getUserId());
+        } else {
+            currentContractor = search.searchContractorById(SessionBean.getUserId());
+        }
         this.fillMessage();
+        
     }
     
     /**
-     * pre fill subject and message
+     * Pre fill subject and message
      */
     private void fillMessage() {
 
-        String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userCategory");
         String from = "";
         String body = "";
-        if (currentTenderer != null && userCategory.equals("TENDERER")) {
+        if (SessionBean.getUserCategory().equals(Tenderer.userCategory)) {
             from = currentTenderer.getFirstname() + " " + currentTenderer.getLastname();
             body = " souhaite que vous deveniez soumissionnaire sur Oops afin que vous poussiez donner votre avis sur notre annuaire de prestations."
                     + "\nhttp://www.oopsgdf.fr\n\n";
         }
-        if (currentContractor != null && userCategory.equals("CONTRACTOR")) {
+        if (SessionBean.getUserCategory().equals(Contractor.userCategory)) {
             from = currentContractor.getRepresentatorFirstname() + " "
                     + currentContractor.getRepresentatorLastname() + " de "
                     + currentContractor.getSocialReason();
@@ -81,18 +74,22 @@ public class MailInvitBean implements Serializable {
                 + from
                 + body
                 + "Cordialement,\nL'équipe Oops";
+        
     }
+    
     /**
-     * send the message in email
+     * Send the message in email
      */
     public void sendMail() {
+        
         msb.sendEmail(to, subject, message);
-        // reset fields
+        // Reset fields
         to = null;
         this.fillMessage();
         
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Message envoyé!",  "") );
+        
     }
 
     public String getMessage() {

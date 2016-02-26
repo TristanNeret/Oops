@@ -6,11 +6,11 @@
 package com.gdf.managedBean;
 
 import com.gdf.ejb.NotificationBean;
-import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Notification;
 import com.gdf.persistence.Tenderer;
+import com.gdf.session.SessionBean;
 import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.io.Serializable;
@@ -46,8 +46,15 @@ public class ManageNotificationBean implements Serializable {
      */
     @PostConstruct
     public void initBean() {
+        
+        this.notificationsList = new ArrayList<>();
+        
+        // Test if a User is connected
+        if (SessionBean.getUserId() != null) {
 
-        this.findNotifications();
+            this.findNotifications();
+        
+        }
 
     }
 
@@ -56,51 +63,28 @@ public class ManageNotificationBean implements Serializable {
      */
     public void findNotifications() {
 
-        this.notificationsList = new ArrayList<>();
+        this.notificationsList = null;
+        this.allNotificationsList = null;
+        Long id = SessionBean.getUserId();
+        switch (SessionBean.getUserCategory()) {
 
-        // Temporary used to connect a Tenderer
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userID", new Long("1"));
-        FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("userCategory", Tenderer.userCategory);
+            case Tenderer.userCategory:
+                this.notificationsList = Lists.reverse(this.nb.findUnreadTendererNotification(id));
+                this.allNotificationsList = Lists.reverse(this.nb.findAllTendererNotification(id));
+                break;
 
-        // Check if a user is connected
-        Long userID = (Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userID");
-        String userCategory = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userCategory");
+            case Contractor.userCategory:
+                this.notificationsList = Lists.reverse(this.nb.findUnreadContractorNotification(id));
+                this.allNotificationsList = Lists.reverse(this.nb.findAllContractorNotification(id));
+                break;
 
-        // TEMPORARY : DON'T FORGET TO REMOVE !
-        userID = new Long(1);
-        userCategory = "TENDERER";
+            case Moderator.userCategory:
+                this.notificationsList = Lists.reverse(this.nb.findUnreadModeratorNotification(id));
+                this.allNotificationsList = Lists.reverse(this.nb.findAllModeratorNotification(id));
+                break;
 
-        if (userID != null) {
-
-            if (userCategory != null) {
-
-                // Connected
-                this.notificationsList = null;
-                this.allNotificationsList = null;
-                Long id = userID;
-                switch (userCategory) {
-
-                    case Tenderer.userCategory:
-                        this.notificationsList = Lists.reverse(this.nb.findUnreadTendererNotification(id));
-                        this.allNotificationsList = Lists.reverse(this.nb.findAllTendererNotification(id));
-                        break;
-
-                    case Contractor.userCategory:
-                        this.notificationsList = Lists.reverse(this.nb.findUnreadContractorNotification(id));
-                        this.allNotificationsList = Lists.reverse(this.nb.findAllContractorNotification(id));
-                        break;
-
-                    case Moderator.userCategory:
-                        this.notificationsList = Lists.reverse(this.nb.findUnreadModeratorNotification(id));
-                        this.allNotificationsList = Lists.reverse(this.nb.findAllModeratorNotification(id));
-                        break;
-
-                    default:
-                        break;
-
-                }
-
-            }
+            default:
+                break;
 
         }
 
@@ -183,6 +167,7 @@ public class ManageNotificationBean implements Serializable {
     }
 
     // GETTER/SETTER
+    
     public List<Notification> getNotificationsList() {
         return notificationsList;
     }

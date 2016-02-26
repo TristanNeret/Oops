@@ -10,6 +10,8 @@ and open the template in the editor.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:o="http://omnifaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
@@ -18,60 +20,74 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
 
+    <f:metadata>
+        <o:viewParam name ="category" value="#{searchManagedBean.categoryParam}" />
+        <f:viewAction action="#{searchManagedBean.serachCategory()}" />
+    </f:metadata>
+
     <h:body>
 
         <!-- HEADER -->
-        <ui:include src="/includes/header.xhtml" />
+        <c:if test="#{!authentificationBean.moderatorConnected}">
+            <ui:include src="/includes/header.xhtml" />
+        </c:if>
+        <c:if test="#{authentificationBean.moderatorConnected}">
+            <ui:include src="/includes/headerAdmin.xhtml" />
+        </c:if>
 
         <!-- SEARCH -->
         <ui:include src="/includes/search.xhtml" />
 
-        <p:fieldset rendered="#{empty searchManagedBean.lc}">
-            <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
-                <h:outputText id="noResultOutputText" value="Aucun résultat ne correspond aux critères de recherche !"/> 
-            </div>
-        </p:fieldset>
-
-        <h:panelGroup rendered ="#{searchManagedBean.lc.size() ge 2}">
-
-            <fieldset width="100%" style="margin: 0px;">
-                <h:form>
+        <b:panel styleClass="panelSimple">
+            <h:form onsubmit="#{searchManagedBean.valueChangeMethod()}">
+                <h:panelGrid columns="2">
                     <h:outputText value="Trier par : " />
-                    <h:selectOneMenu id ="listOrder" value="#{searchManagedBean.order}" onchange="submit()"
-                                     valueChangeListener="#{searchManagedBean.valueChangeMethod}">
-                        <f:selectItems value="#{searchManagedBean.orders}" />
-                    </h:selectOneMenu>
-                </h:form>
-            </fieldset>
-        </h:panelGroup>
+                    <b:selectOneMenu id ="listOrder" value="#{searchManagedBean.order}" onchange="this.form.submit()" >
+                        <f:selectItem id="rate" itemLabel="Note" itemValue="RATINGS" />
+                        <f:selectItem  id="name" itemLabel="Nom" itemValue="ALPHABETICAL" />
+                    </b:selectOneMenu>
+                </h:panelGrid>
+            </h:form>
+        </b:panel>
 
         <!-- CONTENT -->
-        <div class="divContent">
-            <c:forEach items="#{searchManagedBean.lc}" var="contractor" rendered="#{not empty searchManagedBean.lc}">
-                <div class="divContentPadding">
-                    <fieldset id="listContractor" style="margin-top: 10px;"> 
-                        <h:graphicImage value="#{contractor.logo}" height="75px" style="float: left;"/>
-                        <h:outputText style="font-size: x-large; padding-right: 25px; padding-left: 20px;" 
-                                      value="#{contractor.socialReason}"/> 
-                        <h:outputText value="#{contractor.address.town} (#{contractor.address.zipCode})" /> 
-                        <div style="float: right;">
-                            <div style="float: right; margin-right: 10px;">
-                                <div style="float: left;">
-                                    <h:outputText value="Note moyenne : " /> 
-                                </div>
-                                <div style="float: right; margin-left: 10px; margin-top: 2px;">
-                                    <p:rating id="stars1" value="#{contractor.rating}" stars="5" readonly="true"/>
-                                </div>
-                            </div>
-                            <div>
-                                <h:button class="headerCommandButton" value="Voir #{contractor.socialReason}" 
-                                          outcome="/views/contractorInformations?id=#{contractor.id}" />
-                            </div>
-                        </div>
-                    </fieldset> 
-                    <h:outputText style="padding-left: 10px; margin-bottom: 20px;" value="#{contractor.description}" /> 
-                </div>
-            </c:forEach>
+        <div class="container">
+
+            <p:fieldset rendered="#{empty searchManagedBean.lc}" styleClass="fieldsetNoResult">
+                <h:outputText id="noResultOutputText" styleClass="fieldsetNoResult" value="Aucun résultat ne correspond aux critères de recherche."/> 
+            </p:fieldset>
+
+            <p:dataGrid var="contractor" value="#{searchManagedBean.lc}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="6,12,16" rendered="#{not empty searchManagedBean.lc}">
+
+                <b:panel collapsible="false" styleClass="panelHeaderBootsfaces">
+                    <f:facet name="heading">
+                        <b:row styleClass="show-grid">
+                            <b:column>
+                                <h:graphicImage value="#{contractor.logo}" height="50px" />
+                                <h:outputText value="#{contractor.socialReason}" styleClass="outputTextTitle" />
+                            </b:column>
+                            <b:column styleClass="columnRating">
+                                <p:rating id="stars1" value="#{contractor.rating}" stars="5" readonly="true" styleClass="rating" />
+                                <h:outputText value="Note moyenne : " styleClass="outputTextRating" />
+                            </b:column>
+                        </b:row>
+                    </f:facet>
+                    <b:container fluid="true">
+                        <b:row styleClass="show-grid">
+                            <h:outputText value="#{contractor.description}"/>
+                        </b:row>
+                        <b:row styleClass="show-grid" style="margin-top: 10px; padding-top: 15px;">
+                            <b><h:outputText value="Localisation : " /></b>
+                            <h:outputText value="#{contractor.address.town} (#{contractor.address.zipCode})"/>
+                            <b:button look="primary" value="Voir #{contractor.socialReason}" outcome="/views/contractorInformations?id=#{contractor.id}" style="float: right; margin-top: -15px;" />
+                        </b:row>
+                    </b:container>
+                </b:panel>
+
+            </p:dataGrid>
+
         </div>
 
     </h:body>

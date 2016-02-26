@@ -17,6 +17,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  * NotificationBeanImpl
@@ -84,23 +85,8 @@ public class NotificationBeanImpl implements NotificationBean, Serializable {
     @Override
     public List<Notification> findUnreadModeratorNotification(Long moderatorId) {
 
-        List<Notification> notificationList = new ArrayList<>();
-        Moderator moderator = em.find(Moderator.class, moderatorId);
-
-        if (moderator != null) {
-
-            for (Notification notification : moderator.getNotifications()) {
-
-                // Only add unread notifications
-                if (notification.getState().equals(NotificationState.NOT_READ) && notification.getCategory().equals(NotificationType.TO_MODERATOR)) {
-
-                    notificationList.add(notification);
-
-                }
-
-            }
-
-        }
+        Query query = em.createNamedQuery("Notification.findUnreadForModerator", Notification.class);
+        List<Notification> notificationList = query.getResultList();
 
         return notificationList;
 
@@ -159,23 +145,8 @@ public class NotificationBeanImpl implements NotificationBean, Serializable {
     @Override
     public List<Notification> findAllModeratorNotification(Long moderatorId) {
         
-        List<Notification> notificationList = new ArrayList<>();
-        Moderator moderator = em.find(Moderator.class, moderatorId);
-
-        if (moderator != null) {
-
-            for (Notification notification : moderator.getNotifications()) {
-
-                // Only Moderator notifications
-                if (notification.getCategory().equals(NotificationType.TO_MODERATOR)) {
-
-                    notificationList.add(notification);
-
-                }
-
-            }
-
-        }
+        Query query = em.createNamedQuery("Notification.findForModerator", Notification.class);
+        List<Notification> notificationList = query.getResultList();
 
         return notificationList;
         

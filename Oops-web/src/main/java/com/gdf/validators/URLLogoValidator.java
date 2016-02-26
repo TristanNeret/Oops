@@ -27,7 +27,7 @@ public class URLLogoValidator implements Validator {
     
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        if(value != null && !value.toString().matches("(http(s?):/)(/[^/]+)+\\.(?:jpg|gif|png)")) {
+        if(value != null && !value.toString().matches(".*(jpg|gif|png|jpeg)")) {
             
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, URL_FORMAT, null));
             

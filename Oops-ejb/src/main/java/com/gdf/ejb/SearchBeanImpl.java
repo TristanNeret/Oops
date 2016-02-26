@@ -9,11 +9,9 @@ import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Review;
-import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -135,7 +133,7 @@ public class SearchBeanImpl implements SearchBean, Serializable {
      * @return the list of contractors
      */
     @Override
-    public List<Contractor> findContractors(String keyWord, int rating, String country, String category, String order) {
+    public List<Contractor> findContractors(String keyWord, int rating, String country, String category, String order,String region) {
 
         boolean first = true;
         String requete;
@@ -165,6 +163,17 @@ public class SearchBeanImpl implements SearchBean, Serializable {
             }
             requete = requete + " c.address.country = :country ";
         }
+        
+        
+        if (country != null && country.equals("France") && region != null) {
+            if (first) {
+                requete = requete + " WHERE ";
+                first = false;
+            } else {
+                requete = requete + " AND ";
+            }
+            requete = requete + " c.address.region = :region ";
+        }
 
         switch (order) {
             case "ALPHABETICAL":
@@ -184,6 +193,10 @@ public class SearchBeanImpl implements SearchBean, Serializable {
 
         if (country != null) {
             query.setParameter("country", country);
+        }
+        
+        if (region != null && country != null && country.equals("France")) {
+            query.setParameter("region", region);
         }
 
         if (keyWord != null) {
@@ -260,6 +273,18 @@ public class SearchBeanImpl implements SearchBean, Serializable {
     public List<String> getAllCountry() {
         TypedQuery<String> query;
         query = em.createQuery("SELECT DISTINCT c.address.country FROM Contractor c ", String.class);
+        return query.getResultList();
+    }
+    
+      /**
+     * Get all countries
+     *
+     * @return all countries
+     */
+    @Override
+    public List<String> getAllStates() {
+        TypedQuery<String> query;
+        query = em.createQuery("SELECT DISTINCT c.address.region FROM Contractor c ", String.class);
         return query.getResultList();
     }
 
@@ -407,4 +432,12 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         return em.find(Category.class, idCategory);
 
     }
+
+    @Override
+    public List<Review> getThreeReviewsToShow() {
+        
+        return em.createQuery("SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED ", Review.class).setFirstResult(0).setMaxResults(3).getResultList();
+        
+    }
+    
 }

@@ -31,14 +31,11 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Contractor.findAll",
-            query = "select c from Contractor c order by c.email"),
-    @NamedQuery(name = "Contractor.findByLogin",
-            query = "select c from Contractor c where c.login=?1"),
-    @NamedQuery(name = "Contractor.findByEmail",
-            query = "select c from Contractor c where c.email=?1"),
-    @NamedQuery(name= "Contractor.beginBy", query = "SELECT c.socialReason from Contractor c WHERE c.socialReason LIKE ?1")    
-
+    @NamedQuery(name = "Contractor.findAll", query = "select c from Contractor c order by c.email"),
+    @NamedQuery(name = "Contractor.findByLogin", query = "select c from Contractor c where c.login=?1"),
+    @NamedQuery(name = "Contractor.findByEmail", query = "select c from Contractor c where c.email=?1"),
+    @NamedQuery(name= "Contractor.beginBy", query = "SELECT c.socialReason from Contractor c WHERE c.socialReason LIKE ?1"),    
+    @NamedQuery(name= "Contractor.authentification", query = "SELECT c.id from Contractor c WHERE c.login LIKE ?1 AND c.password LIKE ?2")  
 })
 public class Contractor implements Serializable {
     
@@ -58,14 +55,17 @@ public class Contractor implements Serializable {
     @NotNull( message = "Veuillez saisir un email" )
     private String email;
     
+    @NotNull(message = "Veuillez saisir une description")
+    @Size(min = 30, message = "La description doit contenir au moins 30 caractères")
     private String description;
     
     @NotNull( message = "Veuillez saisir un numéro de téléphone" )
     private String phone;
     
+    @NotNull(message = "Veuillez saisir un logo")
     private String logo;
     
-    private String socialReason, legalForm; // fileds which can be null (2 steps registration) 
+    private String socialReason, legalForm;
     
     private int turnover, nbEmployees, rating;  
     private String registrationDate, updateDate;
@@ -105,7 +105,7 @@ public class Contractor implements Serializable {
     public Contractor(String login, String email, String password, String socialReason, String legalForm, String description, String phone, String logo, String representatorFirstname, String representatorLastname, int turnover, int nbEmployees, int rating, Address address, LegalInformation legalInformation) {
         this.login = login;
         this.email = email;
-        this.password = password;
+        this.password = this.encryptPassword(password);
         this.socialReason = socialReason;
         this.legalForm = legalForm;
         this.description = description;
@@ -361,6 +361,8 @@ public class Contractor implements Serializable {
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
     }
+    
+    
 
     private String encryptPassword(String password){
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();

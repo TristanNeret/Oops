@@ -34,7 +34,8 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
     @NamedQuery(name = "Tenderer.findAll", query = "SELECT t FROM Tenderer t ORDER BY t.login ASC"),
     @NamedQuery(name = "Tenderer.findByLogin", query = "SELECT t FROM Tenderer t WHERE t.login=?1"),
     @NamedQuery(name = "Tenderer.findByEmail", query = "SELECT t FROM Tenderer t WHERE t.email=?1"),
-    @NamedQuery(name = "Tenderer.beginBy", query = "SELECT t.login FROM Tenderer t WHERE t.login LIKE ?1")
+    @NamedQuery(name = "Tenderer.beginBy", query = "SELECT t.login FROM Tenderer t WHERE t.login LIKE ?1"),
+    @NamedQuery(name= "Tenderer.authentification", query = "SELECT t.id from Tenderer t WHERE t.login LIKE ?1 AND t.password LIKE ?2")  
 })
 public class Tenderer implements Serializable {
 
@@ -86,7 +87,7 @@ public class Tenderer implements Serializable {
     public Tenderer(String login, String email, String password, String firstname, String lastname, String avatar, String phone, String registrationDate) {
         this.login = login;
         this.email = email;
-        this.password = password;
+        this.password = this.encryptPassword(password);
         this.firstname = firstname;
         this.lastname = lastname;
         this.avatar = avatar;

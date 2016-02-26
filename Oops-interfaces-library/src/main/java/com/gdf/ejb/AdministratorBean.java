@@ -38,5 +38,4 @@ public interface AdministratorBean {
 
     public void sendMessageNotificationToContractor(long moderatorID, Contractor contractorSelected, String message);
     
-    
 }
