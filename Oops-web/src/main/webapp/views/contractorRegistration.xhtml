@@ -10,7 +10,6 @@ and open the template in the editor.
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:o="http://omnifaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:b="http://bootsfaces.net/ui">
 
@@ -23,12 +22,8 @@ and open the template in the editor.
             }
         }
         function handlePreviousStep(xhr, status, args) {
-            if (args.validationFailed) {
-
-            } else {
-                $('.wizardPseudoClass').carousel('prev');
-                $('.wizardPseudoClass').carousel('pause');
-            }
+            $('.wizardPseudoClass').carousel('prev');
+            $('.wizardPseudoClass').carousel('pause');
         }
         function handleNextStep(xhr, status, args) {
             if (args.validationFailed) {
@@ -75,432 +70,425 @@ and open the template in the editor.
 
             <p:growl widgetVar="registerGrowl" sticky="false" showDetail="false" life="3000" />
 
-            <h:form id="rootForm">
-                <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false">
+            <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false">
+                
+                <b:carouselItem style="width:800px; margin-left: auto; margin-right: auto;">
 
-                    <b:carouselItem style="width:800px; margin-left: auto; margin-right: auto;">
+                    <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
+                             Etape 1/5" look="primary" collapsible="false">
 
-                        <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
-                                 Etape 1/5" look="primary" collapsible="false">
+                        <h:form id="registerContractorFormAccountInfos">
 
-                            <h:form id="registerContractorFormAccountInfos">
+                            <b:inputText id="contractorLogin" label="Login" placeholder="Entrez votre login" renderLabel="true" value="#{contractorRegistrationBean.contractor.login}">
+                                <f:validator validatorId="com.gdf.loginAlreadyExistValidator" />
+                            </b:inputText>
+                            <b:message id="contractorLoginMessage" for="contractorLogin" />
 
-                                <b:inputText id="contractorLogin" label="Login" placeholder="Entrez votre login" renderLabel="true" value="#{contractorRegistrationBean.contractor.login}">
-                                    <f:validator validatorId="com.gdf.loginAlreadyExistValidator" />
+                            <b:inputSecret id="contractorPassword" label="Mot de passe" placeholder="Entrez un mot de passe" renderLabel="true" value="#{contractorRegistrationBean.password}">
+                            </b:inputSecret>
+                            <b:message id="contractorPasswordMessage" for="contractorPassword" />
+
+                            <b:inputSecret id="contractorConfirmPassword" label="Confirmer le mot de passe" placeholder="Entrez une confirmation de mot de passe" renderLabel="true" value="#{contractorRegistrationBean.passwordConfirm}">
+                            </b:inputSecret>
+                            <b:message id="contractorConfirmPasswordMessage" for="contractorConfirmPassword" />
+
+                            <b:inputText id="contractorFirstname" label="Prénom" placeholder="Entrez votre votre prénom" renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorFirstname}">
+                            </b:inputText>
+                            <b:message id="contractorFirstnameMessage" for="contractorFirstname" />
+
+                            <b:inputText id="contractorLastname" label="Nom" placeholder="Entrez votre nom" renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorLastname}">
+                            </b:inputText>
+                            <b:message id="contractorLastnameMessage" for="contractorLastname" />
+
+                            <b:inputText id="contractorMail" label="Adresse mail" placeholder="Entrez votre mail" renderLabel="true" value="#{contractorRegistrationBean.contractor.email}" >
+                                <f:validator validatorId="com.gdf.mailFormatValidator"/>
+                            </b:inputText>
+                            <b:message id="contractorMailMessage" for="contractorMail" />
+
+                            <b:inputText id="contractorPhoneNumber" label="Téléphone" placeholder="Entrez votre numéro de téléphone" renderLabel="true" value="#{contractorRegistrationBean.contractor.phone}">
+                                <f:validator validatorId="com.gdf.phoneFormatValidator"/>
+                            </b:inputText>
+                            <b:message id="contractorPhoneNumberMessage" for="contractorPhoneNumber" />
+
+                            <p:commandButton 
+                                value="Suivant"
+                                oncomplete="handleNextStep(xhr, status, args)"
+                                update="@form registerContractorFormPrezInfos"/>
+
+                        </h:form>
+
+                    </b:panel>
+
+                </b:carouselItem>
+
+
+
+                <b:carouselItem>
+                    <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
+                             Etape 2/5" look="primary" collapsible="false">
+
+                        <h:form id="registerContractorFormPrezInfos">
+
+                            <b:inputText id="contractorLogo" label="URL du logo" placeholder="Entrez l'URL du logo" renderLabel="true" size="70" value="#{contractorRegistrationBean.contractor.logo}">
+                                <f:validator validatorId="com.gdf.urlLogoValidator"/>
+                            </b:inputText>
+                            <b:message id="logoMessage" for="contractorLogo" />
+
+                            <b:inputTextarea id="contractorDescription" label="Description" renderLabel="true" value="#{contractorRegistrationBean.contractor.description}"
+                                             rows="7" placeholder="Decrivez en quelques mots votre entreprise">
+                            </b:inputTextarea>
+                            <b:message id="descriptionMessage" for="contractorDescription" />
+
+                            <p:commandButton 
+                                value="Précédent"
+                                oncomplete="handlePreviousStep(xhr, status, args)"/>
+                            <p:commandButton 
+                                value="Suivant"
+                                oncomplete="handleNextStep(xhr, status, args)"
+                                update="@form registerContractorFormLegalInfos"/>
+
+
+                        </h:form>
+
+                    </b:panel>
+                </b:carouselItem>
+
+
+
+                <b:carouselItem>
+                    <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
+                             Etape 3/5" look="primary" collapsible="false">
+
+
+                        <h:form id="registerContractorFormLegalInfos">
+
+
+                            <h:panelGrid columns="3">
+
+                                <b:inputText id="contractorSocialReason" label="Raison sociale" placeholder="Entrez la raison sociale" renderLabel="true" value="#{contractorRegistrationBean.contractor.socialReason}">
+                                    <f:validator validatorId="com.gdf.socialReasonValidator"/>
                                 </b:inputText>
-                                <b:message id="contractorLoginMessage" for="contractorLogin" />
+                                <b:message id="contractorSocialReasonMessage" for="contractorSocialReason" />
 
-                                <b:inputSecret id="contractorPassword" label="Mot de passe" placeholder="Entrez un mot de passe" renderLabel="true" value="#{contractorRegistrationBean.password}">
-                                </b:inputSecret>
-                                <b:message id="contractorPasswordMessage" for="contractorPassword" />
+                            </h:panelGrid>
 
-                                <b:inputSecret id="contractorConfirmPassword" label="Confirmer le mot de passe" placeholder="Entrez une confirmation de mot de passe" renderLabel="true" value="#{contractorRegistrationBean.passwordConfirm}">
-                                </b:inputSecret>
-                                <b:message id="contractorConfirmPasswordMessage" for="contractorConfirmPassword" />
+                            <h:panelGrid id ="gridSOM" columns="2">
 
-                                <b:inputText id="contractorFirstname" label="Prénom" placeholder="Entrez votre votre prénom" renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorFirstname}">
-                                </b:inputText>
-                                <b:message id="contractorFirstnameMessage" for="contractorFirstname" />
-
-                                <b:inputText id="contractorLastname" label="Nom" placeholder="Entrez votre nom" renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorLastname}">
-                                </b:inputText>
-                                <b:message id="contractorLastnameMessage" for="contractorLastname" />
-
-                                <b:inputText id="contractorMail" label="Adresse mail" placeholder="Entrez votre mail" renderLabel="true" value="#{contractorRegistrationBean.contractor.email}" >
-                                    <f:validator validatorId="com.gdf.mailFormatValidator"/>
-                                </b:inputText>
-                                <b:message id="contractorMailMessage" for="contractorMail" />
-
-                                <b:inputText id="contractorPhoneNumber" label="Téléphone" placeholder="Entrez votre numéro de téléphone" renderLabel="true" value="#{contractorRegistrationBean.contractor.phone}">
-                                    <f:validator validatorId="com.gdf.phoneFormatValidator"/>
-                                </b:inputText>
-                                <b:message id="contractorPhoneNumberMessage" for="contractorPhoneNumber" />
-
-                                <p:commandButton 
-                                    value="Suivant"
-                                    oncomplete="handleNextStep(xhr, status, args)"
-                                    update="rootForm:registerContractorFormAccountInfos"/>
-
-                            </h:form>
-
-                        </b:panel>
-
-                    </b:carouselItem>
-
-
-
-                    <b:carouselItem>
-                        <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
-                                 Etape 2/5" look="primary" collapsible="false">
-
-                            <h:form id="registerContractorFormPrezInfos">
-
-                                <b:inputText id="contractorLogo" label="URL du logo" placeholder="Entrez l'URL du logo" renderLabel="true" size="70" value="#{contractorRegistrationBean.contractor.logo}">
-                                    <f:validator validatorId="com.gdf.urlLogoValidator"/>
-                                </b:inputText>
-                                <b:message id="logoMessage" for="contractorLogo" />
-
-                                <b:inputTextarea id="contractorDescription" label="Description" renderLabel="true" value="#{contractorRegistrationBean.contractor.description}"
-                                                 rows="7" placeholder="Decrivez en quelques mots votre entreprise">
-                                </b:inputTextarea>
-                                <b:message id="descriptionMessage" for="contractorDescription" />
-
-                                <p:commandButton 
-                                    value="Précédent"
-                                    oncomplete="handlePreviousStep(xhr, status, args)"
-                                    update="rootForm:registerContractorFormAccountInfos"/>
-                                <p:commandButton 
-                                    value="Suivant"
-                                    oncomplete="handleNextStep(xhr, status, args)"
-                                    update="rootForm:registerContractorFormPrezInfos"/>
-
-
-                            </h:form>
-
-                        </b:panel>
-                    </b:carouselItem>
-
-
-
-                    <b:carouselItem>
-                        <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
-                                 Etape 3/5" look="primary" collapsible="false">
-
-
-                            <h:form id="registerContractorFormLegalInfos">
-
-
-                                <h:panelGrid id="grid2" columns="1" cellpadding="5">
-
-                                    <h:panelGrid columns="1" cellpadding="0">
-
-                                        <h:panelGrid columns="3">
-
-                                            <b:inputText id="contractorSocialReason" label="Raison sociale" placeholder="Entrez la raison sociale" renderLabel="true" value="#{contractorRegistrationBean.contractor.socialReason}">
-                                                <f:validator validatorId="com.gdf.socialReasonValidator"/>
-                                            </b:inputText>
-                                            <b:message id="contractorSocialReasonMessage" for="contractorSocialReason" />
-
-                                        </h:panelGrid>
-
-                                        <h:panelGrid id ="gridSOM" columns="2">
-
-                                            <h:outputLabel value="Forme juridique :" class="labelModificationForm"/>                          
-                                            <p:selectOneMenu id="contractorLegalForm" value="#{contractorRegistrationBean.contractor.legalForm}" >
-                                                <f:selectItems value="#{contractorRegistrationBean.legalForms}" />
-                                                <p:ajax update="gridSOM"/>
-                                            </p:selectOneMenu>
-
-                                            <h:outputLabel value="Nombre d'employés :" 
-                                                           rendered="#{contractorRegistrationBean.isATeamCompanySelected()}"
-                                                           class="labelModificationForm"/>
-                                            <p:selectOneMenu id="contractorNbEmployees" value="#{contractorRegistrationBean.contractor.nbEmployees}"
-                                                             rendered="#{contractorRegistrationBean.isATeamCompanySelected()}">
-                                                <f:selectItem itemLabel="> 1" itemValue="1" />
-                                                <f:selectItem itemLabel="> 5" itemValue="5" />
-                                                <f:selectItem itemLabel="> 10" itemValue="10" />
-                                                <f:selectItem itemLabel="> 50" itemValue="50" />
-                                                <f:selectItem itemLabel="> 100" itemValue="100" />
-                                                <f:selectItem itemLabel="> 500" itemValue="500" />
-                                                <f:selectItem itemLabel="> 1K" itemValue="1000" />
-                                                <f:selectItem itemLabel="> 5K" itemValue="5000" />
-                                            </p:selectOneMenu>
-
-                                            <h:outputLabel value="Chiffre d'affaire :" class="labelModificationForm"/>
-                                            <p:selectOneMenu id="contractorTurnover" value="#{contractorRegistrationBean.contractor.turnover}">
-                                                <f:selectItem itemLabel="> 500 €" itemValue="500" />
-                                                <f:selectItem itemLabel="> 1K €" itemValue="1000" />
-                                                <f:selectItem itemLabel="> 5K €" itemValue="5000" />
-                                                <f:selectItem itemLabel="> 10K €" itemValue="10000" />
-                                                <f:selectItem itemLabel="> 50K €" itemValue="50000" />
-                                                <f:selectItem itemLabel="> 100K €" itemValue="100000" />
-                                                <f:selectItem itemLabel="> 500K €" itemValue="500000" />
-                                                <f:selectItem itemLabel="> 1M €" itemValue="1000000" />
-                                            </p:selectOneMenu>
-
-                                        </h:panelGrid>
-
-                                        <h:panelGrid columns="2">
-                                            <b:inputText  id="contractorSiren"  label="N° SIREN" placeholder="Entrez le n° SIREN" renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.siren}" size="9" 
-                                                          maxlength="9">
-                                                <f:validator validatorId="com.gdf.sirenValidator"/>
-                                            </b:inputText>
-                                            <b:message id="sirenMessage" for="contractorSiren" />
-
-                                            <b:inputText  id="contractorSiret"  label="N° SIRET" placeholder="Entrez le n° SIRET" renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.siret}" size="14" 
-                                                          maxlength="14">
-                                                <f:validator validatorId="com.gdf.siretValidator"/>      
-                                            </b:inputText>
-                                            <b:message id="siretMessage" for="contractorSiret" />
-
-                                            <b:inputText  id="contractorRcs"  label="N° RCS" placeholder="Entrez le n° RCS" renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.rcs}"
-                                                          maxlength="20">                                 
-                                            </b:inputText>
-                                            <b:message id="rcsMessage" for="contractorRcs" />
-
-                                            <b:inputText  id="contractorInsurrance"  label="Assurance" placeholder="Entrez votre assurance" renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.insurrance}">
-                                            </b:inputText>
-                                            <b:message id="insurranceMessage" for="contractorInsurrance" />
-
-                                        </h:panelGrid>
-
-                                    </h:panelGrid>
-
-                                </h:panelGrid>
-
-                                <p:commandButton 
-                                    value="Précédent"
-                                    oncomplete="handlePreviousStep(xhr, status, args)"
-                                    update="rootForm:registerContractorFormPrezInfos"/>
-                                <p:commandButton 
-                                    value="Suivant"
-                                    oncomplete="handleNextStep(xhr, status, args)"
-                                    update="registerContractorFormLegalInfos"/>
-
-                            </h:form>
-
-                        </b:panel>
-                    </b:carouselItem>
-
-                    <b:carouselItem>
-                        <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
-                                 Etape 4/5" look="primary" collapsible="false">
-
-                            <h:form id="registerContractorFormAddress">
-
-                                <h:panelGroup id="infoFrance"/> 
-
-
-                                <h:outputLabel for="listCountries" value="Pays :" class="labelModificationForm"/>
-                                <p:selectOneMenu  id="listCountries"  value="#{contractorRegistrationBean.country}">
-                                    <f:selectItems value="#{contractorRegistrationBean.allCountry}"/>
-                                    <f:ajax render ="registerContractorFormLegalInfos:registerContractorFormAdress"/>
+                                <h:outputLabel value="Forme juridique :" class="labelModificationForm"/>                          
+                                <p:selectOneMenu id="contractorLegalForm" value="#{contractorRegistrationBean.contractor.legalForm}" >
+                                    <f:selectItems value="#{contractorRegistrationBean.legalForms}" />
+                                    <p:ajax update="gridSOM"/>
                                 </p:selectOneMenu>
-                                <br/> 
 
-                                <h:panelGroup id="registerContractorFormAdress">
+                                <h:outputLabel value="Nombre d'employés :" 
+                                               rendered="#{contractorRegistrationBean.isATeamCompanySelected()}"
+                                               class="labelModificationForm"/>
+                                <p:selectOneMenu id="contractorNbEmployees" value="#{contractorRegistrationBean.contractor.nbEmployees}"
+                                                 rendered="#{contractorRegistrationBean.isATeamCompanySelected()}">
+                                    <f:selectItem itemLabel="> 1" itemValue="1" />
+                                    <f:selectItem itemLabel="> 5" itemValue="5" />
+                                    <f:selectItem itemLabel="> 10" itemValue="10" />
+                                    <f:selectItem itemLabel="> 50" itemValue="50" />
+                                    <f:selectItem itemLabel="> 100" itemValue="100" />
+                                    <f:selectItem itemLabel="> 500" itemValue="500" />
+                                    <f:selectItem itemLabel="> 1K" itemValue="1000" />
+                                    <f:selectItem itemLabel="> 5K" itemValue="5000" />
+                                </p:selectOneMenu>
 
-                                    <h:panelGroup rendered="#{contractorRegistrationBean.country != 'France'}">
+                                <h:outputLabel value="Chiffre d'affaire :" class="labelModificationForm"/>
+                                <p:selectOneMenu id="contractorTurnover" value="#{contractorRegistrationBean.contractor.turnover}">
+                                    <f:selectItem itemLabel="> 500 €" itemValue="500" />
+                                    <f:selectItem itemLabel="> 1K €" itemValue="1000" />
+                                    <f:selectItem itemLabel="> 5K €" itemValue="5000" />
+                                    <f:selectItem itemLabel="> 10K €" itemValue="10000" />
+                                    <f:selectItem itemLabel="> 50K €" itemValue="50000" />
+                                    <f:selectItem itemLabel="> 100K €" itemValue="100000" />
+                                    <f:selectItem itemLabel="> 500K €" itemValue="500000" />
+                                    <f:selectItem itemLabel="> 1M €" itemValue="1000000" />
+                                </p:selectOneMenu>
 
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="2">
+                                <b:inputText  id="contractorSiren"  label="N° SIREN" placeholder="Entrez le n° SIREN" renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.siren}" size="9" 
+                                              maxlength="9">
+                                    <f:validator validatorId="com.gdf.sirenValidator"/>
+                                </b:inputText>
+                                <b:message id="sirenMessage" for="contractorSiren" />
+
+                                <b:inputText  id="contractorSiret"  label="N° SIRET" placeholder="Entrez le n° SIRET" renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.siret}" size="14" 
+                                              maxlength="14">
+                                    <f:validator validatorId="com.gdf.siretValidator"/>      
+                                </b:inputText>
+                                <b:message id="siretMessage" for="contractorSiret" />
+
+                                <b:inputText  id="contractorRcs"  label="N° RCS" placeholder="Entrez le n° RCS" renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.rcs}"
+                                              maxlength="20">                                 
+                                </b:inputText>
+                                <b:message id="rcsMessage" for="contractorRcs" />
+
+                                <b:inputText  id="contractorInsurrance"  label="Assurance" placeholder="Entrez votre assurance" renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.insurrance}">
+                                </b:inputText>
+                                <b:message id="insurranceMessage" for="contractorInsurrance" />
+
+                            </h:panelGrid>
+
+
+                            <p:commandButton 
+                                value="Précédent"
+                                oncomplete="handlePreviousStep(xhr, status, args)"/>
+                            <p:commandButton 
+                                value="Suivant"
+                                oncomplete="handleNextStep(xhr, status, args)"
+                                update="@form registerContractorFormAddress"/>
+
+                        </h:form>
+
+                    </b:panel>
+                </b:carouselItem>
+                
+                <b:carouselItem>
+                    <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
+                             Etape 4/5" look="primary" collapsible="false">
+
+                        <h:form id="registerContractorFormAddress">
+
+                            <h:panelGroup id="infoFrance"/> 
+
+
+                            <h:outputLabel for="listCountries" value="Pays :" class="labelModificationForm"/>
+                            <p:selectOneMenu  id="listCountries"  value="#{contractorRegistrationBean.country}">
+                                <f:selectItems value="#{contractorRegistrationBean.allCountry}"/>
+                                <p:ajax update="registerContractorFormAddress:registerContractorFormAdress"/>
+                            </p:selectOneMenu>
+                            <br/> 
+
+                            <h:panelGroup id="registerContractorFormAdress">
+
+                                <h:panelGroup rendered="#{contractorRegistrationBean.country != 'France'}">
+
+                                    <br/>
+                                    <b:inputText id="contractorZipCode" label="Code postal" placeholder="Entrez le code postal" renderLabel="true" value="#{contractorRegistrationBean.zipCode}" maxlength="6" size="6">
+                                    </b:inputText>
+                                    <b:message id="zipCodeMessage" for="contractorZipCode" />
+                                    <br/>
+
+                                    <b:inputText id="contractorStreetNumber" placeholder="Entrez le numéro de la rue" label="N°" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.streetNumber}" size="5" maxlength="5">
+                                    </b:inputText>
+                                    <b:message id="streetNumberMessage" for="contractorStreetNumber" />
+                                    <br/>
+
+                                    <b:inputText id="contractorStreet" placeholder="Entrez le nom de la rue" label="Rue" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.street}">
+                                    </b:inputText>
+                                    <b:message id="streetMessage" for="contractorStreet" />
+                                    <br/>
+
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{contractorRegistrationBean.country == 'France'}">
+
+                                    <br/>
+                                    <b:inputText  id="zipCode" label="Code postal" placeholder="Entrez le code postal" renderLabel="true" value="#{contractorRegistrationBean.zipCode}" size="5" maxlength="5">
+                                        <p:ajax update="registerContractorFormAddress:registerContractorFormAdress" event="blur"/>
+                                        <f:validator validatorId="com.gdf.zipValidator"/>
+                                    </b:inputText>
+                                    <b:message id="zipCodeMessageFr" for="zipCode" />
+                                    <br/>
+
+                                    <h:panelGroup rendered="#{contractorRegistrationBean.isCode()}">
+
+                                        <h:outputLabel for="contractorRegionFr" value="Region :" class="labelModificationForm"/>
+                                        <h:outputText id="contractorRegionFr" value="#{contractorRegistrationBean.contractor.address.region}"/>
+                                        <b:message id="regionMessageFr" for="contractorRegionFr" />
                                         <br/>
-                                        <h:outputLabel for="contractorZipCode" value="Code postal :" class="labelModificationForm" />
-                                        <b:inputText id="contractorZipCode" value="#{contractorRegistrationBean.zipCode}" maxlength="6" size="6">
+
+                                        <h:outputLabel for="contractorTownFr" value="Ville :" class="labelModificationForm"/>
+                                        <p:selectOneMenu id="contractorTownFr"   value="#{contractorRegistrationBean.contractor.address.town}">
+                                            <f:selectItems   value="#{contractorRegistrationBean.allTown}"/>
+                                        </p:selectOneMenu>
+                                        <b:message id="townMessageFr" for="contractorTownFr" />
+                                        <br/>   
+
+                                        <b:inputText id="contractorStreetNumberFr" placeholder="Entrez le numéro de la rue" label="N°" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.streetNumber}" size ="5" maxlength="5">
                                         </b:inputText>
-                                        <b:message id="zipCodeMessage" for="contractorZipCode" />
+                                        <b:message id="streetNumberMessageFr" for="contractorStreetNumberFr" />
                                         <br/>
 
-                                        <h:outputLabel for="contractorStreetNumber" value="N° :" class="labelModificationForm"/>
-                                        <b:inputText id="contractorStreetNumber" placeholder="Numéro de la rue" value="#{contractorRegistrationBean.contractor.address.streetNumber}" size="5" maxlength="5">
+                                        <b:inputText id="contractorStreetFr" placeholder="Entrez le nom de la rue" label="Rue" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.street}">
                                         </b:inputText>
-                                        <b:message id="streetNumberMessage" for="contractorStreetNumber" />
+                                        <b:message id="streetMessageFr" for="contractorStreetFr" />
                                         <br/>
-
-                                        <h:outputLabel for="contractorStreet" value="Rue :" class="labelModificationForm"/>
-                                        <b:inputText placeholder="Nom de la rue" id="contractorStreet" value="#{contractorRegistrationBean.contractor.address.street}">
-                                        </b:inputText>
-                                        <b:message id="streetMessage" for="contractorStreet" />
-                                        <br/>
-
-                                    </h:panelGroup>
-
-                                    <h:panelGroup rendered="#{contractorRegistrationBean.country == 'France'}">
-
-                                        <br/>
-                                        <h:outputLabel for="zipCode" value="Code postal :" class="labelModificationForm"/>
-                                        <b:inputText  id="zipCode" value="#{contractorRegistrationBean.zipCode}" size="5" maxlength="5">
-                                            <f:ajax render="registerContractorFormLegalInfos:registerContractorFormAdress" event="blur"/>
-                                            <f:validator validatorId="com.gdf.zipValidator"/>
-                                        </b:inputText>
-                                        <b:message id="zipCodeMessageFr" for="zipCode" />
-                                        <br/>
-
-                                        <h:panelGroup rendered="#{contractorRegistrationBean.isCode()}">
-
-                                            <h:outputLabel for="contractorRegionFr" value="Region :" class="labelModificationForm"/>
-                                            <h:outputText id="contractorRegionFr" value="#{contractorRegistrationBean.contractor.address.region}"/>
-                                            <b:message id="regionMessageFr" for="contractorRegionFr" />
-                                            <br/>
-
-                                            <h:outputLabel for="contractorTownFr" value="Ville :" class="labelModificationForm"/>
-                                            <p:selectOneMenu id="contractorTownFr"   value="#{contractorRegistrationBean.contractor.address.town}">
-                                                <f:selectItems   value="#{contractorRegistrationBean.allTown}"/>
-                                            </p:selectOneMenu>
-                                            <b:message id="townMessageFr" for="contractorTownFr" />
-                                            <br/>   
-
-                                            <h:outputLabel for="contractorStreetNumberFr" value="N° :" class="labelModificationForm"/>
-                                            <b:inputText id="contractorStreetNumberFr" placeholder="Numéro de la rue" value="#{contractorRegistrationBean.contractor.address.streetNumber}" size ="5" maxlength="5">
-                                            </b:inputText>
-                                            <b:message id="streetNumberMessageFr" for="contractorStreetNumberFr" />
-                                            <br/>
-
-                                            <h:outputLabel for="contractorStreet" value="Rue :" class="labelModificationForm"/>
-                                            <b:inputText id="contractorStreetFr" placeholder="Nom de la rue" value="#{contractorRegistrationBean.contractor.address.street}">
-                                            </b:inputText>
-                                            <b:message id="streetMessageFr" for="contractorStreetFr" />
-                                            <br/>
-
-                                        </h:panelGroup>
 
                                     </h:panelGroup>
 
                                 </h:panelGroup>
 
-                                <p:commandButton 
-                                    value="Précédent"
-                                    oncomplete="handlePreviousStep(xhr, status, args)"
-                                    update="rootForm:registerContractorFormLegalInfos"/>
-                                <p:commandButton 
-                                    value="Suivant"
-                                    oncomplete="handleNextStep(xhr, status, args)"
-                                    update="rootForm:registerContractorFormAddress"/>
+                            </h:panelGroup>
 
-                            </h:form>
+                            <p:commandButton 
+                                value="Précédent"
+                                oncomplete="handlePreviousStep(xhr, status, args)"/>
+                            <p:commandButton 
+                                value="Suivant"
+                                oncomplete="handleNextStep(xhr, status, args)"
+                                update="@form registerContractorFormServices"/>
 
-                        </b:panel>
-                    </b:carouselItem>
+                        </h:form>
 
-                    <b:carouselItem>
-                        <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
-                                 Etape 5/5" look="primary" collapsible="false">
+                    </b:panel>
+                </b:carouselItem>
 
-
-                            <h:form id="registerContractorFormServices">
+                <b:carouselItem>
+                    <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
+                             Etape 5/5" look="primary" collapsible="false">
 
 
-                                <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste de vos services :" />
+                        <h:form id="registerContractorFormServices">
 
-                                <p:panel id="grid4">
 
-                                    <!-- CONTRACTOR'S SERVICES -->  
-                                    <p:growl id="growlServiceContractorList" sticky="false" showDetail="false" life="3000" />
-                                    <div class="divCurrentContractorServices">
-                                        <h:outputLabel value="Il n'y a encore aucun service vous concernant." rendered="#{!contractorRegistrationBean.areServices()}" /> 
-                                        <c:forEach items="#{contractorRegistrationBean.contractor.services}" var="service" > 
-                                            <div class="divLeftContractorService">
-                                                <div class="divServiceTitle">
-                                                    <h:outputText value="#{service.title}" />
+                            <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste de vos services :" />
+
+                            <p:panel id="grid4">
+
+                                <!-- CONTRACTOR'S SERVICES -->  
+                                <p:growl id="growlServiceContractorList" sticky="false" showDetail="false" life="3000" />
+                                <div class="divCurrentContractorServices">
+                                    <h:outputLabel value="Il n'y a encore aucun service vous concernant." rendered="#{!contractorRegistrationBean.areServices()}" /> 
+                                    <c:forEach items="#{contractorRegistrationBean.contractor.services}" var="service" > 
+                                        <div class="divLeftContractorService">
+                                            <div class="divServiceTitle">
+                                                <h:outputText value="#{service.title}" />
+                                            </div>
+                                            <h:outputText value="#{service.description}"/> 
+                                            <div class="divServiceButton">
+                                                <div class="leftServiceButton">
+                                                    Tarif horraire : <b><h:outputText value="#{service.price}"/> €</b> - 
+                                                    <span class="spanServiceCategory">#{service.category.name}</span>
                                                 </div>
-                                                <h:outputText value="#{service.description}"/> 
-                                                <div class="divServiceButton">
-                                                    <div class="leftServiceButton">
-                                                        Tarif horraire : <b><h:outputText value="#{service.price}"/> €</b> - 
-                                                        <span class="spanServiceCategory">#{service.category.name}</span>
-                                                    </div>
-                                                    <div class="rightServiceButton">  
+                                                <div class="rightServiceButton">  
 
-                                                        <!-- Dialog view to edit Prestation -->
-                                                        <p:dialog id="prestationDialog" header="Modifier votre prestation :" modal="true" resizable="false" widgetVar="prestationDialog" dynamic="true">
-                                                            <h:panelGrid columns="2" cellpadding="5">
-                                                                <h:outputLabel value="Titre :" />
-                                                                <b:inputText id="serviceTitle" value="#{contractorRegistrationBean.editService.title}" 
-                                                                             style="width: 100%;" required="true" label="Titre de la prestation" />
+                                                    <!-- Dialog view to edit Prestation -->
+                                                    <p:dialog id="prestationDialog" header="Modifier votre prestation :" modal="true" resizable="false" widgetVar="prestationDialog" dynamic="true">
+                                                        <h:panelGrid columns="2" cellpadding="5">
+                                                            <h:outputLabel value="Titre :" />
+                                                            <b:inputText id="serviceTitle" value="#{contractorRegistrationBean.editService.title}" 
+                                                                         style="width: 100%;" required="true" label="Titre de la prestation" />
 
-                                                                <h:outputLabel value="Description :" />
-                                                                <b:inputTextarea id="serviceDescription" rows="6" style="width: 100%;" 
-                                                                                 value="#{contractorRegistrationBean.editService.description}" required="true" label="Description" />
+                                                            <h:outputLabel value="Description :" />
+                                                            <b:inputTextarea id="serviceDescription" rows="6" style="width: 100%;" 
+                                                                             value="#{contractorRegistrationBean.editService.description}" required="true" label="Description" />
 
-                                                                <h:outputLabel value="Catégorie :" />
-                                                                <h:outputLabel value="#{contractorRegistrationBean.editService.category.name}" />
+                                                            <h:outputLabel value="Catégorie :" />
+                                                            <h:outputLabel value="#{contractorRegistrationBean.editService.category.name}" />
 
-                                                                <h:outputLabel value="Tarif :" />
-                                                                <b:inputText id="servicePrice" 
-                                                                             value="#{contractorRegistrationBean.editService.price}" 
-                                                                             style="width: 100%;" label="Tarif" />
+                                                            <h:outputLabel value="Tarif :" />
+                                                            <b:inputText id="servicePrice" 
+                                                                         value="#{contractorRegistrationBean.editService.price}" 
+                                                                         style="width: 100%;" label="Tarif" />
 
-                                                                <f:facet name="footer">
-                                                                    <p:commandButton id="editButtonDialogValidate" value="Modifier" 
-                                                                                     action="#{contractorRegistrationBean.updateService()}" 
-                                                                                     oncomplete="handleReviewRequest(xhr, status, args);"
-                                                                                     update="@form" />
-                                                                    <p:commandButton id="cancelButtonDialogValidate" value="Annuler" 
-                                                                                     oncomplete="PF('prestationDialog').hide();" />
-                                                                </f:facet>  
-                                                            </h:panelGrid>
-                                                        </p:dialog>
+                                                            <f:facet name="footer">
+                                                                <p:commandButton id="editButtonDialogValidate" value="Modifier" 
+                                                                                 action="#{contractorRegistrationBean.updateService()}" 
+                                                                                 oncomplete="handleReviewRequest(xhr, status, args);"
+                                                                                 update="@form" />
+                                                                <p:commandButton id="cancelButtonDialogValidate" value="Annuler" 
+                                                                                 oncomplete="PF('prestationDialog').hide();" />
+                                                            </f:facet>  
+                                                        </h:panelGrid>
+                                                    </p:dialog>
 
-                                                        <p:commandButton id="updateCommandButton" value="Modifier" 
-                                                                         action="#{contractorRegistrationBean.setEditService(service)}" 
-                                                                         styleClass="updateButtonService" update="prestationDialog"
-                                                                         oncomplete="PF('prestationDialog').show();"/>
-                                                        <p:commandButton id="deleteCommandButton" value="Supprimer" 
-                                                                         action="#{contractorRegistrationBean.deleteService(service)}" 
-                                                                         styleClass="removeButtonService" update="growlServiceContractorList @form">
-                                                            <p:confirm header="Confirmation" 
-                                                                       message="Êtes-vous sûr de vouloir supprimer cette prestation ?" 
-                                                                       icon="ui-icon-alert" />
-                                                        </p:commandButton>
+                                                    <p:commandButton id="updateCommandButton" value="Modifier" 
+                                                                     action="#{contractorRegistrationBean.setEditService(service)}" 
+                                                                     styleClass="updateButtonService" update="prestationDialog"
+                                                                     oncomplete="PF('prestationDialog').show();"/>
+                                                    <p:commandButton id="deleteCommandButton" value="Supprimer" 
+                                                                     action="#{contractorRegistrationBean.deleteService(service)}" 
+                                                                     styleClass="removeButtonService" update="growlServiceContractorList @form">
+                                                        <p:confirm header="Confirmation" 
+                                                                   message="Êtes-vous sûr de vouloir supprimer cette prestation ?" 
+                                                                   icon="ui-icon-alert" />
+                                                    </p:commandButton>
 
-                                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                                            <p:commandButton id="confirmButtonDialogValidate" value="Yes" 
-                                                                             type="button" styleClass="ui-confirmdialog-yes" 
-                                                                             icon="ui-icon-check" />
-                                                            <p:commandButton id="confirmButtonDialogUnvalidate" value="No" 
-                                                                             type="button" styleClass="ui-confirmdialog-no" 
-                                                                             icon="ui-icon-close" />
-                                                        </p:confirmDialog>
-                                                    </div>
+                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                        <p:commandButton id="confirmButtonDialogValidate" value="Yes" 
+                                                                         type="button" styleClass="ui-confirmdialog-yes" 
+                                                                         icon="ui-icon-check" />
+                                                        <p:commandButton id="confirmButtonDialogUnvalidate" value="No" 
+                                                                         type="button" styleClass="ui-confirmdialog-no" 
+                                                                         icon="ui-icon-close" />
+                                                    </p:confirmDialog>
                                                 </div>
-                                            </div>      
-                                        </c:forEach> 
+                                            </div>
+                                        </div>      
+                                    </c:forEach> 
+                                </div>
+
+                                <!-- CONTRACTOR'S NEW SERVICE -->
+
+                                <p:growl id="growlNewServiceContractor" sticky="false" showDetail="false" life="3000" />
+                                <div class="divContractorAddService">
+                                    <div id="divAddServiceTitle">
+                                        <h:outputLabel value="Ajouter un service :" />
                                     </div>
+                                    <div>
+                                        <b:inputText id="titleService" styleClass="inputNewContractorService" 
+                                                     required="true" size="20" value="#{contractorRegistrationBean.titleService}" 
+                                                     label="Nom de la prestation"/> 
+                                        <p:watermark for="titleService" value="Nom de la prestation" id="wTitleService" /><br/>
+                                        <b:inputTextarea id="serviceContent" styleClass="inputNewContractorService" 
+                                                         rows="6" value="#{contractorRegistrationBean.descriptionService}" 
+                                                         required="true" label="Description" />
+                                        <p:watermark for="serviceContent" value="Description ..." id="wServiceContent" /><br/>
+                                        <div class="inputNewContractorService">
 
-                                    <!-- CONTRACTOR'S NEW SERVICE -->
+                                            <p:selectOneMenu id="selectOneMenuCategorie" 
+                                                             value="#{contractorRegistrationBean.idCategoryService}" 
+                                                             style="width: 60%;">
 
-                                    <p:growl id="growlNewServiceContractor" sticky="false" showDetail="false" life="3000" />
-                                    <div class="divContractorAddService">
-                                        <div id="divAddServiceTitle">
-                                            <h:outputLabel value="Ajouter un service :" />
+                                                <f:selectItems value="#{contractorRegistrationBean.categories}" 
+                                                               var="categoryItem" itemLabel="#{categoryItem.name}" 
+                                                               itemValue="#{categoryItem.id}" />
+                                            </p:selectOneMenu>
                                         </div>
-                                        <div>
-                                            <h:inputText id="titleService" styleClass="inputNewContractorService" 
-                                                         required="true" size="20" value="#{contractorRegistrationBean.titleService}" 
-                                                         label="Nom de la prestation"/> 
-                                            <p:watermark for="titleService" value="Nom de la prestation" id="wTitleService" /><br/>
-                                            <b:inputTextarea id="serviceContent" styleClass="inputNewContractorService" 
-                                                             rows="6" value="#{contractorRegistrationBean.descriptionService}" 
-                                                             required="true" label="Description" />
-                                            <p:watermark for="serviceContent" value="Description ..." id="wServiceContent" /><br/>
-                                            <div class="inputNewContractorService">
-
-                                                <p:selectOneMenu id="selectOneMenuCategorie" 
-                                                                 value="#{contractorRegistrationBean.idCategoryService}" 
-                                                                 style="width: 60%;">
-
-                                                    <f:selectItems value="#{contractorRegistrationBean.categories}" 
-                                                                   var="categoryItem" itemLabel="#{categoryItem.name}" 
-                                                                   itemValue="#{categoryItem.id}" />
-                                                </p:selectOneMenu>
-                                            </div>
-                                            Tarif : <h:inputText id="priceService" size="10" 
-                                                                 value="#{contractorRegistrationBean.priceService}" 
-                                                                 label="Tarif" /> €<br/>
-                                            <p:watermark for="priceService" value="Tarif en €" id="wPriceService" /><br/>
-                                            <div class="divContractorService">
-                                                <p:commandButton id="addServiceButton" action="#{contractorRegistrationBean.addService()}" 
-                                                                 value="Ajouter" update="registerContractorFormServices" /> 
-                                            </div>
+                                        Tarif : <h:inputText id="priceService" size="10" 
+                                                             value="#{contractorRegistrationBean.priceService}" 
+                                                             label="Tarif" /> €<br/>
+                                        <p:watermark for="priceService" value="Tarif en €" id="wPriceService" /><br/>
+                                        <div class="divContractorService">
+                                            <p:commandButton 
+                                                value="Précédent"
+                                                oncomplete="handlePreviousStep(xhr, status, args)"/>
+                                            <p:commandButton id="addServiceButton" action="#{contractorRegistrationBean.addService()}" 
+                                                             value="Ajouter" update="registerContractorFormServices" /> 
+                                            <p:commandButton 
+                                                value="S'inscrire"
+                                                oncomplete="handleContractorRegistration(xhr, status, args)"
+                                                rendered="#{contractorRegistrationBean.areServices()}"/>
+                                        </div>
 
 
-                                        </div>          
-                                    </div>    
+                                    </div>          
+                                </div>    
 
-                                </p:panel>
-                            </h:form>
-
-                        </b:panel>
-                    </b:carouselItem>
+                            </p:panel>
 
 
-                    <b:carouselItem>
-                        <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
-                            Redirection en cours...
-                        </div>
-                    </b:carouselItem>
 
-                    <b:carouselControl/>
-                </b:carousel>
-            </h:form>
+                        </h:form>
+
+                    </b:panel>
+                </b:carouselItem>
+
+
+                <b:carouselItem>
+                    <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
+                        Redirection en cours...
+                    </div>
+                </b:carouselItem>
+
+                <b:carouselControl/>
+            </b:carousel>
+
         </div>
 
         <!-- FOOTER -->

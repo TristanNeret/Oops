@@ -53,12 +53,14 @@ and open the template in the editor.
 
             <p:growl widgetVar="registerGrowl" sticky="false" showDetail="false" life="3000" />
 
-            <h:form id="registerTendererForm">
-                <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false">
-                    <b:carouselItem>
 
-                        <b:panel title="Soumissionnaire, inscrivez-vous sur le plus grand annuaire de prestataires du web !" look="primary" collapsible="false" style="width:625px; margin-left: auto; margin-right: auto;">
-                            
+            <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false">
+                <b:carouselItem>
+
+                    <b:panel title="Soumissionnaire, inscrivez-vous sur le plus grand annuaire de prestataires du web !" look="primary" collapsible="false" style="width:625px; margin-left: auto; margin-right: auto;">
+
+                        <h:form id="registerTendererForm">
+
                             <b:inputText id="registerLogin" label="Login" renderLabel="true" value="#{tendererRegistrationBean.login}"
                                          placeholder="Entez votre login">
                                 <f:validator validatorId="com.gdf.loginAlreadyExistValidator" /> 
@@ -110,21 +112,22 @@ and open the template in the editor.
                                              oncomplete="handleRequest(xhr, status, args)"
                                              update="@form"/>
 
-                        </b:panel>
-                    </b:carouselItem>
+                        </h:form>
 
-                    <b:carouselItem>
+                    </b:panel>
+                </b:carouselItem>
 
-                        <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
-                            Redirection en cours...
-                        </div>
+                <b:carouselItem>
 
-                    </b:carouselItem>
+                    <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
+                        Redirection en cours...
+                    </div>
 
-                    <b:carouselControl/>
+                </b:carouselItem>
 
-                </b:carousel>
-            </h:form>
+                <b:carouselControl/>
+
+            </b:carousel>
 
         </div>
 

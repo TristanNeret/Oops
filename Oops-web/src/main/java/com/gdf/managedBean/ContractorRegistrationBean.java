@@ -222,9 +222,7 @@ public class ContractorRegistrationBean implements Serializable {
      * @return True if the Contractor has Service, or False
      */
     public boolean areServices() {
-        return true;
-        //return !this.contractor.getServices().isEmpty();
-
+        return !this.contractor.getServices().isEmpty();
     }
 
     /**
