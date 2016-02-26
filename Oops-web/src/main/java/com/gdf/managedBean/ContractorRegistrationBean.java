@@ -93,6 +93,7 @@ public class ContractorRegistrationBean implements Serializable {
         contractor = new Contractor();
         contractor.setAddress(new Address());
         contractor.setLegalInformation(new LegalInformation());
+        contractor.setServices(new ArrayList<Service>());
         
         code = false;
         
