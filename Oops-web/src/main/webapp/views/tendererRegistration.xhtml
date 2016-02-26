@@ -21,6 +21,8 @@ and open the template in the editor.
             } else {
                 PF('registerGrowl').renderMessage({summary: 'Inscription réussie !',
                     detail: 'Bienvenue sur Oops !', severity: 'info'});
+                $('.wizardPseudoClass').carousel('next');
+                $('.wizardPseudoClass').carousel('pause');
                 // GO HOME
                 setTimeout(function () {
                     window.location.href = "/Oops-web";
@@ -52,69 +54,76 @@ and open the template in the editor.
             <p:growl widgetVar="registerGrowl" sticky="false" showDetail="false" life="3000" />
 
             <h:form id="registerTendererForm">
+                <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false">
+                    <b:carouselItem>
 
-                <p:fieldset rendered="#{tendererRegistrationBean.step == 1}">
+                        <b:panel title="Soumissionnaire, inscrivez-vous sur le plus grand annuaire de prestataires du web !" look="primary" collapsible="false" style="width:625px; margin-left: auto; margin-right: auto;">
+                            
+                            <b:inputText id="registerLogin" label="Login" renderLabel="true" value="#{tendererRegistrationBean.login}"
+                                         placeholder="Entez votre login">
+                                <f:validator validatorId="com.gdf.loginAlreadyExistValidator" /> 
+                            </b:inputText>
+                            <b:message id="loginMessage" for="registerLogin" />
 
-                    <b:panel title="Soumissionnaire, inscrivez-vous sur le plus grand annuaire de prestataires du web !" look="primary" collapsible="false" style="width:625px; margin-left: auto; margin-right: auto;">
-                        <b:inputText id="registerLogin" label="Login" renderLabel="true" value="#{tendererRegistrationBean.login}"
-                                     placeholder="Entez votre login">
-                            <f:validator validatorId="com.gdf.loginAlreadyExistValidator" /> 
-                        </b:inputText>
-                        <b:message id="loginMessage" for="registerLogin" />
+                            <b:inputSecret id="registerPassword" label="Mot de passe" renderLabel="true" value="#{tendererRegistrationBean.password}"
+                                           placeholder="Entez un mot de passe">
+                            </b:inputSecret>
+                            <b:message id="passwordMessage" for="registerPassword" />
 
-                        <b:inputSecret id="registerPassword" label="Mot de passe" renderLabel="true" value="#{tendererRegistrationBean.password}"
-                                       placeholder="Entez un mot de passe">
-                        </b:inputSecret>
-                        <b:message id="passwordMessage" for="registerPassword" />
-
-                        <b:inputSecret id="registerConfirmPassword" label="Confirmer le mot de passe" renderLabel="true" value="#{tendererRegistrationBean.passwordConfirm}"
-                                       placeholder="Entez une confirmation de mot de passe">
-                        </b:inputSecret>
-                        <b:message id="confirmPasswordMessage" for="registerConfirmPassword" />
-
-
-                        <b:inputText id="registerFirstname" label="Prénom" renderLabel="true" value="#{tendererRegistrationBean.firstname}"
-                                     placeholder="Entez votre prénom">
-                        </b:inputText>
-                        <b:message id="firstnameMessage" for="registerFirstname" />
-
-                        <b:inputText id="registerLastname" label="Nom" renderLabel="true" value="#{tendererRegistrationBean.lastname}"
-                                     placeholder="Entez votre nom">
-                        </b:inputText>
-                        <b:message id="lastnameMessage" for="registerLastname" />
-
-                        <b:inputText id="registerMail" label="Adresse mail" renderLabel="true" value="#{tendererRegistrationBean.email}"
-                                     placeholder="Entez votre adresse mail">
-                            <f:validator validatorId="com.gdf.mailFormatValidator" />
-                        </b:inputText>
-                        <b:message id="mailMessage" for="registerMail" />
-
-                        <b:inputText id="registerPhoneNumber" label="Téléphone" renderLabel="true" value="#{tendererRegistrationBean.phone}"
-                                     placeholder="Facultatif">
-                        </b:inputText>
-                        <b:message id="phoneNumberMessage" for="registerPhoneNumber" />
+                            <b:inputSecret id="registerConfirmPassword" label="Confirmer le mot de passe" renderLabel="true" value="#{tendererRegistrationBean.passwordConfirm}"
+                                           placeholder="Entez une confirmation de mot de passe">
+                            </b:inputSecret>
+                            <b:message id="confirmPasswordMessage" for="registerConfirmPassword" />
 
 
-                        <b:inputText id="registerAvatar" label="URL de l'avatar" renderLabel="true" value="#{tendererRegistrationBean.avatar}"
-                                     placeholder="Facultatif">   
-                            <f:validator validatorId="com.gdf.urlLogoValidator"/>
-                        </b:inputText>
-                        <b:message id="avatarMessage" for="registerAvatar" />
+                            <b:inputText id="registerFirstname" label="Prénom" renderLabel="true" value="#{tendererRegistrationBean.firstname}"
+                                         placeholder="Entez votre prénom">
+                            </b:inputText>
+                            <b:message id="firstnameMessage" for="registerFirstname" />
 
-                        <p:commandButton id="tenderRegisterButton"
-                                         value="S'inscrire"
-                                         actionListener="#{tendererRegistrationBean.submit()}" 
-                                         oncomplete="handleRequest(xhr, status, args)"
-                                         update="@form"/>
-                    </b:panel>
-                </p:fieldset>
+                            <b:inputText id="registerLastname" label="Nom" renderLabel="true" value="#{tendererRegistrationBean.lastname}"
+                                         placeholder="Entez votre nom">
+                            </b:inputText>
+                            <b:message id="lastnameMessage" for="registerLastname" />
 
-                <p:fieldset rendered="#{tendererRegistrationBean.step == 2}">
-                    <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
-                        Redirection en cours...
-                    </div>
-                </p:fieldset>
+                            <b:inputText id="registerMail" label="Adresse mail" renderLabel="true" value="#{tendererRegistrationBean.email}"
+                                         placeholder="Entez votre adresse mail">
+                                <f:validator validatorId="com.gdf.mailFormatValidator" />
+                            </b:inputText>
+                            <b:message id="mailMessage" for="registerMail" />
 
+                            <b:inputText id="registerPhoneNumber" label="Téléphone" renderLabel="true" value="#{tendererRegistrationBean.phone}"
+                                         placeholder="Facultatif">
+                            </b:inputText>
+                            <b:message id="phoneNumberMessage" for="registerPhoneNumber" />
+
+
+                            <b:inputText id="registerAvatar" label="URL de l'avatar" renderLabel="true" value="#{tendererRegistrationBean.avatar}"
+                                         placeholder="Facultatif">   
+                                <f:validator validatorId="com.gdf.urlLogoValidator"/>
+                            </b:inputText>
+                            <b:message id="avatarMessage" for="registerAvatar" />
+
+                            <p:commandButton id="tenderRegisterButton"
+                                             value="S'inscrire"
+                                             actionListener="#{tendererRegistrationBean.submit()}" 
+                                             oncomplete="handleRequest(xhr, status, args)"
+                                             update="@form"/>
+
+                        </b:panel>
+                    </b:carouselItem>
+
+                    <b:carouselItem>
+
+                        <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
+                            Redirection en cours...
+                        </div>
+
+                    </b:carouselItem>
+
+                    <b:carouselControl/>
+
+                </b:carousel>
             </h:form>
 
         </div>
