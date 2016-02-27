@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Service
@@ -26,7 +28,13 @@ public class Service implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String title, description;
+    @NotNull( message = "Veuillez saisir un nom" )
+    @Size( min = 5, message = "Le nom doit contenir au moins 5 caractères" )
+    private String title;
+    @NotNull( message = "Veuillez saisir une description" )
+    @Size( min = 15, message = "La description doit contenir au moins 15 caractères" )
+    private String description;
+    
     private double price;
     
     @ManyToOne

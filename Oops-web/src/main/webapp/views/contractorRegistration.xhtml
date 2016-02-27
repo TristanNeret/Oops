@@ -16,6 +16,7 @@ and open the template in the editor.
     <script type="text/javascript">
         function handleReviewRequest(xhr, status, args) {
             if (args.validationFailed) {
+                PF('prestationDialog').jq.effect("shake", {times: 5}, 100);
                 PF('prestationDialog').show();
             } else {
                 PF('prestationDialog').hide();
@@ -40,10 +41,12 @@ and open the template in the editor.
                     detail: 'Bienvenue sur Oops !', severity: 'info'});
                 $('.wizardPseudoClass').carousel('next');
                 $('.wizardPseudoClass').carousel('pause');
-                // GO HOME
+                // Go to add services
                 setTimeout(function () {
-                    window.location.href = "/Oops-web";
+                    window.location.href = "/Oops-web/views/contractorManagement.xhtml#tabViewContractor:tabServices";
                 }, 3000);
+                PF('registerGrowl').renderMessage({summary: 'Finalisez votre inscription !',
+                    detail: 'Ajoutez vos services !', severity: 'info'});
             }
         }
     </script>
@@ -71,7 +74,7 @@ and open the template in the editor.
             <p:growl widgetVar="registerGrowl" sticky="false" showDetail="false" life="3000" />
 
             <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false">
-                
+
                 <b:carouselItem style="width:800px; margin-left: auto; margin-right: auto;">
 
                     <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
@@ -246,7 +249,7 @@ and open the template in the editor.
 
                     </b:panel>
                 </b:carouselItem>
-                
+
                 <b:carouselItem>
                     <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
                              Etape 4/5" look="primary" collapsible="false">
@@ -259,11 +262,11 @@ and open the template in the editor.
                             <h:outputLabel for="listCountries" value="Pays :" class="labelModificationForm"/>
                             <p:selectOneMenu  id="listCountries"  value="#{contractorRegistrationBean.country}">
                                 <f:selectItems value="#{contractorRegistrationBean.allCountry}"/>
-                                <p:ajax update="registerContractorFormAddress:registerContractorFormAdress"/>
+                                <p:ajax update="registerContractorFormAddress:registerContractorPGAddress"/>
                             </p:selectOneMenu>
                             <br/> 
 
-                            <h:panelGroup id="registerContractorFormAdress">
+                            <h:panelGroup id="registerContractorPGAddress">
 
                                 <h:panelGroup rendered="#{contractorRegistrationBean.country != 'France'}">
 
@@ -272,6 +275,10 @@ and open the template in the editor.
                                     </b:inputText>
                                     <b:message id="zipCodeMessage" for="contractorZipCode" />
                                     <br/>
+                                    
+                                    <b:inputText id="contractorTown" placeholder="Entrez la ville" label="Ville" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.town}"/>
+                                    <b:message id="townMessage" for="contractorTown" />
+                                    <br/>  
 
                                     <b:inputText id="contractorStreetNumber" placeholder="Entrez le numéro de la rue" label="N°" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.streetNumber}" size="5" maxlength="5">
                                     </b:inputText>
@@ -289,7 +296,7 @@ and open the template in the editor.
 
                                     <br/>
                                     <b:inputText  id="zipCode" label="Code postal" placeholder="Entrez le code postal" renderLabel="true" value="#{contractorRegistrationBean.zipCode}" size="5" maxlength="5">
-                                        <p:ajax update="registerContractorFormAddress:registerContractorFormAdress" event="blur"/>
+                                        <p:ajax update="registerContractorFormAddress:registerContractorPGAddress" event="blur"/>
                                         <f:validator validatorId="com.gdf.zipValidator"/>
                                     </b:inputText>
                                     <b:message id="zipCodeMessageFr" for="zipCode" />
@@ -330,155 +337,14 @@ and open the template in the editor.
                                 oncomplete="handlePreviousStep(xhr, status, args)"/>
                             <p:commandButton 
                                 value="Suivant"
-                                oncomplete="handleNextStep(xhr, status, args)"
-                                update="@form registerContractorFormServices"/>
+                                action="#{contractorRegistrationBean.register()}"
+                                oncomplete="handleContractorRegistration(xhr, status, args)"
+                                update="@form"/>
 
                         </h:form>
 
                     </b:panel>
                 </b:carouselItem>
-
-                <b:carouselItem>
-                    <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
-                             Etape 5/5" look="primary" collapsible="false">
-
-
-                        <h:form id="registerContractorFormServices">
-
-
-                            <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste de vos services :" />
-
-                            <p:panel id="grid4">
-
-                                <!-- CONTRACTOR'S SERVICES -->  
-                                <p:growl id="growlServiceContractorList" sticky="false" showDetail="false" life="3000" />
-                                <div class="divCurrentContractorServices">
-                                    <h:outputLabel value="Il n'y a encore aucun service vous concernant." rendered="#{!contractorRegistrationBean.areServices()}" /> 
-                                    <c:forEach items="#{contractorRegistrationBean.contractor.services}" var="service" > 
-                                        <div class="divLeftContractorService">
-                                            <div class="divServiceTitle">
-                                                <h:outputText value="#{service.title}" />
-                                            </div>
-                                            <h:outputText value="#{service.description}"/> 
-                                            <div class="divServiceButton">
-                                                <div class="leftServiceButton">
-                                                    Tarif horraire : <b><h:outputText value="#{service.price}"/> €</b> - 
-                                                    <span class="spanServiceCategory">#{service.category.name}</span>
-                                                </div>
-                                                <div class="rightServiceButton">  
-
-                                                    <!-- Dialog view to edit Prestation -->
-                                                    <p:dialog id="prestationDialog" header="Modifier votre prestation :" modal="true" resizable="false" widgetVar="prestationDialog" dynamic="true">
-                                                        <h:panelGrid columns="2" cellpadding="5">
-                                                            <h:outputLabel value="Titre :" />
-                                                            <b:inputText id="serviceTitle" value="#{contractorRegistrationBean.editService.title}" 
-                                                                         style="width: 100%;" required="true" label="Titre de la prestation" />
-
-                                                            <h:outputLabel value="Description :" />
-                                                            <b:inputTextarea id="serviceDescription" rows="6" style="width: 100%;" 
-                                                                             value="#{contractorRegistrationBean.editService.description}" required="true" label="Description" />
-
-                                                            <h:outputLabel value="Catégorie :" />
-                                                            <h:outputLabel value="#{contractorRegistrationBean.editService.category.name}" />
-
-                                                            <h:outputLabel value="Tarif :" />
-                                                            <b:inputText id="servicePrice" 
-                                                                         value="#{contractorRegistrationBean.editService.price}" 
-                                                                         style="width: 100%;" label="Tarif" />
-
-                                                            <f:facet name="footer">
-                                                                <p:commandButton id="editButtonDialogValidate" value="Modifier" 
-                                                                                 action="#{contractorRegistrationBean.updateService()}" 
-                                                                                 oncomplete="handleReviewRequest(xhr, status, args);"
-                                                                                 update="@form" />
-                                                                <p:commandButton id="cancelButtonDialogValidate" value="Annuler" 
-                                                                                 oncomplete="PF('prestationDialog').hide();" />
-                                                            </f:facet>  
-                                                        </h:panelGrid>
-                                                    </p:dialog>
-
-                                                    <p:commandButton id="updateCommandButton" value="Modifier" 
-                                                                     action="#{contractorRegistrationBean.setEditService(service)}" 
-                                                                     styleClass="updateButtonService" update="prestationDialog"
-                                                                     oncomplete="PF('prestationDialog').show();"/>
-                                                    <p:commandButton id="deleteCommandButton" value="Supprimer" 
-                                                                     action="#{contractorRegistrationBean.deleteService(service)}" 
-                                                                     styleClass="removeButtonService" update="growlServiceContractorList @form">
-                                                        <p:confirm header="Confirmation" 
-                                                                   message="Êtes-vous sûr de vouloir supprimer cette prestation ?" 
-                                                                   icon="ui-icon-alert" />
-                                                    </p:commandButton>
-
-                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                                        <p:commandButton id="confirmButtonDialogValidate" value="Yes" 
-                                                                         type="button" styleClass="ui-confirmdialog-yes" 
-                                                                         icon="ui-icon-check" />
-                                                        <p:commandButton id="confirmButtonDialogUnvalidate" value="No" 
-                                                                         type="button" styleClass="ui-confirmdialog-no" 
-                                                                         icon="ui-icon-close" />
-                                                    </p:confirmDialog>
-                                                </div>
-                                            </div>
-                                        </div>      
-                                    </c:forEach> 
-                                </div>
-
-                                <!-- CONTRACTOR'S NEW SERVICE -->
-
-                                <p:growl id="growlNewServiceContractor" sticky="false" showDetail="false" life="3000" />
-                                <div class="divContractorAddService">
-                                    <div id="divAddServiceTitle">
-                                        <h:outputLabel value="Ajouter un service :" />
-                                    </div>
-                                    <div>
-                                        <b:inputText id="titleService" styleClass="inputNewContractorService" 
-                                                     required="true" size="20" value="#{contractorRegistrationBean.titleService}" 
-                                                     label="Nom de la prestation"/> 
-                                        <p:watermark for="titleService" value="Nom de la prestation" id="wTitleService" /><br/>
-                                        <b:inputTextarea id="serviceContent" styleClass="inputNewContractorService" 
-                                                         rows="6" value="#{contractorRegistrationBean.descriptionService}" 
-                                                         required="true" label="Description" />
-                                        <p:watermark for="serviceContent" value="Description ..." id="wServiceContent" /><br/>
-                                        <div class="inputNewContractorService">
-
-                                            <p:selectOneMenu id="selectOneMenuCategorie" 
-                                                             value="#{contractorRegistrationBean.idCategoryService}" 
-                                                             style="width: 60%;">
-
-                                                <f:selectItems value="#{contractorRegistrationBean.categories}" 
-                                                               var="categoryItem" itemLabel="#{categoryItem.name}" 
-                                                               itemValue="#{categoryItem.id}" />
-                                            </p:selectOneMenu>
-                                        </div>
-                                        Tarif : <h:inputText id="priceService" size="10" 
-                                                             value="#{contractorRegistrationBean.priceService}" 
-                                                             label="Tarif" /> €<br/>
-                                        <p:watermark for="priceService" value="Tarif en €" id="wPriceService" /><br/>
-                                        <div class="divContractorService">
-                                            <p:commandButton 
-                                                value="Précédent"
-                                                oncomplete="handlePreviousStep(xhr, status, args)"/>
-                                            <p:commandButton id="addServiceButton" action="#{contractorRegistrationBean.addService()}" 
-                                                             value="Ajouter" update="registerContractorFormServices" /> 
-                                            <p:commandButton 
-                                                value="S'inscrire"
-                                                oncomplete="handleContractorRegistration(xhr, status, args)"
-                                                rendered="#{contractorRegistrationBean.areServices()}"/>
-                                        </div>
-
-
-                                    </div>          
-                                </div>    
-
-                            </p:panel>
-
-
-
-                        </h:form>
-
-                    </b:panel>
-                </b:carouselItem>
-
 
                 <b:carouselItem>
                     <div style="width: 100%; text-align: center; height: 200px; padding-top: 100px; padding-bottom: 100px;">
