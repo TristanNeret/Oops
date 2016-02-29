@@ -147,7 +147,7 @@ public class PopulateDBBean implements PopulateDB {
         "SA", "Nous sommes ITContractor nous vous offront different types de services IT,"
                 + " n'hesitez pas a nous contacter pour plus d'informations.", 
                 "937937820", "http://www.ut-capitole.fr/medias/photo/it-128_1413288947855-png", "ITContractor", "Representant", 100000, 100, 3,
-        new Address(3, "beans street", 2648, "New York", "USA"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
+        new Address(3, "beans street", 2648, "New York", "Etats-Unis"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         Service service = new Service("Developpement Informatique", "Nous developpons vos projets informatique, sous forme d'applications "
                 + "web et mobiles.", 500.0, contractor, category);
         contractor.setId(50);
