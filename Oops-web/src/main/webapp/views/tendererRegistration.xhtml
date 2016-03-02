@@ -25,7 +25,7 @@ and open the template in the editor.
                 // GO HOME
                 setTimeout(function () {
                     window.location.href = "/Oops-web";
-                }, 3000);
+                }, 2000);
             }
         }
     </script>
@@ -56,39 +56,39 @@ and open the template in the editor.
             <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false">
                 <b:carouselItem>
 
-                    <b:panel title="Soumissionnaire, inscrivez-vous sur le plus grand annuaire de prestataires du web !" look="primary" collapsible="false" style="width:630px; margin-left: auto; margin-right: auto;">
+                    <b:panel title="Soumissionnaire, inscrivez-vous sur le plus grand annuaire de prestataires du web !" look="primary" collapsible="false">
 
                         <h:form id="registerTendererForm">
 
                             <b:inputText id="registerLogin" label="Login" renderLabel="true" value="#{tendererRegistrationBean.login}"
-                                         placeholder="Entez votre login">
+                                         placeholder="Entrez votre login">
                                 <f:validator validatorId="com.gdf.loginAlreadyExistValidator" /> 
                             </b:inputText>
                             <b:message id="loginMessage" for="registerLogin" />
 
                             <b:inputSecret id="registerPassword" label="Mot de passe" renderLabel="true" value="#{tendererRegistrationBean.password}"
-                                           placeholder="Entez un mot de passe">
+                                           placeholder="Entrez un mot de passe">
                             </b:inputSecret>
                             <b:message id="passwordMessage" for="registerPassword" />
 
                             <b:inputSecret id="registerConfirmPassword" label="Confirmer le mot de passe" renderLabel="true" value="#{tendererRegistrationBean.passwordConfirm}"
-                                           placeholder="Entez une confirmation de mot de passe">
+                                           placeholder="Entrez une confirmation de mot de passe">
                             </b:inputSecret>
                             <b:message id="confirmPasswordMessage" for="registerConfirmPassword" />
 
 
                             <b:inputText id="registerFirstname" label="Prénom" renderLabel="true" value="#{tendererRegistrationBean.firstname}"
-                                         placeholder="Entez votre prénom">
+                                         placeholder="Entrez votre prénom">
                             </b:inputText>
                             <b:message id="firstnameMessage" for="registerFirstname" />
 
                             <b:inputText id="registerLastname" label="Nom" renderLabel="true" value="#{tendererRegistrationBean.lastname}"
-                                         placeholder="Entez votre nom">
+                                         placeholder="Entrez votre nom">
                             </b:inputText>
                             <b:message id="lastnameMessage" for="registerLastname" />
 
                             <b:inputText id="registerMail" label="Adresse mail" renderLabel="true" value="#{tendererRegistrationBean.email}"
-                                         placeholder="Entez votre adresse mail">
+                                         placeholder="Entrez votre adresse mail">
                                 <f:validator validatorId="com.gdf.mailFormatValidator" />
                             </b:inputText>
                             <b:message id="mailMessage" for="registerMail" />
@@ -98,7 +98,6 @@ and open the template in the editor.
                             </b:inputText>
                             <b:message id="phoneNumberMessage" for="registerPhoneNumber" />
 
-
                             <b:inputText id="registerAvatar" label="URL de l'avatar" renderLabel="true" value="#{tendererRegistrationBean.avatar}"
                                          placeholder="Facultatif">   
                                 <f:validator validatorId="com.gdf.urlLogoValidator"/>
@@ -106,7 +105,7 @@ and open the template in the editor.
                             <b:message id="avatarMessage" for="registerAvatar" />
 
                             <p:commandButton id="tenderRegisterButton"
-                                             value="S'inscrire"
+                                             value="S'inscrire" styleClass="buttonRegistration"
                                              actionListener="#{tendererRegistrationBean.submit()}" 
                                              oncomplete="handleRequest(xhr, status, args)"
                                              update="@form"/>

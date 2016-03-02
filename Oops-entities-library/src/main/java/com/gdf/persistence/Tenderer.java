@@ -50,7 +50,6 @@ public class Tenderer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull(message = "Veuillez saisir un email")
     private String email;
 
     @NotNull(message = "Veuillez saisir un mot de passe")

@@ -11,32 +11,33 @@ and open the template in the editor.
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    
+
     <script type="text/javascript">
         // Update CSS style on select choices
         function choiceSelected(item) {
             var values = $(item).attr("id").split(":");
-            var before = values[0].concat(":",values[1],":");
+            var before = values[0].concat(":", values[1], ":").concat(values[2], ":").concat(values[3], ":");
             var buttonValidateId = before.concat("buttonValidate");
             var buttonModifyId = before.concat("buttonModify");
             var buttonRejectId = before.concat("buttonReject");
-            var itemId = values[2];
-            switch(itemId) {
+            var itemId = values[4];
+            switch (itemId) {
                 case 'buttonValidate':
-                    document.getElementById($(item).attr("id")).setAttribute("class", "commandButtonChoiceSelected");
-                    document.getElementById(buttonModifyId).setAttribute("class", "commandButtonChoice");
-                    document.getElementById(buttonRejectId).setAttribute("class", "commandButtonChoice");
+                    document.getElementById(buttonValidateId).disabled = true;
+                    document.getElementById(buttonModifyId).disabled = false;
+                    document.getElementById(buttonRejectId).disabled = false;
                     break;
                 case 'buttonModify':
-                    document.getElementById(buttonValidateId).setAttribute("class", "commandButtonChoice");
-                    document.getElementById($(item).attr("id")).setAttribute("class", "commandButtonChoiceSelected");
-                    document.getElementById(buttonRejectId).setAttribute("class", "commandButtonChoice");
+                    document.getElementById(buttonModifyId).disabled = true;
+                    document.getElementById(buttonValidateId).disabled = false;
+                    document.getElementById(buttonRejectId).disabled = false;
                     break;
                 case 'buttonReject':
-                    document.getElementById(buttonValidateId).setAttribute("class", "commandButtonChoice");
-                    document.getElementById(buttonModifyId).setAttribute("class", "commandButtonChoice");
-                    document.getElementById($(item).attr("id")).setAttribute("class", "commandButtonChoiceSelected");
+                    document.getElementById(buttonRejectId).disabled = true;
+                    document.getElementById(buttonValidateId).disabled = false;
+                    document.getElementById(buttonModifyId).disabled = false;
                     break;
                 default:
                     break;
@@ -44,71 +45,98 @@ and open the template in the editor.
             return false;
         }
     </script>
-    
+
     <div class="container">
-        
+
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis en attente de traitement :" rendered="#{!manageReviewBean.areReviews}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Il n'y a aucun avis en attente de traitement." rendered="#{manageReviewBean.areReviews}" /> 
-        
+
         <p:panel>
-            <c:forEach items="#{manageReviewBean.reviewList}" var="review" >
-                <div class="panelReviewAdmin">
+
+            <p:dataGrid var="review" value="#{manageReviewBean.reviewList}" columns="1" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="6,12,16">
+
+                <b:container fluid="true">
+
                     <!-- Review informations -->
-                    <div class="leftPanelAdmin">
-                        <div class="divImageReviewAdmin">
-                            <h:graphicImage value="#{review.contractor.logo}" width="40px"/>
-                        </div>
-                        <div class="divDescriptionReviewAdmin">
-                            <h:outputLabel styleClass="labelTitleReviewAdmin" value="#{review.contractor.socialReason}" /> 
-                            <br/><br/>
-                            <h:outputLabel value="#{review.appreciation}" />
-                            <br/>
-                            <h:outputLabel value="#{review.content}" />
-                            <br/><br/>
-                            <div>
-                                <h:outputLabel styleClass="labelDateReviewAdmin" value="Le #{review.date}" />
-                                <p:rating id="stars" styleClass="starsReviewAdmin" value="#{review.rating}" stars="5" readonly="true"/>
-                            </div>
-                        </div>
-                    </div>
+                    <b:column span="6">
+                        <b:panel collapsible="false" styleClass="panelReview">
+                            <f:facet name="heading">
+                                <b:row styleClass="show-grid">
+                                    <h:outputText value="#{review.appreciation}"/>
+                                    <h:outputText styleClass="outputTextSubTitle" value="par"/>
+                                    <a class="aTendererLink" href="/Oops-web/views/tendererInformations.xhtml?id=#{review.tenderer.id}">#{review.tenderer.login}</a>
+                                    <h:outputText styleClass="outputTextSubTitle" value="le #{review.date}"/>
+                                </b:row>
+                            </f:facet>
+                            <b:container fluid="true">
+                                <b:row styleClass="show-grid">
+                                    <h:graphicImage value="#{review.contractor.logo}" width="40px"/>
+                                    <h:outputLabel styleClass="labelTitleReviewAdmin" value="#{review.contractor.socialReason}" />
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <h:outputText value="#{review.content}" />
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b id="starsTxt2" style="float:left;">Note : </b> 
+                                    <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
+                                </b:row>
+                            </b:container>
+                        </b:panel>
+                    </b:column>
+
                     <!-- Moderator actions -->
-                    <div class="rightPanelTitleAdmin">
-                        <div class="rightPanelTitleLeftAdmin">
-                            <h:outputLabel value="Décision" />
-                        </div>
-                        <div class="rightPanelTitleRightAdmin">
-                            <h:outputLabel value="Description" />
-                        </div>
-                    </div>
-                    <div class="rightPanelAdmin">
-                        <div class="buttonsRightPanelAdmin">
-                            <h:form class="formManageReview">
-                                <div class="divButtonsRightPanelAdmin">
-                                    <div class="divButtonsLeftRightPanelAdmin">
-                                        <h:commandButton id="buttonModify" style="height: 65px; width: 100%;"  value="Modifier" styleClass="commandButtonChoice" onclick="choiceSelected(this);" action="#{manageReviewBean.modifyReview(review.id)}" >
+                    <b:column span="6">
+                        <b:row styleClass="show-grid">
+                            <b:column span="3" style="text-align: center;">
+                                <h:form id="formDecision">
+                                    <b:row styleClass="show-grid">
+                                        <h:outputLabel value="Décision" />
+                                    </b:row>
+                                    <b:row styleClass="show-grid">
+                                        <b:commandButton id="buttonValidate" styleClass="commandButtonAdminReview" look="primary" value="Valider" onclick="choiceSelected(this);" action="#{manageReviewBean.validateReview(review.id)}" >
                                             <f:ajax execute="formDecision" render="@none" />
-                                        </h:commandButton>
-                                        <h:commandButton id="buttonReject" style="height: 65px; width: 100%; margin-top: 10px;" value="Rejeter" styleClass="commandButtonChoice" onclick="choiceSelected(this);" action="#{manageReviewBean.rejectReview(review.id)}" >
+                                        </b:commandButton>
+                                    </b:row>
+                                    <b:row styleClass="show-grid">
+                                        <b:commandButton id="buttonModify" styleClass="commandButtonAdminReview" look="warning" value="Modifier" onclick="choiceSelected(this);" action="#{manageReviewBean.modifyReview(review.id)}" >
                                             <f:ajax execute="formDecision" render="@none" />
-                                        </h:commandButton>
-                                    </div>
-                                    <h:commandButton id="buttonValidate" style="float: right; height: 140px; width: 45%;" value="Valider" styleClass="commandButtonChoice" onclick="choiceSelected(this);" action="#{manageReviewBean.validateReview(review.id)}" >
-                                        <f:ajax execute="formDecision" render="@none" />
-                                    </h:commandButton>
-                                </div>
+                                        </b:commandButton>
+                                    </b:row>
+                                    <b:row styleClass="show-grid">
+                                        <b:commandButton id="buttonReject" styleClass="commandButtonAdminReview" look="danger" value="Rejeter" onclick="choiceSelected(this);" action="#{manageReviewBean.rejectReview(review.id)}" >
+                                            <f:ajax execute="formDecision" render="@none" />
+                                        </b:commandButton>
+                                    </b:row>
+                                </h:form>
+                            </b:column>
+                            <h:form id="formSendManageReview">
+                                <b:column span="6" style="text-align: center;">
+                                    <b:row styleClass="show-grid">
+                                        <h:outputLabel value="Description" />
+                                    </b:row>
+                                    <b:row styleClass="show-grid">
+                                        <b:inputTextarea id="reviewContent" rows="6" value="#{manageReviewBean.contentReview[review.id]}" required="false" label="Facultatif" />
+                                    </b:row>
+                                </b:column>
+                                <b:column span="3" style="text-align: center;">
+                                    <b:row styleClass="show-grid">
+                                        <h:outputLabel value=" " />
+                                    </b:row>
+                                    <b:row styleClass="show-grid">
+                                        <b:commandButton value="Envoyer" styleClass="commandButtonAdminReview" look="success" action="#{manageReviewBean.manageReview(review.id)}" />
+                                    </b:row>
+                                </b:column>
                             </h:form>
-                        </div>
-                        <div class="inputLeftPanelAdmin" >
-                            <h:form class="formSendManageReview">
-                                <p:growl id="growlReviewAdmin" sticky="false" showDetail="false" life="3000" /> 
-                                <p:inputTextarea id="reviewContent" styleClass="inputReviewAdmin" rows="6" cols="20" value="#{manageReviewBean.contentReview[review.id]}" required="false" label="Facultatif" />
-                                <h:commandButton value="Envoyer" styleClass="commandButtonSaveAdmin" action="#{manageReviewBean.manageReview(review.id)}" />
-                            </h:form>
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
+                        </b:row>
+                    </b:column>
+
+                </b:container>
+
+            </p:dataGrid>
+
         </p:panel>
     </div>
-    
+
 </ui:composition>

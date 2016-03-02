@@ -138,6 +138,8 @@ public class PopulateDBBean implements PopulateDB {
         
         tenderer = new Tenderer("Dede", "dede.legrand@gmail.com", "password", "Didier", "Legrand", 
                 "", "9837937", "01/01/2016");
+        tenderer.addReview(review3);
+        tenderer.addReview(review4);
         em.persist(tenderer);
         
         // CONTRACTOR

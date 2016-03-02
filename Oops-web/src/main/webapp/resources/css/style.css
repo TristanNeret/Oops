@@ -5,6 +5,7 @@ body {
     width: 100%;
     float: left;
     background: none !important;
+    padding-bottom: 70px;
 }
 
 fieldset {
@@ -49,7 +50,7 @@ td {
     /*background: linear-gradient(white, #97c857);*/
     background-color: #97c857; 
     color: #444444;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     padding-bottom: 50px;
@@ -417,7 +418,6 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 }
 
 #rating {
-    margin-bottom: 15px;
     margin-left: 0px;
     width: 100%;
     float: left;
@@ -545,6 +545,40 @@ form#reviewForm {
 /**************************** TENDERER MANAGER *******************************/
 /*****************************************************************************/
 
+.wizardPseudoClass {
+    margin-top: 20px;
+}
+
+.buttonRegistration {
+    margin-top: 20px !important;
+    color: #fff !important;
+    background-color: #73A839 !important;
+    border-color: #73A839 !important;
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.428571429 !important;
+    border-radius: 4px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.buttonRegistration:hover {
+    background-color: #59822c !important;
+    border-color: #547a29 !important;
+}
+
 .labelTitleTendererInformation {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -619,6 +653,111 @@ form#reviewForm {
 /*****************************************************************************/
 /*************************** CONTRACTOR MANAGER ******************************/
 /*****************************************************************************/
+
+.panelContractor {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.panelContractor .panel-heading {
+    background-color: #2FA4E7 !important;
+    color: white !important;
+    padding: 0px;
+    font-size: 18px; 
+    font-weight: 100; 
+    text-align: left;
+}
+
+.panelContractor .panel-heading .outputTextTitle {
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.panelContractor .panel-heading .rowContractor {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
+}
+
+.panelContractor .outputTextRating {
+    margin-left: 20px;
+}
+
+.panelContractorDescription {
+    text-align: left;
+    font-size: 14px !important;
+}
+
+.panelContractorDescription .panel-heading {
+    background-color: #2FA4E7 !important;
+    color: white !important;
+    padding: 5px;
+    padding-left: 28px;
+    font-size: 18px; 
+}
+
+.panelReview {
+    text-align: left;
+    font-size: 14px !important;
+}
+
+.panelReview .panel-heading {
+    background-color: #2FA4E7 !important;
+    color: white !important;
+    padding: 5px;
+    padding-left: 28px;
+    font-size: 18px;
+}
+
+.panelReview .panel-heading a:after {
+    content: none !important;
+}
+
+.panelReview .panel-heading .outputTextSubTitle {
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.aTendererLink {
+    color: lightcyan !important;
+    padding-left: 5px;
+}
+
+.aContractorLink {
+    color: #333333 !important; 
+    margin-left: 5px;
+}
+
+.buttonBackRegistration {
+    margin-top: 20px !important;
+    background-color: #2FA4E7 !important;
+    border-color: #2FA4E7 !important;
+    color: #fff !important;
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.428571429 !important;
+    border-radius: 4px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.buttonBackRegistration:hover {
+    background-color: #178acc !important;
+    border-color: #1684c2 !important;
+}
 
 .panelReviewContractor {
     width: 100%; 
@@ -702,119 +841,10 @@ form .updateButtonContractorReview {
     float: left;
 }
 
-/* Moderator */
-
-.titlePanelReviewAdmin {
-    font-size: 22px;
-    font-weight: 200;
-}
-
-.panelReviewAdmin {
-    width: 100%; 
-    float: left;
-}
-
-.starsReviewAdmin {
-    float: right; 
-    margin-left: 20px;
-}
-
-.labelTitleReviewAdmin {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.labelDateReviewAdmin {
-    font-size: 15px;
-    color: gray;
-}
-
-.divImageReviewAdmin {
-    width: 50px; 
-    height: 120px; 
-    text-align: center; 
-    float: left; 
-    background-color: #66cccc; 
-    padding-top: 20px;
-}
-
-.divDescriptionReviewAdmin {
-    float: left; 
-    margin-left: 20px; 
-    height: 100%;
-}
-
-.leftPanelAdmin {
-    width: 45%; 
-    float: left;
-    height: 140px;
-    margin-top: 40px;
-    border-right-width: 3px;
-    border-right-color: darkgray;
-    border-right-style: ridge;
-}
-
-.rightPanelAdmin {
-    width: 50%; 
-    float: left;
-    margin-left: 20px;
-    margin-bottom: 20px;
-    height: 150px;
-}
-
-.rightPanelTitleAdmin {
-    width: 50%; 
-    float: left;
-    margin-left: 20px;
-    margin-top: 10px;
-    height: 30px;
-}
-
-.rightPanelTitleLeftAdmin {
-    width: 35%; 
-    float: left;
-}
-
-.rightPanelTitleRightAdmin {
-    width: 60%; 
-    float: right;
-}
-
-.buttonsRightPanelAdmin {
-    float: left; 
-    width: 35%;
-}
-
-.divButtonsRightPanelAdmin {
-    width: 100%; 
-    text-align: center;
-}
-
-.divButtonsLeftRightPanelAdmin {
-    float: left; 
-    height: 140px; 
-    width: 48%;
-}
-
-.inputLeftPanelAdmin {
-    float: right; 
-    width: 60%;
-}
-
-.inputReviewAdmin {
-    float: left; 
-    height: 130px !important; 
-    width: 70%;
-}
-
 .commandButtonSaveAdmin {
     float: right; 
     height: 140px !important; 
     width: 25%;
-    background-color: #336c6c;
-    color: #66cccc;
-    font-size: 15px !important;
-    font-weight: 100;
     height: 40px;
     padding: 10px;
     text-align: center;
@@ -822,15 +852,7 @@ form .updateButtonContractorReview {
     cursor: pointer;
 }
 
-.commandButtonSaveAdmin:active {
-    background-color: #666666;
-}
-
 .commandButtonChoice {
-    background-color: #66cccc;
-    color: #336c6c;
-    font-size: 15px !important;
-    font-weight: 100;
     height: 40px;
     padding: 10px;
     text-align: center;
@@ -839,10 +861,6 @@ form .updateButtonContractorReview {
 }
 
 .commandButtonChoiceSelected {
-    background-color: #336c6c;
-    color: #66cccc;
-    font-size: 15px !important;
-    font-weight: 100;
     height: 40px;
     padding: 10px;
     text-align: center;
@@ -916,32 +934,6 @@ form .updateButtonContractorReview {
     height: 100%;
 }
 
-.leftPanelAdmin {
-    width: 45%; 
-    float: left;
-    height: 140px;
-    margin-top: 40px;
-    border-right-width: 3px;
-    border-right-color: darkgray;
-    border-right-style: ridge;
-}
-
-.rightPanelAdmin {
-    width: 50%; 
-    float: left;
-    margin-left: 20px;
-    margin-bottom: 20px;
-    height: 150px;
-}
-
-.rightPanelTitleAdmin {
-    width: 50%; 
-    float: left;
-    margin-left: 20px;
-    margin-top: 10px;
-    height: 30px;
-}
-
 .rightPanelTitleLeftAdmin {
     width: 35%; 
     float: left;
@@ -979,47 +971,16 @@ form .updateButtonContractorReview {
     width: 70%;
 }
 
-.commandButtonSaveAdmin {
-    float: right; 
-    height: 140px !important; 
-    width: 25%;
-    background-color: #336c6c;
-    color: #66cccc;
-    font-size: 15px !important;
-    font-weight: 100;
-    height: 40px;
-    padding: 10px;
-    text-align: center;
-    border: none;
-    cursor: pointer;
+.commandButtonAdminReview {
+    width: 90%;
+    margin-top: 5px;
 }
 
-.commandButtonSaveAdmin:active {
-    background-color: #666666;
-}
-
-.commandButtonChoice {
-    background-color: #66cccc;
-    color: #336c6c;
-    font-size: 15px !important;
-    font-weight: 100;
-    height: 40px;
-    padding: 10px;
-    text-align: center;
-    border: none;
-    cursor: pointer;
-}
-
-.commandButtonChoiceSelected {
-    background-color: #336c6c;
-    color: #66cccc;
-    font-size: 15px !important;
-    font-weight: 100;
-    height: 40px;
-    padding: 10px;
-    text-align: center;
-    border: none;
-    cursor: pointer;
+.commandButtonAdminReviewSelected {
+    cursor: not-allowed !important;
+    background-color: lightgray !important;
+    border-color: darkgray !important;
+    color: darkgray !important;
 }
 
 /*****************************************************************************/
@@ -1249,7 +1210,8 @@ a.navbar-brand:hover {
 }
 
 footer.footer {
-    position: absolute !important;
+    /*position: absolute !important;*/
+    position: fixed;
     color: #ffffff !important;
     bottom: 0 !important;
     width: 100% !important;

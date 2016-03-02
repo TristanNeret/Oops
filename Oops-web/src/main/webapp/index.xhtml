@@ -73,7 +73,7 @@ and open the template in the editor.
                         </b:row>
                         <b:row styleClass="show-grid" style="text-align: center;">
                             <h:graphicImage url="#{review.contractor.logo}" title="Logo" height="30px" />
-                            <b><h:outputText value="#{review.contractor.socialReason}" style="margin-left: 5px;" /></b>
+                            <b><a class="aContractorLink" href="/Oops-web/views/contractorInformations.xhtml?id=#{review.contractor.id}">#{review.contractor.socialReason}</a></b>
                         </b:row>
                         <b:row styleClass="show-grid" style="text-align: center;">
                             <p:rating styleClass="ratingCenter" value="#{review.rating}" stars="5" readonly="true" />

@@ -7,7 +7,6 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.AdministratorBean;
 import com.gdf.ejb.SearchBean;
-import com.gdf.persistence.Moderator;
 import com.gdf.persistence.ReviewState;
 import com.gdf.session.SessionBean;
 import java.io.Serializable;

@@ -25,7 +25,7 @@ public class ReviewBean {
     
     private String reviewAppreciation;
     private String reviewContent;
-    private int reviewRating;
+    private int reviewRating = 3;
     
     /**
      * Submitting the review

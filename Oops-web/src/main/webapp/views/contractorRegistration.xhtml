@@ -75,7 +75,7 @@ and open the template in the editor.
 
             <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false">
 
-                <b:carouselItem style="width:800px; margin-left: auto; margin-right: auto;">
+                <b:carouselItem>
 
                     <b:panel title="Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
                              Etape 1/5" look="primary" collapsible="false">
@@ -114,7 +114,7 @@ and open the template in the editor.
                             <b:message id="contractorPhoneNumberMessage" for="contractorPhoneNumber" />
 
                             <p:commandButton 
-                                value="Suivant"
+                                value="Suivant" styleClass="buttonRegistration"
                                 oncomplete="handleNextStep(xhr, status, args)"
                                 update="@form registerContractorFormPrezInfos"/>
 
@@ -142,10 +142,10 @@ and open the template in the editor.
                             </b:inputTextarea>
                             <b:message id="descriptionMessage" for="contractorDescription" />
 
-                            <p:commandButton 
+                            <p:commandButton styleClass="buttonBackRegistration" 
                                 value="Précédent"
                                 oncomplete="handlePreviousStep(xhr, status, args)"/>
-                            <p:commandButton 
+                            <p:commandButton styleClass="buttonRegistration"
                                 value="Suivant"
                                 oncomplete="handleNextStep(xhr, status, args)"
                                 update="@form registerContractorFormLegalInfos"/>
@@ -237,10 +237,10 @@ and open the template in the editor.
                             </h:panelGrid>
 
 
-                            <p:commandButton 
+                            <p:commandButton styleClass="buttonBackRegistration" 
                                 value="Précédent"
                                 oncomplete="handlePreviousStep(xhr, status, args)"/>
-                            <p:commandButton 
+                            <p:commandButton styleClass="buttonRegistration" 
                                 value="Suivant"
                                 oncomplete="handleNextStep(xhr, status, args)"
                                 update="@form registerContractorFormAddress"/>
@@ -332,10 +332,10 @@ and open the template in the editor.
 
                             </h:panelGroup>
 
-                            <p:commandButton 
+                            <p:commandButton styleClass="buttonBackRegistration" 
                                 value="Précédent"
                                 oncomplete="handlePreviousStep(xhr, status, args)"/>
-                            <p:commandButton 
+                            <p:commandButton styleClass="buttonRegistration" 
                                 value="Suivant"
                                 action="#{contractorRegistrationBean.register()}"
                                 oncomplete="handleContractorRegistration(xhr, status, args)"
