@@ -14,6 +14,7 @@ import com.gdf.session.SessionBean;
 import com.gdf.singleton.PopulateDB;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -83,16 +84,10 @@ public class ContractorRegistrationBean implements Serializable {
         contractor.setLegalInformation(new LegalInformation());
 
         code = false;
-
-        SelectItemGroup g1 = new SelectItemGroup("Entreprise individuelle");
-        g1.setSelectItems(nonTeamCompanies);
-
-        SelectItemGroup g2 = new SelectItemGroup("Entreprise non-individuelle");
-        g2.setSelectItems(teamCompanies);
-
+        
         legalForms = new ArrayList<>();
-        legalForms.add(g1);
-        legalForms.add(g2);
+        legalForms.addAll(Arrays.asList(nonTeamCompanies));
+        legalForms.addAll(Arrays.asList(teamCompanies));
     }
 
     /**
