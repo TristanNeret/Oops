@@ -73,93 +73,114 @@ and open the template in the editor.
 
             <p:growl widgetVar="registerGrowl" sticky="false" showDetail="false" life="3000" />
 
-            <h2 style="white-space: nowrap">
+            <h2 style="white-space: nowrap; text-align: center;">
                 Prestataire, enregistrez-vous et donnez à vos prestations une dimension Internationale !
             </h2>
 
-            <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false">
-                
-                                <b:carouselItem>
-                
-                                    <b:panel title="Prestataire, inscrivez-vous ici !
-                                             Etape 1/5" look="primary" collapsible="false">
-                
-                                        <h:form id="registerContractorFormAccountInfos">
-                
-                                            <b:inputText id="contractorLogin" label="Login" placeholder="Entrez votre login" renderLabel="true" value="#{contractorRegistrationBean.contractor.login}">
-                                                <f:validator validatorId="com.gdf.loginAlreadyExistValidator" />
-                                            </b:inputText>
-                                            <b:message id="contractorLoginMessage" for="contractorLogin" />
-                
-                                            <b:inputSecret id="contractorPassword" label="Mot de passe" placeholder="Entrez un mot de passe" renderLabel="true" value="#{contractorRegistrationBean.password}">
-                                            </b:inputSecret>
-                                            <b:message id="contractorPasswordMessage" for="contractorPassword" />
-                
-                                            <b:inputSecret id="contractorConfirmPassword" label="Confirmer le mot de passe" placeholder="Entrez une confirmation de mot de passe" renderLabel="true" value="#{contractorRegistrationBean.passwordConfirm}">
-                                            </b:inputSecret>
-                                            <b:message id="contractorConfirmPasswordMessage" for="contractorConfirmPassword" />
-                
-                                            <b:inputText id="contractorFirstname" label="Prénom" placeholder="Entrez votre votre prénom" renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorFirstname}">
-                                            </b:inputText>
-                                            <b:message id="contractorFirstnameMessage" for="contractorFirstname" />
-                
-                                            <b:inputText id="contractorLastname" label="Nom" placeholder="Entrez votre nom" renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorLastname}">
-                                            </b:inputText>
-                                            <b:message id="contractorLastnameMessage" for="contractorLastname" />
-                
-                                            <b:inputText id="contractorMail" label="Adresse mail" placeholder="Entrez votre mail" renderLabel="true" value="#{contractorRegistrationBean.contractor.email}" >
-                                                <f:validator validatorId="com.gdf.mailFormatValidator"/>
-                                            </b:inputText>
-                                            <b:message id="contractorMailMessage" for="contractorMail" />
-                
-                                            <b:inputText id="contractorPhoneNumber" label="Téléphone" placeholder="Entrez votre numéro de téléphone" renderLabel="true" value="#{contractorRegistrationBean.contractor.phone}">
-                                                <f:validator validatorId="com.gdf.phoneFormatValidator"/>
-                                            </b:inputText>
-                                            <b:message id="contractorPhoneNumberMessage" for="contractorPhoneNumber" />
-                
-                                            <p:commandButton 
-                                                value="Suivant" styleClass="buttonRegistration"
-                                                oncomplete="handleNextStep(xhr, status, args)"
-                                                update="@form registerContractorFormPrezInfos"/>
-                
-                                        </h:form>
-                
-                                    </b:panel>
-                
-                                </b:carouselItem>
-                
-                
-                
-                                <b:carouselItem>
-                                    <b:panel title="Prestataire, inscrivez-vous ici !
-                                             Etape 2/5" look="primary" collapsible="false">
-                
-                                        <h:form id="registerContractorFormPrezInfos">
-                
-                                            <b:inputText id="contractorLogo" label="URL du logo" placeholder="Entrez l'URL du logo" renderLabel="true" size="70" value="#{contractorRegistrationBean.contractor.logo}">
-                                                <f:validator validatorId="com.gdf.urlLogoValidator"/>
-                                            </b:inputText>
-                                            <b:message id="logoMessage" for="contractorLogo" />
-                
-                                            <b:inputTextarea id="contractorDescription" label="Description" renderLabel="true" value="#{contractorRegistrationBean.contractor.description}"
-                                                             rows="7" placeholder="Decrivez en quelques mots votre entreprise">
-                                            </b:inputTextarea>
-                                            <b:message id="descriptionMessage" for="contractorDescription" />
-                
-                                            <p:commandButton styleClass="buttonBackRegistration" 
-                                                             value="Précédent"
-                                                             oncomplete="handlePreviousStep(xhr, status, args)"/>
-                                            <p:commandButton styleClass="buttonRegistration"
-                                                             value="Suivant"
-                                                             oncomplete="handleNextStep(xhr, status, args)"
-                                                             update="@form registerContractorFormLegalInfos"/>
-                
-                
-                                        </h:form>
-                
-                                    </b:panel>
-                                </b:carouselItem>
-                                
+            <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false"
+                        style="width:600px; margin-left: auto; margin-right: auto;">
+
+                <b:carouselItem>
+
+                    <b:panel title="Prestataire, inscrivez-vous ici !
+                             Etape 1/5" look="primary" collapsible="false">
+
+                        <h:form id="registerContractorFormAccountInfos">
+
+                            <b:inputText id="contractorLogin" label="Login" placeholder="Entrez votre login" renderLabel="true" value="#{contractorRegistrationBean.contractor.login}">
+                                <f:facet name="prepend">
+                                    <b:icon name="user" />
+                                </f:facet>
+                                <f:validator validatorId="com.gdf.loginAlreadyExistValidator" />
+                            </b:inputText>
+                            <b:message id="contractorLoginMessage" for="contractorLogin" />
+
+                            <b:inputSecret id="contractorPassword" label="Mot de passe" placeholder="Entrez un mot de passe" renderLabel="true" value="#{contractorRegistrationBean.contractor.password}">
+                                <f:facet name="prepend">
+                                    <b:icon name="lock" />
+                                </f:facet>
+                                <f:validator validatorId="com.gdf.passwordConfirmationValidator" />
+                                <f:attribute name="confirm" value="#{confirm}" />
+                            </b:inputSecret>
+                            <b:message id="contractorPasswordMessage" for="contractorPassword" />
+
+                            <b:inputSecret id="contractorConfirmPassword" label="Confirmer le mot de passe" placeholder="Entrez une confirmation de mot de passe" 
+                                           renderLabel="true" value="#{contractorRegistrationBean.passwordConfirm}" binding="#{confirm}">
+                                <f:facet name="prepend">
+                                    <b:icon name="lock" />
+                                </f:facet>
+                            </b:inputSecret>
+                            <b:message id="contractorConfirmPasswordMessage" for="contractorConfirmPassword" />
+
+                            <b:inputText id="contractorFirstname" label="Prénom" placeholder="Entrez votre votre prénom" renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorFirstname}">
+                            </b:inputText>
+                            <b:message id="contractorFirstnameMessage" for="contractorFirstname" />
+
+                            <b:inputText id="contractorLastname" label="Nom" placeholder="Entrez votre nom" renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorLastname}">
+                            </b:inputText>
+                            <b:message id="contractorLastnameMessage" for="contractorLastname" />
+
+                            <b:inputText id="contractorMail" label="Adresse mail" placeholder="Entrez votre mail" renderLabel="true" value="#{contractorRegistrationBean.contractor.email}" >
+                                <f:facet name="prepend">
+                                    <h:outputText value="@" />
+                                </f:facet>
+                            </b:inputText>
+                            <b:message id="contractorMailMessage" for="contractorMail" />
+
+                            <b:inputText id="contractorPhoneNumber" label="Téléphone" placeholder="Entrez votre numéro de téléphone" renderLabel="true" value="#{contractorRegistrationBean.contractor.phone}">
+                                <f:facet name="prepend">
+                                    <b:icon name="earphone" />
+                                </f:facet>
+                                <f:validator validatorId="com.gdf.phoneFormatValidator" /> 
+                            </b:inputText>
+                            <b:message id="contractorPhoneNumberMessage" for="contractorPhoneNumber" />
+
+                            <p:commandButton 
+                                value="Suivant" styleClass="buttonRegistration"
+                                oncomplete="handleNextStep(xhr, status, args)"
+                                update="@form registerContractorFormPrezInfos"/>
+
+                        </h:form>
+
+                    </b:panel>
+
+                </b:carouselItem>
+
+
+
+                <b:carouselItem>
+                    <b:panel title="Prestataire, inscrivez-vous ici !
+                             Etape 2/5" look="primary" collapsible="false">
+
+                        <h:form id="registerContractorFormPrezInfos">
+
+                            <b:inputText id="contractorLogo" label="URL du logo" placeholder="Entrez l'URL du logo" renderLabel="true" size="70" value="#{contractorRegistrationBean.contractor.logo}">
+                                <f:facet name="prepend">
+                                    <b:icon name="picture" />
+                                </f:facet>
+                                <f:validator validatorId="com.gdf.urlLogoValidator"/>
+                            </b:inputText>
+                            <b:message id="logoMessage" for="contractorLogo" />
+
+                            <b:inputTextarea id="contractorDescription" label="Description" renderLabel="true" value="#{contractorRegistrationBean.contractor.description}"
+                                             rows="7" placeholder="Decrivez en quelques mots votre entreprise">
+                            </b:inputTextarea>
+                            <b:message id="descriptionMessage" for="contractorDescription" />
+
+                            <p:commandButton styleClass="buttonBackRegistration" 
+                                             value="Précédent"
+                                             oncomplete="handlePreviousStep(xhr, status, args)"/>
+                            <p:commandButton styleClass="buttonRegistration"
+                                             value="Suivant"
+                                             oncomplete="handleNextStep(xhr, status, args)"
+                                             update="@form registerContractorFormLegalInfos"/>
+
+
+                        </h:form>
+
+                    </b:panel>
+                </b:carouselItem>
+
                 <b:carouselItem>
                     <b:panel title="Prestataire, inscrivez-vous ici !
                              Etape 3/5" look="primary" collapsible="false">
@@ -169,7 +190,6 @@ and open the template in the editor.
 
 
                             <b:inputText id="contractorSocialReason" label="Raison sociale" placeholder="Entrez la raison sociale" renderLabel="true" value="#{contractorRegistrationBean.contractor.socialReason}">
-                                <f:validator validatorId="com.gdf.socialReasonValidator"/>
                             </b:inputText>
                             <b:message id="contractorSocialReasonMessage" for="contractorSocialReason" />
 
@@ -211,14 +231,12 @@ and open the template in the editor.
                             <b:inputText  id="contractorSiren"  label="N° SIREN" placeholder="Entrez le n° SIREN" 
                                           renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.siren}" size="9" 
                                           maxlength="9">
-                                <f:validator validatorId="com.gdf.sirenValidator"/>
                             </b:inputText>
                             <b:message id="sirenMessage" for="contractorSiren" />
 
                             <b:inputText  id="contractorSiret"  label="N° SIRET" placeholder="Entrez le n° SIRET" 
                                           renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.siret}" size="14" 
-                                          maxlength="14">
-                                <f:validator validatorId="com.gdf.siretValidator"/>      
+                                          maxlength="14">    
                             </b:inputText>
                             <b:message id="siretMessage" for="contractorSiret" />
 
@@ -285,7 +303,7 @@ and open the template in the editor.
                                 <h:panelGroup rendered="#{contractorRegistrationBean.country == 'France'}">
 
                                     <b:inputText  id="zipCode" label="Code postal" placeholder="Entrez le code postal" renderLabel="true" value="#{contractorRegistrationBean.zipCode}" size="5" maxlength="5">
-                                        <p:ajax update="registerContractorFormAddress:registerContractorPGAddress" event="blur"/>
+                                        <f:ajax event="change" render="registerContractorFormAddress:registerContractorPGAddress"/>
                                         <f:validator validatorId="com.gdf.zipValidator"/>
                                     </b:inputText>
                                     <b:message id="zipCodeMessageFr" for="zipCode" />
