@@ -7,6 +7,9 @@ package com.gdf.validators;
 
 
 import com.gdf.ejb.SearchBean;
+import com.gdf.persistence.Contractor;
+import com.gdf.persistence.Tenderer;
+import com.gdf.session.SessionBean;
 import java.util.Map;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
@@ -29,7 +32,6 @@ import javax.faces.validator.ValidatorException;
 public class LoginAlreadyExistForModificationValidator implements Validator {
 
     private static final String LOGIN_ALREADY_USED = "Ce login est déjà utilisé";
-    private static final String ID_CONTRACTOR ="idContractor";
     private static final String LOGIN_NULL ="Veuillez indiquer un login";
 
     @EJB
@@ -44,15 +46,20 @@ public class LoginAlreadyExistForModificationValidator implements Validator {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         
-        
         String newLogin = (String)value;
         
         if(newLogin == null){
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, LOGIN_NULL, null));
         }
-       
-        long idContractor = (long) component.getAttributes().get( ID_CONTRACTOR );
-        String formerLogin = sb.searchContractorById(idContractor).getLogin();
+
+        long id = SessionBean.getUserId();
+        String cat = SessionBean.getUserCategory();
+        String formerLogin = null;
+        
+        if(cat.equals(Contractor.userCategory))
+            formerLogin = sb.searchContractorById(id).getLogin();
+        else
+            formerLogin = sb.searchTendererById(id).getLogin();
               
         if(!newLogin.equals(formerLogin)){
         // Test if a Tenderer or a Contractor already uses this login

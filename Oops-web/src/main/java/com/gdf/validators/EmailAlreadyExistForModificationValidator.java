@@ -2,6 +2,8 @@
 package com.gdf.validators;
 
 import com.gdf.ejb.SearchBean;
+import com.gdf.persistence.Contractor;
+import com.gdf.session.SessionBean;
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -23,7 +25,6 @@ public class EmailAlreadyExistForModificationValidator implements Validator {
 
     private static final String EMAIL_ALREADY_USED = "Cet email est déjà utilisé !";
     private static final String EMAIL_NULL ="Veuillez indiquer un email";
-    private static final String ID_CONTRACTOR ="idContractor";
 
     @EJB
     SearchBean sb;
@@ -43,12 +44,18 @@ public class EmailAlreadyExistForModificationValidator implements Validator {
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, EMAIL_NULL, null));
         }
        
-        long idContractor = (long) component.getAttributes().get( ID_CONTRACTOR );
-        String formerEmail = sb.searchContractorById(idContractor).getEmail();
+        long id = SessionBean.getUserId();
+        String cat = SessionBean.getUserCategory();;
+        String formerEmail = null ;
+        
+        if(cat.equals(Contractor.userCategory))
+            formerEmail = sb.searchContractorById(id).getEmail();
+        else
+            formerEmail = sb.searchTendererById(id).getEmail();
               
         if(!newEmail.equals(formerEmail)){
         // Test if a Tenderer or a Contractor already uses this login
-            if(this.sb.searchContractorByLogin(newEmail) != null || this.sb.searchTendererByLogin(newEmail) != null) {
+            if(this.sb.searchContractorByEmail(newEmail) != null || this.sb.searchTendererByEmail(newEmail) != null) {
                 throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, EMAIL_ALREADY_USED, null));
             }
         }   
