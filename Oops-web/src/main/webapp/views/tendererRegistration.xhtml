@@ -52,57 +52,80 @@ and open the template in the editor.
 
             <p:growl widgetVar="registerGrowl" sticky="false" showDetail="false" life="3000" />
 
-             <h2 style="white-space: nowrap">
-                 Soumissionnaire, inscrivez-vous sur le plus grand annuaire de prestataires du web !
-             </h2>
+            <h2 style="white-space: nowrap">
+                Soumissionnaire, inscrivez-vous sur le plus grand annuaire de prestataires du web !
+            </h2>
 
-            <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false">
+            <b:carousel id="wizard" styleClass="wizardPseudoClass" startAnimation="false" showIndicators="false"
+                           style="width:600px; margin-left: auto; margin-right: auto;">
+                
                 <b:carouselItem>
 
                     <b:panel title="Soumissionnaire, inscrivez-vous ici !" look="primary" collapsible="false">
 
                         <h:form id="registerTendererForm">
 
-                            <b:inputText id="registerLogin" label="Login" renderLabel="true" value="#{tendererRegistrationBean.login}"
+                            <b:inputText id="registerLogin" label="Login" renderLabel="true" value="#{tendererRegistrationBean.tenderer.login}"
                                          placeholder="Entrez votre login">
+                                <f:facet name="prepend">
+                                    <b:icon name="user" />
+                                </f:facet>
                                 <f:validator validatorId="com.gdf.loginAlreadyExistValidator" /> 
                             </b:inputText>
                             <b:message id="loginMessage" for="registerLogin" />
 
-                            <b:inputSecret id="registerPassword" label="Mot de passe" renderLabel="true" value="#{tendererRegistrationBean.password}"
+                            <b:inputSecret id="registerPassword" label="Mot de passe" renderLabel="true" value="#{tendererRegistrationBean.tenderer.password}"
                                            placeholder="Entrez un mot de passe">
+                                <f:facet name="prepend">
+                                    <b:icon name="lock" />
+                                </f:facet>                
+                                <f:validator validatorId="com.gdf.passwordConfirmationValidator" />
+                                <f:attribute name="confirm" value="#{confirm}" />
                             </b:inputSecret>
                             <b:message id="passwordMessage" for="registerPassword" />
 
                             <b:inputSecret id="registerConfirmPassword" label="Confirmer le mot de passe" renderLabel="true" value="#{tendererRegistrationBean.passwordConfirm}"
-                                           placeholder="Entrez une confirmation de mot de passe">
+                                           placeholder="Entrez une confirmation de mot de passe" binding="#{confirm}">
+                                <f:facet name="prepend">
+                                    <b:icon name="lock" />
+                                </f:facet>
                             </b:inputSecret>
                             <b:message id="confirmPasswordMessage" for="registerConfirmPassword" />
 
 
-                            <b:inputText id="registerFirstname" label="Prénom" renderLabel="true" value="#{tendererRegistrationBean.firstname}"
+                            <b:inputText id="registerFirstname" label="Prénom" renderLabel="true" value="#{tendererRegistrationBean.tenderer.firstname}"
                                          placeholder="Entrez votre prénom">
                             </b:inputText>
                             <b:message id="firstnameMessage" for="registerFirstname" />
 
-                            <b:inputText id="registerLastname" label="Nom" renderLabel="true" value="#{tendererRegistrationBean.lastname}"
+                            <b:inputText id="registerLastname" label="Nom" renderLabel="true" value="#{tendererRegistrationBean.tenderer.lastname}"
                                          placeholder="Entrez votre nom">
                             </b:inputText>
                             <b:message id="lastnameMessage" for="registerLastname" />
 
-                            <b:inputText id="registerMail" label="Adresse mail" renderLabel="true" value="#{tendererRegistrationBean.email}"
+                            <b:inputText id="registerMail" label="Adresse mail" renderLabel="true" value="#{tendererRegistrationBean.tenderer.email}"
                                          placeholder="Entrez votre adresse mail">
+                                <f:facet name="prepend">
+                                    <h:outputText value="@" />
+                                </f:facet>
                                 <f:validator validatorId="com.gdf.mailFormatValidator" />
                             </b:inputText>
                             <b:message id="mailMessage" for="registerMail" />
 
-                            <b:inputText id="registerPhoneNumber" label="Téléphone" renderLabel="true" value="#{tendererRegistrationBean.phone}"
+                            <b:inputText id="registerPhoneNumber" label="Téléphone" renderLabel="true" value="#{tendererRegistrationBean.tenderer.phone}"
                                          placeholder="Facultatif">
+                                <f:facet name="prepend">
+                                    <b:icon name="earphone" />
+                                </f:facet>
+                                <f:validator validatorId="com.gdf.phoneFormatValidator" /> 
                             </b:inputText>
                             <b:message id="phoneNumberMessage" for="registerPhoneNumber" />
 
-                            <b:inputText id="registerAvatar" label="URL de l'avatar" renderLabel="true" value="#{tendererRegistrationBean.avatar}"
-                                         placeholder="Facultatif">   
+                            <b:inputText id="registerAvatar" label="URL de l'avatar" renderLabel="true" value="#{tendererRegistrationBean.tenderer.avatar}"
+                                         placeholder="Facultatif">
+                                <f:facet name="prepend">
+                                    <b:icon name="picture" />
+                                </f:facet>
                                 <f:validator validatorId="com.gdf.urlLogoValidator"/>
                             </b:inputText>
                             <b:message id="avatarMessage" for="registerAvatar" />

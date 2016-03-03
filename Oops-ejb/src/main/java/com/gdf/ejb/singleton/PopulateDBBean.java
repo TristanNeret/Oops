@@ -128,7 +128,7 @@ public class PopulateDBBean implements PopulateDB {
         // TENDERERS
         
         Tenderer tenderer = new Tenderer("Michmich", "michou.dupond@gmail.com", 
-                "password", "Michel", "Dupond", "http://goodfilmguide.co.uk/wp-content/uploads/2010/04/avatar12.jpg", "3988937", "01/01/2016");
+                "password", "Michel", "Dupond", "http://goodfilmguide.co.uk/wp-content/uploads/2010/04/avatar12.jpg", "1234567890", "01/01/2016");
         tenderer.setId(1);
         tenderer.addReview(review);
         tenderer.addReview(review1);
@@ -137,7 +137,7 @@ public class PopulateDBBean implements PopulateDB {
         em.persist(tenderer);
         
         tenderer = new Tenderer("Dede", "dede.legrand@gmail.com", "password", "Didier", "Legrand", 
-                "", "9837937", "01/01/2016");
+                "", "1234567890", "01/01/2016");
         tenderer.addReview(review3);
         tenderer.addReview(review4);
         em.persist(tenderer);
@@ -148,7 +148,7 @@ public class PopulateDBBean implements PopulateDB {
         Contractor contractor = new Contractor("ITContractor", "contact@itcontractor.com", "password", "IT Contractor Inc.",
         "SA", "Nous sommes ITContractor nous vous offront different types de services IT,"
                 + " n'hesitez pas a nous contacter pour plus d'informations.", 
-                "937937820", "http://www.ut-capitole.fr/medias/photo/it-128_1413288947855-png", "ITContractor", "Representant", 100000, 100, 3,
+                "3937937820", "http://www.ut-capitole.fr/medias/photo/it-128_1413288947855-png", "ITContractor", "Representant", 100000, 100, 3,
         new Address(3, "beans street", 2648, "New York", "Etats-Unis"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         Service service = new Service("Developpement Informatique", "Nous developpons vos projets informatique, sous forme d'applications "
                 + "web et mobiles.", 500.0, contractor, category);
@@ -166,7 +166,7 @@ public class PopulateDBBean implements PopulateDB {
         contractor = new Contractor("FranceBTP", "contact@francebtp.com", "password", "FranceBTP Sarl",
         "SARL", "Nous sommes FranceBTP nous vous offront different services dans le domaine de la construction et du batiment,"
                 + " n'hesitez pas a nous contacter pour plus d'informations."
-                , "937937820", "http://www.cibtp.fr/fileadmin/templates/portail/img/logo_charte_qualite.png", "FranceBTP", "Representant", 500000, 500, 2,
+                , "9937937820", "http://www.cibtp.fr/fileadmin/templates/portail/img/logo_charte_qualite.png", "FranceBTP", "Representant", 500000, 500, 2,
         new Address(3, "rue des haricots", 2648, "Paris", "France","ile-de-france"), new LegalInformation("12345678903987", "126456789", "RCSITC113456789", "Assurancetoutrix"));
         service = new Service("Démolition", "Nous réalisons vos travaux de démolition", 100.0, contractor, category);
         contractor.addService(service); 

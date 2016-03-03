@@ -43,13 +43,14 @@ public class Tenderer implements Serializable {
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";
 
     @NotNull(message = "Veuillez saisir un login")
-    @Size(min = 4, max = 20, message = "Votre login doit contenir entre 5 et 20 caractères.")
+    @Size(min = 4, max = 20, message = "Votre login doit contenir entre 4 et 20 caractères.")
     @Column(unique = true)
     private String login;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull(message = "Veuillez saisir un email")
     private String email;
 
     @NotNull(message = "Veuillez saisir un mot de passe")
@@ -65,6 +66,7 @@ public class Tenderer implements Serializable {
     private String lastname;
 
     private String avatar;
+    
     private String phone;
 
     private String registrationDate, updateDate;

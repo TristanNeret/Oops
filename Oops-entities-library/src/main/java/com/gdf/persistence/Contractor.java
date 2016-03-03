@@ -27,6 +27,7 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
  * Contractor
+ *
  * @author aziz
  */
 @Entity
@@ -34,74 +35,80 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
     @NamedQuery(name = "Contractor.findAll", query = "select c from Contractor c order by c.email"),
     @NamedQuery(name = "Contractor.findByLogin", query = "select c from Contractor c where c.login=?1"),
     @NamedQuery(name = "Contractor.findByEmail", query = "select c from Contractor c where c.email=?1"),
-    @NamedQuery(name= "Contractor.beginBy", query = "SELECT c.socialReason from Contractor c WHERE c.socialReason LIKE ?1"),    
-    @NamedQuery(name= "Contractor.authentification", query = "SELECT c.id from Contractor c WHERE c.login LIKE ?1 AND c.password LIKE ?2")  
+    @NamedQuery(name = "Contractor.beginBy", query = "SELECT c.socialReason from Contractor c WHERE c.socialReason LIKE ?1"),
+    @NamedQuery(name = "Contractor.authentification", query = "SELECT c.id from Contractor c WHERE c.login LIKE ?1 AND c.password LIKE ?2")
 })
 public class Contractor implements Serializable {
-    
+
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";
-    
+
     private static final long serialVersionUID = 1L;
-   
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
-    @NotNull( message = "Veuillez saisir un login" )
-    @Size( min = 5, message = "Le login doit contenir au moins 5 caractères" )
-    @Column(unique=true)
+
+    @NotNull(message = "Veuillez saisir un login")
+    @Size(min = 5, message = "Le login doit contenir au moins 5 caractères")
+    @Column(unique = true)
     private String login;
-    
-    @NotNull( message = "Veuillez saisir un email" )
+
+    @NotNull(message = "Veuillez saisir un email")
     private String email;
-    
+
     @NotNull(message = "Veuillez saisir une description")
     @Size(min = 30, message = "La description doit contenir au moins 30 caractères")
     private String description;
-    
-    @NotNull( message = "Veuillez saisir un numéro de téléphone" )
+
+    @NotNull(message = "Veuillez saisir un numéro de téléphone")
     private String phone;
-    
+
     @NotNull(message = "Veuillez saisir un logo")
     private String logo;
-    
-    private String socialReason, legalForm;
-    
-    private int turnover, nbEmployees, rating;  
+
+    @NotNull(message = "Veuillez saisir une raison sociale")
+    @Size(min = 5, message = "La raison sociale doit contenir au moins 5 caractères")
+    private String socialReason;
+
+    @NotNull(message = "Veuillez saisir une forme juridique")
+    @Size(min = 2, message = "La forme juridique doit contenir au moins 2 caractères")
+    private String legalForm;
+
+    private int turnover, nbEmployees, rating;
     private String registrationDate, updateDate;
-    
-    @NotNull( message = "Veuillez saisir un mot de passe" )
-    @Size( min = 6, message = "Le mot de passe doit contenir au moins 6 caractères" )
+
+    @NotNull(message = "Veuillez saisir un mot de passe")
+    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères")
     private String password;
-    
-    @NotNull( message = "Veuillez saisir un prénom" )
-    @Size( min = 3, message = "Le prénom doit contenir au moins 3 caractères" )
-    private String representatorFirstname; 
-    
-    @NotNull( message = "Veuillez saisir un nom" )
-    @Size( min = 3, message = "Le nom doit contenir au moins 3 caractères" )
+
+    @NotNull(message = "Veuillez saisir un prénom")
+    @Size(min = 3, message = "Le prénom doit contenir au moins 3 caractères")
+    private String representatorFirstname;
+
+    @NotNull(message = "Veuillez saisir un nom")
+    @Size(min = 3, message = "Le nom doit contenir au moins 3 caractères")
     private String representatorLastname;
-   
+
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Service> services = new ArrayList<>();
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Address address;
-    
+
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private LegalInformation legalInformation;
-        
+
     @OneToMany(fetch = EAGER)
     private List<Notification> notifications;
-  
-    @OneToMany(mappedBy = "contractor", fetch = EAGER, cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+
+    @OneToMany(mappedBy = "contractor", fetch = EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Review> reviews = new ArrayList<>();
 
     public static final String userCategory = "CONTRACTOR";
-    
-    public Contractor(){
+
+    public Contractor() {
     }
-    
+
     public Contractor(String login, String email, String password, String socialReason, String legalForm, String description, String phone, String logo, String representatorFirstname, String representatorLastname, int turnover, int nbEmployees, int rating, Address address, LegalInformation legalInformation) {
         this.login = login;
         this.email = email;
@@ -119,7 +126,7 @@ public class Contractor implements Serializable {
         this.address = address;
         this.legalInformation = legalInformation;
     }
-    
+
     public String getPassword() {
         return password;
     }
@@ -215,11 +222,11 @@ public class Contractor implements Serializable {
     public void setServices(List<Service> services) {
         this.services = services;
     }
-    
-    public void removeService(Service service){
+
+    public void removeService(Service service) {
         this.services.remove(service);
     }
-    
+
     public Address getAddress() {
         return address;
     }
@@ -267,33 +274,33 @@ public class Contractor implements Serializable {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
-    
-    public void addService(Service service){
-       service.setContractor(this);
-       this.services.add(service);
+
+    public void addService(Service service) {
+        service.setContractor(this);
+        this.services.add(service);
     }
-    
-    public void addReview(Review review){
+
+    public void addReview(Review review) {
         review.setContractor(this);
         this.reviews.add(review);
     }
-    
+
     public void removeReview(Review r) {
         int i = 0;
         while (i < this.reviews.size() && !this.reviews.get(i).getId().equals(r.getId())) {
             i++;
-        } 
+        }
         this.reviews.get(i).setContractor(null);
         this.reviews.remove(i);
     }
-    
-    public void addNotification(Notification n){
+
+    public void addNotification(Notification n) {
         this.notifications.add(n);
         n.setContractor(this);
     }
-    
+
     public void removeNotificationByReviewId(long reviewId) {
-        for (ListIterator<Notification> iter = this.notifications.listIterator(); iter.hasNext(); ) {
+        for (ListIterator<Notification> iter = this.notifications.listIterator(); iter.hasNext();) {
             Notification n = iter.next();
             if (n.getReview().getId().equals(reviewId)) {
                 iter.remove();
@@ -312,28 +319,29 @@ public class Contractor implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    
-    public int calculRate(){
-        
+
+    public int calculRate() {
+
         int res = 0;
-        int nb = 0 ;
-        
-        for(Review r : this.reviews) {
-            if(r.getReviewState().equals(ReviewState.ACCEPTED)) {
-             
-                res = res + r.getRating(); 
+        int nb = 0;
+
+        for (Review r : this.reviews) {
+            if (r.getReviewState().equals(ReviewState.ACCEPTED)) {
+
+                res = res + r.getRating();
                 nb++;
-               
+
             }
         }
-        
-        if(nb == 0 )
+
+        if (nb == 0) {
             return 0;
-        else            
-            return (int)(res/nb);
-        
+        } else {
+            return (int) (res / nb);
+        }
+
     }
-    
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -361,16 +369,14 @@ public class Contractor implements Serializable {
     public void setUpdateDate(String updateDate) {
         this.updateDate = updateDate;
     }
-    
-    
 
-    private String encryptPassword(String password){
+    private String encryptPassword(String password) {
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
-        passwordEncryptor.setAlgorithm( ENCRYPTION_ALGORITHM );
-        passwordEncryptor.setPlainDigest( true );
+        passwordEncryptor.setAlgorithm(ENCRYPTION_ALGORITHM);
+        passwordEncryptor.setPlainDigest(true);
         return passwordEncryptor.encryptPassword(password);
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
