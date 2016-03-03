@@ -130,6 +130,8 @@
                         <p:inputText  id="modifiedEmail" value="#{contractorEditBean.contractor.email}">
                             <f:ajax  event="blur" render="emailMessage"/>
                             <f:validator validatorId="com.gdf.mailFormatValidator"/>
+                            <f:validator validatorId="com.gdf.emailAlreadyExistForModificationValidator"/>
+                            <f:attribute value="#{contractorEditBean.contractor.id}" name="idContractor"/>
                         </p:inputText>    
                         <h:message id="emailMessage" for="modifiedEmail" errorClass="erreur" />
                     </p>

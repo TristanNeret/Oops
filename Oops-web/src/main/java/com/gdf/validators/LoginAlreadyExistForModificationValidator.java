@@ -45,7 +45,6 @@ public class LoginAlreadyExistForModificationValidator implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         
         
-        
         String newLogin = (String)value;
         
         if(newLogin == null){
