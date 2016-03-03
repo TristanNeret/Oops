@@ -39,8 +39,8 @@ public class NoBlankSpaceValidator implements Validator {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
-        if (((String) value).trim().isEmpty()) {
-            
+        if (value == null || ((String) value).trim().isEmpty()) {
+
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, NO_BLANK_SPACE, null));
 
         }

@@ -11,9 +11,9 @@ and open the template in the editor.
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-    xmlns:o="http://omnifaces.org/ui"
-    >
+    xmlns:o="http://omnifaces.org/ui">
 
     <script type="text/javascript">
         function handleSendMessage(xhr, status, args) {
@@ -25,128 +25,185 @@ and open the template in the editor.
                 PF('growlError').renderMessage({summary: 'Succès!', detail: 'Votre message a été envoyé !', severity: 'info'});
             }
         }
-        function handleSendAllMessage(xhr, status, args) {
-            if (args.validationFailed) {
-                PF('sendAllMsgDialog').jq.effect("shake", {times: 5}, 100);
-            }
-            else {
-                PF('sendAllMsgDialog').hide();
-                PF('growlError').renderMessage({summary: 'Succès!', detail: 'Votre message a été envoyé !', severity: 'info'});
-            }
+        function toggleGroupMessage(visible) {
+            var element = document.getElementById('tabViewAdmin:formResearch:panelGroupMessage');
+            element.style.display = visible;
         }
     </script>
 
     <div class="container">
 
-        <h:outputText style="font-family: Helvetica, sans-serif;margin-left: 10px" styleClass="labelTitleReviewAdmin" value=" Rechercher :"/>
+        <h:outputText styleClass="labelTitleReviewAdmin" value=" Rechercher :"/>
 
-        <h:form id="formResearch" style="margin-left: 20px">
-            <p:autoComplete placeholder="Mots-clés" id="queryInputText" class="searchInputText" style="margin-right: 15px;" value="#{adminSearchBean.keyWord}" completeMethod="#{adminSearchBean.completeQuery}"  />
-            <p:selectOneMenu id="listType" value="#{adminSearchBean.type}" style="margin-right: 15px; top:10px">
-                <f:selectItem  id="tend" itemLabel="Soumissionnaire" itemValue="tend" />
-                <f:selectItem id="cont" itemLabel="Prestataire" itemValue="cont"/>
-                <f:ajax render="@form"/>
-            </p:selectOneMenu>
-            <p:commandButton id="searchButton" update="tabViewAdmin:resultResearch" style=" background-color: #336c6c; border-radius: 8px; margin-right: 15px;"   
-                             value="Recherche" action="#{adminSearchBean.search()}"/>     
-            <p:commandButton onclick="PF('sendAllMsgDialog').show();" value="Envoyer un message groupé" 
-                              style=" background-color: #336c6c; border-radius: 8px;"
-                              update="tabViewAdmin:sendAllMsgDialogForm:sendAllDialogPanel"
-                              actionListener="#{adminSearchBean.init()}"
-                            />
+        <!-- Search bar -->
+        <h:form styleClass="formResearch">
+            <b:container fluid="true">
+                <b:row styleClass="show-grid">
+                    <b:column span="3">
+                        <b:inputText value="#{adminSearchBean.keyWord}" placeholder="Mots-clés">
+                            <f:facet name="prepend">
+                                <b:icon name="user" />
+                            </f:facet>
+                        </b:inputText>
+                    </b:column>
+                    <b:column span="3">
+                        <b:selectOneMenu value="#{adminSearchBean.type}" id="typeID" required="true">
+                            <f:selectItem id="tend" itemLabel="Soumissionnaire" itemValue="tend"/>
+                            <f:selectItem id="cont" itemLabel="Prestataire" itemValue="cont"/>
+                            <f:ajax render="@form"/>
+                        </b:selectOneMenu>
+                    </b:column>
+                    <b:column span="6">
+
+                        <b:commandButton value="Recherche" ajax="true" look="primary" actionListener="#{adminSearchBean.search()}" oncomplete="toggleGroupMessage('none'); return false;" update="@(.resultResearch)" />
+                        <b:commandButton value="Envoyer un message groupé" ajax="true" look="success" onclick="toggleGroupMessage('block');
+                                         #{adminSearchBean.setSuccess(false)} return false;" style="margin-left: 15px;"/>
+
+                    </b:column>
+                </b:row>
+            </b:container>
         </h:form>
+
+        <!-- Group message --> 
+        <h:form id="formResearch" styleClass="formResearch">
+            <p:growl id="growlSuccess" widgetVar="growlSuccess" rendered="#{adminSearchBean.success}" sticky="false" showDetail="true" life="3000" />
+            <b:panel id="panelGroupMessage" styleClass="panelGroupMessage" style="display:none;">
+                <b:row styleClass="show-grid">
+                    <h:outputLabel value="Envoi d'un message groupé" styleClass="outputLabelPanelTitle" />
+                </b:row>
+                <b:row styleClass="show-grid">
+                    <b:column span="6">
+                        <h:outputLabel  for="targetsOR" value="Envoyer aux :" />
+                        <b:selectOneMenu id="targetsOR" value="#{adminSearchBean.targetGroup}" required="true">
+                            <f:selectItem itemLabel="Soumissionnaires uniquement" itemValue="TEND" />
+                            <f:selectItem itemLabel="Prestataires uniquement" itemValue="CONT" />
+                            <f:selectItem itemLabel="Soumissionnaires et prestataires" itemValue="ALL" />
+                        </b:selectOneMenu>
+                        <b:commandButton value="Annuler" styleClass="commandButtonMessage" ajax="true" look="danger" onclick="toggleGroupMessage('none');
+                                return false;" />
+                        <b:commandButton value="Envoyer" styleClass="commandButtonMessage" ajax="true" look="success" actionListener="#{adminSearchBean.sendGroupMessage()}" 
+                                         oncomplete="if(validationFailed) { toggleGroupMessage('block'); return false; }" style="margin-left: 10px;" /> 
+                    </b:column>
+                    <b:column span="6">
+                        <h:outputLabel id="allMessage" value="Message :" />
+                        <b:inputTextarea id="allMessageOut" required="true" placeholder="Saisissez votre message."
+                                         value="#{adminSearchBean.message}" label="Message">
+                        </b:inputTextarea>
+                        <b:message id="allMessageErr" for="allMessageOut"/>
+                        <b:fetchBeanInfos />
+                    </b:column>
+                </b:row>
+            </b:panel>
+        </h:form>
+
         <br/>
 
-        <h:panelGrid id="resultResearch">
+        <h:panelGrid id="resultResearch" styleClass="resultResearch" style="width: 100%;" >
 
-            <h:panelGrid rendered="#{not empty adminSearchBean.lc}">
-                <h:outputText styleClass="labelTitleReviewAdmin" value="Resultat Recherche (Prestataire)"/>
+            <p:dataGrid var="contractor" value="#{adminSearchBean.lc}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="6,12,16" rendered="#{not empty adminSearchBean.lc}">
 
-                <c:forEach items="#{adminSearchBean.lc}" var="contractor">
-                    <div style="margin-left: 15px">
-                        <h:form id="formSendMsg">
-                            
-                            <div class="divLoginTitle">
-                                <h:outputText value="#{contractor.login}"/>
-                            </div>
-                            
-                            <div style="margin-left: 20px;margin-bottom: 10px;font-family: Helvetica, sans-serif">
-                                Nom : <h:outputText style="color: #008B8B;margin-right: 15px" value="#{contractor.representatorLastname}   "/>
-                                Prénom : <h:outputText style="color: #008B8B;margin-right: 15px" value="#{contractor.representatorFirstname}   "/>
-                                Email : <h:outputText  style="color: #008B8B;margin-right: 15px" value="#{contractor.email}   "/>
-                                Téléphone : <h:outputText style="color: #008B8B;margin-right: 15px" value=" #{contractor.phone}  "/>
-                            </div>
-                            
-                            <div style="margin-left: 20px;margin-bottom: 10px;font-family: Helvetica, sans-serif;font-size: x-small">
-                                Date Inscription : <h:outputText value="#{contractor.registrationDate}"/> 
-                            </div>
-                            
-                            <div>
-                                <p:commandButton style=" background-color: #336c6c; border-radius: 8px; margin-left: 20px; margin-bottom: 10px;"
-                                                 class="" actionListener="#{adminSearchBean.setContractorSelected(contractor)}"
-                                                 onclick="PF('sendMsgDialog').show();"
+                <b:panel collapsible="false" styleClass="panelHeaderBootsfaces">
+                    <f:facet name="heading">
+                        <b:row styleClass="show-grid">
+                            <b:column>
+                                <a href="/Oops-web/views/contractorInformations.xhtml?id=#{contractor.id}">
+                                    <h:graphicImage value="#{contractor.logo}" height="50px" />
+                                </a>
+                                <h:outputText value="#{contractor.socialReason}" styleClass="outputTextTitle" />
+                            </b:column>
+                            <b:column styleClass="columnRating">
+                                <p:rating id="stars1" value="#{contractor.rating}" stars="5" readonly="true" styleClass="rating" />
+                                <h:outputText value="Note moyenne : " styleClass="outputTextRating" />
+                            </b:column>
+                        </b:row>
+                    </f:facet>
+                    <b:container fluid="true">
+                        <b:row styleClass="show-grid">
+                            <b:column span="6">
+                                <b:row><b>Nom : </b> <h:outputText style="color: #008B8B;margin-right: 15px" value=" #{contractor.representatorLastname}" /></b:row>
+                                <b:row><b>Prénom : </b> <h:outputText style="color: #008B8B;margin-right: 15px" value=" #{contractor.representatorFirstname}" /></b:row>
+                            </b:column>
+                            <b:column span="6">
+                                <b:row><b>Localisation : </b><h:outputText value="#{contractor.address.town} (#{contractor.address.zipCode})"/></b:row>
+                                <b:row><b>Email : </b> <h:outputText  style="color: #008B8B;margin-right: 15px" value=" #{contractor.email}" /></b:row>
+                                <b:row><b>Téléphone : </b> <h:outputText style="color: #008B8B;margin-right: 15px" value=" #{contractor.phone}" /></b:row>
+                            </b:column>  
+                        </b:row>
+                        <b:row styleClass="show-grid" style="margin-top: 10px; padding-top: 15px;">
+                            <b:column span="6">
+                                <b>Date d'inscription : </b><h:outputText value="#{contractor.registrationDate}" />
+                            </b:column>
+                            <b:column span="6">
+                                <h:form>
+                                    <p:commandButton styleClass="buttonBackRegistration" style="float: right; margin-top: 0px !important;" actionListener="#{adminSearchBean.setContractorSelected(contractor)}"
+                                                     onclick="PF('sendMsgDialog').show();"
+                                                     update="tabViewAdmin:sendMsgDialogForm:dialogPanel"
+                                                     value="Envoyer un message"/> 
+                                </h:form>
+                            </b:column>
+                        </b:row>
+                    </b:container>
+                </b:panel>
+
+            </p:dataGrid>
+
+            <!-- Search Tenderer -->
+            <p:dataGrid var="tend" value="#{adminSearchBean.ltd}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+                        paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="6,12,16" rendered="#{not empty adminSearchBean.ltd}">
+
+                <b:panel collapsible="false" styleClass="panelHeaderBootsfaces">
+                    <f:facet name="heading">
+                        <b:row styleClass="show-grid">
+                            <b:column>
+                                <h:graphicImage value="#{tend.avatar}" height="50px" />
+                                <a href="/Oops-web/views/tendererInformations.xhtml?id=#{tend.id}">
+                                    <h:outputText value="#{tend.login}" styleClass="outputTextTitle" />
+                                </a>
+                            </b:column>
+                            <b:column styleClass="columnRating">
+                                <h:outputText value="#{tend.nbReviews} avis donné" styleClass="outputTextRating" rendered="#{tend.nbReviews lt 2}" />                                               
+                                <h:outputText value="#{tend.nbReviews} avis donnés" styleClass="outputTextRating" rendered="#{tend.nbReviews gt 1}" />                                               
+                            </b:column>
+                        </b:row>
+                    </f:facet>
+                    <b:container fluid="true">
+                        <b:row styleClass="show-grid">
+                            <b:column span="8">
+                                <b:row><b>Nom complet : </b> <h:outputText style="color: #008B8B;margin-right: 15px" value="#{tend.firstname} #{tend.lastname}" /></b:row>
+                                <b:row><b>Email : </b> <h:outputText style="color: #008B8B;margin-right: 15px" value=" #{tend.email}" /></b:row>
+                            </b:column>
+                            <b:column span="4">
+                                <b:row><b>Inscrit le : </b> <h:outputText style="color: #008B8B;margin-right: 15px" value="#{tend.registrationDate}" /></b:row>
+                                <b:row><b>Téléphone : </b> <h:outputText style="color: #008B8B;margin-right: 15px" value=" #{tend.phone}" /></b:row>
+                            </b:column>
+                            <h:form>
+                                <p:commandButton id="firstButtonSoum" actionListener="#{adminSearchBean.setTendererSelected(tend)}"
+                                                 onclick="PF('sendMsgDialog').show();" style="float: right;"
                                                  update="tabViewAdmin:sendMsgDialogForm:dialogPanel"
-                                                 value="Envoyer un message"/> 
-                            </div>
-                        </h:form> 
-                        <hr/>
-                    </div>
-                </c:forEach>               
+                                                 value="Envoyer un message" styleClass="buttonBackRegistration" />
+                            </h:form>
+                        </b:row>
+                    </b:container>
+                </b:panel>
 
-            </h:panelGrid>
-
-            <h:panelGrid rendered="#{not empty adminSearchBean.ltd}">
-
-                <h:outputText styleClass="labelTitleReviewAdmin" value="Resultat Recherche (Soumissionnaire)"/>
-
-                <c:forEach items="#{adminSearchBean.ltd}" var="soum">
-                    <div>
-                        <h:form id="formSendMsgSoum">
-
-                            <div class="divLoginTitle">
-                                <h:outputText value="#{soum.login}"/>
-                            </div>
-
-                            <div style="margin-left: 20px;margin-bottom: 10px;">
-                                Nom : <h:outputText style="color: #008B8B;margin-right: 15px" value="#{soum.lastname}   "/>
-                                Prénom : <h:outputText style="color: #008B8B;margin-right: 15px" value="#{soum.firstname}   "/>
-                                Email : <h:outputText  style="color: #008B8B;margin-right: 15px" value="#{soum.email}   "/>
-                                Téléphone : <h:outputText style="color: #008B8B;margin-right: 15px" value=" #{soum.phone}  "/>
-                            </div>
-                            
-                            <div style="margin-left: 20px;margin-bottom: 10px;font-family: Helvetica, sans-serif;font-size: x-small">
-                                Date Inscription : <h:outputText value="#{soum.registrationDate}" style="margin-right: 15px" /> 
-                                Nombre de commentaire validés : <h:outputText value="#{soum.nbReviews}" />
-                            </div>
-                           
-                            <p:commandButton id="firstButtonSoum"
-                                             style=" background-color: #336c6c; border-radius: 8px;margin-left: 20px;  margin-bottom: 10px;"
-                                             actionListener="#{adminSearchBean.setTendererSelected(soum)}"
-                                             onclick="PF('sendMsgDialog').show();"
-                                             update="tabViewAdmin:sendMsgDialogForm:dialogPanel"
-                                             value="Envoyer un message"
-                                             />
-                           
-                        </h:form>
-                        <hr/>
-                    </div>
-                </c:forEach>  
-
-            </h:panelGrid>  
+            </p:dataGrid>
 
         </h:panelGrid>
 
         <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
 
+        <!-- Popup message -->
         <o:form id="sendMsgDialogForm" includeViewParams="true">
-
-            <p:dialog header="Envoyer un message" modal="true" widgetVar="sendMsgDialog" resizable="false">
+            <p:dialog header="Envoyer un message" modal="true" widgetVar="sendMsgDialog" resizable="false" style="min-width: 480px;">
 
                 <p:outputPanel id="dialogPanel">
 
                     <c:choose>
                         <c:when test="#{adminSearchBean.type == 'cont'}">    
-                            <h:outputText value="Prestataire : " style="width: 100%;"/>
+                            <b><h:outputText value="Prestataire : " style="width: 100%;"/></b>
                             <h:outputText id="contractorName" 
                                           value="#{adminSearchBean.contractorSelected.login} 
                                           (#{adminSearchBean.contractorSelected.representatorLastname} 
@@ -154,7 +211,7 @@ and open the template in the editor.
                                           style="width: 100%;"/>
                         </c:when>
                         <c:otherwise>
-                            <h:outputText value="Soumissionnaire : " style="width: 100%;"/>
+                            <b><h:outputText value="Soumissionnaire : " style="width: 100%;"/></b>
                             <h:outputText id="soumiName" value="#{adminSearchBean.tendererSelected.login} 
                                           (#{adminSearchBean.tendererSelected.lastname} 
                                           #{adminSearchBean.tendererSelected.firstname})" 
@@ -172,49 +229,13 @@ and open the template in the editor.
                     <p:message id="msgError" for="messageOut"/>
 
                     <div class="dialogFooter" >
-                        <p:commandButton id="sendButtonDialogValidate" value="Envoyer" action="#{adminSearchBean.sendMessage()}"
+                        <p:commandButton id="cancelButtonDialogValidate" value="Annuler" styleClass="buttonCancel" oncomplete="PF('sendMsgDialog').hide();" />
+                        <p:commandButton id="sendButtonDialogValidate" value="Envoyer" styleClass="buttonRegistration" action="#{adminSearchBean.sendMessage()}"
                                          update="tabViewAdmin:sendMsgDialogForm:msgError" oncomplete="handleSendMessage(xhr, status, args)"/> 
-                        <p:commandButton id="cancelButtonDialogValidate" value="Annuler" oncomplete="PF('sendMsgDialog').hide();" />
                     </div> 
                 </p:outputPanel>
 
             </p:dialog>
-
-        </o:form>
-
-        <o:form id="sendAllMsgDialogForm" includeViewParams="true">
-
-            <p:dialog header="Envoyer un message groupé" modal="true" widgetVar="sendAllMsgDialog" resizable="false">
-
-                <p:outputPanel id="sendAllDialogPanel">
-
-                    <p:outputLabel for="targetsOR" value="Envoyer aux :" />
-                    <p:selectOneRadio id="targetsOR" value="#{adminSearchBean.targetGroup}" layout="pageDirection" 
-                                      required="true">                            
-                        <f:selectItem itemLabel="Soumissionnaires uniquement" itemValue="TEND" />
-                        <f:selectItem itemLabel="Prestataires uniquement" itemValue="CONT" />
-                        <f:selectItem itemLabel="Soumissionnaires et prestataires" itemValue="ALL" />
-                    </p:selectOneRadio>
-                    <br/>
-                    <h:outputLabel id="allMessage" value="Message :" />
-                    <p:inputTextarea id="allMessageOut" placeholder="Tapez ici votre message."
-                                     rows="6" cols="33" style="width: 100%;" value="#{adminSearchBean.message}"  
-                                     required ="true" label="Message">
-                        <f:validator validatorId="com.gdf.noBlankSpaceValidator" binding="#{noBlankSpaceValidator}" />
-                    </p:inputTextarea>
-                    <p:message id="allMsgError" for="allMessageOut"/>
-
-                    <div class="dialogFooter" >
-                        <p:commandButton value="Envoyer" action="#{adminSearchBean.sendGroupMessage()}" 
-                                         oncomplete="handleSendAllMessage(xhr, status, args)"
-                                         update="tabViewAdmin:sendAllMsgDialogForm:sendAllDialogPanel" 
-                                         /> 
-                        <p:commandButton value="Annuler" oncomplete="PF('sendAllMsgDialog').hide();" />
-                    </div> 
-                </p:outputPanel>
-
-            </p:dialog>
-
         </o:form>
 
     </div>

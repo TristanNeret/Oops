@@ -6,7 +6,10 @@
 package com.gdf.persistence;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
@@ -118,6 +121,9 @@ public class Contractor implements Serializable {
         this.rating = rating;
         this.address = address;
         this.legalInformation = legalInformation;
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        this.registrationDate = dateFormat.format(cal.getTime());
     }
     
     public String getPassword() {

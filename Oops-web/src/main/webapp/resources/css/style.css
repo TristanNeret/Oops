@@ -904,6 +904,7 @@ form .updateButtonContractorReview {
 .labelTitleReviewAdmin {
     font-size: 22px;
     font-weight: bold;
+    padding-left: 15px;
 }
 
 .labelDateReviewAdmin {
@@ -983,6 +984,49 @@ form .updateButtonContractorReview {
     color: darkgray !important;
 }
 
+.formResearch {
+    margin-top: 15px;
+}
+
+.modal-header h4 {
+    font-size: 24px;
+    margin-bottom: -10px;
+}
+
+.commandButtonMessage {
+    margin-top: 20px;
+}
+
+.buttonCancel {
+    margin-top: 20px !important;
+    color: #fff !important;
+    background-color: #C71C22 !important;
+    border-color: #C71C22 !important;
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.428571429 !important;
+    border-radius: 4px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.buttonCancel:hover {
+    background-color: #9a161a !important;
+    border-color: #911419 !important;
+}
+
 /*****************************************************************************/
 /******************************* NOTIFICATION ********************************/
 /*****************************************************************************/
@@ -1010,8 +1054,22 @@ form .updateButtonContractorReview {
     float: left;
 }
 
+.panelGroupMessage {
+    margin: 15px;
+}
+
+.outputLabelPanelTitle {
+    margin-left: 15px; 
+    font-size: 18px;
+}
+
 .commandButtonClickNotification {
     width: 100% !important;
+}
+
+.panelNotification .panel-body {
+    padding-bottom: 8px !important;
+    padding-left: 0px !important;
 }
 
 /*****************************************************************************/
@@ -1247,6 +1305,10 @@ footer.footer {
     font-size: 18px;
     font-weight: 200;
     float: right;
+}
+
+.panelHeaderBootsfaces .panel-heading a:after {
+    content: none !important;
 }
 
 .panelHeaderBootsfaces .panel-heading .rating {
