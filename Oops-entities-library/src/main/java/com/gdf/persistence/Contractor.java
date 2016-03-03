@@ -48,45 +48,45 @@ public class Contractor implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull(message = "Veuillez saisir un login")
-    @Size(min = 5, message = "Le login doit contenir au moins 5 caractères")
+    @NotNull(message = "Veuillez saisir un login !")
+    @Size(min = 5, message = "Le login doit contenir au moins 5 caractères !")
     @Column(unique = true)
     private String login;
 
-    @NotNull(message = "Veuillez saisir un email")
+    @NotNull(message = "Veuillez saisir un email !")
     private String email;
 
-    @NotNull(message = "Veuillez saisir une description")
-    @Size(min = 30, message = "La description doit contenir au moins 30 caractères")
+    @NotNull(message = "Veuillez saisir une description !")
+    @Size(min = 30, message = "La description doit contenir au moins 30 caractères !")
     private String description;
 
-    @NotNull(message = "Veuillez saisir un numéro de téléphone")
+    @NotNull(message = "Veuillez saisir un numéro de téléphone !")
     private String phone;
 
-    @NotNull(message = "Veuillez saisir un logo")
+    @NotNull(message = "Veuillez saisir un logo !")
     private String logo;
 
-    @NotNull(message = "Veuillez saisir une raison sociale")
-    @Size(min = 5, message = "La raison sociale doit contenir au moins 5 caractères")
+    @NotNull(message = "Veuillez saisir une raison sociale !")
+    @Size(min = 5, message = "La raison sociale doit contenir au moins 5 caractères !")
     private String socialReason;
 
-    @NotNull(message = "Veuillez saisir une forme juridique")
-    @Size(min = 2, message = "La forme juridique doit contenir au moins 2 caractères")
+    @NotNull(message = "Veuillez saisir une forme juridique !")
+    @Size(min = 2, message = "La forme juridique doit contenir au moins 2 caractères !")
     private String legalForm;
 
     private int turnover, nbEmployees, rating;
     private String registrationDate, updateDate;
 
-    @NotNull(message = "Veuillez saisir un mot de passe")
-    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères")
+    @NotNull(message = "Veuillez saisir un mot de passe !")
+    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères !")
     private String password;
 
-    @NotNull(message = "Veuillez saisir un prénom")
-    @Size(min = 3, message = "Le prénom doit contenir au moins 3 caractères")
+    @NotNull(message = "Veuillez saisir un prénom !")
+    @Size(min = 3, message = "Le prénom doit contenir au moins 3 caractères !")
     private String representatorFirstname;
 
-    @NotNull(message = "Veuillez saisir un nom")
-    @Size(min = 3, message = "Le nom doit contenir au moins 3 caractères")
+    @NotNull(message = "Veuillez saisir un nom !")
+    @Size(min = 3, message = "Le nom doit contenir au moins 3 caractères !")
     private String representatorLastname;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

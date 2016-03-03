@@ -172,7 +172,7 @@
                 <p>
                     <h:outputLabel for="confirmationPassword" class="labelModificationForm">Confirmation du mot de passe</h:outputLabel>
                     <h:inputSecret id="confirmationPassword" value="#{contractorEditBean.contractor.password}" size="20" maxlength="20">
-                        <f:validator validatorId="passwordConfirmationValidator" />
+                        <f:validator validatorId="com.gdf.passwordConfirmationValidator" />
                         <f:attribute name="composantMotDePasse" value="#{composantMotDePasse}" />
                         <f:ajax event="blur" execute="password confirmationPassword" render="passwordMessage confirmationPasswordMessage" /> 
                     </h:inputSecret> 
