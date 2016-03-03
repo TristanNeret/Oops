@@ -34,12 +34,13 @@ public class MailInvitBean implements Serializable {
     private String message;
     private String to;
     private String subject;
+    private boolean success;
 
     private Tenderer currentTenderer;
     private Contractor currentContractor;
 
     @PostConstruct
-    private void init() {
+    public void init() {
         
         if (SessionBean.getUserCategory().equals(Tenderer.userCategory)) {
             currentTenderer = search.searchTendererById(SessionBean.getUserId());
@@ -47,6 +48,7 @@ public class MailInvitBean implements Serializable {
             currentContractor = search.searchContractorById(SessionBean.getUserId());
         }
         this.fillMessage();
+        this.success = false;
         
     }
     
@@ -89,7 +91,18 @@ public class MailInvitBean implements Serializable {
         
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Message envoyé!",  "") );
+        this.success = true;
         
+    }
+    
+    // GETTER/SETTER
+    
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public String getMessage() {

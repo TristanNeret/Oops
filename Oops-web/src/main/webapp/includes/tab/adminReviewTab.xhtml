@@ -51,7 +51,7 @@ and open the template in the editor.
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis en attente de traitement :" rendered="#{!manageReviewBean.areReviews}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Il n'y a aucun avis en attente de traitement." rendered="#{manageReviewBean.areReviews}" /> 
 
-        <p:panel>
+        <p:panel rendered="#{!manageReviewBean.areReviews}">
 
             <p:dataGrid var="review" value="#{manageReviewBean.reviewList}" columns="1" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

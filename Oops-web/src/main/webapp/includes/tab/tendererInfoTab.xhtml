@@ -12,6 +12,7 @@ and open the template in the editor.
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:p="http://primefaces.org/ui"
     xmlns:o="http://omnifaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <script type="text/javascript">
@@ -30,44 +31,30 @@ and open the template in the editor.
 
     <div class="container">
 
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Mes informations personnelles" /> 
+
         <o:form id="infoForm" includeViewParams="true">
 
-            <div class="divTendererAvatar">
-                <h:graphicImage value="#{tendererInfoMngBean.tenderer.avatar}" height="150px" rendered="#{tendererInfoMngBean.isAvatar()}" />
-                <h:outputLabel value="Aucune image" rendered="#{!tendererInfoMngBean.isAvatar()}" />
-            </div>
-
-            <p:panel id="content" class="panelTendererInformation">
-                <table id="table">
-                    <tr>
-                        <td class="labelTitleTendererInformation">Login : </td>
-                        <td><h:outputText value="#{tendererInfoMngBean.tenderer.login}"/></td>
-                    </tr>
-                    <tr>
-                        <td class="labelTitleTendererInformation">Prénom : </td>
-                        <td><h:outputText value="#{tendererInfoMngBean.tenderer.firstname}"/></td>
-                    </tr>
-                    <tr>
-                        <td class="labelTitleTendererInformation">Nom : </td>
-                        <td><h:outputText value="#{tendererInfoMngBean.tenderer.lastname}"/></td>
-                    </tr>
-                    <tr>
-                        <td class="labelTitleTendererInformation">E-mail : </td>
-                        <td><h:outputText value="#{tendererInfoMngBean.tenderer.email}"/></td>
-                    </tr>
-                    <tr>
-                        <td class="labelTitleTendererInformation">Téléphone : </td>
-                        <td><h:outputText value="#{tendererInfoMngBean.tenderer.phone}"/></td>
-                    </tr>
-                    <tr>
-                        <td class="labelTitleTendererInformation">Inscrit depuis le : </td>
-                        <td><h:outputText value="#{tendererInfoMngBean.tenderer.registrationDate}"/></td>
-
-                    </tr>
-                </table>
-
-                <p:commandButton id="modifier" value="Modifier" styleClass="commandButtonEditTenderer" update="dialogEditInfo" oncomplete="PF('infoDialog').show();" />
-            </p:panel>
+            <b:container fluid="true" style="margin-top: 20px;">
+                <b:row styleClass="show-grid">
+                    <b:column span="2">
+                        <h:graphicImage value="#{tendererInfoMngBean.tenderer.avatar}" height="150px" rendered="#{tendererInfoMngBean.isAvatar()}" />
+                        <h:outputLabel value="Aucune image" rendered="#{!tendererInfoMngBean.isAvatar()}" />
+                    </b:column>
+                    <b:column span="10" styleClass="columnTendererField">
+                        <b:row styleClass="rowTendererField"><b>Login : </b><h:outputText value="#{tendererInfoMngBean.tenderer.login}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Prénom : </b><h:outputText value="#{tendererInfoMngBean.tenderer.firstname}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Nom : </b><h:outputText value="#{tendererInfoMngBean.tenderer.lastname}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>E-mail : </b><h:outputText value="#{tendererInfoMngBean.tenderer.email}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Téléphone : </b><h:outputText value="#{tendererInfoMngBean.tenderer.phone}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Inscrit depuis le : </b><h:outputText value="#{tendererInfoMngBean.tenderer.registrationDate}"/></b:row>
+                        <b:row styleClass="rowTendererField">
+                            <b:commandButton id="modifier" value="Modifier" look="primary" styleClass="commandButtonEditTenderer" update="dialogEditInfo" oncomplete="PF('infoDialog').show();" />
+                            <b:button look="link" value="Voir la page de mon profil" outcome="/views/tendererInformations?id=#{tendererInfoMngBean.tenderer.id}" style="margin-top: 20px" />
+                        </b:row>
+                    </b:column>
+                </b:row>
+            </b:container>
 
             <!-- Dialog view to edit a Tenderer -->
             <p:growl id="updateGrowl" widgetVar="updateGrowl" sticky="false" showDetail="false" life="3000" />

@@ -650,6 +650,19 @@ form#reviewForm {
     margin-bottom: 20px;
 }
 
+.rowTendererField {
+    padding-left: 20px; 
+    padding-top: 10px;
+}
+
+.columnTendererField {
+    font-size: 18px; 
+    font-weight: 100; 
+    border-left-color: darkgray; 
+    border-left-style: solid; 
+    border-left-width: 1px;
+}
+
 /*****************************************************************************/
 /*************************** CONTRACTOR MANAGER ******************************/
 /*****************************************************************************/
