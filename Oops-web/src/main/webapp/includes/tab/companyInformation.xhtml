@@ -113,7 +113,8 @@
                                                   actionListener="#{contractorEditBean.update()}"
                                                   oncomplete="handleModifCompanyInfosRequest1(xhr, status, args)" />
 
-                                <p:commandButton  value="Annuler" id="cancelButton" 
+                                <p:commandButton  value="Annuler" id="cancelButton"
+                                                  actionListener="#{contractorEditBean.undo()}"
                                                   onclick="PF('modifDialog1').hide();"/>
                             </div>
                         </h:panelGroup>
@@ -311,7 +312,8 @@
                                                   actionListener="#{contractorEditBean.update()}"
                                                   oncomplete="handleModifCompanyInfosRequest2(xhr, status, args)" />
 
-                                <p:commandButton  value="Annuler" id="cancelButton" 
+                                <p:commandButton  value="Annuler" id="cancelButton"
+                                                  actionListener="#{contractorEditBean.undo()}"
                                                   onclick="PF('modifDialog2').hide();"/>
                             </div>
 
@@ -344,14 +346,19 @@
                                                   (#{contractorEditBean.contractor.address.zipCode})"/>
                                 </td>
                             </tr> 
+                            
+                            <c:if test="#{contractorEditBean.contractor.address.country == 'France'}">
                             <tr>
                                 <td class="labelTitleContractorInformation">
                                     <h:outputLabel value="Région :"/>
                                 </td>
                                 <td>
                                     <h:outputText value="#{contractorEditBean.contractor.address.region}"/>
+                                      
                                 </td>
                             </tr>
+                            </c:if>
+                            
                             <tr>
                                 <td class="labelTitleContractorInformation">
                                     <h:outputLabel value="Pays :"/>
@@ -364,6 +371,7 @@
 
                         <br/>
                         <p:commandButton value="Modifier" onclick="PF('modifDialog3').show();">
+                            <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:listCountries"/>
                             <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:contractorZipCode"/>
                             <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:zipCodeMessage"/>
                             <p:ajax update="tabViewContractor:accordionPanel:dialogForm3:contractorStreetNumber"/>
@@ -404,6 +412,13 @@
                                     </p:inputText>
                                     <p:message id="zipCodeMessage" for="contractorZipCode" />
                                     <br/>
+            
+                            
+                                    <h:outputLabel for="contractorTown" value="Town :" class="labelModificationForm" />
+                                    <p:inputText id="contractorTown" value="#{contractorEditBean.contractor.address.town}">
+                                    </p:inputText>
+                                    <p:message id="townMessage" for="contractorTown" />
+                                    <br/>
 
                                     <h:outputLabel for="contractorStreetNumber" value="N° :" class="labelModificationForm"/>
                                     <p:inputText id="contractorStreetNumber" placeholder="Numéro de la rue" value="#{contractorEditBean.contractor.address.streetNumber}" size="5" maxlength="5">
@@ -416,7 +431,7 @@
                                     </p:inputText>
                                     <p:message id="streetMessage" for="contractorStreet" />
                                     <br/>
-
+                                    
                                 </h:panelGroup>
 
                                 <h:panelGroup rendered="#{contractorEditBean.contractor.address.country == 'France'}">
@@ -430,33 +445,30 @@
                                     <p:message id="zipCodeMessageFr" for="zipCode" />
                                     <br/>
 
-                                    <h:panelGroup rendered="#{contractorEditBean.isCode()}">
+                                    <h:outputLabel for="contractorRegionFr" value="Region :" class="labelModificationForm"/>
+                                    <h:outputText id="contractorRegionFr" value="#{contractorEditBean.contractor.address.region}"/>
+                                    <p:message id="regionMessageFr" for="contractorRegionFr" />
+                                    <br/>
 
-                                        <h:outputLabel for="contractorRegionFr" value="Region :" class="labelModificationForm"/>
-                                        <h:outputText id="contractorRegionFr" value="#{contractorEditBean.contractor.address.region}"/>
-                                        <p:message id="regionMessageFr" for="contractorRegionFr" />
-                                        <br/>
+                                    <h:outputLabel for="contractorTownFr" value="Ville :" class="labelModificationForm"/>
+                                    <p:selectOneMenu id="contractorTownFr"   value="#{contractorEditBean.contractor.address.town}">
+                                        <f:selectItems   value="#{contractorEditBean.allTown}"/>
+                                    </p:selectOneMenu>
+                                    <p:message id="townMessageFr" for="contractorTownFr" />
+                                    <br/>   
 
-                                        <h:outputLabel for="contractorTownFr" value="Ville :" class="labelModificationForm"/>
-                                        <p:selectOneMenu id="contractorTownFr"   value="#{contractorEditBean.contractor.address.town}">
-                                            <f:selectItems   value="#{contractorEditBean.allTown}"/>
-                                        </p:selectOneMenu>
-                                        <p:message id="townMessageFr" for="contractorTownFr" />
-                                        <br/>   
+                                    <h:outputLabel for="contractorStreetNumberFr" value="N° :" class="labelModificationForm"/>
+                                    <p:inputText id="contractorStreetNumberFr" placeholder="Numéro de la rue" value="#{contractorEditBean.contractor.address.streetNumber}" size ="5" maxlength="5">
+                                    </p:inputText>
+                                    <p:message id="streetNumberMessageFr" for="contractorStreetNumberFr" />
+                                    <br/>
 
-                                        <h:outputLabel for="contractorStreetNumberFr" value="N° :" class="labelModificationForm"/>
-                                        <p:inputText id="contractorStreetNumberFr" placeholder="Numéro de la rue" value="#{contractorEditBean.contractor.address.streetNumber}" size ="5" maxlength="5">
-                                        </p:inputText>
-                                        <p:message id="streetNumberMessageFr" for="contractorStreetNumberFr" />
-                                        <br/>
+                                    <h:outputLabel for="contractorStreet" value="Rue :" class="labelModificationForm"/>
+                                    <p:inputText id="contractorStreetFr" placeholder="Nom de la rue" value="#{contractorEditBean.contractor.address.street}">
+                                    </p:inputText>
+                                    <p:message id="streetMessageFr" for="contractorStreetFr" />
+                                    <br/>
 
-                                        <h:outputLabel for="contractorStreet" value="Rue :" class="labelModificationForm"/>
-                                        <p:inputText id="contractorStreetFr" placeholder="Nom de la rue" value="#{contractorEditBean.contractor.address.street}">
-                                        </p:inputText>
-                                        <p:message id="streetMessageFr" for="contractorStreetFr" />
-                                        <br/>
-
-                                    </h:panelGroup>
                                 </h:panelGroup>
                             </h:panelGroup>
 
@@ -465,8 +477,10 @@
                                                   actionListener="#{contractorEditBean.update()}"
                                                   oncomplete="handleModifCompanyInfosRequest3(xhr, status, args)" />
 
-                                <p:commandButton  value="Annuler" id="cancelButton" 
-                                                  onclick="PF('modifDialog3').hide();"/>
+                                <p:commandButton  value="Annuler" id="cancelButton"
+                                                  actionListener="#{contractorEditBean.undo()}"
+                                                  oncomplete="PF('modifDialog3').hide();"/>
+                                
                             </div>
 
                         </h:panelGroup>

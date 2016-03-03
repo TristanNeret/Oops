@@ -40,7 +40,7 @@ and open the template in the editor.
                 </b:selectOneMenu>
 
                 <h:panelGroup id="listRegions" >
-                    <b:selectOneMenu value="#{searchManagedBean.region}" rendered="#{searchManagedBean.country == 'France'}" style="margin-right: 5px">
+                    <b:selectOneMenu value="#{searchManagedBean.region}" rendered="#{searchManagedBean.country == 'France' and searchManagedBean.type == 'cont'}" style="margin-right: 5px">
                         <f:selectItem itemLabel="Régions" itemValue=""/>
                         <f:selectItems value="#{searchManagedBean.allRegions}"/>
                     </b:selectOneMenu>
