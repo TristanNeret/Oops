@@ -16,30 +16,31 @@ import javax.validation.constraints.Size;
 
 /**
  * LegalInformation
+ *
  * @author aziz
  */
 @Entity
 public class LegalInformation implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Pattern(regexp = "[0-9]{14}", message = "Le n° SIRET doit contenir 14 chiffres" )
-    @NotNull( message = "Veuillez saisir un numéro de SIRET" )
+    @Pattern(regexp = "[0-9]{14}", message = "Le n° SIRET doit contenir 14 chiffres !")
+    @NotNull(message = "Veuillez saisir un numéro de SIRET !")
     private String siret;
-    
-    @Pattern(regexp = "[0-9]{9}", message = "Le n° SIREN doit contenir 9 chiffres" )
-    @NotNull( message = "Veuillez saisir un numéro de SIREN" )
+
+    @Pattern(regexp = "[0-9]{9}", message = "Le n° SIREN doit contenir 9 chiffres !")
+    @NotNull(message = "Veuillez saisir un numéro de SIREN !")
     private String siren;
-    
-    @Size(min = 9, message = "Le n° RCS doit contenir au moins 9 caractères" )
-    @NotNull( message = "Veuillez saisir un numéro de RCS" )
+
+    @Size(min = 9, message = "Le n° RCS doit contenir au moins 9 caractères !")
+    @NotNull(message = "Veuillez saisir un numéro de RCS !")
     private String rcs;
-    
-    @Size( min = 5, message = "L'assurance doit contenir au moins 5 caractères" )
-    @NotNull( message = "Veuillez saisir une assurance" )
+
+    @Size(min = 5, message = "L'assurance doit contenir au moins 5 caractères !")
+    @NotNull(message = "Veuillez saisir une assurance !")
     private String insurrance;
 
     public LegalInformation() {
@@ -51,7 +52,7 @@ public class LegalInformation implements Serializable {
         this.rcs = rcs;
         this.insurrance = insurrance;
     }
-    
+
     public Long getId() {
         return id;
     }

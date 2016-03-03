@@ -32,12 +32,9 @@ public class ContractorManagerBeanImpl implements ContractorManagerBean, Seriali
 
     @Override
     public void delete(Contractor c) {
-        
         Contractor contractorToRemove =  em.find(Contractor.class, c.getId());
         if(contractorToRemove != null) {
-        
             this.em.remove(contractorToRemove);
-        
         }
         
     }
@@ -46,7 +43,6 @@ public class ContractorManagerBeanImpl implements ContractorManagerBean, Seriali
     public Contractor undo(Contractor c) {
         Contractor attachedContractor = em.merge(c);
         em.refresh(attachedContractor);
-        System.out.println("entre : " + attachedContractor.getPhone());
         return attachedContractor;
     }
     

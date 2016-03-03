@@ -49,7 +49,7 @@ public class ContractorEditBean implements Serializable {
         new SelectItem("SCA", "SCA")
     };
 
-    private boolean code;
+
     @EJB
     private PopulateDB pdb;
     private List<SelectItem> allCountry;
@@ -76,7 +76,6 @@ public class ContractorEditBean implements Serializable {
         legalForms.add(g1);
         legalForms.add(g2);
 
-        code = false;
     }
 
     /**
@@ -98,7 +97,9 @@ public class ContractorEditBean implements Serializable {
     }
 
     public void undo() {
-        contractor = cm.undo(contractor);
+        System.out.println("entre");
+        this.contractor = sb.searchContractorById(SessionBean.getUserId());
+        //contractor = cm.undo(contractor);
     }
 
     public void update() {
@@ -127,12 +128,7 @@ public class ContractorEditBean implements Serializable {
         return false;
     }
 
-    public boolean isCode() {
-        return code;
-    }
-
     public void setZipCode(int zipCode) {
-        this.code = true;
         this.contractor.getAddress().setZipCode(zipCode);
         this.contractor.getAddress().setRegion(pdb.getRegion(Integer.toString(zipCode)));
     }
@@ -143,7 +139,6 @@ public class ContractorEditBean implements Serializable {
 
     public void setCountry(String country) {
         this.contractor.getAddress().setCountry(country);
-        this.contractor.getAddress().setZipCode(0);
     }
 
     public String getCountry() {
@@ -173,9 +168,13 @@ public class ContractorEditBean implements Serializable {
 
         List<SelectItem> li = new ArrayList<>();
 
-        for (String town : ltowns) {
-            li.add(new SelectItem(town));
-        }
+        if(ltowns != null){
+        
+            for (String town : ltowns) {
+                li.add(new SelectItem(town));
+            }
+        
+        }    
 
         return li;
     }

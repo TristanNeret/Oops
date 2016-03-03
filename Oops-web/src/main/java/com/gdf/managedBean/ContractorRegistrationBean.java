@@ -14,16 +14,15 @@ import com.gdf.session.SessionBean;
 import com.gdf.singleton.PopulateDB;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * Manage Contrator registration
@@ -37,15 +36,10 @@ public class ContractorRegistrationBean implements Serializable {
     @EJB
     private RegistrationBean rb;
     @EJB
-    private SearchBean sb;
-    @EJB
     private PopulateDB pdb;
 
     private Contractor contractor;
 
-    @NotNull(message = "Veuillez saisir un mot de passe")
-    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères")
-    private String password;
     @NotNull(message = "Veuillez saisir une confirmation de mot de passe")
     private String passwordConfirm;
 
@@ -74,6 +68,14 @@ public class ContractorRegistrationBean implements Serializable {
      */
     private List<SelectItem> allCountry;
     private List<SelectItem> allTown;
+    
+    
+    /**
+     * Creates a new instance of ContractorRegistrationBean
+     */
+    public ContractorRegistrationBean() {
+
+    }
 
     @PostConstruct
     public void init() {
@@ -83,27 +85,13 @@ public class ContractorRegistrationBean implements Serializable {
         contractor.setLegalInformation(new LegalInformation());
 
         code = false;
-
-        SelectItemGroup g1 = new SelectItemGroup("Entreprise individuelle");
-        g1.setSelectItems(nonTeamCompanies);
-
-        SelectItemGroup g2 = new SelectItemGroup("Entreprise non-individuelle");
-        g2.setSelectItems(teamCompanies);
-
+        
         legalForms = new ArrayList<>();
-        legalForms.add(g1);
-        legalForms.add(g2);
+        legalForms.addAll(Arrays.asList(nonTeamCompanies));
+        legalForms.addAll(Arrays.asList(teamCompanies));
     }
 
-    /**
-     * Creates a new instance of ContractorRegistrationBean
-     */
-    public ContractorRegistrationBean() {
-
-    }
-
-    public void register() {
-        this.contractor.setPassword(this.password);
+    public void register() { 
         Long id = this.rb.register(this.contractor);
         // Connect the contractor
         HttpSession session = SessionBean.getSession();
@@ -111,14 +99,6 @@ public class ContractorRegistrationBean implements Serializable {
         session.setAttribute("userCategory", Contractor.userCategory);
         session.setAttribute("userName", this.contractor.getSocialReason());
         session.setAttribute("userAvatar", this.contractor.getLogo());
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getPasswordConfirm() {
