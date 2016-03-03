@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -30,6 +32,7 @@ public class AdminSearchBean implements Serializable {
     private String message;
     private String keyWord;
     private String type;
+    private boolean success;
     private Contractor contractorSelected;
     private Tenderer tendererSelected;
     private String targetGroup;
@@ -59,37 +62,16 @@ public class AdminSearchBean implements Serializable {
     public void initBean() {
       
         moderatorID = SessionBean.getUserId();
+        this.targetGroup = "ALL";
+        this.message = "";
+        this.success = false;
 
     }
-
+    
     public AdminSearchBean() {
         // Temporary used to connect a Tenderer
         ltd = new ArrayList();
         lc = new ArrayList();
-    }
-
-    public List<Contractor> getLc() {
-        return lc;
-    }
-
-    public void setLc(List<Contractor> lc) {
-        this.lc = lc;
-    }
-
-    public List<Tenderer> getLtd() {
-        return ltd;
-    }
-
-    public void setLtd(List<Tenderer> ltd) {
-        this.ltd = ltd;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public List<String> completeQuery(String query) {
@@ -111,6 +93,94 @@ public class AdminSearchBean implements Serializable {
         return results;
     }
 
+    public void search() {
+
+        if (type != null) {
+            
+            ltd = new ArrayList();
+            lc = new ArrayList();
+
+            if (type.equals("tend")) {
+                ltd = sb.findTenderers(keyWord);
+            } else {
+                lc = sb.findContractors(keyWord, 0, null, null, "ALPHABETICAL",null);
+            }
+        
+        }
+
+        message = "";
+        
+    }
+
+    public void sendMessage() {
+
+        if (type.equals("tend")) {
+            ab.sendMessageNotificationToTenderer(moderatorID, tendererSelected, message);
+        } else {
+            ab.sendMessageNotificationToContractor(moderatorID, contractorSelected, message);
+        }
+
+        // reset
+        tendererSelected = null;
+        contractorSelected = null;
+        message = "";
+    }
+
+    public void sendGroupMessage() {
+
+        switch (this.targetGroup) {
+            case "TEND":
+
+                for (Tenderer t : sb.findAllTenderer()) {
+                    ab.sendMessageNotificationToTenderer(moderatorID, t, message);
+                }
+
+                break;
+
+            case "CONT":
+
+                for (Contractor c : sb.findAllContractor()) {
+                    ab.sendMessageNotificationToContractor(moderatorID, c, message);
+                }
+
+                break;
+
+            case "ALL":
+
+                for (Tenderer t : sb.findAllTenderer()) {
+                    ab.sendMessageNotificationToTenderer(moderatorID, t, message);
+                }
+                for (Contractor c : sb.findAllContractor()) {
+                    ab.sendMessageNotificationToContractor(moderatorID, c, message);
+                }
+
+                break;
+        }
+        FacesContext.getCurrentInstance().addMessage("growlSuccess", new FacesMessage(FacesMessage.SEVERITY_INFO, "Succès !", "Votre message a été envoyé !"));
+        this.success = true;
+
+        this.message = "";
+        this.targetGroup = "";
+    }
+    
+    // GETTER/SETTER
+    
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getTargetGroup() {
+        return targetGroup;
+    }
+
+    public void setTargetGroup(String targetGroup) {
+        this.targetGroup = targetGroup;
+    }
+    
     public String getKeyWord() {
         return keyWord;
     }
@@ -145,79 +215,28 @@ public class AdminSearchBean implements Serializable {
         this.tendererSelected = tendererSelected;
     }
 
-    public void search() {
-
-        ltd = new ArrayList();
-        lc = new ArrayList();
-
-        if (type.equals("tend")) {
-            ltd = sb.findTenderers(keyWord);
-        } else {
-            lc = sb.findContractors(keyWord, 0, null, null, "ALPHABETICAL",null);
-        }
-
-        message = null;
+    public List<Contractor> getLc() {
+        return lc;
     }
 
-    public void sendMessage() {
-
-        if (type.equals("tend")) {
-            ab.sendMessageNotificationToTenderer(moderatorID, tendererSelected, message);
-        } else {
-            ab.sendMessageNotificationToContractor(moderatorID, contractorSelected, message);
-        }
-
-        // reset
-        tendererSelected = null;
-        contractorSelected = null;
-        message = "";
+    public void setLc(List<Contractor> lc) {
+        this.lc = lc;
     }
 
-    public String getTargetGroup() {
-        return targetGroup;
+    public List<Tenderer> getLtd() {
+        return ltd;
     }
 
-    public void setTargetGroup(String targetGroup) {
-        this.targetGroup = targetGroup;
+    public void setLtd(List<Tenderer> ltd) {
+        this.ltd = ltd;
     }
 
-    public void init() {
-        this.targetGroup = null;
-        this.message = null;
+    public String getMessage() {
+        return message;
     }
 
-    public void sendGroupMessage() {
-
-        switch (this.targetGroup) {
-            case "TEND":
-
-                for (Tenderer t : sb.findAllTenderer()) {
-                    ab.sendMessageNotificationToTenderer(moderatorID, t, message);
-                }
-
-                break;
-
-            case "CONT":
-
-                for (Contractor c : sb.findAllContractor()) {
-                    ab.sendMessageNotificationToContractor(moderatorID, c, message);
-                }
-
-                break;
-
-            case "ALL":
-
-                for (Tenderer t : sb.findAllTenderer()) {
-                    ab.sendMessageNotificationToTenderer(moderatorID, t, message);
-                }
-                for (Contractor c : sb.findAllContractor()) {
-                    ab.sendMessageNotificationToContractor(moderatorID, c, message);
-                }
-
-                break;
-        }
-
-        this.message = "";
-        this.targetGroup = "";
+    public void setMessage(String message) {
+        this.message = message;
     }
+
 }

@@ -51,7 +51,7 @@ and open the template in the editor.
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis en attente de traitement :" rendered="#{!manageReviewBean.areReviews}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Il n'y a aucun avis en attente de traitement." rendered="#{manageReviewBean.areReviews}" /> 
 
-        <p:panel>
+        <p:panel rendered="#{!manageReviewBean.areReviews}">
 
             <p:dataGrid var="review" value="#{manageReviewBean.reviewList}" columns="1" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -71,8 +71,10 @@ and open the template in the editor.
                                 </b:row>
                             </f:facet>
                             <b:container fluid="true">
-                                <b:row styleClass="show-grid">
+                                <b:row styleClass="show-grid" style="padding-bottom: 12px;">
+                                    <a href="/Oops-web/views/contractorInformations.xhtml?id=#{review.contractor.id}">
                                     <h:graphicImage value="#{review.contractor.logo}" width="40px"/>
+                                    </a>
                                     <h:outputLabel styleClass="labelTitleReviewAdmin" value="#{review.contractor.socialReason}" />
                                 </b:row>
                                 <b:row styleClass="show-grid">
@@ -117,7 +119,7 @@ and open the template in the editor.
                                         <h:outputLabel value="Description" />
                                     </b:row>
                                     <b:row styleClass="show-grid">
-                                        <b:inputTextarea id="reviewContent" rows="6" value="#{manageReviewBean.contentReview[review.id]}" required="false" label="Facultatif" />
+                                        <b:inputTextarea id="reviewContent" placeholder="Facultatif" rows="6" value="#{manageReviewBean.contentReview[review.id]}" required="false" label="Facultatif" />
                                     </b:row>
                                 </b:column>
                                 <b:column span="3" style="text-align: center;">
