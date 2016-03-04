@@ -308,10 +308,13 @@ and open the template in the editor.
 
                                 <h:panelGroup rendered="#{contractorRegistrationBean.country == 'France'}">
 
-                                    <b:inputText  id="zipCode" label="Code postal" placeholder="Entrez le code postal" renderLabel="true" value="#{contractorRegistrationBean.zipCode}" size="5" maxlength="5">
-                                        <f:ajax event="change" render="registerContractorFormAddress:registerContractorPGAddress"/>
-                                        <f:validator validatorId="com.gdf.zipValidator"/>
-                                    </b:inputText>
+                                    <div class="form-group">
+                                        <label for="zipCode">Code postal:</label>
+                                        <h:inputText  class="form-control" id="zipCode" label="Code postal" value="#{contractorRegistrationBean.zipCode}" size="5" maxlength="5">
+                                            <f:ajax event="change" render="registerContractorFormAddress:registerContractorPGAddress"/>
+                                            <f:validator validatorId="com.gdf.zipValidator"/>
+                                        </h:inputText>
+                                    </div>
                                     <b:message id="zipCodeMessageFr" for="zipCode" />
 
                                     <h:panelGroup rendered="#{contractorRegistrationBean.isCode()}">                                      
