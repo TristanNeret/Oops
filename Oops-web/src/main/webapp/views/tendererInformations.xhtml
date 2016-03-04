@@ -29,16 +29,14 @@ and open the template in the editor.
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
         
-        <nav class="navbar navbar-default" style="background-color: white; border-color:white">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <ul class="nav nav-tabs">
-                    <a class="navbar-brand" href="javascript:history.go(-1)">
-                        <b:image value="/resources/default/img/back.png" name="img" width="35" height="35"/>
-                    </a>
-                    </ul>    
-                </div>
-            </div>   
+        <!-- NAV BACK -->
+        <nav class="navbar navbar-default" id="navBack">
+            <div class="container">
+            <a class="navbar-brand" href="javascript:history.go(-1)">
+                <b:image value="/resources/default/img/back_arrow.png" name="img" width="30" height="30" style="margin-top: -11px;"/>
+            </a>
+                <b:button look="link" value="Accueil" outcome="/index.xhtml" />
+            </div>
         </nav>
 
         <!-- CONTENT -->

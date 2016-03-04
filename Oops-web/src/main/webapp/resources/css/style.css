@@ -225,6 +225,14 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     margin-top: 10px;
 }
 
+#navBack {
+    background-color: #97c857; 
+    border-color: #97c857; 
+    border-radius: 0; 
+    height: 40px;
+    min-height: 0px;
+}
+
 /*****************************************************************************/
 /********************************* FOOTER ************************************/
 /*****************************************************************************/
