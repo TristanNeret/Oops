@@ -17,8 +17,8 @@ and open the template in the editor.
 
         <h:form id="formSearch" onsubmit="#{searchManagedBean.search()}">
             <h:panelGrid columns="7" style="margin: auto;">
-
-                <b:inputText id="queryInputText" placeholder="Mots-clés" value="#{searchManagedBean.keyWord}" autocomplete="on"></b:inputText>
+                                
+                <p:autoComplete class="autocompleteInput" placeholder="Mots-clés" id="queryInputText" value="#{searchManagedBean.keyWord}" completeMethod="#{searchManagedBean.completeQuery}" />
 
                 <b:selectOneMenu id="listType" value="#{searchManagedBean.type}" onchange="this.form.submit()" styleClass="menuSearchField">
                     <f:selectItem id="cont" itemLabel="Prestataire" itemValue="cont" />
