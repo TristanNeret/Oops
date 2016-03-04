@@ -46,6 +46,7 @@ public class ContractorRegistrationBean implements Serializable {
     @NotNull(message = "Veuillez saisir une confirmation de mot de passe !")
     private String passwordConfirm;
 
+    @NotNull(message = "Veuillez saisir un code postal !")
     @Size(min = 5, max = 5, message = "Le code postal doit contenir 5 chiffres !")
     private String zipCode;
     private boolean code;
