@@ -124,6 +124,8 @@ and open the template in the editor.
                                 <f:facet name="prepend">
                                     <h:outputText value="@" />
                                 </f:facet>
+                                <f:validator validatorId="com.gdf.mailFormatValidator" />
+                                <f:validator validatorId="com.gdf.emailAlreadyExistValidator" /> 
                             </b:inputText>
                             <b:message id="contractorMailMessage" for="contractorMail" />
 

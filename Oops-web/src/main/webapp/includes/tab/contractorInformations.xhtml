@@ -104,9 +104,8 @@
                         <p:inputText   id="modifiedLogin" value="#{contractorEditBean.contractor.login}">
                             <f:ajax  event="blur" render="loginMessage"/>
                             <f:validator validatorId="com.gdf.loginAlreadyExistForModificationValidator"/>
-                            <f:attribute value="#{contractorEditBean.contractor.id}" name="idContractor"/>
                         </p:inputText>
-                        <h:message id="loginMessage" for="modifiedLogin" errorClass="erreur" />
+                        <p:message id="loginMessage" for="modifiedLogin"/>
                     </p>
 
                     <p>
@@ -114,7 +113,7 @@
                         <p:inputText  id="modifiedFirstName" value="#{contractorEditBean.contractor.representatorFirstname}">
                             <f:ajax  event="blur" render="firstNameMessage"/>
                         </p:inputText>
-                        <h:message id="firstNameMessage" for="modifiedFirstName" errorClass="erreur"  />
+                        <p:message id="firstNameMessage" for="modifiedFirstName"/>
                     </p>
 
                     <p>
@@ -122,7 +121,7 @@
                         <p:inputText  id="modifiedLastName" value="#{contractorEditBean.contractor.representatorLastname}">
                             <f:ajax  event="blur" render="lastNameMessage"/>
                         </p:inputText>
-                        <h:message id="lastNameMessage" for="modifiedLastName" errorClass="erreur" />
+                        <p:message id="lastNameMessage" for="modifiedLastName"/>
                     </p>
 
                     <p>
@@ -130,8 +129,10 @@
                         <p:inputText  id="modifiedEmail" value="#{contractorEditBean.contractor.email}">
                             <f:ajax  event="blur" render="emailMessage"/>
                             <f:validator validatorId="com.gdf.mailFormatValidator"/>
-                        </p:inputText>    
-                        <h:message id="emailMessage" for="modifiedEmail" errorClass="erreur" />
+                            <f:validator validatorId="com.gdf.emailAlreadyExistForModificationValidator"/>
+                        </p:inputText>
+                        <p:message id="emailMessage" for="modifiedEmail"/>
+
                     </p>
 
                     <p>
@@ -140,7 +141,7 @@
                             <f:validator validatorId="com.gdf.phoneFormatValidator"/>
                             <f:ajax  event="blur" render="phoneMessage"/>
                         </p:inputText>
-                        <h:message id="phoneMessage" for="modifiedPhoneNumber" errorClass="erreur" /> 
+                        <p:message id="phoneMessage" for="modifiedPhoneNumber"/> 
                     </p>
 
                     <p:commandButton value="Modifier" update="tabViewContractor:informations" actionListener="#{contractorEditBean.update()}" 
@@ -166,7 +167,7 @@
                     <h:inputSecret id="password" value="#{contractorEditBean.contractor.password}" size="20" maxlength="20" binding="#{composantMotDePasse}" >
                         <f:ajax event="blur" execute="password confirmationPassword" render="passwordMessage confirmationPasswordMessage" />
                     </h:inputSecret>  
-                    <h:message id="passwordMessage" for="password" errorClass="erreur" />
+                    <p:message id="passwordMessage" for="password"/>
                 </p>
 
                 <p>
@@ -176,7 +177,7 @@
                         <f:attribute name="composantMotDePasse" value="#{composantMotDePasse}" />
                         <f:ajax event="blur" execute="password confirmationPassword" render="passwordMessage confirmationPasswordMessage" /> 
                     </h:inputSecret> 
-                    <h:message id="confirmationPasswordMessage" for="confirmationPassword" errorClass="erreur" />
+                    <p:message id="confirmationPasswordMessage" for="confirmationPassword"/>
                 </p>
 
                 <p:commandButton value="Modifier"  actionListener="#{contractorEditBean.update()}" 

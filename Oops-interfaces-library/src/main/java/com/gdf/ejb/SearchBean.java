@@ -49,7 +49,7 @@ public interface SearchBean {
      * @param email the email of the Contractor
      * @return the Contractor identified by the email if any or null if doesn't exist
      */
-    public List<Contractor> searchContractorByEmail(String email);
+    public Contractor searchContractorByEmail(String email);
 
     /**
      * Search contractors by several criteria 
@@ -193,5 +193,7 @@ public interface SearchBean {
      * @return all states
      */
     public List<String> getAllStates(); 
+
+    public Tenderer searchTendererByEmail(String email);
     
 }

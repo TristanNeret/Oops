@@ -17,34 +17,35 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- * Test if a String is only composed by whitespace
- * @author Tristan
+ * Test if a email is already used by another user
+ * @author Nicolas
  */
 @ManagedBean
 @RequestScoped
-@FacesValidator("com.gdf.noBlankSpaceValidator")
-public class NoBlankSpaceValidator implements Validator {
+@FacesValidator(value="com.gdf.emailAlreadyExistValidator")
+public class EmailAlreadyExistValidator implements Validator {
 
-    private static final String NO_BLANK_SPACE = "Les champs de saisie ne peuvent contenir que des espaces.";
+    private static final String EMAIL_ALREADY_USED = "Cet email est déjà utilisé !";
 
     @EJB
     SearchBean sb;
     
     /**
-     * Creates a new instance of NoBlankSpaceValidator
+     * Creates a new instance of EmailAlreadyExistValidator
      */
-    public NoBlankSpaceValidator() {
+    public EmailAlreadyExistValidator() {
     }
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-
-        if (value == null || ((String) value).trim().isEmpty()) {
-
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, NO_BLANK_SPACE, null));
-
+        
+        String email = (String)value;
+        
+        // Test if a Tenderer or a Contractor already uses this email
+        if(this.sb.searchContractorByEmail(email) != null || this.sb.searchTendererByEmail(email) != null) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, EMAIL_ALREADY_USED, null));
         }
-
+        
     }
-    
+        
 }
