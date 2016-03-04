@@ -14,6 +14,7 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Manage Tenderer registration
@@ -26,19 +27,23 @@ public class TendererRegistrationBean {
 
     @EJB
     RegistrationBean rb;
-    
+
     private Tenderer tenderer;
-    
-    @NotNull(message = "Veuillez saisir une confirmation de mot de passe")
-    private String passwordConfirm;  
-    
+
+    @NotNull(message = "Veuillez saisir un de mot de passe !")
+    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères !")
+    private String password;
+
+    @NotNull(message = "Veuillez saisir une confirmation de mot de passe !")
+    private String passwordConfirm;
+
     /**
      * Creates a new instance of TendererRegisterBean
      */
     public TendererRegistrationBean() {
-        
+
     }
-    
+
     @PostConstruct
     public void init() {
         tenderer = new Tenderer();
@@ -48,6 +53,7 @@ public class TendererRegistrationBean {
      * Register a new Tenderer
      */
     public void submit() {
+        tenderer.setPassword(password);
         Long id = this.rb.register(tenderer);
         // Connect the Tenderer
         HttpSession session = SessionBean.getSession();
@@ -72,5 +78,12 @@ public class TendererRegistrationBean {
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
     }
-    
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

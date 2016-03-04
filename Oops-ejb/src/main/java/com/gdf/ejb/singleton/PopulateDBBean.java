@@ -25,12 +25,14 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.UriBuilder;
@@ -323,4 +325,37 @@ public class PopulateDBBean implements PopulateDB {
         return region;
     }
     
+    private final SelectItem[] nonTeamCompanies = new SelectItem[]{
+        new SelectItem("Auto-entrepreneur", "Auto-entrepreneur"),
+        new SelectItem("Entrepreneur individuel", "Entrepreneur individuel"),
+        new SelectItem("EIRL", "EIRL"),
+        new SelectItem("EURL", "EURL"),
+        new SelectItem("SASU", "SASU")
+    };
+
+    private final SelectItem[] teamCompanies = new SelectItem[]{
+        new SelectItem("SNC", "SNC"),
+        new SelectItem("SARL", "SARL"),
+        new SelectItem("SA", "SA"),
+        new SelectItem("SAS", "SAS"),
+        new SelectItem("SCA", "SCA")
+    };
+    
+    @Override
+    public List<SelectItem> getLegalForms(){
+        List<SelectItem> legalForms = new ArrayList<>();
+        legalForms.addAll(Arrays.asList(nonTeamCompanies));
+        legalForms.addAll(Arrays.asList(teamCompanies));
+        return legalForms;
+    }
+
+    @Override
+    public boolean isATeamCompany(String teamCompany) {
+        for (SelectItem si : teamCompanies) {
+            if (si.getLabel().equals(teamCompany)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

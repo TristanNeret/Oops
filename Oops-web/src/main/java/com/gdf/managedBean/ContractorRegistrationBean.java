@@ -6,7 +6,6 @@
 package com.gdf.managedBean;
 
 import com.gdf.ejb.RegistrationBean;
-import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Address;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
@@ -14,7 +13,6 @@ import com.gdf.session.SessionBean;
 import com.gdf.singleton.PopulateDB;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -23,6 +21,7 @@ import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Manage Contrator registration
@@ -40,6 +39,10 @@ public class ContractorRegistrationBean implements Serializable {
 
     private Contractor contractor;
 
+    @NotNull(message = "Veuillez saisir un de mot de passe")
+    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères !")
+    private String password;
+
     @NotNull(message = "Veuillez saisir une confirmation de mot de passe")
     private String passwordConfirm;
 
@@ -47,29 +50,12 @@ public class ContractorRegistrationBean implements Serializable {
 
     private List<SelectItem> legalForms;
 
-    private final SelectItem[] nonTeamCompanies = new SelectItem[]{
-        new SelectItem("Auto-entrepreneur", "Auto-entrepreneur"),
-        new SelectItem("Entrepreneur individuel", "Entrepreneur individuel"),
-        new SelectItem("EIRL", "EIRL"),
-        new SelectItem("EURL", "EURL"),
-        new SelectItem("SASU", "SASU")
-    };
-
-    private final SelectItem[] teamCompanies = new SelectItem[]{
-        new SelectItem("SNC", "SNC"),
-        new SelectItem("SARL", "SARL"),
-        new SelectItem("SA", "SA"),
-        new SelectItem("SAS", "SAS"),
-        new SelectItem("SCA", "SCA")
-    };
-
     /**
      * All countries available for the registration
      */
     private List<SelectItem> allCountry;
     private List<SelectItem> allTown;
-    
-    
+
     /**
      * Creates a new instance of ContractorRegistrationBean
      */
@@ -79,19 +65,17 @@ public class ContractorRegistrationBean implements Serializable {
 
     @PostConstruct
     public void init() {
-
         contractor = new Contractor();
         contractor.setAddress(new Address());
         contractor.setLegalInformation(new LegalInformation());
 
         code = false;
-        
-        legalForms = new ArrayList<>();
-        legalForms.addAll(Arrays.asList(nonTeamCompanies));
-        legalForms.addAll(Arrays.asList(teamCompanies));
+
+        legalForms = pdb.getLegalForms();
     }
 
-    public void register() { 
+    public void register() {
+        contractor.setPassword(password);
         Long id = this.rb.register(this.contractor);
         // Connect the contractor
         HttpSession session = SessionBean.getSession();
@@ -110,12 +94,7 @@ public class ContractorRegistrationBean implements Serializable {
     }
 
     public boolean isATeamCompanySelected() {
-        for (SelectItem si : teamCompanies) {
-            if (si.getLabel().equals(contractor.getLegalForm())) {
-                return true;
-            }
-        }
-        return false;
+        return pdb.isATeamCompany(contractor.getLegalForm());
     }
 
     public boolean isCode() {
@@ -189,5 +168,13 @@ public class ContractorRegistrationBean implements Serializable {
 
     public void setContractor(Contractor contractor) {
         this.contractor = contractor;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
