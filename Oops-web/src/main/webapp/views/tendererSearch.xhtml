@@ -75,13 +75,15 @@ and open the template in the editor.
                                     <b><h:outputText value="Inscrit le " style="padding-left: 20px;" /></b>
                                     <h:outputText value="#{tend.registrationDate}" />
                                 </b:column>
-                                <b:column>
-                                    <b:commandButton id="askReviewBtn" look="success" value="Demander un avis" 
+                                <b:column>                      
+                                    <b:button look="primary" value="Voir #{tend.login}" outcome="/views/tendererInformations?id=#{tend.id}" 
+                                              style="float: right; margin-top: 5px;" />
+                                    <p:commandButton id="askReviewBtn" value="Demander un avis" 
+                                                     styleClass="buttonAskReview"
                                                      rendered="#{tendererSearchBean.display(tend.id)}"
                                                      onclick="PF('askReviewDialog').show();"
                                                      actionListener="#{tendererSearchBean.setTenderer(tend)}"
-                                                     update="askReviewDialogForm:dialogPanel" style="float: right; margin-top: 5px;" /> 
-                                    <b:button look="primary" value="Voir #{tend.login}" outcome="/views/tendererInformations?id=#{tend.id}" style="float: right; margin-top: 5px;" />
+                                                     update="askReviewDialogForm:dialogPanel" style="float: right; margin-top: 5px; margin-right: 10px" /> 
                                 </b:column>
                             </b:row>
                         </b:container>
