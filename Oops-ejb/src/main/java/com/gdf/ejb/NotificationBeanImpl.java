@@ -6,7 +6,6 @@
 package com.gdf.ejb;
 
 import com.gdf.persistence.Contractor;
-import com.gdf.persistence.Moderator;
 import com.gdf.persistence.Notification;
 import com.gdf.persistence.NotificationState;
 import com.gdf.persistence.NotificationType;
@@ -32,6 +31,11 @@ public class NotificationBeanImpl implements NotificationBean, Serializable {
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;
 
+    /**
+     * method to find unread notification of a tenderer
+     * @param tendererId id of the tenderer to get notifications
+     * @return return a list of notifications
+     */
     @Override
     public List<Notification> findUnreadTendererNotification(Long tendererId) {
 
@@ -56,7 +60,12 @@ public class NotificationBeanImpl implements NotificationBean, Serializable {
         return notificationList;
 
     }
-
+    
+    /**
+     * method to find unread notifications of a contractor
+     * @param contractorId id of the contractor to get notifications
+     * @return a list of notifications
+     */
     @Override
     public List<Notification> findUnreadContractorNotification(Long contractorId) {
 
@@ -82,6 +91,11 @@ public class NotificationBeanImpl implements NotificationBean, Serializable {
 
     }
 
+    /**
+     * method to find unread notifications of a moderator
+     * @param moderatorId the id of the moderator to get notifications
+     * @return a list of notifications
+     */
     @Override
     public List<Notification> findUnreadModeratorNotification(Long moderatorId) {
 
@@ -91,7 +105,12 @@ public class NotificationBeanImpl implements NotificationBean, Serializable {
         return notificationList;
 
     }
-
+    
+    /**
+     * method to find all tenderer's notifications
+     * @param tendererId
+     * @return a list of notifications
+     */
     @Override
     public List<Notification> findAllTendererNotification(Long tendererId) {
         
@@ -117,6 +136,11 @@ public class NotificationBeanImpl implements NotificationBean, Serializable {
 
     }
 
+    /**
+     * method to find all notifications of a contractor
+     * @param contractorId
+     * @return a list of notifications
+     */
     @Override
     public List<Notification> findAllContractorNotification(Long contractorId) {
         
@@ -142,6 +166,11 @@ public class NotificationBeanImpl implements NotificationBean, Serializable {
 
     }
 
+    /**
+     * method to find all moderator's notifications
+     * @param moderatorId
+     * @return a list of notifications
+     */
     @Override
     public List<Notification> findAllModeratorNotification(Long moderatorId) {
         
@@ -151,7 +180,11 @@ public class NotificationBeanImpl implements NotificationBean, Serializable {
         return notificationList;
         
     }
-
+    
+    /**
+     * method to mark as read a list notifications
+     * @param notifications 
+     */
     @Override
     public void markAsRead(List<Notification> notifications) {
 
@@ -167,7 +200,11 @@ public class NotificationBeanImpl implements NotificationBean, Serializable {
         }
 
     }
-
+    
+    /**
+     * method to mark as read a notifications
+     * @param notification 
+     */
     @Override
     public void markAsRead(Notification notification) {
 

@@ -33,7 +33,13 @@ public class EvaluationBeanImpl implements EvaluationBean, Serializable {
      */
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;
-
+    
+    /**
+     * Method to add a review
+     * @param tenderer the tenderer who send the review
+     * @param contractor the contracor reviewed
+     * @param review the review to persist
+     */
     @Override
     public void addReview(Tenderer tenderer, Contractor contractor, Review review) {
 
@@ -46,7 +52,15 @@ public class EvaluationBeanImpl implements EvaluationBean, Serializable {
         attachedContractor.addReview(review);
 
     }
-
+    
+    /**
+     * 
+     * @param tendererID
+     * @param contractorID
+     * @param reviewAppreciation
+     * @param reviewContent
+     * @param reviewRate 
+     */
     @Override
     public void addReview(Long tendererID, Long contractorID, String reviewAppreciation, String reviewContent, int reviewRate) {
 
@@ -67,7 +81,14 @@ public class EvaluationBeanImpl implements EvaluationBean, Serializable {
         this.sendNotification(newReview, attachedTenderer, attachedContractor, NotificationType.TO_MODERATOR);
 
     }
-
+    
+    /**
+     * method to send a notification
+     * @param review
+     * @param tenderer
+     * @param contractor
+     * @param notificationType 
+     */
     @Override
     public void sendNotification(Review review, Tenderer tenderer, Contractor contractor, NotificationType notificationType) {
 
@@ -88,7 +109,12 @@ public class EvaluationBeanImpl implements EvaluationBean, Serializable {
         attachedReview.addNotification(newNotification);
 
     }
-
+    
+    /**
+     * method to update a contractor's answer of a review
+     * @param review
+     * @param contractorsAnswer 
+     */
     @Override
     public void updateContractorsAnswer(Review review, String contractorsAnswer) {
 
@@ -123,13 +149,23 @@ public class EvaluationBeanImpl implements EvaluationBean, Serializable {
 
     }
 
+    /**
+     * method to delete a contractor's answer of a review
+     * @param review 
+     */
     @Override
     public void deleteContractorsAnswer(Review review) {
 
         review.setContractorAnswer(null);
         em.merge(review);
     }
-
+    
+    /**
+     * method to ask a review from a contractor to a tenderer
+     * @param contractorID
+     * @param tendererID
+     * @param message 
+     */
     @Override
     public void askForReview(Long contractorID, Long tendererID, String message) {
         
@@ -150,7 +186,13 @@ public class EvaluationBeanImpl implements EvaluationBean, Serializable {
         em.persist(n);
         
     }
-
+    
+    /**
+     * method to get last notifications of a contractor or a tenderer
+     * @param contractorID
+     * @param tendererID
+     * @return a Notification object
+     */
     @Override
     public Notification getLastNotificationSent(Long contractorID, Long tendererID) {
         Query q = em.createNamedQuery("Notification.findByContractorAndTenderer", Notification.class);
