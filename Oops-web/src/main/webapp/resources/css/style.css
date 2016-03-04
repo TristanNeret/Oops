@@ -218,6 +218,7 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 }
 
 .commandButtonNotification {
+    width: 100% !important;
     color: #666666 !important;
 }
 
@@ -732,6 +733,23 @@ form#reviewForm {
 
 .panelContractor .outputTextRating {
     margin-left: 20px;
+}
+
+.panelTitleAccordion {
+    color: white;
+    font-size: 18px;
+    cursor: pointer !important;
+    text-decoration: none;
+}
+
+.panelAccordion .panel-heading {
+    padding-bottom: 5px;
+    padding-top: 8px;
+}
+
+.panelAccordion .panel-heading a:after {
+    color: white;
+    cursor: pointer !important;
 }
 
 .panelContractorDescription {

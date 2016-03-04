@@ -69,9 +69,10 @@ public class AdminSearchBean implements Serializable {
     }
     
     public AdminSearchBean() {
-        // Temporary used to connect a Tenderer
+        
         ltd = new ArrayList();
         lc = new ArrayList();
+        
     }
 
     public List<String> completeQuery(String query) {
@@ -91,6 +92,7 @@ public class AdminSearchBean implements Serializable {
             results = sb.findContractorBeginBy(query);
         }
         return results;
+        
     }
 
     public void search() {
@@ -124,6 +126,7 @@ public class AdminSearchBean implements Serializable {
         tendererSelected = null;
         contractorSelected = null;
         message = "";
+        
     }
 
     public void sendGroupMessage() {

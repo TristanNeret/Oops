@@ -104,7 +104,7 @@ public class ManageReviewBean implements Serializable {
     public void manageReview(Long id) {
         
         if(this.decisionReview.get(id) != null) {
-
+            
             this.ab.manageReview(id, SessionBean.getUserId(), this.decisionReview.get(id), this.contentReview.get(id));
 
             // Update the waiting Reviews list

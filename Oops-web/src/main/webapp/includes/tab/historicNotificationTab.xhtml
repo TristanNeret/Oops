@@ -30,8 +30,8 @@ and open the template in the editor.
                     <b:panel collapsible="false" styleClass="panelNotification">
                         <b:container fluid="true">
                             <b:column span="10">
-                                <b>Reçu le : </b><h:outputLabel>#{notification.date}</h:outputLabel>
-                                <h:outputLabel style="font-size: 18px; font-weight: 200;">#{notification.description}</h:outputLabel>
+                                <b:row><b>Reçu le : </b><h:outputLabel>#{notification.date}</h:outputLabel></b:row>
+                                <b:row><h:outputLabel style="font-size: 18px; font-weight: 200;">#{notification.description}</h:outputLabel></b:row>
                             </b:column>
                             <b:column span="2">
                                 <p:commandButton class="commandButtonClickNotification" styleClass="buttonBackRegistration" 
