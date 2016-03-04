@@ -296,7 +296,7 @@ public class SearchBeanImpl implements SearchBean, Serializable {
     @Override
     public List<Tenderer> searchTendererByKeyWord(String keyWord) {
         TypedQuery<Tenderer> query;
-        query = em.createQuery("SELECT t FROM Tenderer t WHERE t.login LIKE :word OR t.email LIKE :word Or t.firstname LIKE :word Or t.lastname LIKE :word", Tenderer.class);
+        query = em.createQuery("SELECT t FROM Tenderer t WHERE t.login LIKE :word OR t.email LIKE :word Or t.firstname LIKE :word Or t.lastname LIKE :word ORDER BY t.login ASC", Tenderer.class);
         query.setParameter("word", "%" + keyWord + "%");
         return query.getResultList();
     }
