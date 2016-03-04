@@ -11,13 +11,14 @@ and open the template in the editor.
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    
+
     <div class="container">
-        
+
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste de vos avis soumis :" rendered="#{tendererReviewBean.areReviews()}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Vous n'avez pas encore soumis d'avis." rendered="#{!tendererReviewBean.areReviews()}" /> 
-        
+
         <p:panel id="reviewsList">
             <div>
                 <h:form id="formComment">
@@ -25,76 +26,77 @@ and open the template in the editor.
                                 paginator="true" paginatorPosition="bottom" id="reviews"
                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 rowsPerPageTemplate="6,12,16">
-                        
-                        <!-- Dialog view to edit Review -->
-                        <p:dialog id="dialogEditReview" header="Modifier votre avis :" dynamic="true" modal="true" widgetVar="reviewDialog" resizable="false">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputLabel value="Titre :" />
-                                <p:inputText id="reviewAppreciation" value="#{tendererReviewBean.editReviewAppreciation}" required="true" label="Titre" />
 
-                                <h:outputLabel value="Description :" />
-                                <p:inputTextarea id="reviewContent" rows="6" cols="33" value="#{tendererReviewBean.editReviewContent}" required="true" label="Description" />
-
-                                <h:outputLabel value="Note moyenne :" />
-                                <p:rating id="reviewRate" value="#{tendererReviewBean.editReviewRating}" required="true" />
-
-                                <f:facet name="footer">
-                                    <p:commandButton id="editButtonDialogValidate" value="Soumettre l'avis modifié" action="#{tendererReviewBean.editReview()}" 
-                                                     oncomplete="PF('reviewDialog').hide();" update="@form" />
-                                    <p:commandButton id="cancelButtonDialogValidate" value="Annuler" oncomplete="PF('reviewDialog').hide();" />
-                                </f:facet>  
-                            </h:panelGrid>
-                        </p:dialog>
-                        
                         <!-- REVIEW -->
-                        <div class="divReviewsTenderer">
-                            
-                            <div class="divTendererReviewInformation">
-                                <div class="divImageReviewTenderer">
-                                    <h:graphicImage value="#{review.contractor.logo}" width="40px"/>
-                                </div>
-                                <h:outputLabel class="divReviewContractorNameTenderer" value="#{review.contractor.socialReason}"/>
-                                <div style="margin-top: 10px;">
-                                    <h:outputLabel class="divReviewAppreciationTenderer" value="#{review.appreciation}"/>
-                                    <br/>
-                                    <h:outputText value="#{review.content}" />
-                                </div>
-                                <br/>
-                                <div class="diveRateReview">
-                                    <b id="starsTxt2" style="float:left;">Note : </b> 
-                                    <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
-                                    <h:outputLabel value="Le #{review.date}" class="divReviewUpdateDateTenderer" />
-                                </div>
-                                <br/>
-                                <c:if test="#{review.contractorAnswer != null}" >
-                                    <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
-                                </c:if>
-                                <c:if test="#{review.contractorAnswer == null}" >
-                                    <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
-                                </c:if>
-                            </div>
-                            <div class="divTendererReviewButton">
-                                <h:outputLabel value="Statut : #{tendererReviewBean.getReviewState(review.reviewState)}" />
+                        <b:container fluid="true">
 
-                                <div style="float: right;">
-                                    <p:growl id="growlReviewTenderer" sticky="false" showDetail="true" life="3000" />
-                                    <p:commandButton id="deleteButton" value="Supprimer" action="#{tendererReviewBean.removeReview(review)}" update="growlReviewTenderer reviews">
-                                        <p:confirm header="Confirmation" message="Êtes-vous sûr de vouloir supprimer cet avis ?" icon="ui-icon-alert" />
-                                    </p:commandButton>
-                                    <p:commandButton id="editButton" value="Modifier" action="#{tendererReviewBean.setEditReview(review)}" update="dialogEditReview" oncomplete="PF('reviewDialog').show();" />
+                            <!-- Dialog view to edit Review -->
+                            <p:dialog id="dialogEditReview" header="Modifier votre avis :" dynamic="true" modal="true" widgetVar="reviewDialog" resizable="false">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputLabel value="Titre :" />
+                                    <p:inputText id="reviewAppreciation" value="#{tendererReviewBean.editReviewAppreciation}" required="true" label="Titre" />
 
-                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                        <p:commandButton id="confirmButtonDialogValidate" value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                        <p:commandButton id="confirmButtonDialogUnvalidate" value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                                    </p:confirmDialog>
-                                </div>
-                            </div>
-                            
-                        </div>
+                                    <h:outputLabel value="Description :" />
+                                    <p:inputTextarea id="reviewContent" rows="6" cols="33" value="#{tendererReviewBean.editReviewContent}" required="true" label="Description" />
+
+                                    <h:outputLabel value="Note moyenne :" />
+                                    <p:rating id="reviewRate" value="#{tendererReviewBean.editReviewRating}" required="true" />
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="editButtonDialogValidate" value="Soumettre l'avis modifié" action="#{tendererReviewBean.editReview()}" 
+                                                         oncomplete="PF('reviewDialog').hide();" update="@form" />
+                                        <p:commandButton id="cancelButtonDialogValidate" value="Annuler" oncomplete="PF('reviewDialog').hide();" />
+                                    </f:facet>  
+                                </h:panelGrid>
+                            </p:dialog>
+
+                            <!-- Review informations -->
+                            <b:row styleClass="show-grid">
+                                <b:panel collapsible="false" styleClass="panelReview">
+                                    <f:facet name="heading">
+                                        <b:row styleClass="show-grid">
+                                            <h:outputText value="#{review.appreciation}"/>
+                                            <h:outputText styleClass="outputTextSubTitle" value="par"/>
+                                            <a class="aTendererLink" href="/Oops-web/views/tendererInformations.xhtml?id=#{review.tenderer.id}">#{review.tenderer.login}</a>
+                                            <h:outputText styleClass="outputTextSubTitle" value="le #{review.date}"/>
+                                        </b:row>
+                                    </f:facet>
+                                    <b:container fluid="true">
+                                        <b:row styleClass="show-grid" style="padding-bottom: 12px;">
+                                            <a href="/Oops-web/views/contractorInformations.xhtml?id=#{review.contractor.id}">
+                                                <h:graphicImage value="#{review.contractor.logo}" width="40px"/>
+                                            </a>
+                                            <h:outputLabel styleClass="labelTitleReviewAdmin" value="#{review.contractor.socialReason}" />
+                                        </b:row>
+                                        <b:row styleClass="show-grid">
+                                            <h:outputText value="#{review.content}" />
+                                        </b:row>
+                                        <b:row styleClass="show-grid">
+                                            <b id="starsTxt2" style="float:left;">Note : </b> 
+                                            <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
+                                        </b:row>
+                                    </b:container>
+                                </b:panel>
+                            </b:row>
+                            <b:row styleClass="show-grid" style="padding-bottom: 15px; padding-left: 15px; padding-right: 15px;">
+                                <b>Statut : </b><h:outputLabel style="color: #2FA4E7 !important;" value=" #{tendererReviewBean.getReviewState(review.reviewState)}" />
+                                <p:growl id="growlReviewTenderer" sticky="false" showDetail="true" life="3000" />
+                                <p:commandButton id="deleteButton" style="float: right; margin-top: 0px !important;" styleClass="buttonCancel" value="Supprimer" action="#{tendererReviewBean.removeReview(review)}" update="growlReviewTenderer reviews">
+                                    <p:confirm header="Confirmation" message="Êtes-vous sûr de vouloir supprimer cet avis ?" icon="ui-icon-alert" />
+                                </p:commandButton>
+                                <p:commandButton id="editButton" style="float: right; margin-top: 0px !important;" styleClass="buttonBackRegistration" value="Modifier" action="#{tendererReviewBean.setEditReview(review)}" update="dialogEditReview" oncomplete="PF('reviewDialog').show();" />
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton id="confirmButtonDialogValidate" value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton id="confirmButtonDialogUnvalidate" value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </p:confirmDialog>
+                            </b:row>
+
+                        </b:container>
+
                     </p:dataGrid>
                 </h:form>
             </div>
         </p:panel>
     </div>
-    
+
 </ui:composition>

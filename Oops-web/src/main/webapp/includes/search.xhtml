@@ -25,6 +25,11 @@ and open the template in the editor.
                     <f:selectItem  id="tend" itemLabel="Soumissionnaire" itemValue="tend" />
                 </b:selectOneMenu>
 
+                <b:selectOneMenu id="listCategories" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.category}" style="margin-right: 5px">
+                    <f:selectItem itemLabel="Catégorie" itemValue=""/>
+                    <f:selectItems value="#{searchManagedBean.allCategory}"/>
+                </b:selectOneMenu>
+                
                 <b:selectOneMenu id ="listRating" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.rating}" style="margin-right: 5px">
                     <f:selectItem itemLabel="Note moyenne" itemValue=""/>
                     <f:selectItem itemLabel=">=4" itemValue="4"/>
@@ -45,11 +50,6 @@ and open the template in the editor.
                         <f:selectItems value="#{searchManagedBean.allRegions}"/>
                     </b:selectOneMenu>
                 </h:panelGroup>
-
-                <b:selectOneMenu id="listCategories" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.category}" style="margin-right: 5px">
-                    <f:selectItem itemLabel="Catégorie" itemValue=""/>
-                    <f:selectItems value="#{searchManagedBean.allCategory}"/>
-                </b:selectOneMenu>
 
                 <b:commandButton id="searchButton" look="primary" value="Recherche" action="#{searchManagedBean.search()}"></b:commandButton>      
 
