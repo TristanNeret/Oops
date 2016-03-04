@@ -67,6 +67,16 @@ and open the template in the editor.
         <c:if test="#{authentificationBean.moderatorConnected}">
             <ui:include src="/includes/headerAdmin.xhtml" />
         </c:if>
+        
+        <!-- NAV BACK -->
+        <nav class="navbar navbar-default" id="navBack">
+            <div class="container">
+            <a class="navbar-brand" href="javascript:history.go(-1)">
+                <b:image value="/resources/default/img/back_arrow.png" name="img" width="30" height="30" style="margin-top: -11px;"/>
+            </a>
+                <b:button look="link" value="Accueil" outcome="/index.xhtml" />
+            </div>
+        </nav>
 
         <!-- CONTENT -->
         <div class="container">

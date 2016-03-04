@@ -1432,8 +1432,8 @@ footer.footer {
     width: 268px;
     padding: 5px;
     font-size: 16px;
-    line-height: 1;
-    border: 0;
+    border: 0;    line-height: 1;
+
     border-radius: 0;
     height: 34px;
     -webkit-appearance: none;
@@ -1463,7 +1463,7 @@ footer.footer {
     -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important;
     -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important;
-    cursor: text; 
+    cursor: text !important; 
 }
 .autocompleteInput .ui-state-hover {
     -webkit-appearance: textfield !important;
@@ -1493,6 +1493,14 @@ footer.footer {
     -webkit-user-select: text !important;
     cursor: auto !important;
     border: none !important;
+}
+
+.autocompleteInput .ui-state-default {
+    border: none !important;
+}
+
+.autocompleteInput .ui-inputfield {
+    padding: 0px !important
 }
 
 .autocompleteInput .ui-inputfield.ui-state-focus {
