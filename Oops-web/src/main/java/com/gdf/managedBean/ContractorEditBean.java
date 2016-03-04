@@ -16,7 +16,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -32,22 +31,6 @@ public class ContractorEditBean implements Serializable {
     private Contractor contractor;
 
     private List<SelectItem> legalForms;
-
-    private final SelectItem[] nonTeamCompanies = new SelectItem[]{
-        new SelectItem("Auto-entrepreneur", "Auto-entrepreneur"),
-        new SelectItem("Entrepreneur individuel", "Entrepreneur individuel"),
-        new SelectItem("EIRL", "EIRL"),
-        new SelectItem("EURL", "EURL"),
-        new SelectItem("SASU", "SASU")
-    };
-
-    private final SelectItem[] teamCompanies = new SelectItem[]{
-        new SelectItem("SNC", "SNC"),
-        new SelectItem("SARL", "SARL"),
-        new SelectItem("SA", "SA"),
-        new SelectItem("SAS", "SAS"),
-        new SelectItem("SCA", "SCA")
-    };
 
 
     @EJB
@@ -66,15 +49,7 @@ public class ContractorEditBean implements Serializable {
         
         this.contractor = sb.searchContractorById(SessionBean.getUserId());
 
-        SelectItemGroup g1 = new SelectItemGroup("Entreprise individuelle");
-        g1.setSelectItems(nonTeamCompanies);
-
-        SelectItemGroup g2 = new SelectItemGroup("Entreprise non-individuelle");
-        g2.setSelectItems(teamCompanies);
-
-        legalForms = new ArrayList<>();
-        legalForms.add(g1);
-        legalForms.add(g2);
+        legalForms = pdb.getLegalForms();
 
     }
 
@@ -120,12 +95,7 @@ public class ContractorEditBean implements Serializable {
     }
 
     public boolean isATeamCompanySelected() {
-        for (SelectItem si : teamCompanies) {
-            if (si.getLabel().equals(contractor.getLegalForm())) {
-                return true;
-            }
-        }
-        return false;
+        return pdb.isATeamCompany(contractor.getLegalForm());
     }
 
     public void setZipCode(int zipCode) {
