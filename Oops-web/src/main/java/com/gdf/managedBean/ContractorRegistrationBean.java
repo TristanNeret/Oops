@@ -114,7 +114,6 @@ public class ContractorRegistrationBean implements Serializable {
     }
 
     public void setZipCode(int zipCode) {
-        System.out.println("code  = " + zipCode );
         this.code = true;
         this.contractor.getAddress().setZipCode(zipCode);
         this.contractor.getAddress().setRegion(pdb.getRegion(Integer.toString(zipCode)));
@@ -147,12 +146,8 @@ public class ContractorRegistrationBean implements Serializable {
     }
 
     public List<SelectItem> getAllTown() {
-        
-        System.out.println(this.contractor.getAddress().getZipCode());
-            System.out.println("pays : " +this.getCountry() );
-        
+            
         List<String> ltowns = pdb.getAllTown(Integer.toString(this.contractor.getAddress().getZipCode()));
-
         List<SelectItem> li = new ArrayList<>();
 
         if(ltowns != null){
@@ -160,7 +155,7 @@ public class ContractorRegistrationBean implements Serializable {
                 li.add(new SelectItem(town));
             }
         }
-        System.out.println("entre : getAlltowns" );
+
         return li;
     }
 
