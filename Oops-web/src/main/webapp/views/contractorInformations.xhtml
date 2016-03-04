@@ -31,7 +31,7 @@ and open the template in the editor.
     </h:head>
 
     <h:body>
-
+                
         <f:metadata>
             <o:viewParam name ="id" value="#{contractorInformationsBean.id}" />
             <f:viewAction action="#{contractorInformationsBean.init()}" />
@@ -44,6 +44,19 @@ and open the template in the editor.
         <c:if test="#{authentificationBean.moderatorConnected}">
             <ui:include src="/includes/headerAdmin.xhtml" />
         </c:if>
+        
+
+        <nav class="navbar navbar-default" style="background-color: white; border-color:white">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <ul class="nav nav-tabs">
+                    <a class="navbar-brand" href="javascript:history.go(-1)">
+                        <b:image value="/resources/default/img/back.png" name="img" width="35" height="35"/>
+                    </a>
+                    </ul>    
+                </div>
+            </div>   
+        </nav>
 
         <!-- CONTENT -->
         <div class="container">

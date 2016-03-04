@@ -17,33 +17,30 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- * Test if the entreprise is already register
  *
- * @author Tristan
+ * @author aziz
  */
 @ManagedBean
 @RequestScoped
-@FacesValidator(value = "com.gdf.sirenAlreadyExistValidator")
-public class SirenAlreadyExistValidator implements Validator {
+@FacesValidator(value = "com.gdf.rcsAlreadyExistValidator")
+public class RcsAlreadyExistValidator implements Validator {
 
-    private static final String SIREN_ALREADY_EXIST = "L'entreprise correspondant à ce numéro SIREN est déjà inscrite !";
+    private static final String SIREN_ALREADY_EXIST = "L'entreprise correspondant à ce numéro RCS est déjà inscrite !";
 
     @EJB
     SearchBean sb;
 
-    /**
-     * Creates a new instance of LoginAlreadyExistValidator
-     */
-    public SirenAlreadyExistValidator() {
+    public RcsAlreadyExistValidator() {
+
     }
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 
-        String siren = (String) value;
+        String rcs = (String) value;
 
-        // Test if a Contractor with this SIREN value already exist
-        if (this.sb.searchContractorBySiren(siren) != null) {
+        // Test if a Contractor with this RCS value already exist
+        if (this.sb.searchContractorByRcs(rcs) != null) {
 
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, SIREN_ALREADY_EXIST, null));
 

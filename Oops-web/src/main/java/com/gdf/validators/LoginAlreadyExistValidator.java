@@ -25,7 +25,7 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator(value="com.gdf.loginAlreadyExistValidator")
 public class LoginAlreadyExistValidator implements Validator {
 
-    private static final String LOGIN_ALREADY_USED = "Ce login est déjà utilisé";
+    private static final String LOGIN_ALREADY_USED = "Ce login est déjà utilisé !";
 
     @EJB
     SearchBean sb;
