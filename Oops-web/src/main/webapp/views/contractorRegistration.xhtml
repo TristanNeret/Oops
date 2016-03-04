@@ -100,12 +100,12 @@ and open the template in the editor.
                                     <b:icon name="lock" />
                                 </f:facet>
                                 <f:validator validatorId="com.gdf.passwordConfirmationValidator" />
-                                <f:attribute name="confirm" value="#{confirm}" />
+                                <f:attribute name="confirm" value="#{confirmPassword.submittedValue}" />
                             </b:inputSecret>
                             <b:message id="contractorPasswordMessage" for="contractorPassword" />
 
                             <b:inputSecret id="contractorConfirmPassword" label="Confirmer le mot de passe" placeholder="Entrez une confirmation de mot de passe" 
-                                           renderLabel="true" value="#{contractorRegistrationBean.passwordConfirm}" binding="#{confirm}">
+                                           renderLabel="true" value="#{contractorRegistrationBean.passwordConfirm}" binding="#{confirmPassword}">
                                 <f:facet name="prepend">
                                     <b:icon name="lock" />
                                 </f:facet>
@@ -308,10 +308,13 @@ and open the template in the editor.
 
                                 <h:panelGroup rendered="#{contractorRegistrationBean.country == 'France'}">
 
-                                    <b:inputText  id="zipCode" label="Code postal" placeholder="Entrez le code postal" renderLabel="true" value="#{contractorRegistrationBean.zipCode}" size="5" maxlength="5">
-                                        <f:ajax event="change" render="registerContractorFormAddress:registerContractorPGAddress"/>
-                                        <f:validator validatorId="com.gdf.zipValidator"/>
-                                    </b:inputText>
+                                    <div class="form-group">
+                                        <label for="zipCode">Code postal:</label>
+                                        <h:inputText  class="form-control" id="zipCode" label="Code postal" value="#{contractorRegistrationBean.zipCode}" size="5" maxlength="5">
+                                            <f:ajax event="change" render="registerContractorFormAddress:registerContractorPGAddress"/>
+                                            <f:validator validatorId="com.gdf.zipValidator"/>
+                                        </h:inputText>
+                                    </div>
                                     <b:message id="zipCodeMessageFr" for="zipCode" />
 
                                     <h:panelGroup rendered="#{contractorRegistrationBean.isCode()}">                                      

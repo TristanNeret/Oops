@@ -32,6 +32,10 @@ public class TendererManagerBeanImpl implements TendererManagerBean, Serializabl
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;  
     
+    /**
+     * method to edit a review
+     * @param review the review to edit
+     */
     @Override
     public void editReview(Review review) {
         
@@ -78,6 +82,11 @@ public class TendererManagerBeanImpl implements TendererManagerBean, Serializabl
 
     }
 
+    /**
+     * method to remove a review 
+     * @param tendererId the tenderer id of the review
+     * @param review the review to remove
+     */
     @Override
     public void removeReview(long tendererId, Review review) {
         

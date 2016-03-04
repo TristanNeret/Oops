@@ -125,7 +125,6 @@ public class ContractorRegistrationBean implements Serializable {
 
     public void setCountry(String country) {
         this.contractor.getAddress().setCountry(country);
-        this.contractor.getAddress().setZipCode(0);
     }
 
     public String getCountry() {
@@ -147,12 +146,14 @@ public class ContractorRegistrationBean implements Serializable {
     }
 
     public List<SelectItem> getAllTown() {
+            
         List<String> ltowns = pdb.getAllTown(Integer.toString(this.contractor.getAddress().getZipCode()));
-
         List<SelectItem> li = new ArrayList<>();
 
-        for (String town : ltowns) {
-            li.add(new SelectItem(town));
+        if(ltowns != null){
+            for (String town : ltowns) {
+                li.add(new SelectItem(town));
+            }
         }
 
         return li;

@@ -80,12 +80,13 @@ and open the template in the editor.
                                     <b:icon name="lock" />
                                 </f:facet>                
                                 <f:validator validatorId="com.gdf.passwordConfirmationValidator" />
-                                <f:attribute name="confirm" value="#{confirm}" />
+                                <f:attribute name="confirm" value="#{confirmPassword.submittedValue}" />
                             </b:inputSecret>
                             <b:message id="passwordMessage" for="registerPassword" />
 
-                            <b:inputSecret id="registerConfirmPassword" label="Confirmer le mot de passe" renderLabel="true" value="#{tendererRegistrationBean.passwordConfirm}"
-                                           placeholder="Entrez une confirmation de mot de passe" binding="#{confirm}">
+                            <b:inputSecret id="registerConfirmPassword" label="Confirmer le mot de passe" renderLabel="true" 
+                                           value="#{tendererRegistrationBean.passwordConfirm}"
+                                           placeholder="Entrez une confirmation de mot de passe" binding="#{confirmPassword}">
                                 <f:facet name="prepend">
                                     <b:icon name="lock" />
                                 </f:facet>
