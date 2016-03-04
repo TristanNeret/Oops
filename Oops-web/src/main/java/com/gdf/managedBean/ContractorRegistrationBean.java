@@ -40,12 +40,14 @@ public class ContractorRegistrationBean implements Serializable {
     private Contractor contractor;
 
     @NotNull(message = "Veuillez saisir un de mot de passe !")
-    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères !")
+    @Size(min = 5, message = "Le mot de passe doit contenir au moins 6 caractères !")
     private String password;
 
     @NotNull(message = "Veuillez saisir une confirmation de mot de passe !")
     private String passwordConfirm;
 
+    @Size(min = 5, max = 5, message = "Le code postal doit contenir 5 chiffres !")
+    private String zipCode;
     private boolean code;
 
     private List<SelectItem> legalForms;
@@ -113,14 +115,15 @@ public class ContractorRegistrationBean implements Serializable {
         this.legalForms = legalForms;
     }
 
-    public void setZipCode(int zipCode) {
+    public void setZipCode(String zipCode) {
         this.code = true;
-        this.contractor.getAddress().setZipCode(zipCode);
-        this.contractor.getAddress().setRegion(pdb.getRegion(Integer.toString(zipCode)));
+        this.zipCode = zipCode;
+        this.contractor.getAddress().setZipCode(Integer.parseInt(zipCode));
+        this.contractor.getAddress().setRegion(pdb.getRegion(zipCode));
     }
 
-    public int getZipCode() {
-        return this.contractor.getAddress().getZipCode();
+    public String getZipCode() {
+        return this.zipCode;
     }
 
     public void setCountry(String country) {

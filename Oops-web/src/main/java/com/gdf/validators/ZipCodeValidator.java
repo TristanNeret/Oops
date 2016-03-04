@@ -36,7 +36,7 @@ public class ZipCodeValidator implements Validator {
 
             String code = value.toString();
 
-            if (pdb.getAllTown(code) == null) {
+            if (code.length() == 5 && pdb.getAllTown(code) == null) {
                 throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, NOT_VALIDE, null));
             }
 
