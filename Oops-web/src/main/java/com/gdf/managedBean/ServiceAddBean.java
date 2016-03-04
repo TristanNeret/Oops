@@ -38,10 +38,11 @@ public class ServiceAddBean implements Serializable {
     private String title;
     private String description;
     private long idCategory;
-    private double price;
+    private Double price;
     private Contractor contractor;
     private List<Category> categories;
     private Service editService;
+    private boolean success;
     
     @PostConstruct
     public void init() {
@@ -50,9 +51,10 @@ public class ServiceAddBean implements Serializable {
         categories = new ArrayList<>();
         this.setCategories(searchBean.getCategories());
         
-        this.setTitle(null);
-        this.setDescription(null);
+        this.setTitle("");
+        this.setDescription("");
         this.setPrice(0.0);
+        this.success = false;
         
     }
     
@@ -74,7 +76,7 @@ public class ServiceAddBean implements Serializable {
         Service service = new Service();
         service.setTitle(getTitle());
         service.setDescription(getDescription());
-        if (this.getPrice() != 0.0) {
+        if (this.getPrice() != null) {
             service.setPrice(getPrice());
         }
         service.setCategory(this.searchBean.searchCategoryById(this.idCategory));
@@ -83,6 +85,7 @@ public class ServiceAddBean implements Serializable {
         
         this.init();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre prestation a été ajoutée avec succès !", ""));
+        this.success = true;
         
     }
     
@@ -109,15 +112,20 @@ public class ServiceAddBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre prestation a été modifiée avec succès !", ""));
     
     }
-
-    /*
-     * GETTER and SETTER
-     */
     
+    // GETTER/SETTER
+    
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {    
+        this.success = success;
+    }
+
     public List<Category> getCategories() {
         return categories;
     }
-    
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
@@ -138,11 +146,11 @@ public class ServiceAddBean implements Serializable {
         this.description = description;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

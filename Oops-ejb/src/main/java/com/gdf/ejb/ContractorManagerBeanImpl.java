@@ -24,29 +24,37 @@ public class ContractorManagerBeanImpl implements ContractorManagerBean, Seriali
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;  
 
-    
+    /**
+     * method to update a contractor
+     * @param c the contractor to update
+     */
     @Override
     public void update(Contractor c) {
         em.merge(c);
     }
-
+    
+    /**
+     * method to delete a contractor
+     * @param c the contractor to delete
+     */
     @Override
     public void delete(Contractor c) {
-        
         Contractor contractorToRemove =  em.find(Contractor.class, c.getId());
         if(contractorToRemove != null) {
-        
             this.em.remove(contractorToRemove);
-        
         }
         
     }
     
+    /**
+     * method to undo changes to the current contractor
+     * @param c the contractor to undo
+     * @return the contractor unchanged from the base
+     */
     @Override
     public Contractor undo(Contractor c) {
         Contractor attachedContractor = em.merge(c);
         em.refresh(attachedContractor);
-        System.out.println("entre : " + attachedContractor.getPhone());
         return attachedContractor;
     }
     

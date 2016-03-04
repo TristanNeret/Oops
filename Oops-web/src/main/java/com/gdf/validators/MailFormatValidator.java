@@ -24,34 +24,29 @@ import javax.faces.validator.ValidatorException;
 @RequestScoped
 @FacesValidator("com.gdf.mailFormatValidator")
 public class MailFormatValidator implements Validator {
-    
-    private static final String BAD_MAIL_FORMAT = "Le format de l'addresse mail est incorrect.";  
-    private static final String NULL_MAIL = "Veuillez saisir une addresse mail";
-    
+
+    private static final String BAD_MAIL_FORMAT = "Le format de l'addresse mail est incorrect !";
+
     /**
      * Creates a new instance of MailFormatValidator
      */
     public MailFormatValidator() {
-        
+
     }
-    
+
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        
-        if(value == null){
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, NULL_MAIL, null));
+
+        if (value != null) {
+
+            String emailRegEx = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+            Pattern pattern = Pattern.compile(emailRegEx);
+            Matcher matcher = pattern.matcher(value.toString().toUpperCase());
+
+            if (!matcher.matches()) {
+
+                throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, BAD_MAIL_FORMAT, null));
+            }
         }
-            
-        
-        String emailRegEx = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        Pattern pattern = Pattern.compile(emailRegEx); 
-        Matcher matcher = pattern.matcher(value.toString().toUpperCase());
-        
-        if(!matcher.matches()) {
-            
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, BAD_MAIL_FORMAT, null));
-        }
-        
     }
-    
 }

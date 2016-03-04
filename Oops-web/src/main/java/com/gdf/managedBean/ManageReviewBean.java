@@ -7,7 +7,6 @@ package com.gdf.managedBean;
 
 import com.gdf.ejb.AdministratorBean;
 import com.gdf.ejb.SearchBean;
-import com.gdf.persistence.Moderator;
 import com.gdf.persistence.ReviewState;
 import com.gdf.session.SessionBean;
 import java.io.Serializable;
@@ -105,7 +104,7 @@ public class ManageReviewBean implements Serializable {
     public void manageReview(Long id) {
         
         if(this.decisionReview.get(id) != null) {
-
+            
             this.ab.manageReview(id, SessionBean.getUserId(), this.decisionReview.get(id), this.contentReview.get(id));
 
             // Update the waiting Reviews list

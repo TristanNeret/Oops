@@ -11,6 +11,7 @@ and open the template in the editor.
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:o="http://omnifaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Tenderer informations</title>
@@ -27,6 +28,16 @@ and open the template in the editor.
 
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
+        
+        <!-- NAV BACK -->
+        <nav class="navbar navbar-default" id="navBack">
+            <div class="container">
+            <a class="navbar-brand" href="javascript:history.go(-1)">
+                <b:image value="/resources/default/img/back_arrow.png" name="img" width="30" height="30" style="margin-top: -11px;"/>
+            </a>
+                <b:button look="link" value="Accueil" outcome="/index.xhtml" />
+            </div>
+        </nav>
 
         <!-- CONTENT -->
         <div class="container">
@@ -37,66 +48,83 @@ and open the template in the editor.
 
             <c:if test="#{tendererInformationsBean.tenderer != null}" >
 
-                <div id="divPresentation">
-                    <div id="divImagePresentation">
-                        <h:graphicImage value="#{tendererInformationsBean.tenderer.avatar}" styleClass="imageLogo" />
-                    </div>
-                    <div id="divDetailsPresentation">
-                        <h:outputLabel value="#{tendererInformationsBean.tenderer.login}" />
-                        <div id="divInformationsPresentation">
-                            <b>Email : </b> <h:outputText value="#{tendererInformationsBean.tenderer.email}" />
-                            <b style="margin-left: 20px;">Téléphone : </b> <h:outputText value="#{tendererInformationsBean.tenderer.phone}" />
-                        </div>
-                    </div>
-                </div>
-
-                <br/>
-                <h:panelGrid columns="2" cellspacing="5">
-
-                    <b>Nom complet :</b> 
-                    <h:outputText value="#{tendererInformationsBean.tenderer.firstname} 
-                                  #{tendererInformationsBean.tenderer.lastname}"/>
-
-                    <b>Date d'inscription :</b>
-                    <h:outputText value="#{tendererInformationsBean.tenderer.registrationDate}"/>
-
-                    <b>Avis donnés :</b> 
-                    <c:if test="#{tendererInformationsBean.reviews.size() gt 0}">   
-                        <h:outputText value="#{tendererInformationsBean.reviews.size()}"/>
-                    </c:if>
-                    <c:if test="#{tendererInformationsBean.reviews.size() eq 0}">
-                        <h:outputText value="aucun"/>
-                    </c:if>
-
-                </h:panelGrid>
+                <b:panel collapsible="false" styleClass="panelContractor">
+                    <f:facet name="heading">
+                        <b:row styleClass="show-grid">
+                            <b:column span="2">
+                                <h:graphicImage value="#{tendererInformationsBean.tenderer.avatar}" styleClass="imageLogo" />
+                            </b:column>
+                            <b:column styleClass="columnRating" span="10">
+                                <b:row styleClass="show-grid" class="rowContractor">
+                                    <h:outputText value="#{tendererInformationsBean.tenderer.login}" styleClass="outputTextTitle" />
+                                </b:row>
+                                <b:row styleClass="show-grid" class="rowContractor">
+                                    <b>Email : </b> <h:outputText value="#{tendererInformationsBean.tenderer.email}" />
+                                    <b style="margin-left: 20px;">Téléphone : </b> <h:outputText value="#{tendererInformationsBean.tenderer.phone}" />
+                                </b:row>
+                            </b:column>
+                        </b:row>
+                    </f:facet>
+                    <b:container fluid="true">
+                        <b:row styleClass="show-grid">
+                            <b><h:outputText value="Nom complet : " /></b>
+                            <h:outputText value="#{tendererInformationsBean.tenderer.firstname} #{tendererInformationsBean.tenderer.lastname}"/>
+                            <b><h:outputText value="Date d'inscription : " styleClass="outputTextRating" /></b>
+                            <h:outputText value="#{tendererInformationsBean.tenderer.registrationDate}"/>
+                            <b><h:outputText value="Avis donnés : " styleClass="outputTextRating" /></b>
+                            <c:if test="#{tendererInformationsBean.reviews.size() gt 0}">   
+                                <h:outputText value="#{tendererInformationsBean.reviews.size()}"/>
+                            </c:if>
+                            <c:if test="#{tendererInformationsBean.reviews.size() eq 0}">
+                                <h:outputText value="aucun"/>
+                            </c:if>
+                        </b:row>
+                    </b:container>
+                </b:panel>
 
                 <c:if test="#{tendererInformationsBean.reviews.size() gt 0}">
+                    
+                    <h2>Avis</h2>
+                    
+                    <p:dataGrid var="review" value="#{tendererInformationsBean.reviews}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+                                paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="6,12,16">
 
-                    <div id="divReviews">
-
-                        <h2>Avis</h2>
-
-                        <c:forEach items="#{tendererInformationsBean.reviews}" var="review" >
-                            <div class="divReviews">
-                                <h:outputLabel style="font-size: 20px;" value="#{review.appreciation}"/><h:outputLabel style="font-size: 14px; color: #999999;" value=" pour #{review.contractor.login} le #{review.date}" />
-                                <br/>
-                                <h:outputText value="#{review.content}" />
-                                <br/>
-                                <div class="diveRateReview">
+                        <b:panel collapsible="false" styleClass="panelReview">
+                            <f:facet name="heading">
+                                <b:row styleClass="show-grid">
+                                    <h:outputText value="#{review.appreciation}"/>
+                                    <h:outputText styleClass="outputTextSubTitle" value="par"/>
+                                    <a class="aTendererLink" href="/Oops-web/views/tendererInformations.xhtml?id=#{review.tenderer.id}">#{review.tenderer.login}</a>
+                                    <h:outputText styleClass="outputTextSubTitle" value="le #{review.date}"/>
+                                </b:row>
+                            </f:facet>
+                            <b:container fluid="true">
+                                <b:row styleClass="show-grid" style="padding-bottom: 12px;">
+                                    <a href="/Oops-web/views/contractorInformations.xhtml?id=#{review.contractor.id}">
+                                    <h:graphicImage value="#{review.contractor.logo}" width="40px"/>
+                                    </a>
+                                    <h:outputLabel styleClass="labelTitleReviewAdmin" value="#{review.contractor.socialReason}" />
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <h:outputText value="#{review.content}" />
+                                </b:row>
+                                <b:row styleClass="show-grid">
                                     <b id="starsTxt2" style="float:left;">Note : </b> 
                                     <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
-                                </div>
-                                <br/>
-                                <c:if test="#{review.contractorAnswer != null}" >
-                                    <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
-                                </c:if>
-                                <c:if test="#{review.contractorAnswer == null}" >
-                                    <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
-                                </c:if>
-                            </div>
-                        </c:forEach>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <c:if test="#{review.contractorAnswer != null}" >
+                                        <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
+                                    </c:if>
+                                    <c:if test="#{review.contractorAnswer == null}" >
+                                        <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
+                                    </c:if>
+                                </b:row>
+                            </b:container>
+                        </b:panel>
 
-                    </div>
+                    </p:dataGrid>
 
                 </c:if>
 

@@ -17,14 +17,19 @@ and open the template in the editor.
 
         <h:form id="formSearch" onsubmit="#{searchManagedBean.search()}">
             <h:panelGrid columns="7" style="margin: auto;">
-
-                <b:inputText id="queryInputText" placeholder="Mots-clés" value="#{searchManagedBean.keyWord}" autocomplete="on"></b:inputText>
+                                
+                <p:autoComplete class="autocompleteInput" placeholder="Mots-clés" id="queryInputText" value="#{searchManagedBean.keyWord}" completeMethod="#{searchManagedBean.completeQuery}" />
 
                 <b:selectOneMenu id="listType" value="#{searchManagedBean.type}" onchange="this.form.submit()" styleClass="menuSearchField">
                     <f:selectItem id="cont" itemLabel="Prestataire" itemValue="cont" />
                     <f:selectItem  id="tend" itemLabel="Soumissionnaire" itemValue="tend" />
                 </b:selectOneMenu>
 
+                <b:selectOneMenu id="listCategories" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.category}" style="margin-right: 5px">
+                    <f:selectItem itemLabel="Catégorie" itemValue=""/>
+                    <f:selectItems value="#{searchManagedBean.allCategory}"/>
+                </b:selectOneMenu>
+                
                 <b:selectOneMenu id ="listRating" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.rating}" style="margin-right: 5px">
                     <f:selectItem itemLabel="Note moyenne" itemValue=""/>
                     <f:selectItem itemLabel=">=4" itemValue="4"/>
@@ -40,16 +45,11 @@ and open the template in the editor.
                 </b:selectOneMenu>
 
                 <h:panelGroup id="listRegions" >
-                    <b:selectOneMenu value="#{searchManagedBean.region}" rendered="#{searchManagedBean.country == 'France'}" style="margin-right: 5px">
+                    <b:selectOneMenu value="#{searchManagedBean.region}" rendered="#{searchManagedBean.country == 'France' and searchManagedBean.type == 'cont'}" style="margin-right: 5px">
                         <f:selectItem itemLabel="Régions" itemValue=""/>
                         <f:selectItems value="#{searchManagedBean.allRegions}"/>
                     </b:selectOneMenu>
                 </h:panelGroup>
-
-                <b:selectOneMenu id="listCategories" rendered ="#{searchManagedBean.type == 'cont'}" value="#{searchManagedBean.category}" style="margin-right: 5px">
-                    <f:selectItem itemLabel="Catégorie" itemValue=""/>
-                    <f:selectItems value="#{searchManagedBean.allCategory}"/>
-                </b:selectOneMenu>
 
                 <b:commandButton id="searchButton" look="primary" value="Recherche" action="#{searchManagedBean.search()}"></b:commandButton>      
 

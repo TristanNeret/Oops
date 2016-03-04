@@ -32,6 +32,11 @@ public class RegistrationBeanImpl implements RegistrationBean, Serializable {
     
     private final String dateMode = "dd/MM/yyyy HH:mm:ss";
     
+    /**
+     * method to register a contractor
+     * @param c the contractor to register
+     * @return the registered contractor
+     */
     @Override
     public Long register(Contractor c) {
         
@@ -46,6 +51,11 @@ public class RegistrationBeanImpl implements RegistrationBean, Serializable {
         return em.merge(c).getId();
     }
     
+    /**
+     * method to register a tenderer
+     * @param t the tenderer to register
+     * @return the registered tenderer
+     */
     @Override
     public Long register(Tenderer t) {
         
@@ -60,7 +70,10 @@ public class RegistrationBeanImpl implements RegistrationBean, Serializable {
         return em.merge(t).getId();
     }
     
-    
+    /**
+     * method to update a contractor
+     * @param c the contractor to update
+     */
     @Override
     public void update(Contractor c) {
         
@@ -73,6 +86,10 @@ public class RegistrationBeanImpl implements RegistrationBean, Serializable {
         
     }
     
+    /**
+     * method to update a tenderer 
+     * @param t the tenderer to update
+     */
     @Override
     public void update(Tenderer t) {
         
@@ -85,6 +102,10 @@ public class RegistrationBeanImpl implements RegistrationBean, Serializable {
 
     }
 
+    /**
+     * method to register a moderator
+     * @param m the moderator to register
+     */
     @Override
     public void register(Moderator m) {
         
@@ -92,7 +113,10 @@ public class RegistrationBeanImpl implements RegistrationBean, Serializable {
         
     }
 
-
+    /**
+     * method to update a service
+     * @param s the Service to update
+     */
     @Override
     public void update(Service s) {
         

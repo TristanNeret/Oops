@@ -5,6 +5,7 @@ body {
     width: 100%;
     float: left;
     background: none !important;
+    padding-bottom: 70px;
 }
 
 fieldset {
@@ -49,7 +50,7 @@ td {
     /*background: linear-gradient(white, #97c857);*/
     background-color: #97c857; 
     color: #444444;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     padding-bottom: 50px;
@@ -217,11 +218,20 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 }
 
 .commandButtonNotification {
+    width: 100% !important;
     color: #666666 !important;
 }
 
 .commandButtonAsReadNotification {
     margin-top: 10px;
+}
+
+#navBack {
+    background-color: #97c857; 
+    border-color: #97c857; 
+    border-radius: 0; 
+    height: 40px;
+    min-height: 0px;
 }
 
 /*****************************************************************************/
@@ -417,7 +427,6 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 }
 
 #rating {
-    margin-bottom: 15px;
     margin-left: 0px;
     width: 100%;
     float: left;
@@ -545,6 +554,70 @@ form#reviewForm {
 /**************************** TENDERER MANAGER *******************************/
 /*****************************************************************************/
 
+.wizardPseudoClass {
+    margin-top: 20px;
+}
+
+.buttonAskReview {
+    margin-top: 5px !important;
+    color: #fff !important;
+    background-color: #73A839 !important;
+    border-color: #73A839 !important;
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+    padding: 5px 7px !important;
+    font-size: 13px !important;
+    line-height: 1.428571429 !important;
+    border-radius: 4px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.buttonAskReview:hover {
+    background-color: #59822c !important;
+    border-color: #547a29 !important;
+}
+
+.buttonRegistration {
+    margin-top: 20px !important;
+    color: #fff !important;
+    background-color: #73A839 !important;
+    border-color: #73A839 !important;
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.428571429 !important;
+    border-radius: 4px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.buttonRegistration:hover {
+    background-color: #59822c !important;
+    border-color: #547a29 !important;
+}
+
 .labelTitleTendererInformation {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -616,9 +689,144 @@ form#reviewForm {
     margin-bottom: 20px;
 }
 
+.rowTendererField {
+    padding-left: 20px; 
+    padding-top: 10px;
+}
+
+.columnTendererField {
+    font-size: 18px; 
+    font-weight: 100; 
+    border-left-color: darkgray; 
+    border-left-style: solid; 
+    border-left-width: 1px;
+}
+
 /*****************************************************************************/
 /*************************** CONTRACTOR MANAGER ******************************/
 /*****************************************************************************/
+
+.panelContractor {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.panelContractor .panel-heading {
+    background-color: #2FA4E7 !important;
+    color: white !important;
+    padding: 0px;
+    font-size: 18px; 
+    font-weight: 100; 
+    text-align: left;
+}
+
+.panelContractor .panel-heading .outputTextTitle {
+    font-size: 34px;
+    font-weight: bold;
+}
+
+.panelContractor .panel-heading .rowContractor {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20px;
+}
+
+.panelContractor .outputTextRating {
+    margin-left: 20px;
+}
+
+.panelTitleAccordion {
+    color: white;
+    font-size: 18px;
+    cursor: pointer !important;
+    text-decoration: none;
+}
+
+.panelAccordion .panel-heading {
+    padding-bottom: 5px;
+    padding-top: 8px;
+}
+
+.panelAccordion .panel-heading a:after {
+    color: white;
+    cursor: pointer !important;
+}
+
+.panelContractorDescription {
+    text-align: left;
+    font-size: 14px !important;
+}
+
+.panelContractorDescription .panel-heading {
+    background-color: #2FA4E7 !important;
+    color: white !important;
+    padding: 5px;
+    padding-left: 28px;
+    font-size: 18px; 
+}
+
+.panelReview {
+    text-align: left;
+    font-size: 14px !important;
+}
+
+.panelReview .panel-heading {
+    background-color: #2FA4E7 !important;
+    color: white !important;
+    padding: 5px;
+    padding-left: 28px;
+    font-size: 18px;
+}
+
+.panelReview .panel-heading a:after {
+    content: none !important;
+}
+
+.panelReview .panel-heading .outputTextSubTitle {
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: 100;
+}
+
+.aTendererLink {
+    color: lightcyan !important;
+    padding-left: 5px;
+}
+
+.aContractorLink {
+    color: #333333 !important; 
+    margin-left: 5px;
+}
+
+.buttonBackRegistration {
+    margin-top: 20px !important;
+    background-color: #2FA4E7 !important;
+    border-color: #2FA4E7 !important;
+    color: #fff !important;
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.428571429 !important;
+    border-radius: 4px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.buttonBackRegistration:hover {
+    background-color: #178acc !important;
+    border-color: #1684c2 !important;
+}
 
 .panelReviewContractor {
     width: 100%; 
@@ -702,119 +910,10 @@ form .updateButtonContractorReview {
     float: left;
 }
 
-/* Moderator */
-
-.titlePanelReviewAdmin {
-    font-size: 22px;
-    font-weight: 200;
-}
-
-.panelReviewAdmin {
-    width: 100%; 
-    float: left;
-}
-
-.starsReviewAdmin {
-    float: right; 
-    margin-left: 20px;
-}
-
-.labelTitleReviewAdmin {
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.labelDateReviewAdmin {
-    font-size: 15px;
-    color: gray;
-}
-
-.divImageReviewAdmin {
-    width: 50px; 
-    height: 120px; 
-    text-align: center; 
-    float: left; 
-    background-color: #66cccc; 
-    padding-top: 20px;
-}
-
-.divDescriptionReviewAdmin {
-    float: left; 
-    margin-left: 20px; 
-    height: 100%;
-}
-
-.leftPanelAdmin {
-    width: 45%; 
-    float: left;
-    height: 140px;
-    margin-top: 40px;
-    border-right-width: 3px;
-    border-right-color: darkgray;
-    border-right-style: ridge;
-}
-
-.rightPanelAdmin {
-    width: 50%; 
-    float: left;
-    margin-left: 20px;
-    margin-bottom: 20px;
-    height: 150px;
-}
-
-.rightPanelTitleAdmin {
-    width: 50%; 
-    float: left;
-    margin-left: 20px;
-    margin-top: 10px;
-    height: 30px;
-}
-
-.rightPanelTitleLeftAdmin {
-    width: 35%; 
-    float: left;
-}
-
-.rightPanelTitleRightAdmin {
-    width: 60%; 
-    float: right;
-}
-
-.buttonsRightPanelAdmin {
-    float: left; 
-    width: 35%;
-}
-
-.divButtonsRightPanelAdmin {
-    width: 100%; 
-    text-align: center;
-}
-
-.divButtonsLeftRightPanelAdmin {
-    float: left; 
-    height: 140px; 
-    width: 48%;
-}
-
-.inputLeftPanelAdmin {
-    float: right; 
-    width: 60%;
-}
-
-.inputReviewAdmin {
-    float: left; 
-    height: 130px !important; 
-    width: 70%;
-}
-
 .commandButtonSaveAdmin {
     float: right; 
     height: 140px !important; 
     width: 25%;
-    background-color: #336c6c;
-    color: #66cccc;
-    font-size: 15px !important;
-    font-weight: 100;
     height: 40px;
     padding: 10px;
     text-align: center;
@@ -822,15 +921,7 @@ form .updateButtonContractorReview {
     cursor: pointer;
 }
 
-.commandButtonSaveAdmin:active {
-    background-color: #666666;
-}
-
 .commandButtonChoice {
-    background-color: #66cccc;
-    color: #336c6c;
-    font-size: 15px !important;
-    font-weight: 100;
     height: 40px;
     padding: 10px;
     text-align: center;
@@ -839,10 +930,6 @@ form .updateButtonContractorReview {
 }
 
 .commandButtonChoiceSelected {
-    background-color: #336c6c;
-    color: #66cccc;
-    font-size: 15px !important;
-    font-weight: 100;
     height: 40px;
     padding: 10px;
     text-align: center;
@@ -886,6 +973,7 @@ form .updateButtonContractorReview {
 .labelTitleReviewAdmin {
     font-size: 22px;
     font-weight: bold;
+    padding-left: 15px;
 }
 
 .labelDateReviewAdmin {
@@ -914,32 +1002,6 @@ form .updateButtonContractorReview {
     float: left; 
     margin-left: 20px; 
     height: 100%;
-}
-
-.leftPanelAdmin {
-    width: 45%; 
-    float: left;
-    height: 140px;
-    margin-top: 40px;
-    border-right-width: 3px;
-    border-right-color: darkgray;
-    border-right-style: ridge;
-}
-
-.rightPanelAdmin {
-    width: 50%; 
-    float: left;
-    margin-left: 20px;
-    margin-bottom: 20px;
-    height: 150px;
-}
-
-.rightPanelTitleAdmin {
-    width: 50%; 
-    float: left;
-    margin-left: 20px;
-    margin-top: 10px;
-    height: 30px;
 }
 
 .rightPanelTitleLeftAdmin {
@@ -979,47 +1041,59 @@ form .updateButtonContractorReview {
     width: 70%;
 }
 
-.commandButtonSaveAdmin {
-    float: right; 
-    height: 140px !important; 
-    width: 25%;
-    background-color: #336c6c;
-    color: #66cccc;
-    font-size: 15px !important;
-    font-weight: 100;
-    height: 40px;
-    padding: 10px;
-    text-align: center;
-    border: none;
-    cursor: pointer;
+.commandButtonAdminReview {
+    width: 90%;
+    margin-top: 5px;
 }
 
-.commandButtonSaveAdmin:active {
-    background-color: #666666;
+.commandButtonAdminReviewSelected {
+    cursor: not-allowed !important;
+    background-color: lightgray !important;
+    border-color: darkgray !important;
+    color: darkgray !important;
 }
 
-.commandButtonChoice {
-    background-color: #66cccc;
-    color: #336c6c;
-    font-size: 15px !important;
-    font-weight: 100;
-    height: 40px;
-    padding: 10px;
-    text-align: center;
-    border: none;
-    cursor: pointer;
+.formResearch {
+    margin-top: 15px;
 }
 
-.commandButtonChoiceSelected {
-    background-color: #336c6c;
-    color: #66cccc;
-    font-size: 15px !important;
-    font-weight: 100;
-    height: 40px;
-    padding: 10px;
-    text-align: center;
-    border: none;
-    cursor: pointer;
+.modal-header h4 {
+    font-size: 24px;
+    margin-bottom: -10px;
+}
+
+.commandButtonMessage {
+    margin-top: 20px;
+}
+
+.buttonCancel {
+    margin-top: 20px !important;
+    color: #fff !important;
+    background-color: #C71C22 !important;
+    border-color: #C71C22 !important;
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.428571429 !important;
+    border-radius: 4px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.buttonCancel:hover {
+    background-color: #9a161a !important;
+    border-color: #911419 !important;
 }
 
 /*****************************************************************************/
@@ -1049,8 +1123,22 @@ form .updateButtonContractorReview {
     float: left;
 }
 
+.panelGroupMessage {
+    margin: 15px;
+}
+
+.outputLabelPanelTitle {
+    margin-left: 15px; 
+    font-size: 18px;
+}
+
 .commandButtonClickNotification {
     width: 100% !important;
+}
+
+.panelNotification .panel-body {
+    padding-bottom: 8px !important;
+    padding-left: 0px !important;
 }
 
 /*****************************************************************************/
@@ -1249,7 +1337,8 @@ a.navbar-brand:hover {
 }
 
 footer.footer {
-    position: absolute !important;
+    /*position: absolute !important;*/
+    position: fixed;
     color: #ffffff !important;
     bottom: 0 !important;
     width: 100% !important;
@@ -1285,6 +1374,10 @@ footer.footer {
     font-size: 18px;
     font-weight: 200;
     float: right;
+}
+
+.panelHeaderBootsfaces .panel-heading a:after {
+    content: none !important;
 }
 
 .panelHeaderBootsfaces .panel-heading .rating {
@@ -1339,10 +1432,86 @@ footer.footer {
     width: 268px;
     padding: 5px;
     font-size: 16px;
-    line-height: 1;
-    border: 0;
+    border: 0;    line-height: 1;
+
     border-radius: 0;
     height: 34px;
     -webkit-appearance: none;
 }
 
+
+
+/*****************************************************************************/
+/*************************** Auto-Completion ***************************/
+/*****************************************************************************/
+
+.autocompleteInput {
+    display: block !important;
+    width: 100% !important;
+    height: 38px !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    font-weight: 100 !important;
+    line-height: 1.428571429 !important;
+    color: #555555 !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075) !important;
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important;
+    cursor: text !important; 
+}
+.autocompleteInput .ui-state-hover {
+    -webkit-appearance: textfield !important;
+    background-color: white !important;
+    border-top-width: 2px !important;
+    border-right-width: 2px !important;
+    border-bottom-width: 2px !important;
+    border-left-width: 2px !important;
+    border-top-style: inset !important;
+    border-right-style: inset !important;
+    border-bottom-style: inset !important;
+    border-left-style: inset !important;
+    border-top-color: initial !important;
+    border-right-color: initial !important;
+    border-bottom-color: initial !important;
+    border-left-color: initial !important;
+    border-image-source: initial !important;
+    border-image-slice: initial !important;
+    border-image-width: initial !important;
+    border-image-outset: initial !important;
+    border-image-repeat: initial !important;
+    padding-top: 1px !important;
+    padding-right: 1px !important;
+    padding-bottom: 1px !important;
+    padding-left: 1px !important;
+    -webkit-rtl-ordering: logical !important;
+    -webkit-user-select: text !important;
+    cursor: auto !important;
+    border: none !important;
+}
+
+.autocompleteInput .ui-state-default {
+    border: none !important;
+}
+
+.autocompleteInput .ui-inputfield {
+    padding: 0px !important
+}
+
+.autocompleteInput .ui-inputfield.ui-state-focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.autocompleteInput .ui-state-highlight, .ui-widget-content .ui-state-highlight {
+    border: none !important;
+    background: #FFFFFF !important;
+    color: #888888 !important;
+    text-shadow: none !important;
+}

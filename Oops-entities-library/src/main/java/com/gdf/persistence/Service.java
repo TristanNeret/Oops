@@ -7,31 +7,37 @@ package com.gdf.persistence;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Service
+ *
  * @author aziz
  */
 @Entity
 public class Service implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String title, description;
+    @NotNull(message = "Veuillez saisir un nom !")
+    private String title;
+    @NotNull(message = "Veuillez saisir une description !")
+    private String description;
+
     private double price;
-    
+
     @ManyToOne
     private Contractor contractor;
-    
+
     @ManyToOne
     private Category category;
 
@@ -45,7 +51,7 @@ public class Service implements Serializable {
         this.contractor = contractor;
         this.category = category;
     }
-    
+
     public Long getId() {
         return id;
     }

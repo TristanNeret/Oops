@@ -34,6 +34,10 @@ public class AdministratorBeanImpl implements AdministratorBean, Serializable {
     @PersistenceContext(unitName = "OopsPU")
     private EntityManager em;  
     
+    /**
+     * method to persist an entity Category
+     * @param category the entiy to persist
+     */
     @Override
     public void addCategory(Category category) {
         
@@ -41,6 +45,11 @@ public class AdministratorBeanImpl implements AdministratorBean, Serializable {
     
     }
     
+    /**
+     * private method to calcul the average rate of a tenderer from his review list
+     * @param reviews the list of reviews
+     * @return return the average rate in int
+     */
     private int calculateRate(List<Review> reviews) {
         int rate = 0;
         for (Review r : reviews) {
@@ -52,6 +61,13 @@ public class AdministratorBeanImpl implements AdministratorBean, Serializable {
         return rate;
     }
 
+    /**
+     * method to manage a review 
+     * @param reviewId id of the review to manage
+     * @param moderatorId id of the moderator who managed the review
+     * @param reviewState the state we want the review to have
+     * @param content the message of the moderator concerning the review
+     */
     @Override
     public void manageReview(long reviewId, long moderatorId, ReviewState reviewState, String content) {
       
@@ -152,6 +168,12 @@ public class AdministratorBeanImpl implements AdministratorBean, Serializable {
         
     }
     
+    /**
+     * method to send a notification to a contractor
+     * @param idModerator id of the moderator who send the notification
+     * @param contractor the contractor we want to send a notification
+     * @param message the message of the notification
+     */
     @Override
     public void sendMessageNotificationToContractor(long idModerator,Contractor contractor,String message){
        
@@ -171,7 +193,12 @@ public class AdministratorBeanImpl implements AdministratorBean, Serializable {
         attachedModerator.addNotification(newNotification);     
     }
     
-        
+    /**
+     * method to send a notification to a tenderer
+     * @param idModerator id of the moderator who send the notification
+     * @param tenderer the tenderer we want to send a notification
+     * @param message the message of the notification
+     */    
     @Override
     public void sendMessageNotificationToTenderer(long idModerator,Tenderer tenderer,String message){
        

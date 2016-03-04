@@ -12,30 +12,41 @@ and open the template in the editor.
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
     xmlns:p="http://primefaces.org/ui"
     xmlns:o="http://omnifaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <div class="container">
         
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Invitez une personne à venir sur Oops !" /> 
+
         <o:form id="mailForm" includeViewParams="true" >
 
-            <p:growl id="updateGrowl" widgetVar="updateGrowl" sticky="false" showDetail="false" life="3000" />
-            <h:panelGrid columns="2" cellpadding="5" >
-               
-                <h:outputLabel value="Objet :" />
-                <p:inputText id="object" value="#{mailInvitBean.subject}" required="true" label="Objet" size="40"/>
+            <p:growl id="updateGrowl" widgetVar="updateGrowl" sticky="false" rendered="#{mailInvitBean.success}" showDetail="false" life="3000" />
 
-                <h:outputLabel value="E-mail de la personne à inviter :" />
-                <p:inputText id="email" value="#{mailInvitBean.to}" required="true" label="E-mail" size="40">
-                    <f:validator validatorId="com.gdf.mailFormatValidator" binding="#{mailFormatValidator}" />
-                </p:inputText>
+            <b:container fluid="true">
+                <b:row styleClass="show-grid" style="padding: 15px;">
+                    <b:row>
+                        <b>Objet : </b><br/>
+                        <b:inputText id="object" value="#{mailInvitBean.subject}" required="true" label="Objet" size="40"/>
+                    </b:row>
+                    <b:row>
+                        <b>E-mail de la personne à inviter : </b><br/>
+                        <b:inputText id="email" value="#{mailInvitBean.to}" required="true" label="E-mail" size="40">
+                            <f:validator validatorId="com.gdf.mailFormatValidator" binding="#{mailFormatValidator}" />
+                        </b:inputText>
+                    </b:row>
+                    <b:message id="messageErrMail" for="email"/>
+                    <b:fetchBeanInfos />
+                    <b:row>
+                        <b>Message : </b><br/>
+                        <b:inputTextarea id="message" value="#{mailInvitBean.message}" rows="10" required="true" label="Message"/>
+                    </b:row>
+                    <b:commandButton id="send" value="Envoyer" look="success" oncomplete="#{mailInvitBean.setSuccess(false)}; return false;" action="#{mailInvitBean.sendMail()}" update="@form" style="float: right; margin-top: 15px;" />
+                </b:row>
+            </b:container>
 
-                <h:outputLabel value="Message :" />
-                <p:inputTextarea id="message" value="#{mailInvitBean.message}" autoResize="true" cols="50" rows="10" required="true" label="Message"/>
-
-                <p:commandButton id="send" value="Envoyer" action="#{mailInvitBean.sendMail()}" 
-                                update="updateGrowl @form" />
-            </h:panelGrid>
         </o:form>
+
     </div>
 
 

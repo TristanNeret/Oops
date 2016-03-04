@@ -5,7 +5,9 @@
  */
 package com.gdf.validators;
 
+import com.gdf.ejb.SearchBean;
 import javax.annotation.ManagedBean;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -20,15 +22,30 @@ import javax.faces.validator.ValidatorException;
  */
 @ManagedBean
 @RequestScoped
-@FacesValidator("com.gdf.socialReasonValidator")
-public class SocialReasonValidator implements Validator {
-    
+@FacesValidator(value = "com.gdf.rcsAlreadyExistValidator")
+public class RcsAlreadyExistValidator implements Validator {
+
+    private static final String SIREN_ALREADY_EXIST = "L'entreprise correspondant à ce numéro RCS est déjà inscrite !";
+
+    @EJB
+    SearchBean sb;
+
+    public RcsAlreadyExistValidator() {
+
+    }
+
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        if(value == null || ((String) value).trim().isEmpty()) {
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuiller indiquez la raison sociale", null));     
-        } else if(((String)value).length() < 4) {
-                throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "La raison sociale doit contenir au moins 5 caractères", null));
+
+        String rcs = (String) value;
+
+        // Test if a Contractor with this RCS value already exist
+        if (this.sb.searchContractorByRcs(rcs) != null) {
+
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, SIREN_ALREADY_EXIST, null));
+
         }
-    } 
+
+    }
+
 }

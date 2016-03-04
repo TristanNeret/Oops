@@ -38,6 +38,13 @@ public interface SearchBean {
     public Contractor searchContractorByLogin(String login);
     
     /**
+     * Search a Contractor by his social reason
+     * @param socialReason the social reason of the Contractor
+     * @return the Contractor ientified by the social reason if any or null if he doesn't exist
+     */
+    public Contractor searchContractorBySocialReason(String socialReason);
+    
+    /**
      * Search a Contractor by his SIREN
      * @param siren the SIREN number of the Contractor
      * @return the Contractor ientified by the SIREN if any or null if he doesn't exist
@@ -45,11 +52,25 @@ public interface SearchBean {
     public Contractor searchContractorBySiren(String siren);
     
     /**
+     * Search a Contractor by his SIRET
+     * @param siret the SIRET number of the Contractor
+     * @return the Contractor ientified by the SIRET if any or null if he doesn't exist
+     */
+    public Contractor searchContractorBySiret(String siret);
+    
+    /**
+     * Search a Contractor by his RCS
+     * @param rcs the RCS number of the Contractor
+     * @return the Contractor ientified by the RCS if any or null if he doesn't exist
+     */
+    public Contractor searchContractorByRcs(String rcs);
+    
+    /**
      * Search a Contractor by his email
      * @param email the email of the Contractor
      * @return the Contractor identified by the email if any or null if doesn't exist
      */
-    public List<Contractor> searchContractorByEmail(String email);
+    public Contractor searchContractorByEmail(String email);
 
     /**
      * Search contractors by several criteria 
@@ -193,5 +214,7 @@ public interface SearchBean {
      * @return all states
      */
     public List<String> getAllStates(); 
+
+    public Tenderer searchTendererByEmail(String email);
     
 }

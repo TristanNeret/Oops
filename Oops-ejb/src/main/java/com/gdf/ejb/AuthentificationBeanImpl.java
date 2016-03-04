@@ -16,6 +16,7 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
 
 /**
  * AuthentificationBeanImpl
+ * Class which implements the authentification
  * @author Tristan
  */
 @Stateless

@@ -5,7 +5,9 @@
  */
 package com.gdf.validators;
 
+import com.gdf.ejb.SearchBean;
 import javax.annotation.ManagedBean;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -20,18 +22,30 @@ import javax.faces.validator.ValidatorException;
  */
 @ManagedBean
 @RequestScoped
-@FacesValidator("com.gdf.sirenValidator")
-public class SirenValidator implements Validator {
+@FacesValidator(value = "com.gdf.socialReasonAlreadyExistValidator")
+public class SocialReasonAlreadyExistValidator implements Validator {
 
-    private static final String SIREN_FORMAT = "Le n° SIREN doit contenir 9 chiffres";
-    
+    private static final String SIREN_ALREADY_EXIST = "L'entreprise correspondant à cette raison sociale est déjà inscrite !";
+
+    @EJB
+    SearchBean sb;
+
+    public SocialReasonAlreadyExistValidator() {
+
+    }
+
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-         if(value == null || !value.toString().matches("[0-9]{9}")) {
-            
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, SIREN_FORMAT, null));
-            
+
+        String socialReason = (String) value;
+
+        // Test if a Contractor with this social reason value already exist
+        if (this.sb.searchContractorBySocialReason(socialReason) != null) {
+
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, SIREN_ALREADY_EXIST, null));
+
         }
+
     }
-    
+
 }

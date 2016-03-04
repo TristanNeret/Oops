@@ -6,6 +6,7 @@
 package com.gdf.singleton;
 
 import java.util.List;
+import javax.faces.model.SelectItem;
 
 /**
  *
@@ -18,5 +19,9 @@ public interface PopulateDB {
     public List<String> getAllTown(String code);
     
     public String getRegion(String code);
+    
+    public List<SelectItem> getLegalForms();
+    
+    public boolean isATeamCompany(String teamCompany);
     
 }

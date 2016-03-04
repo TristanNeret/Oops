@@ -5,7 +5,9 @@
  */
 package com.gdf.validators;
 
+import com.gdf.ejb.SearchBean;
 import javax.annotation.ManagedBean;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -20,17 +22,30 @@ import javax.faces.validator.ValidatorException;
  */
 @ManagedBean
 @RequestScoped
-@FacesValidator("com.gdf.siretValidator")
-public class SiretValidator implements Validator {
+@FacesValidator(value = "com.gdf.siretAlreadyExistValidator")
+public class SiretAlreadyExistValidator implements Validator {
 
-    private static final String SIRET_FORMAT = "Le n° SIRET doit contenir 14 chiffres";
-    
+    private static final String SIREN_ALREADY_EXIST = "L'entreprise correspondant à ce numéro SIRET est déjà inscrite !";
+
+    @EJB
+    SearchBean sb;
+
+    public SiretAlreadyExistValidator() {
+
+    }
+
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        if(value == null || !value.toString().matches("[0-9]{14}")) {
-            
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, SIRET_FORMAT, null));
-            
+
+        String siret = (String) value;
+
+        // Test if a Contractor with this SIRET value already exist
+        if (this.sb.searchContractorBySiret(siret) != null) {
+
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, SIREN_ALREADY_EXIST, null));
+
         }
-    } 
+
+    }
+
 }

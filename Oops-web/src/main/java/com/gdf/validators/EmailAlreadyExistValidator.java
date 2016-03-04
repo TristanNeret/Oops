@@ -17,38 +17,35 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- * Test if the entreprise is already register
- *
- * @author Tristan
+ * Test if a email is already used by another user
+ * @author Nicolas
  */
 @ManagedBean
 @RequestScoped
-@FacesValidator(value = "com.gdf.sirenAlreadyExistValidator")
-public class SirenAlreadyExistValidator implements Validator {
+@FacesValidator(value="com.gdf.emailAlreadyExistValidator")
+public class EmailAlreadyExistValidator implements Validator {
 
-    private static final String SIREN_ALREADY_EXIST = "L'entreprise correspondant à ce numéro SIREN est déjà inscrite !";
+    private static final String EMAIL_ALREADY_USED = "Cet email est déjà utilisé !";
 
     @EJB
     SearchBean sb;
-
+    
     /**
-     * Creates a new instance of LoginAlreadyExistValidator
+     * Creates a new instance of EmailAlreadyExistValidator
      */
-    public SirenAlreadyExistValidator() {
+    public EmailAlreadyExistValidator() {
     }
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-
-        String siren = (String) value;
-
-        // Test if a Contractor with this SIREN value already exist
-        if (this.sb.searchContractorBySiren(siren) != null) {
-
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, SIREN_ALREADY_EXIST, null));
-
+        
+        String email = (String)value;
+        
+        // Test if a Tenderer or a Contractor already uses this email
+        if(this.sb.searchContractorByEmail(email) != null || this.sb.searchTendererByEmail(email) != null) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, EMAIL_ALREADY_USED, null));
         }
-
+        
     }
-
+        
 }

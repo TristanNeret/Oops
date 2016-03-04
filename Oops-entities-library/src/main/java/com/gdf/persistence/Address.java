@@ -13,9 +13,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Address
+ *
  * @author aziz
  */
 @Entity
@@ -25,18 +28,28 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "Address.findByZip", query = "SELECT adr FROM Address adr WHERE adr.zipCode=?1")
 })
 public class Address implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private int streetNumber, zipCode;
-    private String street, town, country,region;
+
+    @Size(min = 3, message = "La rue doit contenir au moins 3 caractères !")
+    @NotNull(message = "Veuillez saisir une rue !")
+    private String street;
+    @Size(min = 3, message = "La ville doit contenir au moins 3 caractères !")
+    @NotNull(message = "Veuillez saisir une ville !")
+    private String town;
+    @Size(min = 3, message = "Le pays doit contenir au moins 3 caractères !")
+    @NotNull(message = "Veuillez saisir un pays !")
+    private String country;
+    private String region;
 
     public Address() {
     }
-    
+
     public Address(int streetNumber, String street, int zipCode, String town, String country) {
         this.streetNumber = streetNumber;
         this.zipCode = zipCode;
@@ -45,7 +58,7 @@ public class Address implements Serializable {
         this.country = country;
     }
 
-    public Address(int streetNumber,String street, int zipCode,  String town, String country, String region) {
+    public Address(int streetNumber, String street, int zipCode, String town, String country, String region) {
         this.streetNumber = streetNumber;
         this.zipCode = zipCode;
         this.street = street;
@@ -53,9 +66,7 @@ public class Address implements Serializable {
         this.country = country;
         this.region = region;
     }
-    
-    
-    
+
     public Long getId() {
         return id;
     }
@@ -111,8 +122,7 @@ public class Address implements Serializable {
     public void setRegion(String region) {
         this.region = region;
     }
-    
-   
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -153,7 +163,7 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return streetNumber+" "+street+" "+zipCode+" "+town+" "+country;
-    } 
-    
+        return streetNumber + " " + street + " " + zipCode + " " + town + " " + country;
+    }
+
 }

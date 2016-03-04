@@ -93,6 +93,23 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         }
 
     }
+    
+    @Override
+    public Contractor searchContractorBySocialReason(String socialReason) {
+
+        Query query = em.createNamedQuery("Contractor.findBySocialReason");
+        query.setParameter(1, socialReason);
+        if (query.getResultList().isEmpty()) {
+
+            return null;
+
+        } else {
+
+            return (Contractor) query.getSingleResult();
+
+        }
+
+    }
 
     @Override
     public Contractor searchContractorBySiren(String siren) {
@@ -110,6 +127,41 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         }
 
     }
+    
+    @Override
+    public Contractor searchContractorBySiret(String siret) {
+
+        Query query = em.createNamedQuery("Contractor.findBySiret");
+        query.setParameter(1, siret);
+        if (query.getResultList().isEmpty()) {
+
+            return null;
+
+        } else {
+
+            return (Contractor) query.getSingleResult();
+
+        }
+
+    }
+    
+    @Override
+    public Contractor searchContractorByRcs(String rcs) {
+
+        Query query = em.createNamedQuery("Contractor.findByRcs");
+        query.setParameter(1, rcs);
+        if (query.getResultList().isEmpty()) {
+
+            return null;
+
+        } else {
+
+            return (Contractor) query.getSingleResult();
+
+        }
+
+    }
+    
 
     /**
      * Search contractors using an email
@@ -118,8 +170,15 @@ public class SearchBeanImpl implements SearchBean, Serializable {
      * @return the list of contractors
      */
     @Override
-    public List<Contractor> searchContractorByEmail(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Contractor searchContractorByEmail(String email) {
+        
+        Query query = em.createNamedQuery("Contractor.findByEmail");
+        query.setParameter(1,email);
+        if (query.getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (Contractor) query.getSingleResult();
+        }
     }
 
     /**
@@ -237,7 +296,7 @@ public class SearchBeanImpl implements SearchBean, Serializable {
     @Override
     public List<Tenderer> searchTendererByKeyWord(String keyWord) {
         TypedQuery<Tenderer> query;
-        query = em.createQuery("SELECT t FROM Tenderer t WHERE t.login LIKE :word OR t.email LIKE :word Or t.firstname LIKE :word Or t.lastname LIKE :word", Tenderer.class);
+        query = em.createQuery("SELECT t FROM Tenderer t WHERE t.login LIKE :word OR t.email LIKE :word Or t.firstname LIKE :word Or t.lastname LIKE :word ORDER BY t.login ASC", Tenderer.class);
         query.setParameter("word", "%" + keyWord + "%");
         return query.getResultList();
     }
@@ -344,9 +403,7 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         } else {
 
             return (Tenderer) query.getSingleResult();
-
         }
-
     }
 
     // MODERATOR
@@ -359,36 +416,27 @@ public class SearchBeanImpl implements SearchBean, Serializable {
             // The lazy relationships must be traversed before exiting the scope of the JPA Session to avoid the Exception.
             moderator.getReviews().size();
         }
-
         return moderator;
-
     }
 
     // REVIEW
     @Override
     public List<Review> searchWaitingReviews() {
-
         Query query = em.createNamedQuery("Review.findWaitingReviews");
-
         return query.getResultList();
-
     }
 
     @Override
     public List<Review> searchAcceptedContratorReviews(long id) {
-
         Query query = em.createNamedQuery("Review.findAcceptedContractorReviews");
         query.setParameter(1, id);
-
         return query.getResultList();
-
     }
 
     @Override
     public List<Review> searchAcceptedTendererReviews(long id) {
         Query query = em.createNamedQuery("Review.findAcceptedTendererReviews");
         query.setParameter(1, id);
-
         return query.getResultList();
     }
 
@@ -411,33 +459,37 @@ public class SearchBeanImpl implements SearchBean, Serializable {
     // CATEGORY
     @Override
     public List<String> getAllCategory() {
-
         TypedQuery<String> query;
         query = em.createQuery("SELECT DISTINCT c.name FROM Category c ", String.class);
         return query.getResultList();
-
     }
 
     @Override
     public List<Category> getCategories() {
-
         TypedQuery<Category> query = em.createQuery("SELECT c FROM Category c ", Category.class);
         return query.getResultList();
-
     }
 
     @Override
     public Category searchCategoryById(long idCategory) {
-
         return em.find(Category.class, idCategory);
-
     }
 
     @Override
-    public List<Review> getThreeReviewsToShow() {
-        
+    public List<Review> getThreeReviewsToShow() {    
         return em.createQuery("SELECT r FROM Review r WHERE r.reviewState=com.gdf.persistence.ReviewState.ACCEPTED ", Review.class).setFirstResult(0).setMaxResults(3).getResultList();
+    }
+
+    @Override
+    public Tenderer searchTendererByEmail(String email) {
         
+        Query query = em.createNamedQuery("Tenderer.findByEmail");
+        query.setParameter(1,email);
+        if (query.getResultList().isEmpty()) {
+            return null;
+        } else {
+            return (Tenderer) query.getSingleResult();
+        }
     }
     
 }

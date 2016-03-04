@@ -16,7 +16,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.model.SelectItem;
-import javax.faces.model.SelectItemGroup;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -33,23 +32,7 @@ public class ContractorEditBean implements Serializable {
 
     private List<SelectItem> legalForms;
 
-    private final SelectItem[] nonTeamCompanies = new SelectItem[]{
-        new SelectItem("Auto-entrepreneur", "Auto-entrepreneur"),
-        new SelectItem("Entrepreneur individuel", "Entrepreneur individuel"),
-        new SelectItem("EIRL", "EIRL"),
-        new SelectItem("EURL", "EURL"),
-        new SelectItem("SASU", "SASU")
-    };
 
-    private final SelectItem[] teamCompanies = new SelectItem[]{
-        new SelectItem("SNC", "SNC"),
-        new SelectItem("SARL", "SARL"),
-        new SelectItem("SA", "SA"),
-        new SelectItem("SAS", "SAS"),
-        new SelectItem("SCA", "SCA")
-    };
-
-    private boolean code;
     @EJB
     private PopulateDB pdb;
     private List<SelectItem> allCountry;
@@ -66,17 +49,8 @@ public class ContractorEditBean implements Serializable {
         
         this.contractor = sb.searchContractorById(SessionBean.getUserId());
 
-        SelectItemGroup g1 = new SelectItemGroup("Entreprise individuelle");
-        g1.setSelectItems(nonTeamCompanies);
+        legalForms = pdb.getLegalForms();
 
-        SelectItemGroup g2 = new SelectItemGroup("Entreprise non-individuelle");
-        g2.setSelectItems(teamCompanies);
-
-        legalForms = new ArrayList<>();
-        legalForms.add(g1);
-        legalForms.add(g2);
-
-        code = false;
     }
 
     /**
@@ -98,7 +72,9 @@ public class ContractorEditBean implements Serializable {
     }
 
     public void undo() {
-        contractor = cm.undo(contractor);
+        System.out.println("entre");
+        this.contractor = sb.searchContractorById(SessionBean.getUserId());
+        //contractor = cm.undo(contractor);
     }
 
     public void update() {
@@ -119,20 +95,10 @@ public class ContractorEditBean implements Serializable {
     }
 
     public boolean isATeamCompanySelected() {
-        for (SelectItem si : teamCompanies) {
-            if (si.getLabel().equals(contractor.getLegalForm())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isCode() {
-        return code;
+        return pdb.isATeamCompany(contractor.getLegalForm());
     }
 
     public void setZipCode(int zipCode) {
-        this.code = true;
         this.contractor.getAddress().setZipCode(zipCode);
         this.contractor.getAddress().setRegion(pdb.getRegion(Integer.toString(zipCode)));
     }
@@ -143,7 +109,6 @@ public class ContractorEditBean implements Serializable {
 
     public void setCountry(String country) {
         this.contractor.getAddress().setCountry(country);
-        this.contractor.getAddress().setZipCode(0);
     }
 
     public String getCountry() {
@@ -173,9 +138,13 @@ public class ContractorEditBean implements Serializable {
 
         List<SelectItem> li = new ArrayList<>();
 
-        for (String town : ltowns) {
-            li.add(new SelectItem(town));
-        }
+        if(ltowns != null){
+        
+            for (String town : ltowns) {
+                li.add(new SelectItem(town));
+            }
+        
+        }    
 
         return li;
     }

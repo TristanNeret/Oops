@@ -35,37 +35,38 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
     @NamedQuery(name = "Tenderer.findByLogin", query = "SELECT t FROM Tenderer t WHERE t.login=?1"),
     @NamedQuery(name = "Tenderer.findByEmail", query = "SELECT t FROM Tenderer t WHERE t.email=?1"),
     @NamedQuery(name = "Tenderer.beginBy", query = "SELECT t.login FROM Tenderer t WHERE t.login LIKE ?1"),
-    @NamedQuery(name= "Tenderer.authentification", query = "SELECT t.id from Tenderer t WHERE t.login LIKE ?1 AND t.password LIKE ?2")  
+    @NamedQuery(name = "Tenderer.authentification", query = "SELECT t.id from Tenderer t WHERE t.login LIKE ?1 AND t.password LIKE ?2")
 })
 public class Tenderer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";
 
-    @NotNull(message = "Veuillez saisir un login")
-    @Size(min = 4, max = 20, message = "Votre login doit contenir entre 5 et 20 caractères.")
+    @NotNull(message = "Veuillez saisir un login !")
+    @Size(min = 4, max = 20, message = "Votre login doit contenir entre 4 et 20 caractères !")
     @Column(unique = true)
     private String login;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull(message = "Veuillez saisir un email")
+    @NotNull(message = "Veuillez saisir un email !")
     private String email;
 
-    @NotNull(message = "Veuillez saisir un mot de passe")
-    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères")
+    @NotNull(message = "Veuillez saisir un mot de passe !")
+    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères !")
     private String password;
 
-    @NotNull(message = "Veuillez saisir un prénom")
-    @Size(min = 3, message = "Le prénom doit contenir au moins 3 caractères")
+    @NotNull(message = "Veuillez saisir un prénom !")
+    @Size(min = 3, message = "Le prénom doit contenir au moins 3 caractères !")
     private String firstname;
 
-    @NotNull(message = "Veuillez saisir un nom")
-    @Size(min = 3, message = "Le nom doit contenir au moins 3 caractères")
+    @NotNull(message = "Veuillez saisir un nom !")
+    @Size(min = 3, message = "Le nom doit contenir au moins 3 caractères !")
     private String lastname;
 
     private String avatar;
+
     private String phone;
 
     private String registrationDate, updateDate;
