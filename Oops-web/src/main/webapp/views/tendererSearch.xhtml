@@ -41,7 +41,7 @@ and open the template in the editor.
 
         <!-- CONTENT -->
         <div class="container">
-            
+
             <p:fieldset rendered="#{empty searchManagedBean.ltd}" styleClass="fieldsetNoResult">
                 <h:outputText id="noResultOutputText" styleClass="fieldsetNoResult" value="Aucun résultat ne correspond aux critères de recherche."/> 
             </p:fieldset>
@@ -81,8 +81,8 @@ and open the template in the editor.
                                     <p:commandButton id="askReviewBtn" value="Demander un avis" 
                                                      styleClass="buttonAskReview"
                                                      rendered="#{tendererSearchBean.display(tend.id)}"
-                                                     onclick="PF('askReviewDialog').show();"
                                                      actionListener="#{tendererSearchBean.setTenderer(tend)}"
+                                                     onclick="PF('askReviewDialog').show();"
                                                      update="askReviewDialogForm:dialogPanel" style="float: right; margin-top: 5px; margin-right: 10px" /> 
                                 </b:column>
                             </b:row>
@@ -96,21 +96,19 @@ and open the template in the editor.
             <!-- DIALOG BOX FOR ASKING REVIEWS  -->
             <o:form id="askReviewDialogForm" includeViewParams="true">
 
-                <p:dialog header="Demande d'avis" modal="true" widgetVar="askReviewDialog" resizable="false">
+                <p:dialog header="Demander un avis" modal="true" widgetVar="askReviewDialog" resizable="false" style="min-width: 480px;">
                     <p:outputPanel id="dialogPanel">
-                        <h:panelGrid columns="1" cellpadding="5">
 
-                            <h:outputText value="Soumissionaire : "/>
-                            <h:outputText value="#{tendererSearchBean.tenderer.login} 
-                                          (#{tendererSearchBean.tenderer.firstname} #{tendererSearchBean.tenderer.lastname})" />
+                        <b><h:outputText value="Soumissionaire : " style="width: 100%;"/></b>
+                        <h:outputText value="#{tendererSearchBean.tenderer.login} 
+                                      (#{tendererSearchBean.tenderer.firstname} #{tendererSearchBean.tenderer.lastname})" />
+                        <br/>
+                        <b><h:outputLabel value="Message :" style="width: 100%;"/></b>
+                        <p:inputTextarea id="askReviewMsg" value="#{tendererSearchBean.message}" 
+                                         rows="6" cols="33" placeholder="Facultatif" style="width: 100%;"/>
 
-                            <h:outputLabel value="Message :" />
-                            <p:inputTextarea id="askReviewMsg" value="#{tendererSearchBean.message}" 
-                                             rows="6" cols="33" placeholder="Facultatif" />
-
-                        </h:panelGrid>
                         <div class="dialogFooter" >
-                            <p:commandButton id="sendAskReviewBtn" update="askReviewForm"
+                            <p:commandButton id="sendAskReviewBtn" update="askReviewForm" styleClass="buttonAskReview"
                                              value="Envoyer" actionListener="#{tendererSearchBean.askReview()}"                                                          
                                              oncomplete="handleAskReviewRequest(xhr, status, args)" 
                                              onclick="PF('askReviewGrowl').renderMessage({summary: 'Demande d\'avis envoyée !',
