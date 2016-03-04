@@ -25,7 +25,7 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("com.gdf.noBlankSpaceValidator")
 public class NoBlankSpaceValidator implements Validator {
 
-    private static final String NO_BLANK_SPACE = "Les champs de saisie ne peuvent contenir que des espaces.";
+    private static final String NO_BLANK_SPACE = "Les champs de saisie ne peuvent contenir que des espaces !";
 
     @EJB
     SearchBean sb;

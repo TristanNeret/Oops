@@ -39,8 +39,11 @@ import org.jasypt.util.password.ConfigurablePasswordEncryptor;
     @NamedQuery(name = "Contractor.findByLogin", query = "select c from Contractor c where c.login=?1"),
     @NamedQuery(name = "Contractor.findByEmail", query = "select c from Contractor c where c.email=?1"),
     @NamedQuery(name = "Contractor.beginBy", query = "SELECT c.socialReason from Contractor c WHERE c.socialReason LIKE ?1"),
-    @NamedQuery(name = "Contractor.authentification", query = "SELECT c.id from Contractor c WHERE c.login LIKE ?1 AND c.password LIKE ?2")
-})
+    @NamedQuery(name = "Contractor.authentification", query = "SELECT c.id from Contractor c WHERE c.login LIKE ?1 AND c.password LIKE ?2"),
+    @NamedQuery(name = "Contractor.findBySocialReason", query = "select c from Contractor c where c.socialReason=?1"),
+    @NamedQuery(name = "Contractor.findBySiren", query = "select c from Contractor c, LegalInformation l WHERE c.legalInformation.id = l.id AND l.siren=?1"),
+    @NamedQuery(name = "Contractor.findBySiret", query = "select c from Contractor c, LegalInformation l WHERE c.legalInformation.id = l.id AND l.siret=?1"),
+    @NamedQuery(name = "Contractor.findByRcs", query = "select c from Contractor c, LegalInformation l WHERE c.legalInformation.id = l.id AND l.rcs=?1"),})
 public class Contractor implements Serializable {
 
     private static final String ENCRYPTION_ALGORITHM = "SHA-256";

@@ -95,7 +95,7 @@ and open the template in the editor.
                             </b:inputText>
                             <b:message id="contractorLoginMessage" for="contractorLogin" />
 
-                            <b:inputSecret id="contractorPassword" label="Mot de passe" placeholder="Entrez un mot de passe" renderLabel="true" value="#{contractorRegistrationBean.contractor.password}">
+                            <b:inputSecret id="contractorPassword" label="Mot de passe" placeholder="Entrez un mot de passe" renderLabel="true" value="#{contractorRegistrationBean.password}">
                                 <f:facet name="prepend">
                                     <b:icon name="lock" />
                                 </f:facet>
@@ -120,7 +120,7 @@ and open the template in the editor.
                             </b:inputText>
                             <b:message id="contractorLastnameMessage" for="contractorLastname" />
 
-                            <b:inputText id="contractorMail" label="Adresse mail" placeholder="Entrez votre mail" renderLabel="true" value="#{contractorRegistrationBean.contractor.email}" >
+                            <b:inputText id="contractorMail" label="Adresse mail" placeholder="Entrez votre adresse mail" renderLabel="true" value="#{contractorRegistrationBean.contractor.email}" >
                                 <f:facet name="prepend">
                                     <h:outputText value="@" />
                                 </f:facet>
@@ -192,6 +192,7 @@ and open the template in the editor.
 
 
                             <b:inputText id="contractorSocialReason" label="Raison sociale" placeholder="Entrez la raison sociale" renderLabel="true" value="#{contractorRegistrationBean.contractor.socialReason}">
+                                <f:validator validatorId="com.gdf.socialReasonAlreadyExistValidator" />
                             </b:inputText>
                             <b:message id="contractorSocialReasonMessage" for="contractorSocialReason" />
 
@@ -233,18 +234,21 @@ and open the template in the editor.
                             <b:inputText  id="contractorSiren"  label="N° SIREN" placeholder="Entrez le n° SIREN" 
                                           renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.siren}" size="9" 
                                           maxlength="9">
+                                <f:validator validatorId="com.gdf.sirenAlreadyExistValidator"/>
                             </b:inputText>
                             <b:message id="sirenMessage" for="contractorSiren" />
 
                             <b:inputText  id="contractorSiret"  label="N° SIRET" placeholder="Entrez le n° SIRET" 
                                           renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.siret}" size="14" 
                                           maxlength="14">    
+                                <f:validator validatorId="com.gdf.siretAlreadyExistValidator"/>
                             </b:inputText>
                             <b:message id="siretMessage" for="contractorSiret" />
 
                             <b:inputText  id="contractorRcs"  label="N° RCS" placeholder="Entrez le n° RCS" 
                                           renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.rcs}"
-                                          maxlength="20">                                 
+                                          maxlength="20">
+                                <f:validator validatorId="com.gdf.rcsAlreadyExistValidator"/>
                             </b:inputText>
                             <b:message id="rcsMessage" for="contractorRcs" />
 

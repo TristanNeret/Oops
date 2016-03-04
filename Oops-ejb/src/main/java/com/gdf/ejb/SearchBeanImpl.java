@@ -93,6 +93,23 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         }
 
     }
+    
+    @Override
+    public Contractor searchContractorBySocialReason(String socialReason) {
+
+        Query query = em.createNamedQuery("Contractor.findBySocialReason");
+        query.setParameter(1, socialReason);
+        if (query.getResultList().isEmpty()) {
+
+            return null;
+
+        } else {
+
+            return (Contractor) query.getSingleResult();
+
+        }
+
+    }
 
     @Override
     public Contractor searchContractorBySiren(String siren) {
@@ -110,6 +127,41 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         }
 
     }
+    
+    @Override
+    public Contractor searchContractorBySiret(String siret) {
+
+        Query query = em.createNamedQuery("Contractor.findBySiret");
+        query.setParameter(1, siret);
+        if (query.getResultList().isEmpty()) {
+
+            return null;
+
+        } else {
+
+            return (Contractor) query.getSingleResult();
+
+        }
+
+    }
+    
+    @Override
+    public Contractor searchContractorByRcs(String rcs) {
+
+        Query query = em.createNamedQuery("Contractor.findByRcs");
+        query.setParameter(1, rcs);
+        if (query.getResultList().isEmpty()) {
+
+            return null;
+
+        } else {
+
+            return (Contractor) query.getSingleResult();
+
+        }
+
+    }
+    
 
     /**
      * Search contractors using an email

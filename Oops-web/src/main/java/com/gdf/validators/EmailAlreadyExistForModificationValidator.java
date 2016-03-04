@@ -24,7 +24,7 @@ import javax.faces.validator.ValidatorException;
 public class EmailAlreadyExistForModificationValidator implements Validator {
 
     private static final String EMAIL_ALREADY_USED = "Cet email est déjà utilisé !";
-    private static final String EMAIL_NULL ="Veuillez indiquer un email";
+    private static final String EMAIL_NULL ="Veuillez indiquer un email !";
 
     @EJB
     SearchBean sb;

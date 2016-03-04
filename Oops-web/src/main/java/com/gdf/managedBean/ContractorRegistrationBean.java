@@ -39,11 +39,11 @@ public class ContractorRegistrationBean implements Serializable {
 
     private Contractor contractor;
 
-    @NotNull(message = "Veuillez saisir un de mot de passe")
+    @NotNull(message = "Veuillez saisir un de mot de passe !")
     @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères !")
     private String password;
 
-    @NotNull(message = "Veuillez saisir une confirmation de mot de passe")
+    @NotNull(message = "Veuillez saisir une confirmation de mot de passe !")
     private String passwordConfirm;
 
     private boolean code;
