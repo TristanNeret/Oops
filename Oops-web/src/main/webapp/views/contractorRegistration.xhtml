@@ -199,7 +199,7 @@ and open the template in the editor.
                             <b:selectOneMenu id="contractorLegalForm" label="Forme juridique" 
                                              renderLabel="true" value="#{contractorRegistrationBean.contractor.legalForm}" >
                                 <f:selectItems value="#{contractorRegistrationBean.legalForms}" />
-                                <!-- This will execute the ajax update without all fields being filled --> 
+                                <!--This will execute the ajax update without all fields being filled-->  
                                 <f:ajax event="change" execute="@none" 
                                         render="registerContractorFormLegalInfos:contractorNbEmployeesPG"/>
                             </b:selectOneMenu>
@@ -309,9 +309,9 @@ and open the template in the editor.
                                 <h:panelGroup rendered="#{contractorRegistrationBean.country == 'France'}">
 
                                     <div class="form-group">
-                                        <label for="zipCode">Code postal:</label>
-                                        <h:inputText  class="form-control" id="zipCode" label="Code postal" value="#{contractorRegistrationBean.zipCode}" size="5" maxlength="5">
-                                            <f:ajax event="change" render="registerContractorFormAddress:registerContractorPGAddress"/>
+                                        <label for="zipCode">Code postal</label>
+                                        <h:inputText  class="form-control" id="zipCode" label="Code postal" value="#{contractorRegistrationBean.zipCode}" size="5" maxlength="5">                                          
+                                            <f:ajax event="keyup" delay="1500" render="registerContractorFormAddress:registerContractorPGAddress"/>
                                             <f:validator validatorId="com.gdf.zipValidator"/>
                                         </h:inputText>
                                     </div>
