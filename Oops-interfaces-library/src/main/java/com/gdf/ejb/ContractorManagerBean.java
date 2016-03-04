@@ -27,7 +27,11 @@ public interface ContractorManagerBean {
      */
     public void delete(Contractor c); 
     
-    
+    /**
+     * undo changes of a contractor
+     * @param c the contractor we want to undo changes
+     * @return the contractor unchanged from the base
+     */
     public Contractor undo(Contractor c);
     
 }
