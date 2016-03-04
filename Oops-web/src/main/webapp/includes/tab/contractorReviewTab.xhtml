@@ -11,48 +11,68 @@ and open the template in the editor.
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    
+
     <div class="container">
-        
+
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis des utilisateurs :" rendered="#{contractorReviewBean.areReviews()}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Il n'y a encore aucun avis vous concernant." rendered="#{!contractorReviewBean.areReviews()}" /> 
-        
-        <p:panel id="reviewsList">
-            <c:forEach items="#{contractorReviewBean.reviews}" var="review" >
-                <div class="panelReviewContractor">
-                    <!-- Review informations -->
-                    <div class="leftPanelContractor">
-                        <div class="divRatingContractorReview">
-                            <h:outputLabel styleClass="labelPresentationContractorReview" value="#{review.appreciation}" />
-                            <p:rating styleClass="starsReviewContractor" value="#{review.rating}" stars="5" readonly="true"/>
-                        </div>
-                        <h:outputLabel value="#{review.content}" style="width:100%;" />
-                        <div class="divTendererContractorReview">
-                            <h:outputLabel value="#{review.tenderer.login}" style="color: #666666;" />
-                            <h:outputLabel value="#{review.date}" style="color: #66cccc; margin-left: 10px;" />
-                        </div>
-                    </div>
-                    <!-- contractor's actions -->
-                    <div class="rightPanelContractor">
-                        <h:form id="formComment">
-                            <p:growl id="growlReviewContractor" sticky="false" showDetail="false" life="3000" /> 
-                            <div class="divTitleReviewComment">
+
+        <p:dataGrid var="review" value="#{contractorReviewBean.reviews}" columns="1" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+                    paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="6,12,16" rendered="#{contractorReviewBean.areReviews()}" style="margin-top: 20px;">
+
+            <!-- REVIEW -->
+            <b:container fluid="true">
+                <b:column span="6">
+                    <b:panel collapsible="false" styleClass="panelReview">
+                        <f:facet name="heading">
+                            <b:row styleClass="show-grid">
+                                <h:outputText value="#{review.appreciation}"/>
+                                <h:outputText styleClass="outputTextSubTitle" value="par"/>
+                                <a class="aTendererLink" href="/Oops-web/views/tendererInformations.xhtml?id=#{review.tenderer.id}">#{review.tenderer.login}</a>
+                                <h:outputText styleClass="outputTextSubTitle" value="le #{review.date}"/>
+                            </b:row>
+                        </f:facet>
+                        <b:container fluid="true">
+                            <b:row styleClass="show-grid">
+                                <h:outputText value="#{review.content}" />
+                            </b:row>
+                            <b:row styleClass="show-grid">
+                                <b id="starsTxt2" style="float:left;">Note : </b> 
+                                <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
+                            </b:row>
+                        </b:container>
+                    </b:panel>
+                </b:column>
+                <b:column span="6">
+                    <h:form id="formComment">
+                        <p:growl id="growlReviewContractor" sticky="false" showDetail="false" life="3000" /> 
+                        <b:column span="9">
+                            <b:row styleClass="show-grid">
                                 <h:outputLabel value="Réponse :" />
-                            </div>
-                            <div>
-                                <p:inputTextarea id="reviewContent" styleClass="textAreaContractorReviewComment" rows="6" cols="20" value="#{contractorReviewBean.answersReview[review.id]}" required="true" autoResize="false" label="Réponse" />
-                                <div class="divContractorReviewComment">
-                                    <p:commandButton id="answerButton" rendered="#{empty review.contractorAnswer}" value="Répondre" styleClass="updateButtonContractorReview" action="#{contractorReviewBean.updateReviewsAnswer(review)}" update="growlReviewContractor @form" />
-                                    <p:commandButton id="editButton" rendered="#{not empty review.contractorAnswer}" value="Modifier" styleClass="updateButtonContractorReview" action="#{contractorReviewBean.updateReviewsAnswer(review)}" update="growlReviewContractor @form" />
-                                    <p:commandButton id="deleteButton" rendered="#{not empty review.contractorAnswer}" value="Supprimer" styleClass="deleteButtonContractorReview" action="#{contractorReviewBean.deleteReviewsAnswer(review)}" update="growlReviewContractor @form" />
-                                </div>
-                            </div>
-                        </h:form>
-                    </div>
-                </div>
-            </c:forEach>
-        </p:panel>
+                            </b:row>
+                            <b:row styleClass="show-grid">
+                                <b:inputTextarea id="reviewContent" placeholder="Saisissez votre réponse ici." rows="4" value="#{contractorReviewBean.answersReview[review.id]}" required="true" label="Réponse" />
+                            </b:row>
+                        </b:column>
+                        <b:column span="3" style="text-align: center;">
+                            <b:row styleClass="show-grid">
+                                <h:outputLabel value=" " />
+                            </b:row>
+                            <b:row styleClass="show-grid">
+                                <p:commandButton id="answerButton" style="margin-top: 5px !important; width: 90% !important;" rendered="#{empty review.contractorAnswer}" value="Répondre" styleClass="buttonRegistration" action="#{contractorReviewBean.updateReviewsAnswer(review)}" update="growlReviewContractor @form" />
+                                <p:commandButton id="editButton" style="margin-top: 5px !important; width: 90% !important;" rendered="#{not empty review.contractorAnswer}" value="Modifier" styleClass="buttonBackRegistration" action="#{contractorReviewBean.updateReviewsAnswer(review)}" update="growlReviewContractor @form" />
+                                <p:commandButton id="deleteButton" style="margin-top: 5px !important; width: 90% !important;" rendered="#{not empty review.contractorAnswer}" value="Supprimer" styleClass="buttonCancel" action="#{contractorReviewBean.deleteReviewsAnswer(review)}" update="growlReviewContractor @form" />
+                            </b:row>
+                        </b:column>
+                    </h:form>
+                </b:column>
+            </b:container>
+
+        </p:dataGrid>
+
     </div>
-    
+
 </ui:composition>

@@ -29,10 +29,8 @@ public class Service implements Serializable {
     private Long id;
 
     @NotNull(message = "Veuillez saisir un nom !")
-    @Size(min = 5, message = "Le nom doit contenir au moins 5 caractères !")
     private String title;
     @NotNull(message = "Veuillez saisir une description !")
-    @Size(min = 15, message = "La description doit contenir au moins 15 caractères !")
     private String description;
 
     private double price;

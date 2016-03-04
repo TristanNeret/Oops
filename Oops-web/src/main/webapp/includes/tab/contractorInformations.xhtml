@@ -11,7 +11,7 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:oou="http://omnifaces.org/ui"
     xmlns:o="http://omnifaces.org/ui"
-    >
+    xmlns:b="http://bootsfaces.net/ui">
 
     <script type="text/javascript">
         function handleMdpModification(xhr, status, args) {
@@ -38,64 +38,54 @@
 
     <div class="container">
 
-        <h:panelGroup id="informations">
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Informations personnelles du représentant :" /> 
 
-            <p>
-                <h:outputLabel for="login" class="labelModificationForm"> Login: </h:outputLabel>
-                <h:outputText  id="login" value="#{contractorEditBean.contractor.login}"/>
-            </p>    
-
-            <p>
-                <h:outputLabel for="firstName" class="labelModificationForm"> Prénom: </h:outputLabel>
-                <h:outputText  id="firstName" value="#{contractorEditBean.contractor.representatorFirstname}"/>
-            </p>
-
-            <p>
-                <h:outputLabel for="lastName" class="labelModificationForm"> Nom: </h:outputLabel>
-                <h:outputText  id="lastName" value="#{contractorEditBean.contractor.representatorLastname}"/>
-            </p>
-
-            <p>
-                <h:outputLabel for="email" class="labelModificationForm"> Email : </h:outputLabel>
-                <h:outputText  id="email" value="#{contractorEditBean.contractor.email}"/>
-            </p>
-
-            <p>
-                <h:outputLabel for="phoneNumber" class="labelModificationForm"> Phone : </h:outputLabel>
-                <h:outputText  id="phoneNumber" value="#{contractorEditBean.contractor.phone}"/> 
-            </p>
-
-            <h:form>
-
-                <p:commandButton id="buttonModify" class="searchCommandButton" value="Modifier" onclick="PF('modifyDialog').show();">
-                    <p:ajax update="tabViewContractor:formModify:modifiedLogin"/>
-                    <p:ajax update="tabViewContractor:formModify:modifiedFirstName"/>
-                    <p:ajax update="tabViewContractor:formModify:modifiedLastName"/>
-                    <p:ajax update="tabViewContractor:formModify:modifiedEmail"/>
-                    <p:ajax update="tabViewContractor:formModify:modifiedPhoneNumber"/>
-                    <p:ajax update="tabViewContractor:formModify:modifiedEmail"/>
-                    <p:ajax update="tabViewContractor:formModify:loginMessage"/>
-                    <p:ajax update="tabViewContractor:formModify:phoneMessage"/>
-                    <p:ajax update="tabViewContractor:formModify:emailMessage"/>
-                    <p:ajax update="tabViewContractor:formModify:lastNameMessage"/>
-                    <p:ajax update="tabViewContractor:formModify:firstNameMessage"/>
-                </p:commandButton>
-
-                <p:commandButton class="searchCommandButton" id="buttonModifyMdp" value="Modifier Mot de passe" onclick="PF('mdpDialog').show();">
-                    <p:ajax update="tabViewContractor:formModifyMdp:confirmationPassword" resetValues="true"/>
-                    <p:ajax update="tabViewContractor:formModifyMdp:password" resetValues="true"/>
-                </p:commandButton> 
-
-            </h:form>
-
-        </h:panelGroup>
-
-        <o:form id="formModify">
+        <o:form id="infoForm" includeViewParams="true">
 
             <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
 
-            <p:dialog header="Modification informations personelles :" modal="true" widgetVar="modifyDialog" resizable="false">             
+            <b:container fluid="true" style="margin-top: 20px;">
+                <b:row styleClass="show-grid">
+                    <b:column span="12" styleClass="columnTendererField">
+                        <b:row styleClass="rowTendererField"><b>Login : </b><h:outputText value="#{contractorEditBean.contractor.login}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Prénom : </b><h:outputText value="#{contractorEditBean.contractor.representatorFirstname}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Nom : </b><h:outputText value="#{contractorEditBean.contractor.representatorLastname}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>E-mail : </b><h:outputText value="#{contractorEditBean.contractor.email}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Téléphone : </b><h:outputText value="#{contractorEditBean.contractor.phone}"/></b:row>
+                        <b:row styleClass="rowTendererField">
 
+                            <p:commandButton id="buttonModify" class="searchCommandButton" styleClass="buttonBackRegistration" value="Modifier" onclick="PF('modifyDialog').show();">
+                                <p:ajax update="tabViewContractor:formModify:modifiedLogin"/>
+                                <p:ajax update="tabViewContractor:formModify:modifiedFirstName"/>
+                                <p:ajax update="tabViewContractor:formModify:modifiedLastName"/>
+                                <p:ajax update="tabViewContractor:formModify:modifiedEmail"/>
+                                <p:ajax update="tabViewContractor:formModify:modifiedPhoneNumber"/>
+                                <p:ajax update="tabViewContractor:formModify:modifiedEmail"/>
+                                <p:ajax update="tabViewContractor:formModify:loginMessage"/>
+                                <p:ajax update="tabViewContractor:formModify:phoneMessage"/>
+                                <p:ajax update="tabViewContractor:formModify:emailMessage"/>
+                                <p:ajax update="tabViewContractor:formModify:lastNameMessage"/>
+                                <p:ajax update="tabViewContractor:formModify:firstNameMessage"/>
+                            </p:commandButton>
+
+                            <p:commandButton class="searchCommandButton" id="buttonModifyMdp" styleClass="buttonBackRegistration" value="Modifier Mot de passe" onclick="PF('mdpDialog').show();">
+                                <p:ajax update="tabViewContractor:formModifyMdp:confirmationPassword" resetValues="true"/>
+                                <p:ajax update="tabViewContractor:formModifyMdp:password" resetValues="true"/>
+                            </p:commandButton>
+                            
+                            <b:button look="link" value="Voir la page de l'entreprise" style="margin-top: 20px;" outcome="/views/contractorInformations.xhtml?id=#{contractorEditBean.contractor.id}" />
+
+                        </b:row>
+                    </b:column>
+                </b:row>
+            </b:container>
+
+        </o:form>
+
+        <!-- Edit Dialog -->
+        <o:form id="formModify">
+
+            <p:dialog header="Modification informations personelles :" modal="true" widgetVar="modifyDialog" resizable="false">             
 
                 <h:panelGroup id="infoc">
 
@@ -144,7 +134,7 @@
                         <p:message id="phoneMessage" for="modifiedPhoneNumber"/> 
                     </p>
 
-                    <p:commandButton value="Modifier" update="tabViewContractor:informations" actionListener="#{contractorEditBean.update()}" 
+                    <p:commandButton value="Modifier" update="tabViewContractor:infoForm" actionListener="#{contractorEditBean.update()}" 
                                      oncomplete="handleModification(xhr, status, args)" />
                 </h:panelGroup>
 
@@ -153,10 +143,10 @@
                 </h:form> 
 
             </p:dialog>
+
         </o:form>
 
-        <!-- Dialogue password -->
-
+        <!-- Password Dialog -->
         <o:form id="formModifyMdp">
 
             <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
