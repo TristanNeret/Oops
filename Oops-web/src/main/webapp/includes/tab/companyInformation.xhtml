@@ -349,7 +349,7 @@
                             <br/>
                             <h:outputLabel for="zipCode" value="Code postal :" class="labelModificationForm"/>
                             <p:inputText  id="zipCode" value="#{contractorEditBean.zipCode}" size="5" maxlength="5">
-                                <f:ajax render="tabViewContractor:dialogForm3:registerContractorFormAdress" event="blur"/>
+                                <f:ajax render="tabViewContractor:dialogForm3:registerContractorFormAdress" event="keyup" delay="1500"/>
                                 <f:validator validatorId="com.gdf.zipValidator"/>
                             </p:inputText>
                             <p:message id="zipCodeMessageFr" for="zipCode" />
