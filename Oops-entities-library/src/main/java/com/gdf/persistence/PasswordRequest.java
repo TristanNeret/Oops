@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Date;
 
 /**
  *
@@ -21,7 +22,7 @@ public class PasswordRequest implements Serializable {
     private String id;
     
     @Column(name = "REQUEST_DATE")
-    private String date;
+    private Date date;
     
     private String userEmail;
 
@@ -37,11 +38,11 @@ public class PasswordRequest implements Serializable {
         this.id = id;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
