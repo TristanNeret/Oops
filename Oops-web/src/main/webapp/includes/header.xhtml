@@ -54,6 +54,8 @@ and open the template in the editor.
             #{' '}
             <b:commandButton action="#{authentificationBean.hideAuthentification()}" update="@form :headerBar" value="Annuler" look="link" >
             </b:commandButton>
+            <p:commandLink action="#{authentificationBean.hideAuthentificationAndGoFP()}" update="@form :headerBar" value="Oops, j'ai oublié mon mot de passe !">
+            </p:commandLink>
         </h:form>
 
         <!-- NOTIFICATION | USER ACCOUNT | DE-CONNECTION -->
