@@ -36,7 +36,7 @@
                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 rowsPerPageTemplate="6,12,16">
 
-                        <b:panel collapsible="false" styleClass="panelContractorDescription">
+                        <b:panel collapsible="false" styleClass="panelContractorDescription  panelContractorDescription-#{service.category.name}">
                             <f:facet name="heading">
                                 <b:row styleClass="show-grid">
                                     <h:outputText value="#{service.title}"/> 
@@ -48,8 +48,8 @@
                                 </b:row>
                                 <b:row styleClass="show-grid" style="margin-top: 10px;">
                                     <b:column span="6">
-                                        <b:row><b>Catégorie : </b> <h:outputText style="color: #1E90FF;" value="#{service.category.name}" /></b:row>
-                                        <b:row><b>Tarif : </b> <h:outputText style="color: #1E90FF;" value="#{service.price} €" /></b:row>
+                                        <b:row><b>Catégorie : </b> <h:outputText class="textColor-#{service.category.name}" value="#{service.category.name}" /></b:row>
+                                        <b:row><b>Tarif : </b> <h:outputText class="textColor-#{service.category.name}" value="#{service.price} €" /></b:row>
                                     </b:column>
                                     <b:column span="6">
                                         <p:commandButton id="updateCommandButton" style="float: right; margin-top: 0px !important;" value="Modifier" action="#{serviceAddBean.setEditService(service)}" styleClass="buttonBackRegistration" update="tabViewContractor:formService:prestationDialog" oncomplete="PF('prestationDialog').show();"/>
