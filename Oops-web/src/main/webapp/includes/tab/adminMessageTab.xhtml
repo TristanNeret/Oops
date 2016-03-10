@@ -40,11 +40,11 @@ and open the template in the editor.
             <b:container fluid="true">
                 <b:row styleClass="show-grid">
                     <b:column span="3">
-                        <b:inputText value="#{adminSearchBean.keyWord}" placeholder="Mots-clés">
-                            <f:facet name="prepend">
-                                <b:icon name="user" />
-                            </f:facet>
-                        </b:inputText>
+                            <p:autoComplete class="autocompleteInput" placeholder="Mots-clés" id="queryInputText" value="#{adminSearchBean.keyWord}" completeMethod="#{adminSearchBean.completeQuery}" >
+                                <f:facet name="prepend">
+                                    <b:icon name="user" />
+                                </f:facet>
+                            </p:autoComplete>
                     </b:column>
                     <b:column span="3">
                         <b:selectOneMenu value="#{adminSearchBean.type}" id="typeID" required="true">
@@ -55,7 +55,10 @@ and open the template in the editor.
                     </b:column>
                     <b:column span="6">
 
-                        <b:commandButton value="Recherche" ajax="true" look="primary" actionListener="#{adminSearchBean.search()}" oncomplete="toggleGroupMessage('none'); return false;" update="@(.resultResearch)" />
+                        <b:commandButton value="Recherche" ajax="true" look="primary" actionListener="#{adminSearchBean.search()}" oncomplete="toggleGroupMessage('none'); return false;" update="@(.resultResearch)">
+                              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </b:commandButton>      
+                       
                         <b:commandButton value="Envoyer un message groupé" ajax="true" look="success" onclick="toggleGroupMessage('block');
                                          #{adminSearchBean.setSuccess(false)} return false;" style="margin-left: 15px;"/>
 

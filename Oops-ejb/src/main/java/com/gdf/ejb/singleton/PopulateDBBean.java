@@ -224,10 +224,10 @@ public class PopulateDBBean implements PopulateDB {
                 , 500.0, contractor, category);
         contractor.addService(service);
         service = new Service("Application mobile : Android, iOS, Windows Phone", "Vous souhaitez développer au sein de votre entreprise les usages mobiles ou proposer à vos utilisateurs et vos clients la possibilité de consulter votre contenu depuis leur smartphone ou tablette."
-              , 500.0, contractor, category);
+              , 300.0, contractor, category);
         contractor.addService(service);
         service = new Service("Expertise technique : Big Data, cloud computing", "De nombreux concepts émergent chaque jour en informatique et représentent de réelles opportunités pour vous et vos métiers."
-              , 500.0, contractor, category);
+              , 300.0, contractor, category);
         contractor.addService(service);
         contractor.setId(53);
         contractor.setRating(contractor.calculRate());
@@ -239,10 +239,10 @@ public class PopulateDBBean implements PopulateDB {
                 "3937937820", "http://www.its4u.lu/wp-content/uploads/2015/01/ITs4U-SSII-Luxembourg-logo-FB-h154.png", "ITs4U", "Representant", 100000, 100, 4,
         new Address(136, "Route de Bettembourg", 5811, "Schiltigheim", "Luxembourg"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         service = new Service("Conseil", "Assistance à la définition des solutions qui vous permettent d’atteindre vos objectifs: CRM, ECM, SOA, BPM"
-        , 500.0, contractor, category);
+        , 250.0, contractor, category);
         contractor.addService(service);
         service = new Service("Expertise Technique", "Architecture (SOA), expertise et assistance technique"
-        , 500.0, contractor, category);
+        , 400.0, contractor, category);
         contractor.addService(service);
         contractor.addReview(review6);
         contractor.setId(52);
@@ -275,7 +275,7 @@ public class PopulateDBBean implements PopulateDB {
         "3937937820", "http://static.wixstatic.com/media/ac44c4_265208be2f1d45ff8dabd4b3aafcc022.jpg_srz_290_221_85_22_0.50_1.20_0.00_jpg_srz", "Le cercle Rouge", "Representant", 100000, 100, 5,
         new Address(41, "Rue A.THIERS", 13001, "Marseille", "France","Provence-Alpes-Côte d'Azur"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         service = new Service("Restaurant Corse", "Une carte de tapas originaux et de desserts maison, à déguster dans le patio chauffé toute l'année, comme à l'intérieur, près de la cheminée, l'endroit idéal pour découvrir aussi l'un de nos cocktails exclusifs et notre carte de spiritueux..."
-        , 100.0, contractor, category);
+        , 80.0, contractor, category);
         contractor.addService(service);
         contractor.setId(2);
         contractor.addReview(review5);
@@ -305,7 +305,7 @@ public class PopulateDBBean implements PopulateDB {
         "3937937820", "http://www.mariageservice.com/logo/6104.jpg", "SoireeVip", "Representant", 100000, 100, 0,
         new Address(1, "Avenue Fosh", 54000, "Nancy", "France","Lorraine"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         service = new Service("Formule PRESTIGE", "Éclairages piste de danse avec 4 projecteurs robotisés, 2 projecteurs de couleurs, stroboscope, machine à brouillard"
-        , 500.0, contractor, category);
+        , 100.0, contractor, category);
         contractor.addService(service);
         contractor.setId(9);
         contractor.setRating(contractor.calculRate());
@@ -316,7 +316,7 @@ public class PopulateDBBean implements PopulateDB {
         "3937937820", "https://upload.wikimedia.org/wikipedia/fr/thumb/a/aa/Jt-logo-current.jpg/220px-Jt-logo-current.jpg", "JonnyAnnimation", "Representant", 100000, 100, 0,
         new Address(1, "Rue de Vern", 35000 , "Renne", "France","Bretagne"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         service = new Service("Sculture sur ballons", "La sculpture sur ballons est l´animation idéale pour les enfants durant le vin d'honneur d´un mariage"
-        , 500.0, contractor, category);
+        , 100.0, contractor, category);
         contractor.addService(service);
         contractor.setId(8);
         contractor.setRating(contractor.calculRate());
