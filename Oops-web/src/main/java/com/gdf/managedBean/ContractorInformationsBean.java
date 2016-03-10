@@ -45,9 +45,13 @@ public class ContractorInformationsBean implements Serializable {
      * Initialize Contractor informations
      */
     public void init() {
+        
         this.contractor = this.searchBean.searchContractorById(id);
         this.reviews = this.searchBean.searchAcceptedContratorReviews(this.id);
+        
     }
+    
+    // GETTER/SETTER
     
     /**
      * Set the id of the Contrator to search

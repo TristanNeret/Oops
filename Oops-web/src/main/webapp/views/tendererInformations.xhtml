@@ -28,13 +28,13 @@ and open the template in the editor.
 
         <!-- HEADER -->
         <ui:include src="/includes/header.xhtml" />
-        
+
         <!-- NAV BACK -->
         <nav class="navbar navbar-default" id="navBack">
             <div class="container">
-            <a class="navbar-brand" href="javascript:history.go(-1)">
-                <b:image value="/resources/default/img/back_arrow.png" name="img" width="30" height="30" style="margin-top: -11px;"/>
-            </a>
+                <a class="navbar-brand" href="javascript:history.go(-1)">
+                    <b:image value="/resources/default/img/back_arrow.png" name="img" width="30" height="30" style="margin-top: -11px;"/>
+                </a>
                 <b:button look="link" value="Accueil" outcome="/index.xhtml" />
             </div>
         </nav>
@@ -83,9 +83,9 @@ and open the template in the editor.
                 </b:panel>
 
                 <c:if test="#{tendererInformationsBean.reviews.size() gt 0}">
-                    
+
                     <h2>Avis</h2>
-                    
+
                     <p:dataGrid var="review" value="#{tendererInformationsBean.reviews}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 rowsPerPageTemplate="6,12,16">
@@ -102,9 +102,9 @@ and open the template in the editor.
                             <b:container fluid="true">
                                 <b:row styleClass="show-grid" style="padding-bottom: 12px;">
                                     <a href="/Oops-web/views/contractorInformations.xhtml?id=#{review.contractor.id}">
-                                    <h:graphicImage value="#{review.contractor.logo}" width="40px"/>
+                                        <h:graphicImage value="#{review.contractor.logo}" width="40px"/>
+                                        <h:outputLabel styleClass="labelTitleReviewAdmin" value="#{review.contractor.socialReason}" />
                                     </a>
-                                    <h:outputLabel styleClass="labelTitleReviewAdmin" value="#{review.contractor.socialReason}" />
                                 </b:row>
                                 <b:row styleClass="show-grid">
                                     <h:outputText value="#{review.content}" />

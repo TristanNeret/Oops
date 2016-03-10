@@ -458,6 +458,12 @@ form#reviewForm {
     border-right-style: ridge !important;
 }
 
+.formNewReview h2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: -8px;
+}
+
 .labelTitleContractorInformation {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -465,6 +471,29 @@ form#reviewForm {
     height: 35px;
     font-size: 20px;
     min-width: 200px;
+}
+
+.panelNewReview {
+    display: none; 
+    padding-left: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 15px;
+    background-color: #f5f5f5 !important;
+}
+
+.labelErrorMessage {
+    color: #ff6666;
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 8px;
+}
+
+.labelSuccessMessage {
+    color: #92d055;
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 8px;
 }
 
 /*****************************************************************************/
@@ -700,6 +729,11 @@ form#reviewForm {
     border-left-color: darkgray; 
     border-left-style: solid; 
     border-left-width: 1px;
+}
+
+.imageTendererMini {
+    float: right; 
+    margin-right: 20px;
 }
 
 /*****************************************************************************/
@@ -1125,6 +1159,10 @@ form .updateButtonContractorReview {
 
 .panelGroupMessage {
     margin: 15px;
+}
+
+.panelGroupMessage .panel-body {
+    background-color: #f5f5f5;
 }
 
 .outputLabelPanelTitle {
