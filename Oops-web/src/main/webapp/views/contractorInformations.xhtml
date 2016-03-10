@@ -107,7 +107,7 @@ and open the template in the editor.
                                 paginatorTemplate=""
                                 rowsPerPageTemplate="6,12,16">
 
-                        <b:panel collapsible="false" styleClass="panelContractorDescription">
+                        <b:panel collapsible="false" styleClass="panelContractorDescription panelContractorDescription-#{service.category.name}">
                             <f:facet name="heading">
                                 <b:row styleClass="show-grid">
                                     <h:outputText value="#{service.title}"/> (<h:outputText value="#{service.category.name}"/>)
@@ -118,7 +118,7 @@ and open the template in the editor.
                                     <h:outputText value="#{service.description}"/>
                                 </b:row>
                                 <b:row styleClass="show-grid">
-                                    <b>Tarif horraire : <h:outputText style="color: #1E90FF;" value="#{service.price} €" /></b>
+                                    <b>Tarif horraire : <h:outputText class="textColor-#{service.category.name}" value="#{contractorInformationsBean.getWellPrice(service.price)}" /></b>
                                 </b:row>
                             </b:container>
                         </b:panel>

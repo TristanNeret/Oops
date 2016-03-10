@@ -51,6 +51,25 @@ public class ContractorInformationsBean implements Serializable {
         
     }
     
+    /**
+     * Return well formed price
+     * @param price selected Contractor price
+     * @return N.C. if no price exist, or Contractor price
+     */
+    public String getWellPrice(Double price) {
+        
+        if (price.equals(0.0)) {
+            
+            return "N.C.";
+            
+        } else {
+            
+            return price + " €";
+            
+        }
+        
+    }
+    
     // GETTER/SETTER
     
     /**

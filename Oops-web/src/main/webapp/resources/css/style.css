@@ -250,6 +250,15 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
     bottom: 0;
 }
 
+#aFooter {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+#aFooter:hover {
+    color: #ccffcc;
+}
+
 /*****************************************************************************/
 /********************************* SEARCH ************************************/
 /*****************************************************************************/
@@ -483,17 +492,33 @@ form#reviewForm {
 }
 
 .labelErrorMessage {
-    color: #ff6666;
+    color: #ce3d3d;
     font-size: 16px;
-    font-weight: 400;
-    margin-top: 8px;
+    font-weight: 300;
+    background-color: #eac6c6;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 4px;
+    margin-bottom: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    border-radius: 8px;
 }
 
 .labelSuccessMessage {
-    color: #92d055;
+    color: #629043;
     font-size: 16px;
-    font-weight: 400;
-    margin-top: 8px;
+    font-weight: 300;
+    background-color: #d8edc9;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 4px;
+    margin-bottom: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    border-radius: 8px;
 }
 
 /*****************************************************************************/
@@ -789,6 +814,7 @@ form#reviewForm {
 .panelContractorDescription {
     text-align: left;
     font-size: 14px !important;
+    background-color: #f8f8f8 !important;
 }
 
 .panelContractorDescription .panel-heading {
@@ -797,6 +823,46 @@ form#reviewForm {
     padding: 5px;
     padding-left: 28px;
     font-size: 18px; 
+}
+
+.panelContractorDescription-Batiment .panel-heading {
+    background-color: #9966ff !important;
+}
+
+.panelContractorDescription-Restauration .panel-heading {
+    background-color: #ff6666 !important;
+}
+
+.panelContractorDescription-Informatique .panel-heading {
+    background-color: #18abff !important;
+}
+
+.panelContractorDescription-Animation .panel-heading {
+    background-color: #cc0099 !important;
+}
+
+.panelContractorDescription-Divers .panel-heading {
+    background-color: #97c857 !important;
+}
+
+.textColor-Batiment {
+    color: #9966ff;
+}
+
+.textColor-Restauration {
+    color: #ff6666;
+}
+
+.textColor-Informatique {
+    color: #18abff;
+}
+
+.textColor-Animation {
+    color: #cc0099;
+}
+
+.textColor-Divers {
+    color: #97c857;
 }
 
 .panelReview {
