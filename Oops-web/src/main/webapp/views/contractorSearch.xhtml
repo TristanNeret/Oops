@@ -57,7 +57,7 @@ and open the template in the editor.
                 <h:outputText id="noResultOutputText" styleClass="fieldsetNoResult" value="Aucun résultat ne correspond aux critères de recherche."/> 
             </p:fieldset>
 
-            <p:dataGrid var="contractor" value="#{searchManagedBean.lc}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+            <p:dataGrid var="contractor" value="#{searchManagedBean.lc}" columns="2" layout="grid" rows="6" paginator="true" paginatorPosition="bottom"
                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="6,12,16" rendered="#{not empty searchManagedBean.lc}">
 

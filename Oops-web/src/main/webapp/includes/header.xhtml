@@ -40,22 +40,34 @@ and open the template in the editor.
         </h:form>
 
         <!-- CONNECTION -->
+     
         <h:form id="formConnection" styleClass="navbar-form navbar-right" rendered="#{!authentificationBean.tendererConnected and !authentificationBean.contractorConnected and authentificationBean.authentificationVisible}">
+                  
             <p:growl widgetVar="growlAuthentification" sticky="false" showDetail="true" life="3000" />
             <div class="form-group">
                 <b:inputText placeholder="Login" value="#{authentificationBean.userName}" fieldSize="sm" />
             </div>
+            
             <div class="form-group">
                 <b:inputSecret placeholder="Mot de passe" value="#{authentificationBean.userPassword}" fieldSize="sm" />
             </div> 
             #{' '}
+            
             <b:commandButton action="#{authentificationBean.validateUserAuthentification()}" update="@form :headerBar" value="Confirmer" look="success" icon="chevron-right" iconAlign="right" >
-            </b:commandButton>
+            </b:commandButton>  
             #{' '}
-            <b:commandButton action="#{authentificationBean.hideAuthentification()}" update="@form :headerBar" value="Annuler" look="link" >
-            </b:commandButton>
-            <p:commandLink action="#{authentificationBean.hideAuthentificationAndGoFP()}" update="@form :headerBar" value="Oops, j'ai oublié mon mot de passe !">
-            </p:commandLink>
+         
+            <div class="form-group" style="margin-left: 2px">
+                <b:row styleClass="show-grid" style="margin-top: -12px;">
+                    <b:commandButton action="#{authentificationBean.hideAuthentification()}" update="@form :headerBar" value="Annuler" look="link" >
+                    </b:commandButton>
+                </b:row>
+                <b:row styleClass="show-grid" style="margin-left: 0.5px; margin-top: -15px; font-size: small">
+                    <p:commandLink action="#{authentificationBean.hideAuthentificationAndGoFP()}" update="@form :headerBar" value="Oops, j'ai oublié mon mot de passe !">
+                    </p:commandLink>
+                </b:row> 
+            </div>    
+            
         </h:form>
 
         <!-- NOTIFICATION | USER ACCOUNT | DE-CONNECTION -->
