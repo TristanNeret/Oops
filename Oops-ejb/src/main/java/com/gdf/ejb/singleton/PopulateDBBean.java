@@ -163,18 +163,21 @@ public class PopulateDBBean implements PopulateDB {
                 "https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png", "1234567890", "01/01/2016");
         tenderer.addReview(review3);
         tenderer.addReview(review4);
+        tenderer.updateNbReviews();
         em.persist(tenderer);
         
         
         tenderer = new Tenderer("Niko", "niko@gmail.com", "password", "Nicolas", "Jukic", 
                 "https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png", "1234567890", "01/01/2016");
         tenderer.addReview(review5);
+        tenderer.updateNbReviews();
         em.persist(tenderer);
         
         
         tenderer = new Tenderer("Chafinou", "chafi@gmail.com", "password", "Aziz", "Chafi", 
         "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSO-MG2D5VbdaQAkN60xGcSYKf-O28tfaxlDTyKhiZk1o62SIDB-w", "1234567890", "01/01/2016");
         tenderer.addReview(review6);
+        tenderer.updateNbReviews();
         em.persist(tenderer);
         
         // CONTRACTOR
@@ -195,6 +198,7 @@ public class PopulateDBBean implements PopulateDB {
         contractor.addReview(review1);
         contractor.addReview(review2);
         contractor.addReview(review4);
+        contractor.setRating(contractor.calculRate());
 
         em.persist(category);
         em.persist(contractor);
@@ -208,6 +212,7 @@ public class PopulateDBBean implements PopulateDB {
                 + "web et mobiles.", 500.0, contractor, category);
         contractor.addService(service);
         contractor.setId(51);
+        contractor.setRating(contractor.calculRate());
         em.persist(contractor);
         
 
@@ -225,6 +230,7 @@ public class PopulateDBBean implements PopulateDB {
               , 500.0, contractor, category);
         contractor.addService(service);
         contractor.setId(53);
+        contractor.setRating(contractor.calculRate());
         em.persist(contractor);
         
         
@@ -240,6 +246,7 @@ public class PopulateDBBean implements PopulateDB {
         contractor.addService(service);
         contractor.addReview(review6);
         contractor.setId(52);
+        contractor.setRating(contractor.calculRate());
         em.persist(contractor);
         
         category = new Category("Batiment", "image"); 
@@ -250,6 +257,7 @@ public class PopulateDBBean implements PopulateDB {
         service = new Service("Démolition", "Nous réalisons vos travaux de démolition", 100.0, contractor, category);
         contractor.addService(service); 
         contractor.addReview(review3);
+        contractor.setRating(contractor.calculRate());
         
         em.persist(category);
         em.persist(contractor);
@@ -265,12 +273,13 @@ public class PopulateDBBean implements PopulateDB {
         contractor = new Contractor("CercleRouge", "contact@lecerclerouge.com", "password", "Le Cercle Rouge",
         "SA", "Au Cercle Rouge, la cuisine maison, revisite la tradition corse. Un de ses produits phare : le veau \"tigre\", venu tout droit de l'exploitation \"Agriculture Biologique\" de Jacques Abbatucci.", 
         "3937937820", "http://static.wixstatic.com/media/ac44c4_265208be2f1d45ff8dabd4b3aafcc022.jpg_srz_290_221_85_22_0.50_1.20_0.00_jpg_srz", "Le cercle Rouge", "Representant", 100000, 100, 5,
-        new Address(41, "Rue A.THIERS", 54000, "Marseille", "France","Provence-Alpes-Côte d'Azur"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
+        new Address(41, "Rue A.THIERS", 13001, "Marseille", "France","Provence-Alpes-Côte d'Azur"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         service = new Service("Restaurant Corse", "Une carte de tapas originaux et de desserts maison, à déguster dans le patio chauffé toute l'année, comme à l'intérieur, près de la cheminée, l'endroit idéal pour découvrir aussi l'un de nos cocktails exclusifs et notre carte de spiritueux..."
         , 100.0, contractor, category);
         contractor.addService(service);
         contractor.setId(2);
         contractor.addReview(review5);
+        contractor.setRating(contractor.calculRate());
         em.persist(contractor);
         
         
@@ -282,6 +291,7 @@ public class PopulateDBBean implements PopulateDB {
         , 100.0, contractor, category);
         contractor.addService(service);
         contractor.setId(3);
+        contractor.setRating(contractor.calculRate());
         em.persist(contractor);
         
   
@@ -298,6 +308,7 @@ public class PopulateDBBean implements PopulateDB {
         , 500.0, contractor, category);
         contractor.addService(service);
         contractor.setId(9);
+        contractor.setRating(contractor.calculRate());
         em.persist(contractor);
         
         contractor = new Contractor("JonnyAnnimation", "contact@jonnyannimation.com", "password", "JonnyAnnimation",
@@ -308,6 +319,7 @@ public class PopulateDBBean implements PopulateDB {
         , 500.0, contractor, category);
         contractor.addService(service);
         contractor.setId(8);
+        contractor.setRating(contractor.calculRate());
         em.persist(contractor);
         
         

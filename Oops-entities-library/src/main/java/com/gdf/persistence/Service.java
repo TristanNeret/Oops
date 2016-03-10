@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,6 +31,8 @@ public class Service implements Serializable {
 
     @NotNull(message = "Veuillez saisir un nom !")
     private String title;
+    
+    @Lob
     @NotNull(message = "Veuillez saisir une description !")
     private String description;
 

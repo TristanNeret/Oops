@@ -20,6 +20,7 @@ import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -62,6 +63,7 @@ public class Contractor implements Serializable {
     @NotNull(message = "Veuillez saisir un email !")
     private String email;
 
+    @Lob
     @NotNull(message = "Veuillez saisir une description !")
     @Size(min = 30, message = "La description doit contenir au moins 30 caractères !")
     private String description;
@@ -337,25 +339,19 @@ public class Contractor implements Serializable {
     }
 
     public int calculRate() {
-
-        int res = 0;
-        int nb = 0;
-
-        for (Review r : this.reviews) {
-            if (r.getReviewState().equals(ReviewState.ACCEPTED)) {
-
-                res = res + r.getRating();
-                nb++;
-
+  
+        int rate = 0;
+        for (Review r : reviews) {
+            if (r.isReviewEnabled()) {
+                rate += r.getRating();
             }
         }
-
-        if (nb == 0) {
+        
+        if(reviews.size() == 0)
             return 0;
-        } else {
-            return (int) (res / nb);
-        }
-
+        
+        rate = rate / reviews.size();
+        return rate;
     }
 
     public void setDescription(String description) {
