@@ -208,7 +208,7 @@ and open the template in the editor.
 
                     <p:dataGrid var="review" value="#{contractorInformationsBean.reviews}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="6,12,16">
+                                rowsPerPageTemplate="6,12,16" rendered="#{contractorInformationsBean.reviews.size() > 0}">
 
                         <b:panel collapsible="false" styleClass="panelReview">
                             <f:facet name="heading">
