@@ -433,6 +433,7 @@ table.panelHeader td.ui-panelgrid-cell a.headerSubtitle {
 
 .imageLogo {
     height: 120px;
+    max-width: 120px;
 }
 
 #rating {

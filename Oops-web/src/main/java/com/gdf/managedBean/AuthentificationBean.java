@@ -115,6 +115,18 @@ public class AuthentificationBean implements Serializable {
     }
     
     /**
+     * Hide authentifications inputs and go to password forgotten page
+     * @return link to password forgotten page
+     */
+    public String hideAuthentificationAndGoFP() {
+        
+        this.setAuthentificationVisible(false);
+        
+        return "/passwordForgotten.xhtml?faces-redirect=true";
+        
+    }
+    
+    /**
      * Go to account user page
      * @throws java.io.IOException
      */

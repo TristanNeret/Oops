@@ -5,6 +5,7 @@
  */
 package com.gdf.ejb;
 
+import com.gdf.persistence.PasswordRequest;
 import javax.ejb.Remote;
 
 /**
@@ -38,4 +39,16 @@ public interface AuthentificationBean {
      */
     public Long isModeratorValid(String userName, String userPassword);
     
+    /**
+     * Send a link to reset the password of an account
+     * @param email the email to send the link
+     */
+    public void passwordForgotten(String email);
+    
+    /**
+     * Get a request identified by id
+     * @param id the id generated for the request
+     * @return the request
+     */
+    public PasswordRequest getPasswordRequest(String id);
 }

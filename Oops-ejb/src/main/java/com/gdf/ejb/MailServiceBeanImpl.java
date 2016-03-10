@@ -18,7 +18,7 @@ import javax.mail.internet.MimeMessage;
  * @author chris
  */
 @Stateless
-public class MailServiceBeanImp implements MailServiceBean {
+public class MailServiceBeanImpl implements MailServiceBean {
     
     private final int port = 587;
     private final String host = "smtp.oopsgdf.fr";

@@ -111,6 +111,22 @@ public class PopulateDBBean implements PopulateDB {
         review4.setContent("Excellent travail ! Mon application est top !");
         review4.setRating(5);
         review4.setReviewState(ReviewState.ACCEPTED);
+        
+        
+        Review review5 = new Review();
+        review5.setAppreciation("Magnifique !!");
+        review5.setContent("Les plats sont succulents !!");
+        review5.setRating(5);
+        review5.setContractorAnswer("Merci et à bientôt !");
+        review5.setReviewState(ReviewState.ACCEPTED);
+        
+        
+        Review review6 = new Review();
+        review6.setAppreciation("Bravo !");
+        review6.setContent("Malgrè les locaux qui ressemblent à un garage, la prestation fut à la hauteur de mon espérance !!");
+        review6.setRating(4);
+        review6.setContractorAnswer("Merci et à bientôt ! PS : On peut aussi s'occuper de nos pneues !");
+        review6.setReviewState(ReviewState.ACCEPTED);
  
         String format = "dd/MM/yy H:mm:ss";
         java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(format);
@@ -120,12 +136,17 @@ public class PopulateDBBean implements PopulateDB {
         review2.setDate(formater.format(date));
         review3.setDate(formater.format(date));
         review4.setDate(formater.format(date));
+        review5.setDate(formater.format(date));
+        review6.setDate(formater.format(date));
+        
         
         em.persist(review);
         em.persist(review1);
         em.persist(review2);
         em.persist(review3);
         em.persist(review4);
+        em.persist(review5);
+        em.persist(review6);
         
         // TENDERERS
         
@@ -139,18 +160,32 @@ public class PopulateDBBean implements PopulateDB {
         em.persist(tenderer);
         
         tenderer = new Tenderer("Dede", "dede.legrand@gmail.com", "password", "Didier", "Legrand", 
-                "", "1234567890", "01/01/2016");
+                "https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png", "1234567890", "01/01/2016");
         tenderer.addReview(review3);
         tenderer.addReview(review4);
         em.persist(tenderer);
         
+        
+        tenderer = new Tenderer("Niko", "niko@gmail.com", "password", "Nicolas", "Jukic", 
+                "https://cdn3.iconfinder.com/data/icons/rcons-user-action/32/boy-512.png", "1234567890", "01/01/2016");
+        tenderer.addReview(review5);
+        em.persist(tenderer);
+        
+        
+        tenderer = new Tenderer("Chafinou", "chafi@gmail.com", "password", "Aziz", "Chafi", 
+        "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSO-MG2D5VbdaQAkN60xGcSYKf-O28tfaxlDTyKhiZk1o62SIDB-w", "1234567890", "01/01/2016");
+        tenderer.addReview(review6);
+        em.persist(tenderer);
+        
         // CONTRACTOR
         
+        
+        //Computer science compagnies
         Category category = new Category("Informatique", "image"); 
         Contractor contractor = new Contractor("ITContractor", "contact@itcontractor.com", "password", "IT Contractor Inc.",
         "SA", "Nous sommes ITContractor nous vous offront different types de services IT,"
                 + " n'hesitez pas a nous contacter pour plus d'informations.", 
-                "3937937820", "http://www.ut-capitole.fr/medias/photo/it-128_1413288947855-png", "ITContractor", "Representant", 100000, 100, 3,
+                "3937937820", "http://www.ut-capitole.fr/medias/photo/it-128_1413288947855-png", "ITContractor", "Representant", 100000, 100, 4,
         new Address(3, "beans street", 2648, "New York", "Etats-Unis"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         Service service = new Service("Developpement Informatique", "Nous developpons vos projets informatique, sous forme d'applications "
                 + "web et mobiles.", 500.0, contractor, category);
@@ -163,12 +198,54 @@ public class PopulateDBBean implements PopulateDB {
 
         em.persist(category);
         em.persist(contractor);
+
+        
+        contractor = new Contractor("Sfeir", "contact@sfeir.com", "password", "Sfeir-Est",
+        "SA", "SFEIR est renommée dans la communauté technologique pour construire les meilleures plateformes numériques.", 
+                "3937937820", "http://lemag.sfeir.com/wp-content/uploads/2015/08/logoSFEIR.jpg", "Sfeir", "Representant", 100000, 100, 0,
+        new Address(1, "avenue de l’Europe", 67300, "Schiltigheim", "France","Alsace"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
+        service = new Service("Transformation digitale et développement", "Assistance à maitrise d’ouvrage, audit, gestion de projet, expertise technique, conception, développement "
+                + "web et mobiles.", 500.0, contractor, category);
+        contractor.addService(service);
+        contractor.setId(51);
+        em.persist(contractor);
+        
+
+        contractor = new Contractor("Acelys", "contact@acelys.com", "password", "Acelys",
+        "SA", "Acelys est une société de services et d’ingénierie en informatique montpelliéraine. Depuis plus de 15ans, nous intervenons auprès des entreprises de la région Languedoc Roussillon dans la transformation de leurs métiers et de leurs systèmes d'information.", 
+                "3937937820", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQtQ3DD5Qkr9YRvw16QqTeYf9FjxltF0AT92DAsaHqychDyjjqzig", "Acelys", "Representant", 100000, 100, 0,
+        new Address(159, "Rue de Thorg", 34000 , "Montpellier", "France","Languedoc-Roussillon"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
+        service = new Service("Développement Web", "Qu'il s'agisse d'une application métier spécifique, d’un Portail, d'un site web institutionnel ou commercial, nous pouvons imaginer la solution parfaite répondant à vos attentes."
+                , 500.0, contractor, category);
+        contractor.addService(service);
+        service = new Service("Application mobile : Android, iOS, Windows Phone", "Vous souhaitez développer au sein de votre entreprise les usages mobiles ou proposer à vos utilisateurs et vos clients la possibilité de consulter votre contenu depuis leur smartphone ou tablette."
+              , 500.0, contractor, category);
+        contractor.addService(service);
+        service = new Service("Expertise technique : Big Data, cloud computing", "De nombreux concepts émergent chaque jour en informatique et représentent de réelles opportunités pour vous et vos métiers."
+              , 500.0, contractor, category);
+        contractor.addService(service);
+        contractor.setId(53);
+        em.persist(contractor);
+        
+        
+        contractor = new Contractor("ITs4U", "contact@its4u.com", "password", "ITs4U",
+        "SA", "ITs4U est une SSII indépendante fondée en 2009 sur des valeurs d’excellence et d’engagement. En croissance constante depuis notre création, nous réalisons plus de 50 % de notre chiffre d’affaires sur engagement de résultats.", 
+                "3937937820", "http://www.its4u.lu/wp-content/uploads/2015/01/ITs4U-SSII-Luxembourg-logo-FB-h154.png", "ITs4U", "Representant", 100000, 100, 4,
+        new Address(136, "Route de Bettembourg", 5811, "Schiltigheim", "Luxembourg"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
+        service = new Service("Conseil", "Assistance à la définition des solutions qui vous permettent d’atteindre vos objectifs: CRM, ECM, SOA, BPM"
+        , 500.0, contractor, category);
+        contractor.addService(service);
+        service = new Service("Expertise Technique", "Architecture (SOA), expertise et assistance technique"
+        , 500.0, contractor, category);
+        contractor.addService(service);
+        contractor.addReview(review6);
+        contractor.setId(52);
+        em.persist(contractor);
         
         category = new Category("Batiment", "image"); 
         contractor = new Contractor("FranceBTP", "contact@francebtp.com", "password", "FranceBTP Sarl",
         "SARL", "Nous sommes FranceBTP nous vous offront different services dans le domaine de la construction et du batiment,"
-                + " n'hesitez pas a nous contacter pour plus d'informations."
-                , "9379378201", "http://www.cibtp.fr/fileadmin/templates/portail/img/logo_charte_qualite.png", "FranceBTP", "Representant", 500000, 500, 2,
+        + " n'hesitez pas a nous contacter pour plus d'informations.", "9379378201", "http://www.cibtp.fr/fileadmin/templates/portail/img/logo_charte_qualite.png", "FranceBTP", "Representant", 500000, 500, 3,
         new Address(3, "rue des haricots", 75001, "Paris", "France","ile-de-france"), new LegalInformation("12345678903987", "126456789", "RCSITC113456789", "Assurancetoutrix"));
         service = new Service("Démolition", "Nous réalisons vos travaux de démolition", 100.0, contractor, category);
         contractor.addService(service); 
@@ -179,10 +256,60 @@ public class PopulateDBBean implements PopulateDB {
         
         category = new Category("Divers", "image"); 
         em.persist(category);
+        
+        
+        //Restauration
         category = new Category("Restauration", "image"); 
         em.persist(category);
+        
+        contractor = new Contractor("CercleRouge", "contact@lecerclerouge.com", "password", "Le Cercle Rouge",
+        "SA", "Au Cercle Rouge, la cuisine maison, revisite la tradition corse. Un de ses produits phare : le veau \"tigre\", venu tout droit de l'exploitation \"Agriculture Biologique\" de Jacques Abbatucci.", 
+        "3937937820", "http://static.wixstatic.com/media/ac44c4_265208be2f1d45ff8dabd4b3aafcc022.jpg_srz_290_221_85_22_0.50_1.20_0.00_jpg_srz", "Le cercle Rouge", "Representant", 100000, 100, 5,
+        new Address(41, "Rue A.THIERS", 54000, "Marseille", "France","Provence-Alpes-Côte d'Azur"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
+        service = new Service("Restaurant Corse", "Une carte de tapas originaux et de desserts maison, à déguster dans le patio chauffé toute l'année, comme à l'intérieur, près de la cheminée, l'endroit idéal pour découvrir aussi l'un de nos cocktails exclusifs et notre carte de spiritueux..."
+        , 100.0, contractor, category);
+        contractor.addService(service);
+        contractor.setId(2);
+        contractor.addReview(review5);
+        em.persist(contractor);
+        
+        
+        contractor = new Contractor("RelaisSaveurs", "contact@aurelaisdessaveurs.com", "password", "Au Relais des Saveurs",
+        "SA", "Dimitri AUDIN, Chef et propriétaire du restaurant, vous propose une cuisine exclusivement réalisée à partir de produits frais, de saison et originaires de producteurs locaux et nationaux.", 
+        "3937937820", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQwwzwsVyAmhtauanZQj5KhKdDpxHmt084VIAT3LYgkm9Yl0uct", "Au Relais des Saveurs", "Representant", 100000, 100, 0,
+        new Address(28, "Rue du commerce", 63800, "Cournon-d'Auvergne", "France","Auvergne"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
+        service = new Service("Le restaurant","Situé au Coeur du vieux bourg, ce lieu est historiquement ancré dans la vie de la Ville de Cournon d’ Auvergne"
+        , 100.0, contractor, category);
+        contractor.addService(service);
+        contractor.setId(3);
+        em.persist(contractor);
+        
+  
+        //Animation
         category = new Category("Animation", "image"); 
         em.persist(category);
+        
+        contractor = new Contractor("SoireeVip", "contact@soireevip.com", "password", "SoireeVip",
+        "SA", "Depuis plus de 12 ans, Soirée VIP vous accompagne tout au long de votre évènement.\n" +
+        "Nous nous chargeons de l'animation, de la sonorisation et de la mise en lumière de votre soirée. Nous pouvons également nous occuper de la partie vidéo et effets spéciaux", 
+        "3937937820", "http://www.mariageservice.com/logo/6104.jpg", "SoireeVip", "Representant", 100000, 100, 0,
+        new Address(1, "Avenue Fosh", 54000, "Nancy", "France","Lorraine"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
+        service = new Service("Formule PRESTIGE", "Éclairages piste de danse avec 4 projecteurs robotisés, 2 projecteurs de couleurs, stroboscope, machine à brouillard"
+        , 500.0, contractor, category);
+        contractor.addService(service);
+        contractor.setId(9);
+        em.persist(contractor);
+        
+        contractor = new Contractor("JonnyAnnimation", "contact@jonnyannimation.com", "password", "JonnyAnnimation",
+        "SA", "​Vous préparez votre mariage sur le secteur de Brest , de Quimper, la fête de votre association dans le Finistère 29, la Soirée dansante de votre comité d'entrepri​se, un départ en retraite, le bal de votre comité des fêtes, ou bien une Soirée Karaoké ?", 
+        "3937937820", "https://upload.wikimedia.org/wikipedia/fr/thumb/a/aa/Jt-logo-current.jpg/220px-Jt-logo-current.jpg", "JonnyAnnimation", "Representant", 100000, 100, 0,
+        new Address(1, "Rue de Vern", 35000 , "Renne", "France","Bretagne"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
+        service = new Service("Sculture sur ballons", "La sculpture sur ballons est l´animation idéale pour les enfants durant le vin d'honneur d´un mariage"
+        , 500.0, contractor, category);
+        contractor.addService(service);
+        contractor.setId(8);
+        em.persist(contractor);
+        
         
         Moderator moderator = new Moderator();
         moderator.setLogin("SuperModerator");
