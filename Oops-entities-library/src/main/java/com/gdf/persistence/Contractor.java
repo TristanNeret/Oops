@@ -123,6 +123,13 @@ public class Contractor implements Serializable {
         this.legalForm = legalForm;
         this.description = description;
         this.phone = phone;
+        // Default image
+        this.logo = "/resources/default/img/Contractor.png";
+        if (logo != null) {
+            if (!logo.equals("")) {
+                this.logo = logo;
+            }
+        }
         this.logo = logo;
         this.representatorFirstname = representatorFirstname;
         this.representatorLastname = representatorLastname;
