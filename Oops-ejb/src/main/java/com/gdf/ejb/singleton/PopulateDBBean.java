@@ -10,6 +10,7 @@ import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.LegalInformation;
 import com.gdf.persistence.Moderator;
+import com.gdf.persistence.PortfolioImage;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.ReviewState;
 import com.gdf.persistence.Service;
@@ -24,6 +25,7 @@ import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +38,7 @@ import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.UriBuilder;
+import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -58,23 +61,85 @@ public class PopulateDBBean implements PopulateDB {
     private Client client; 
     private WebResource service; 
     
-    
     /**
      * Populate the database for the selenium tests
      */
     public PopulateDBBean() {
+        
         this.allCountries = new ArrayList();
+        
     }
     
      
     @PostConstruct
     private void populateDatabase(){
         
+        // IMAGES
+        
+        byte[] image1 = null;
+        byte[] image2 = null;
+        byte[] image3 = null;
+        byte[] image4 = null;
+        byte[] image5 = null;
+        byte[] image6 = null;
+        byte[] image7 = null;
+        byte[] image8 = null;
+        byte[] image9 = null;
+        byte[] image10 = null;
+        byte[] image11 = null;
+        byte[] image12 = null;
+        byte[] image13 = null;
+        byte[] image14 = null;
+        byte[] image15 = null;
+        byte[] image16 = null;
+        byte[] image17 = null;
+        byte[] image18 = null;
+        byte[] image19 = null;
+        byte[] image20 = null;
+        byte[] image21 = null;
+        byte[] image22 = null;
+        byte[] image23 = null;
+        byte[] image24 = null;
+        byte[] image25 = null;
+        byte[] image26 = null;
+        byte[] image27 = null;
+        byte[] image28 = null;
+        try {
+            image1 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Informatique/informatique_1.jpg"));
+            image2 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Informatique/informatique_2.jpg"));
+            image3 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Informatique/informatique_3.jpg"));
+            image4 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Informatique/informatique_4.jpg"));
+            image5 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Informatique/informatique_5.jpg"));
+            image6 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Informatique/informatique_6.jpg"));
+            image7 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Informatique/informatique_7.jpg"));
+            image8 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Restauration/restauration_1.jpg"));
+            image9 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Restauration/restauration_2.jpg"));
+            image10 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Restauration/restauration_3.jpg"));
+            image11 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Restauration/restauration_4.jpg"));
+            image12 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Restauration/restauration_5.jpg"));
+            image13 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Restauration/restauration_6.jpg"));
+            image14 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Restauration/restauration_7.jpg"));
+            image15 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Batiment/batiment_1.jpg"));
+            image16 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Batiment/batiment_2.jpg"));
+            image17 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Batiment/batiment_3.jpg"));
+            image18 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Batiment/batiment_4.jpg"));
+            image19 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Batiment/batiment_5.jpg"));
+            image20 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Batiment/batiment_6.jpg"));
+            image21 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Batiment/batiment_7.jpg"));
+            image22 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Animation/animation_1.jpg"));
+            image23 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Animation/animation_2.jpg"));
+            image24 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Animation/animation_3.jpg"));
+            image25 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Animation/animation_4.jpg"));
+            image26 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Animation/animation_5.jpg"));
+            image27 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Animation/animation_6.jpg"));
+            image28 = IOUtils.toByteArray(this.getClass().getClassLoader().getResourceAsStream("Images/Animation/animation_7.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(PopulateDBBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         // REVIEWS
         
-        /*
-            Retrieve all countries of the world for the registration of a contractor (with API rest com.mashape.unirest) 
-        */
+        // Retrieve all countries of the world for the registration of a contractor (with API rest com.mashape.unirest) 
         this.retrieveAllWorldCoutries();
         
         config = new DefaultClientConfig();
@@ -182,8 +247,8 @@ public class PopulateDBBean implements PopulateDB {
         
         // CONTRACTOR
         
+        // Computer science compagnies
         
-        //Computer science compagnies
         Category category = new Category("Informatique", "image"); 
         Contractor contractor = new Contractor("ITContractor", "contact@itcontractor.com", "password", "IT Contractor Inc.",
         "SA", "Nous sommes ITContractor nous vous offront different types de services IT,"
@@ -199,11 +264,30 @@ public class PopulateDBBean implements PopulateDB {
         contractor.addReview(review2);
         contractor.addReview(review4);
         contractor.setRating(contractor.calculRate());
-
+        PortfolioImage pimage11 = new PortfolioImage(Long.valueOf("50"), image1, "informatique_1.jpg", "Interface moderne");
+        em.persist(pimage11);
+        PortfolioImage pimage12 = new PortfolioImage(Long.valueOf("50"), image2, "informatique_2.jpg", "Technologies récentes");
+        em.persist(pimage12);
+        PortfolioImage pimage13 = new PortfolioImage(Long.valueOf("50"), image3, "informatique_3.jpg", "");
+        em.persist(pimage13);
+        PortfolioImage pimage14 = new PortfolioImage(Long.valueOf("50"), image4, "informatique_4.jpg", "Multi-plateformes");
+        em.persist(pimage14);
+        PortfolioImage pimage15 = new PortfolioImage(Long.valueOf("50"), image5, "informatique_5.jpg", "Collaboration");
+        em.persist(pimage15);
+        PortfolioImage pimage16 = new PortfolioImage(Long.valueOf("50"), image6, "informatique_6.jpg", "Une équipe d'experts");
+        em.persist(pimage16);
+        PortfolioImage pimage17 = new PortfolioImage(Long.valueOf("50"), image7, "informatique_7.jpg", "");
+        em.persist(pimage17);
+        contractor.getImages().add(pimage11);
+        contractor.getImages().add(pimage12);
+        contractor.getImages().add(pimage13);
+        contractor.getImages().add(pimage14);
+        contractor.getImages().add(pimage15);
+        contractor.getImages().add(pimage16);
+        contractor.getImages().add(pimage17);
         em.persist(category);
         em.persist(contractor);
 
-        
         contractor = new Contractor("Sfeir", "contact@sfeir.com", "password", "Sfeir-Est",
         "SA", "SFEIR est renommée dans la communauté technologique pour construire les meilleures plateformes numériques.", 
                 "3937937820", "http://lemag.sfeir.com/wp-content/uploads/2015/08/logoSFEIR.jpg", "Sfeir", "Representant", 100000, 100, 0,
@@ -213,9 +297,23 @@ public class PopulateDBBean implements PopulateDB {
         contractor.addService(service);
         contractor.setId(51);
         contractor.setRating(contractor.calculRate());
+        PortfolioImage pimage21 = new PortfolioImage(Long.valueOf("51"), image1, "informatique_1.jpg", "Interface moderne");
+        em.persist(pimage21);
+        PortfolioImage pimage22 = new PortfolioImage(Long.valueOf("51"), image2, "informatique_2.jpg", "Technologies récentes");
+        em.persist(pimage22);
+        PortfolioImage pimage23 = new PortfolioImage(Long.valueOf("51"), image3, "informatique_3.jpg", "");
+        em.persist(pimage23);
+        PortfolioImage pimage24 = new PortfolioImage(Long.valueOf("51"), image4, "informatique_4.jpg", "Multi-plateformes");
+        em.persist(pimage24);
+        PortfolioImage pimage25 = new PortfolioImage(Long.valueOf("51"), image5, "informatique_5.jpg", "Collaboration");
+        em.persist(pimage25);
+        contractor.getImages().add(pimage21);
+        contractor.getImages().add(pimage22);
+        contractor.getImages().add(pimage23);
+        contractor.getImages().add(pimage24);
+        contractor.getImages().add(pimage25);
         em.persist(contractor);
         
-
         contractor = new Contractor("Acelys", "contact@acelys.com", "password", "Acelys",
         "SA", "Acelys est une société de services et d’ingénierie en informatique montpelliéraine. Depuis plus de 15ans, nous intervenons auprès des entreprises de la région Languedoc Roussillon dans la transformation de leurs métiers et de leurs systèmes d'information.", 
                 "3937937820", "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQtQ3DD5Qkr9YRvw16QqTeYf9FjxltF0AT92DAsaHqychDyjjqzig", "Acelys", "Representant", 100000, 100, 0,
@@ -233,7 +331,6 @@ public class PopulateDBBean implements PopulateDB {
         contractor.setRating(contractor.calculRate());
         em.persist(contractor);
         
-        
         contractor = new Contractor("ITs4U", "contact@its4u.com", "password", "ITs4U",
         "SA", "ITs4U est une SSII indépendante fondée en 2009 sur des valeurs d’excellence et d’engagement. En croissance constante depuis notre création, nous réalisons plus de 50 % de notre chiffre d’affaires sur engagement de résultats.", 
                 "3937937820", "http://www.its4u.lu/wp-content/uploads/2015/01/ITs4U-SSII-Luxembourg-logo-FB-h154.png", "ITs4U", "Representant", 100000, 100, 4,
@@ -247,7 +344,18 @@ public class PopulateDBBean implements PopulateDB {
         contractor.addReview(review6);
         contractor.setId(52);
         contractor.setRating(contractor.calculRate());
+        PortfolioImage pimage31 = new PortfolioImage(Long.valueOf("52"), image1, "informatique_1.jpg", "Interface moderne");
+        em.persist(pimage31);
+        PortfolioImage pimage32 = new PortfolioImage(Long.valueOf("52"), image2, "informatique_2.jpg", "Technologies récentes");
+        em.persist(pimage32);
+        PortfolioImage pimage33 = new PortfolioImage(Long.valueOf("52"), image3, "informatique_3.jpg", "");
+        em.persist(pimage33);
+        contractor.getImages().add(pimage31);
+        contractor.getImages().add(pimage32);
+        contractor.getImages().add(pimage33);
         em.persist(contractor);
+        
+        // Batiment
         
         category = new Category("Batiment", "image"); 
         contractor = new Contractor("FranceBTP", "contact@francebtp.com", "password", "FranceBTP Sarl",
@@ -258,30 +366,71 @@ public class PopulateDBBean implements PopulateDB {
         contractor.addService(service); 
         contractor.addReview(review3);
         contractor.setRating(contractor.calculRate());
-        
+        contractor.setId(61);
+        PortfolioImage pimage41 = new PortfolioImage(Long.valueOf("61"), image15, "batiment_1.jpg", "Pour tous vos travaux");
+        em.persist(pimage41);
+        PortfolioImage pimage42 = new PortfolioImage(Long.valueOf("61"), image16, "batiment_2.jpg", "Des gens passionnés");
+        em.persist(pimage42);
+        PortfolioImage pimage43 = new PortfolioImage(Long.valueOf("61"), image17, "batiment_3.jpg", "");
+        em.persist(pimage43);
+        PortfolioImage pimage44 = new PortfolioImage(Long.valueOf("61"), image18, "batiment_4.jpg", "Une grande précision");
+        em.persist(pimage44);
+        PortfolioImage pimage45 = new PortfolioImage(Long.valueOf("61"), image19, "batiment_5.jpg", "");
+        em.persist(pimage45);
+        PortfolioImage pimage46 = new PortfolioImage(Long.valueOf("61"), image20, "batiment_6.jpg", "La sécurité avant tout");
+        em.persist(pimage46);
+        PortfolioImage pimage47 = new PortfolioImage(Long.valueOf("61"), image21, "batiment_7.jpg", "");
+        em.persist(pimage47);
+        contractor.getImages().add(pimage41);
+        contractor.getImages().add(pimage42);
+        contractor.getImages().add(pimage43);
+        contractor.getImages().add(pimage44);
+        contractor.getImages().add(pimage45);
+        contractor.getImages().add(pimage46);
+        contractor.getImages().add(pimage47);
         em.persist(category);
         em.persist(contractor);
         
         category = new Category("Divers", "image"); 
         em.persist(category);
         
+        // Restauration
         
-        //Restauration
         category = new Category("Restauration", "image"); 
         em.persist(category);
         
         contractor = new Contractor("CercleRouge", "contact@lecerclerouge.com", "password", "Le Cercle Rouge",
         "SA", "Au Cercle Rouge, la cuisine maison, revisite la tradition corse. Un de ses produits phare : le veau \"tigre\", venu tout droit de l'exploitation \"Agriculture Biologique\" de Jacques Abbatucci.", 
-        "3937937820", "http://static.wixstatic.com/media/ac44c4_265208be2f1d45ff8dabd4b3aafcc022.jpg_srz_290_221_85_22_0.50_1.20_0.00_jpg_srz", "Le cercle Rouge", "Representant", 100000, 100, 5,
-        new Address(41, "Rue A.THIERS", 13001, "Marseille", "France","Provence-Alpes-Côte d'Azur"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
+        "3937937820", "https://les365commandements.files.wordpress.com/2012/03/logo-lecercle.jpg", "Le cercle Rouge", "Representant", 100000, 100, 5,
+        new Address(41, "Rue A.THIERS", 54000, "Marseille", "France","Provence-Alpes-Côte d'Azur"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         service = new Service("Restaurant Corse", "Une carte de tapas originaux et de desserts maison, à déguster dans le patio chauffé toute l'année, comme à l'intérieur, près de la cheminée, l'endroit idéal pour découvrir aussi l'un de nos cocktails exclusifs et notre carte de spiritueux..."
         , 80.0, contractor, category);
         contractor.addService(service);
         contractor.setId(2);
+        PortfolioImage pimage51 = new PortfolioImage(Long.valueOf("2"), image8, "restauration_1.jpg", "");
+        em.persist(pimage51);
+        PortfolioImage pimage52 = new PortfolioImage(Long.valueOf("2"), image9, "restauration_2.jpg", "Une décoration moderne");
+        em.persist(pimage52);
+        PortfolioImage pimage53 = new PortfolioImage(Long.valueOf("2"), image10, "restauration_3.jpg", "Des plats rafinés");
+        em.persist(pimage53);
+        PortfolioImage pimage54 = new PortfolioImage(Long.valueOf("2"), image11, "restauration_4.jpg", "Jusqu'à 100 couverts");
+        em.persist(pimage54);
+        PortfolioImage pimage55 = new PortfolioImage(Long.valueOf("2"), image12, "restauration_5.jpg", "");
+        em.persist(pimage55);
+        PortfolioImage pimage56 = new PortfolioImage(Long.valueOf("2"), image13, "restauration_6.jpg", "Des lieux calmes et reposants");
+        em.persist(pimage56);
+        PortfolioImage pimage57 = new PortfolioImage(Long.valueOf("2"), image14, "restauration_7.jpg", "");
+        em.persist(pimage57);
+        contractor.getImages().add(pimage51);
+        contractor.getImages().add(pimage52);
+        contractor.getImages().add(pimage53);
+        contractor.getImages().add(pimage54);
+        contractor.getImages().add(pimage55);
+        contractor.getImages().add(pimage56);
+        contractor.getImages().add(pimage57);
         contractor.addReview(review5);
         contractor.setRating(contractor.calculRate());
         em.persist(contractor);
-        
         
         contractor = new Contractor("RelaisSaveurs", "contact@aurelaisdessaveurs.com", "password", "Au Relais des Saveurs",
         "SA", "Dimitri AUDIN, Chef et propriétaire du restaurant, vous propose une cuisine exclusivement réalisée à partir de produits frais, de saison et originaires de producteurs locaux et nationaux.", 
@@ -292,10 +441,25 @@ public class PopulateDBBean implements PopulateDB {
         contractor.addService(service);
         contractor.setId(3);
         contractor.setRating(contractor.calculRate());
+        PortfolioImage pimage61 = new PortfolioImage(Long.valueOf("3"), image8, "restauration_1.jpg", "");
+        em.persist(pimage61);
+        PortfolioImage pimage62 = new PortfolioImage(Long.valueOf("3"), image9, "restauration_2.jpg", "Une décoration moderne");
+        em.persist(pimage62);
+        PortfolioImage pimage63 = new PortfolioImage(Long.valueOf("3"), image10, "restauration_3.jpg", "Des plats rafinés");
+        em.persist(pimage63);
+        PortfolioImage pimage64 = new PortfolioImage(Long.valueOf("3"), image11, "restauration_4.jpg", "Jusqu'à 100 couverts");
+        em.persist(pimage64);
+        PortfolioImage pimage65 = new PortfolioImage(Long.valueOf("3"), image12, "restauration_5.jpg", "");
+        em.persist(pimage65);
+        contractor.getImages().add(pimage61);
+        contractor.getImages().add(pimage62);
+        contractor.getImages().add(pimage63);
+        contractor.getImages().add(pimage64);
+        contractor.getImages().add(pimage65);
         em.persist(contractor);
         
-  
-        //Animation
+        // Animation
+        
         category = new Category("Animation", "image"); 
         em.persist(category);
         
@@ -309,6 +473,27 @@ public class PopulateDBBean implements PopulateDB {
         contractor.addService(service);
         contractor.setId(9);
         contractor.setRating(contractor.calculRate());
+        PortfolioImage pimage71 = new PortfolioImage(Long.valueOf("9"), image22, "animation_1.jpg", "");
+        em.persist(pimage71);
+        PortfolioImage pimage72 = new PortfolioImage(Long.valueOf("9"), image23, "animation_2.jpg", "Des ambiances variées");
+        em.persist(pimage72);
+        PortfolioImage pimage73 = new PortfolioImage(Long.valueOf("9"), image24, "animation_3.jpg", "Des lieux magiques");
+        em.persist(pimage73);
+        PortfolioImage pimage74 = new PortfolioImage(Long.valueOf("9"), image25, "animation_4.jpg", "Pour une super ambiance !");
+        em.persist(pimage74);
+        PortfolioImage pimage75 = new PortfolioImage(Long.valueOf("9"), image26, "animation_5.jpg", "");
+        em.persist(pimage75);
+        PortfolioImage pimage76 = new PortfolioImage(Long.valueOf("9"), image27, "animation_6.jpg", "Du matériel professionnel");
+        em.persist(pimage76);
+        PortfolioImage pimage77 = new PortfolioImage(Long.valueOf("9"), image28, "animation_7.jpg", "");
+        em.persist(pimage77);
+        contractor.getImages().add(pimage71);
+        contractor.getImages().add(pimage72);
+        contractor.getImages().add(pimage73);
+        contractor.getImages().add(pimage74);
+        contractor.getImages().add(pimage75);
+        contractor.getImages().add(pimage76);
+        contractor.getImages().add(pimage77);
         em.persist(contractor);
         
         contractor = new Contractor("JonnyAnnimation", "contact@jonnyannimation.com", "password", "JonnyAnnimation",
@@ -320,8 +505,22 @@ public class PopulateDBBean implements PopulateDB {
         contractor.addService(service);
         contractor.setId(8);
         contractor.setRating(contractor.calculRate());
+        PortfolioImage pimage81 = new PortfolioImage(Long.valueOf("8"), image22, "animation_1.jpg", "");
+        em.persist(pimage81);
+        PortfolioImage pimage82 = new PortfolioImage(Long.valueOf("8"), image23, "animation_2.jpg", "Des ambiances variées");
+        em.persist(pimage82);
+        PortfolioImage pimage83 = new PortfolioImage(Long.valueOf("8"), image24, "animation_3.jpg", "Des lieux magiques");
+        em.persist(pimage83);
+        PortfolioImage pimage84 = new PortfolioImage(Long.valueOf("8"), image25, "animation_4.jpg", "Pour une super ambiance !");
+        em.persist(pimage84);
+        PortfolioImage pimage85 = new PortfolioImage(Long.valueOf("8"), image26, "animation_5.jpg", "");
+        em.persist(pimage85);
+        contractor.getImages().add(pimage81);
+        contractor.getImages().add(pimage82);
+        contractor.getImages().add(pimage83);
+        contractor.getImages().add(pimage84);
+        contractor.getImages().add(pimage85);
         em.persist(contractor);
-        
         
         Moderator moderator = new Moderator();
         moderator.setLogin("SuperModerator");
@@ -332,10 +531,9 @@ public class PopulateDBBean implements PopulateDB {
         
     }
     
-    
-    /*
-     for retrieve all countries with unirest API
-    */
+    /**
+     * For retrieve all countries with unirest API
+     */
     private void retrieveAllWorldCoutries(){
         
         try {
@@ -373,9 +571,9 @@ public class PopulateDBBean implements PopulateDB {
     
     }
     
-    /*
-    For delete some countries (the small countries for exemple)
-    */
+    /**
+     * For delete some countries (the small countries for exemple)
+     */
     private boolean belongToIgnoredCountry(String name){
         
         for(String country : ignoredCountry){
@@ -383,21 +581,24 @@ public class PopulateDBBean implements PopulateDB {
                 return true; 
         }                   
         return false;
+        
     }
 
     @Override
     public List<String> getAllCountries() {
+        
         return this.allCountries;
+        
     }
 
-    
-    /*
-    For retrieve all towns which correspond to a zipcode 
-    */
+    /**
+     *For retrieve all towns which correspond to a zipcode 
+     * @param code
+     * @return 
+     */
     @Override
     public List<String> getAllTown(String code) {
 
-   
         service = client.resource(
         UriBuilder.fromUri("http://api.zippopotam.us/fr/").build());
         String response;
@@ -424,11 +625,12 @@ public class PopulateDBBean implements PopulateDB {
                 lt.add(nameTown);
             }  
 
-        }catch (ParseException ex) {
+        } catch (ParseException ex) {
             return null;
         }
         
         return lt;
+        
     }
     
     @Override
@@ -457,44 +659,54 @@ public class PopulateDBBean implements PopulateDB {
             JSONObject regionJSON =  (JSONObject) list.get(0);
             region =  (String) regionJSON.get("state");
 
-        }catch (ParseException ex) {
+        } catch (ParseException ex) {
             return null;
         }
 
         return region;
+        
     }
     
-    private final SelectItem[] nonTeamCompanies = new SelectItem[]{
+    private final SelectItem[] nonTeamCompanies = new SelectItem[] {
+        
         new SelectItem("Auto-entrepreneur", "Auto-entrepreneur"),
         new SelectItem("Entrepreneur individuel", "Entrepreneur individuel"),
         new SelectItem("EIRL", "EIRL"),
         new SelectItem("EURL", "EURL"),
         new SelectItem("SASU", "SASU")
+            
     };
 
-    private final SelectItem[] teamCompanies = new SelectItem[]{
+    private final SelectItem[] teamCompanies = new SelectItem[] {
+        
         new SelectItem("SNC", "SNC"),
         new SelectItem("SARL", "SARL"),
         new SelectItem("SA", "SA"),
         new SelectItem("SAS", "SAS"),
         new SelectItem("SCA", "SCA")
+            
     };
     
     @Override
-    public List<SelectItem> getLegalForms(){
+    public List<SelectItem> getLegalForms() {
+        
         List<SelectItem> legalForms = new ArrayList<>();
         legalForms.addAll(Arrays.asList(nonTeamCompanies));
         legalForms.addAll(Arrays.asList(teamCompanies));
         return legalForms;
+        
     }
 
     @Override
     public boolean isATeamCompany(String teamCompany) {
+        
         for (SelectItem si : teamCompanies) {
             if (si.getLabel().equals(teamCompany)) {
                 return true;
             }
         }
         return false;
+         
     }
+    
 }

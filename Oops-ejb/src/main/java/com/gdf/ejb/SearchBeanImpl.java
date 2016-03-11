@@ -8,6 +8,7 @@ package com.gdf.ejb;
 import com.gdf.persistence.Category;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Moderator;
+import com.gdf.persistence.PortfolioImage;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Service;
 import com.gdf.persistence.Tenderer;
@@ -490,6 +491,15 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         } else {
             return (Tenderer) query.getSingleResult();
         }
+    }
+    
+    // PORTFOLIO
+
+    @Override
+    public PortfolioImage getPortfolioImageById(Long id) {
+        
+        return em.find(PortfolioImage.class, id);
+    
     }
     
 }

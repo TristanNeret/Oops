@@ -56,18 +56,16 @@ and open the template in the editor.
             <b:commandButton action="#{authentificationBean.validateUserAuthentification()}" update="@form :headerBar" value="Confirmer" look="success" icon="chevron-right" iconAlign="right" >
             </b:commandButton>  
             #{' '}
-         
             <div class="form-group" style="margin-left: 2px">
-                <b:row styleClass="show-grid" style="margin-top: -12px;">
+                <b:row styleClass="show-grid" style="margin-top: -8px; margin-left: 1px;">
                     <b:commandButton action="#{authentificationBean.hideAuthentification()}" update="@form :headerBar" value="Annuler" look="link" >
                     </b:commandButton>
                 </b:row>
-                <b:row styleClass="show-grid" style="margin-left: 0.5px; margin-top: -15px; font-size: small">
+                <b:row styleClass="show-grid" style="margin-top: -10px; margin-left: 14px; font-size: small">
                     <p:commandLink action="#{authentificationBean.hideAuthentificationAndGoFP()}" update="@form :headerBar" value="Oops, j'ai oublié mon mot de passe !">
                     </p:commandLink>
                 </b:row> 
             </div>    
-            
         </h:form>
 
         <!-- NOTIFICATION | USER ACCOUNT | DE-CONNECTION -->
