@@ -109,13 +109,45 @@ public class Contractor implements Serializable {
 
     @OneToMany(mappedBy = "contractor", fetch = EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<Review> reviews = new ArrayList<>();
+    
+    @OneToMany(fetch = EAGER)
+    private List<PortfolioImage> images;
 
     public static final String userCategory = "CONTRACTOR";
 
+    /**
+     * Default constructor
+     */
     public Contractor() {
+        
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        this.registrationDate = dateFormat.format(cal.getTime());
+        
+        this.images = new ArrayList<>();
+        
     }
 
+    /**
+     * Contractor constructor
+     * @param login
+     * @param email
+     * @param password
+     * @param socialReason
+     * @param legalForm
+     * @param description
+     * @param phone
+     * @param logo
+     * @param representatorFirstname
+     * @param representatorLastname
+     * @param turnover
+     * @param nbEmployees
+     * @param rating
+     * @param address
+     * @param legalInformation 
+     */
     public Contractor(String login, String email, String password, String socialReason, String legalForm, String description, String phone, String logo, String representatorFirstname, String representatorLastname, int turnover, int nbEmployees, int rating, Address address, LegalInformation legalInformation) {
+        
         this.login = login;
         this.email = email;
         this.password = this.encryptPassword(password);
@@ -141,6 +173,8 @@ public class Contractor implements Serializable {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         this.registrationDate = dateFormat.format(cal.getTime());
+        this.images = new ArrayList<>();
+        
     }
 
     public String getPassword() {
@@ -386,6 +420,18 @@ public class Contractor implements Serializable {
         this.updateDate = updateDate;
     }
 
+    public List<PortfolioImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<PortfolioImage> images) {
+        this.images = images;
+    }
+
+    public void removeImage(PortfolioImage image) {
+        this.images.remove(image);
+    }
+    
     private String encryptPassword(String password) {
         ConfigurablePasswordEncryptor passwordEncryptor = new ConfigurablePasswordEncryptor();
         passwordEncryptor.setAlgorithm(ENCRYPTION_ALGORITHM);
@@ -414,4 +460,5 @@ public class Contractor implements Serializable {
         }
         return true;
     }
+    
 }

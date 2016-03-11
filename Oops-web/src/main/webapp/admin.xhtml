@@ -63,7 +63,7 @@ and open the template in the editor.
                 <c:forEach items="#{searchManagedBean.reviewsToShow}" var="review">
                     <b:column span="4" styleClass="containerCarrousselItem">
                         <b:row styleClass="show-grid" style="text-align: center;">
-                            <h:outputText value='"#{review.content}"' />
+                            <h:outputText value='"#{manageReviewBean.getShortReviewDescription(review.content)}"' />
                         </b:row>
                         <b:row styleClass="show-grid" style="text-align: center;">
                             <h:graphicImage url="#{review.contractor.logo}" title="Logo" height="30px" />
