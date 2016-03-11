@@ -71,12 +71,8 @@
                         </b:row>
                         <b:row styleClass="show-grid">
                             <p:commandButton value="Modifier" styleClass="buttonBackRegistration" 
-                                             onclick="$('.modifModal1PseudoClass').modal('show');">
-                                <p:ajax update="tabViewContractor:dialogForm1:contractorLogo"/>
-                                <p:ajax update="tabViewContractor:dialogForm1:logoMessage"/>
-                                <p:ajax update="tabViewContractor:dialogForm1:contractorDescription"/>
-                                <p:ajax update="tabViewContractor:dialogForm1:descriptionMessage"/>
-                            </p:commandButton>
+                                             onclick="$('.modifModal1PseudoClass').modal('show');"
+                                             update="tabViewContractor:dialogForm1"/>
                         </b:row>
                     </b:column>
                 </b:row>
@@ -115,7 +111,7 @@
 
         <!-- LEGAL FORM -->
         <h:form id="viewForm2">
-            <b:panel look="primary" styleClass="panelAccordion" collapsible="true" collapsed="true">
+            <b:panel look="primary" styleClass="panelAccordion" collapsible="true">
                 <f:facet name="heading">
                     <h:outputText styleClass="panelTitleAccordion" value="Informations juridiques"/>
                 </f:facet>
@@ -124,8 +120,8 @@
                     <b:column span="6" styleClass="columnTendererField">
                         <b:row styleClass="rowTendererField"><b>Raison sociale : </b><h:outputText value="#{contractorEditBean.contractor.socialReason}"/></b:row>
                         <b:row styleClass="rowTendererField"><b>Forme juridique : </b><h:outputText value="#{contractorEditBean.contractor.legalForm}"/></b:row>
-                        <b:row styleClass="rowTendererField"><b>Nombre d'employés : </b><h:outputText value="#{contractorEditBean.contractor.nbEmployees}"/></b:row>
-                        <b:row styleClass="rowTendererField"><b>Chiffre d'affaire : </b><h:outputText value="#{contractorEditBean.contractor.turnover}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Nombre d'employés : </b><h:outputText value="> #{contractorEditBean.contractor.nbEmployees}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Chiffre d'affaire : </b><h:outputText value="> #{contractorEditBean.contractor.turnover} €"/></b:row>
                     </b:column>
                     <b:column span="5" styleClass="columnTendererField">
                         <b:row styleClass="rowTendererField"><b>N° SIREN : </b><h:outputText value="#{contractorEditBean.contractor.legalInformation.siren}"/></b:row>
@@ -138,21 +134,8 @@
                     <b:column span="1"></b:column>
                     <b:column span="11">
                         <p:commandButton id="openUpdateDialogButton" styleClass="buttonBackRegistration" 
-                                         value="Modifier" onclick="$('.modifModal2PseudoClass').modal('show');">
-                            <p:ajax update="tabViewContractor:dialogForm2:contractorSocialReason"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:contractorSocialReasonMessage"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:contractorLegalForm"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:contractorNbEmployeesPG"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:contractorTurnover"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:contractorSiren"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:sirenMessage"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:contractorSiret"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:siretMessage"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:contractorRcs"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:rcsMessage"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:contractorInsurrance"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:insurranceMessage"/>
-                        </p:commandButton>
+                                         value="Modifier" onclick="$('.modifModal2PseudoClass').modal('show');"
+                                         update="tabViewContractor:dialogForm2"/>
                     </b:column>
                 </b:row>
             </b:panel>
@@ -168,7 +151,7 @@
 
                     <b:inputText id="contractorSocialReason" label="Raison sociale" maxlength="15"
                                  placeholder="Entrez la raison sociale" renderLabel="true" value="#{contractorEditBean.contractor.socialReason}">
-                        <f:validator validatorId="com.gdf.socialReasonAlreadyExistValidator" />
+                        <f:validator validatorId="com.gdf.socialReasonAlreadyExistForModificationValidator" />
                     </b:inputText>
                     <b:message id="contractorSocialReasonMessage" for="contractorSocialReason" />
 
@@ -212,21 +195,21 @@
                     <b:inputText  id="contractorSiren"  label="N° SIREN" placeholder="Entrez le n° SIREN" 
                                   renderLabel="true" value="#{contractorEditBean.contractor.legalInformation.siren}" size="9" 
                                   maxlength="9">
-                        <f:validator validatorId="com.gdf.sirenAlreadyExistValidator"/>
+                        <f:validator validatorId="com.gdf.sirenAlreadyExistForModificationValidator"/>
                     </b:inputText>
                     <b:message id="sirenMessage" for="contractorSiren" />
 
                     <b:inputText  id="contractorSiret"  label="N° SIRET" placeholder="Entrez le n° SIRET" 
                                   renderLabel="true" value="#{contractorEditBean.contractor.legalInformation.siret}" size="14" 
                                   maxlength="14">    
-                        <f:validator validatorId="com.gdf.siretAlreadyExistValidator"/>
+                        <f:validator validatorId="com.gdf.siretAlreadyExistForModificationValidator"/>
                     </b:inputText>
                     <b:message id="siretMessage" for="contractorSiret" />
 
                     <b:inputText  id="contractorRcs"  label="N° RCS" placeholder="Entrez le n° RCS" 
                                   renderLabel="true" value="#{contractorEditBean.contractor.legalInformation.rcs}"
                                   maxlength="20">
-                        <f:validator validatorId="com.gdf.rcsAlreadyExistValidator"/>
+                        <f:validator validatorId="com.gdf.rcsAlreadyExistForModificationValidator"/>
                     </b:inputText>
                     <b:message id="rcsMessage" for="contractorRcs" />
 
@@ -252,7 +235,7 @@
 
         <!-- ADDRESS -->
         <h:form id="viewForm3">
-            <b:panel look="primary" styleClass="panelAccordion" collapsible="true" collapsed="true">
+            <b:panel look="primary" styleClass="panelAccordion" collapsible="true">
                 <f:facet name="heading">
                     <h:outputText styleClass="panelTitleAccordion" value="Adresse"/>
                 </f:facet>
@@ -271,22 +254,8 @@
                     <b:column span="1"></b:column>
                     <b:column span="11">
                         <p:commandButton value="Modifier" styleClass="buttonBackRegistration" 
-                                         onclick="$('.modifModal3PseudoClass').modal('show');">
-                            <p:ajax update="tabViewContractor:dialogForm3:listCountries"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:contractorZipCode"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:zipCodeMessage"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:contractorStreetNumber"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:streetNumberMessage"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:contractorStreet"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:streetMessage"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:zipCode"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:zipCodeMessageFr"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:townMessageFr"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:contractorStreetNumberFr"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:streetNumberMessageFr"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:contractorStreetFr"/>
-                            <p:ajax update="tabViewContractor:dialogForm3:streetMessageFr"/>
-                        </p:commandButton>
+                                         onclick="$('.modifModal3PseudoClass').modal('show');"
+                                         update="tabViewContractor:dialogForm3"/>
                     </b:column>
                 </b:row>
             </b:panel>

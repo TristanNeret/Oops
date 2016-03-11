@@ -31,12 +31,11 @@
                 }
             }
         }
-
     </script>
 
     <div class="container">
 
-        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Informations personnelles du représentant :" /> 
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Informations personnelles du représentant" /> 
 
         <p:growl widgetVar="growl" sticky="false" showDetail="true" life="3000" />
 
@@ -53,29 +52,15 @@
                         <b:row styleClass="rowTendererField">
 
                             <p:commandButton id="buttonModify" class="searchCommandButton" styleClass="buttonBackRegistration"
-                                             value="Modifier" onclick="$('.modifInfosModalPseudoClass').modal('show');">
-                                <p:ajax update="tabViewContractor:modalForm:contractorLogin"/>
-                                <p:ajax update="tabViewContractor:modalForm:contractorFirstname"/>
-                                <p:ajax update="tabViewContractor:modalForm:contractorLastname"/>
-                                <p:ajax update="tabViewContractor:modalForm:contractorMail"/>
-                                <p:ajax update="tabViewContractor:modalForm:contractorPhoneNumber"/>
-                                <p:ajax update="tabViewContractor:modalForm:contractorLoginMessage"/>
-                                <p:ajax update="tabViewContractor:modalForm:contractorFirstnameMessage"/>
-                                <p:ajax update="tabViewContractor:modalForm:contractorLastnameMessage"/>                                
-                                <p:ajax update="tabViewContractor:modalForm:contractorMailMessage"/>
-                                <p:ajax update="tabViewContractor:modalForm:contractorPhoneNumberMessage"/>
-                            </p:commandButton>
+                                             value="Modifier" onclick="$('.modifInfosModalPseudoClass').modal('show');"
+                                             update="tabViewContractor:modalForm"/> 
 
                             <p:commandButton class="searchCommandButton" id="buttonModifyPassword" 
                                              styleClass="buttonBackRegistration" value="Modifier mon mot de passe" 
-                                             onclick="$('.modifPasswordModalPseudoClass').modal('show');">
-                                <p:ajax update="tabViewContractor:modalFormPassword:contractorConfirmPassword" resetValues="true"/>
-                                <p:ajax update="tabViewContractor:modalFormPassword:contractorPassword" resetValues="true"/>
-                                <p:ajax update="tabViewContractor:modalFormPassword:contractorPasswordMessage"/>
-                                <p:ajax update="tabViewContractor:modalFormPassword:contractorConfirmPasswordMessage"/>
-                            </p:commandButton>
+                                             onclick="$('.modifPasswordModalPseudoClass').modal('show');"
+                                             update="tabViewContractor:modalFormPassword"/>
 
-                            <b:button look="link" value="Voir la page de l'entreprise" style="margin-top: 20px;" outcome="/views/contractorInformations.xhtml?id=#{contractorEditBean.contractor.id}" />
+                            <b:button look="link" value="Voir la page de mon entreprise" style="margin-top: 20px;" outcome="/views/contractorInformations.xhtml?id=#{contractorEditBean.contractor.id}" />
 
                         </b:row>
                     </b:column>
@@ -132,7 +117,7 @@
 
                     <div class="dialogFooter" >
                         <p:commandButton update="@form tabViewContractor:infoForm" styleClass="buttonAskReview"
-                                         value="Modifier" actionListener="#{contractorEditBean.update()}"                                                          
+                                         value="Enregistrer" actionListener="#{contractorEditBean.update()}"                                                          
                                          oncomplete="handleInfosModification(xhr, status, args)"/> 
                         <p:commandButton  value="Annuler" styleClass="buttonAskReview"
                                           onclick="$('.modifInfosModalPseudoClass').modal('hide');"
@@ -167,7 +152,7 @@
 
                 <div class="dialogFooter" >
                     <p:commandButton styleClass="buttonAskReview" update="@form"
-                                     value="Modifier" actionListener="#{contractorEditBean.updatePassword()}"                                                          
+                                     value="Enregistrer" actionListener="#{contractorEditBean.updatePassword()}"                                                          
                                      oncomplete="handlePasswordModification(xhr, status, args)" /> 
                     <p:commandButton  value="Annuler" styleClass="buttonAskReview"
                                       onclick="$('.modifPasswordModalPseudoClass').modal('hide');"/> 

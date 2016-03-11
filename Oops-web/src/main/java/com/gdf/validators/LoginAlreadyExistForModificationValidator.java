@@ -5,7 +5,6 @@
  */
 package com.gdf.validators;
 
-
 import com.gdf.ejb.SearchBean;
 import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Tenderer;
@@ -24,18 +23,20 @@ import javax.faces.validator.ValidatorException;
 
 /**
  * Test if a login is already used by another user
+ *
  * @author Tristan
  */
 @ManagedBean
 @RequestScoped
-@FacesValidator(value="com.gdf.loginAlreadyExistForModificationValidator")
+@FacesValidator(value = "com.gdf.loginAlreadyExistForModificationValidator")
 public class LoginAlreadyExistForModificationValidator implements Validator {
 
     private static final String LOGIN_ALREADY_USED = "Ce login est déjà utilisé !";
+    private static final String LOGIN_NULL = "Veuillez indiquer un login !";
 
     @EJB
     SearchBean sb;
-    
+
     /**
      * Creates a new instance of LoginAlreadyExistValidator
      */
@@ -44,25 +45,30 @@ public class LoginAlreadyExistForModificationValidator implements Validator {
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        
-        String newLogin = (String)value;
+
+        String newLogin = (String) value;
+
+        if (newLogin == null) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, LOGIN_NULL, null));
+        }
 
         long id = SessionBean.getUserId();
         String cat = SessionBean.getUserCategory();
         String formerLogin = null;
-        
-        if(cat.equals(Contractor.userCategory))
+
+        if (cat.equals(Contractor.userCategory)) {
             formerLogin = sb.searchContractorById(id).getLogin();
-        else
+        } else {
             formerLogin = sb.searchTendererById(id).getLogin();
-              
-        if(!newLogin.equals(formerLogin)){
-        // Test if a Tenderer or a Contractor already uses this login
-            if(this.sb.searchContractorByLogin(newLogin) != null || this.sb.searchTendererByLogin(newLogin) != null) {
+        }
+
+        if (!newLogin.equals(formerLogin)) {
+            // Test if a Tenderer or a Contractor already uses this login
+            if (this.sb.searchContractorByLogin(newLogin) != null || this.sb.searchTendererByLogin(newLogin) != null) {
                 throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, LOGIN_ALREADY_USED, null));
             }
-        }    
-        
+        }
+
     }
-    
+
 }

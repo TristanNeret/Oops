@@ -24,6 +24,7 @@ import javax.faces.validator.ValidatorException;
 public class EmailAlreadyExistForModificationValidator implements Validator {
 
     private static final String EMAIL_ALREADY_USED = "Cet email est déjà utilisé !";
+    private static final String EMAIL_NULL ="Veuillez indiquer un email !";
 
     @EJB
     SearchBean sb;
@@ -38,6 +39,10 @@ public class EmailAlreadyExistForModificationValidator implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         
         String newEmail = (String)value;     
+        
+        if(newEmail == null){
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, EMAIL_NULL, null));
+        }
        
         long id = SessionBean.getUserId();
         String cat = SessionBean.getUserCategory();;

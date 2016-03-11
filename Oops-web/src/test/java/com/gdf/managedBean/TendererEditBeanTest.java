@@ -20,15 +20,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * TendererInfoMngBeanTest
+ * TendererEditBeanTest
  * @author chris
  */
-public class TendererInfoMngBeanTest {
+public class TendererEditBeanTest {
     
     private static WebDriver driver;
     private static String baseUrl;
     
-    public TendererInfoMngBeanTest() {
+    public TendererEditBeanTest() {
         
     }
     
