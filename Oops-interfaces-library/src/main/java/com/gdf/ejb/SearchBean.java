@@ -10,6 +10,7 @@ import com.gdf.persistence.Contractor;
 import com.gdf.persistence.Review;
 import com.gdf.persistence.Tenderer;
 import com.gdf.persistence.Moderator;
+import com.gdf.persistence.PortfolioImage;
 import java.util.List;
 import javax.ejb.Remote;
 
@@ -99,6 +100,8 @@ public interface SearchBean {
      * @return the Tenderer identified by the login if any or null if he doesn't exist
      */
     public Tenderer searchTendererByLogin(String login);
+    
+    public Tenderer searchTendererByEmail(String email);
 
     // MODERATOR
     
@@ -215,6 +218,13 @@ public interface SearchBean {
      */
     public List<String> getAllStates(); 
 
-    public Tenderer searchTendererByEmail(String email);
+    // PORTFOLIO
+    
+    /**
+     * Return a PortfolioImage from its id
+     * @param id id of the PortfolioImage to return 
+     * @return a PortfolioImage
+     */
+    public PortfolioImage getPortfolioImageById(Long id);
     
 }

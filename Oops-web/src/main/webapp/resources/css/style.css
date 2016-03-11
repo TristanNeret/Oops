@@ -1356,6 +1356,115 @@ div.ui-growl-message {
     margin-right: auto; 
 }
 
+.caption {
+    text-shadow: 2px 2px 4px #000000;
+    font-size: 16px;
+}
+
+.ui-button-icon-left {
+    background-color: white !important;
+}
+
+.ui-fileupload-buttonbar .ui-button {
+    background-color: #73A839 !important;
+    border-color: #73A839 !important;
+    color: #fff !important;
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+    padding: 6px 10px !important;
+    font-size: 14px !important;
+    line-height: 1.428571429 !important;
+    border-radius: 4px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.ui-fileupload-buttonbar .ui-button:hover {
+    background-color: #59822c !important;
+    border-color: #547a29 !important;
+}
+
+button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-fileupload-upload {
+    background-color: #2FA4E7 !important;
+    border-color: #2FA4E7 !important;
+    color: #fff !important;
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+    padding: 6px 10px !important;
+    font-size: 14px !important;
+    line-height: 1.428571429 !important;
+    border-radius: 4px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-fileupload-upload:hover {
+    background-color: #178acc !important;
+    border-color: #1684c2 !important;
+}
+
+button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-fileupload-cancel {
+    background-color: #C71C22 !important;
+    border-color: #C71C22 !important;
+    color: #fff !important;
+    display: inline-block !important;
+    margin-bottom: 0 !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    touch-action: manipulation !important;
+    cursor: pointer !important;
+    background-image: none !important;
+    border: 1px solid transparent !important;
+    white-space: nowrap !important;
+    padding: 6px 10px !important;
+    font-size: 14px !important;
+    line-height: 1.428571429 !important;
+    border-radius: 4px !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+button.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-text-icon-left.ui-fileupload-cancel:hover {
+    background-color: #9a161a !important;
+    border-color: #911419 !important;
+}
+
+button.ui-fileupload-cancel.ui-button.ui-widget.ui-state-default.ui-corner-all.ui-button-icon-only {
+    background-color: #FFFFFF !important;
+    border-radius: 15px !important;
+}
+
+.ui-progressbar .ui-widget-header {
+    background: #2FA4E7;
+    background: #2FA4E7 linear-gradient(top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+    background: #2FA4E7 -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.8)), to(rgba(255, 255, 255, 0)));
+    background: #2FA4E7 -moz-linear-gradient(top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+    filter: progid DXImageTransform.Microsoft.gradient(startColorstr=#2FA4E7, endColorstr=#2FA4E7);
+}
+
 /*****************************************************************************/
 /********************************* DIALOG ************************************/
 /*****************************************************************************/

@@ -127,6 +127,16 @@ and open the template in the editor.
 
                 </div>
 
+                <!-- PORTFOLIO -->
+                <p:panel id="panelPortfolio">
+                    <h2 style="margin-left: -10px; margin-top: -10px;">Portfolio</h2>
+                    <h:outputLabel value="Il n'y a encore aucune photo pour ce prestataire." style="margin-left: -8px; margin-bottom: 20px;" rendered="#{contractorInformationsBean.contractor.images.size() == 0}" />
+                    <p:contentFlow value="#{contractorInformationsBean.contractor.images}" var="image" rendered="#{contractorInformationsBean.contractor.images.size() > 0}">
+                        <p:graphicImage onclick="/" url="/images/#{image.id}" styleClass="content" />
+                        <div class="caption">#{image.description}</div>
+                    </p:contentFlow>
+                </p:panel>
+
                 <!-- GIVE A REVIEW --> 
                 <h:form id="formNewReview" styleClass="formNewReview">
 
@@ -138,18 +148,18 @@ and open the template in the editor.
                             </b:column>
                             <b:column span="2">
                                 <b:commandButton id="buttonNewReview" value="Donner un avis" ajax="true" look="success" onclick="
-                                    var element = document.getElementById('formNewReview:messageError');
-                                    if (#{reviewBean.isTendererConnected()}) {
-                                        element.style.display = 'none';
-                                        this.form.reset();
-                                        toggleGroupNewReview('block');
-                                    } else {
-                                        element.style.display = 'block';
-                                        setTimeout(function() {
+                                        var element = document.getElementById('formNewReview:messageError');
+                                        if (#{reviewBean.isTendererConnected()}) {
                                             element.style.display = 'none';
-                                        }, 3000);
-                                    }
-                                    return false;" update="@form" />
+                                            this.form.reset();
+                                            toggleGroupNewReview('block');
+                                        } else {
+                                            element.style.display = 'block';
+                                            setTimeout(function () {
+                                                element.style.display = 'none';
+                                            }, 3000);
+                                        }
+                                        return false;" update="@form" />
                             </b:column>
                             <b:column span="9">
                                 <h:outputLabel id="messageError" styleClass="labelErrorMessage" style="display: none;" value="Connectez-vous en tant que soumissionnaire pour évaluer un prestataire." />
@@ -180,13 +190,13 @@ and open the template in the editor.
                                             return false;" />
                                     <b:commandButton value="Soumettre l'avis" styleClass="commandButtonMessage" ajax="true" look="success" actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
                                                      oncomplete="if(validationFailed) { 
-                                                        toggleGroupNewReview('block'); 
+                                                     toggleGroupNewReview('block'); 
                                                      } else {
-                                                        var element = document.getElementById('formNewReview:messageSuccess');
-                                                        element.style.display = 'block';
-                                                        setTimeout(function() {
-                                                            element.style.display = 'none';
-                                                        }, 5000);
+                                                     var element = document.getElementById('formNewReview:messageSuccess');
+                                                     element.style.display = 'block';
+                                                     setTimeout(function() {
+                                                     element.style.display = 'none';
+                                                     }, 5000);
                                                      } return false;" style="margin-left: 10px;" /> 
                                 </b:row>
                             </b:column>
@@ -242,7 +252,7 @@ and open the template in the editor.
                     </p:dataGrid>
 
                     <c:if test="#{contractorInformationsBean.reviews.size() == 0}">
-                        <h:outputLabel value="Il n'existe aucun avis pour ce prestataire." />
+                        <h:outputLabel style="margin-left: 8px; margin-bottom: 20px;" value="Il n'existe aucun avis pour ce prestataire." />
                     </c:if>
                 </div>
             </c:if>
