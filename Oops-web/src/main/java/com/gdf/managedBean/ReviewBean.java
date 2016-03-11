@@ -38,6 +38,9 @@ public class ReviewBean {
 
             // Add the new Review
             eb.addReview(SessionBean.getUserId(), contractorID, reviewAppreciation, reviewContent, reviewRating);
+            this.reviewAppreciation = "";
+            this.reviewContent = "";
+            this.reviewRating = 3;
 
         }
         
@@ -61,6 +64,8 @@ public class ReviewBean {
         return false;
         
     }
+    
+    // GETTER/SETTER
 
     public String getReviewAppreciation() {
         return reviewAppreciation;

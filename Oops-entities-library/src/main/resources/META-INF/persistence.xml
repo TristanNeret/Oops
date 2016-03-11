@@ -9,9 +9,11 @@
     <class>com.gdf.persistence.Moderator</class>
     <class>com.gdf.persistence.ModeratorReview</class>
     <class>com.gdf.persistence.Notification</class>
+    <class>com.gdf.persistence.PasswordRequest</class>
     <class>com.gdf.persistence.Review</class>
     <class>com.gdf.persistence.Service</class>
     <class>com.gdf.persistence.Tenderer</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="${jdbc.connectionURL}"/>
       <property name="javax.persistence.jdbc.user" value="${jdbc.username}"/>

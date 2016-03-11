@@ -27,6 +27,10 @@ and open the template in the editor.
                     PF('growlError').renderMessage({summary: 'Avis soumis !', detail: 'Un modérateur va se charger de vérifier sa validité', severity: 'info'});
                 }
             }
+            function toggleGroupNewReview(visible) {
+                var element = document.getElementById('formNewReview:panelNewReview');
+                element.style.display = visible;
+            }
         </script>
     </h:head>
 
@@ -48,9 +52,9 @@ and open the template in the editor.
         <!-- NAV BACK -->
         <nav class="navbar navbar-default" id="navBack">
             <div class="container">
-            <a class="navbar-brand" href="javascript:history.go(-1)">
-                <b:image value="/resources/default/img/back_arrow.png" name="img" width="30" height="30" style="margin-top: -11px;"/>
-            </a>
+                <a class="navbar-brand" href="javascript:history.go(-1)">
+                    <b:image value="/resources/default/img/back_arrow.png" name="img" width="30" height="30" style="margin-top: -11px;"/>
+                </a>
                 <b:button look="link" value="Accueil" outcome="/index.xhtml" />
             </div>
         </nav>
@@ -103,7 +107,7 @@ and open the template in the editor.
                                 paginatorTemplate=""
                                 rowsPerPageTemplate="6,12,16">
 
-                        <b:panel collapsible="false" styleClass="panelContractorDescription">
+                        <b:panel collapsible="false" styleClass="panelContractorDescription panelContractorDescription-#{service.category.name}">
                             <f:facet name="heading">
                                 <b:row styleClass="show-grid">
                                     <h:outputText value="#{service.title}"/> (<h:outputText value="#{service.category.name}"/>)
@@ -114,7 +118,7 @@ and open the template in the editor.
                                     <h:outputText value="#{service.description}"/>
                                 </b:row>
                                 <b:row styleClass="show-grid">
-                                    <b>Tarif horraire : <h:outputText style="color: #1E90FF;" value="#{service.price} €" /></b>
+                                    <b>Tarif horraire : <h:outputText class="textColor-#{service.category.name}" value="#{contractorInformationsBean.getWellPrice(service.price)}" /></b>
                                 </b:row>
                             </b:container>
                         </b:panel>
@@ -123,45 +127,88 @@ and open the template in the editor.
 
                 </div>
 
-                <div id="rating">   
-                    <!-- DIALOG BOX FOR RATING -->
-                    <o:form id="reviewForm" includeViewParams="true">
-                        <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <h2 style="margin-left: -8px;">Avis</h2>
-                            <b:commandButton id="reviewBtn" value="Donner votre avis" onclick="if (#{reviewBean.isTendererConnected()}) {
+                <!-- GIVE A REVIEW --> 
+                <h:form id="formNewReview" styleClass="formNewReview">
+
+                    <b:container fluid="true">
+                        <b:row styleClass="show-grid">
+
+                            <b:column span="1">
+                                <h2>Avis</h2>
+                            </b:column>
+                            <b:column span="2">
+                                <b:commandButton id="buttonNewReview" value="Donner un avis" ajax="true" look="success" onclick="
+                                    var element = document.getElementById('formNewReview:messageError');
+                                    if (#{reviewBean.isTendererConnected()}) {
+                                        element.style.display = 'none';
                                         this.form.reset();
-                                        PF('reviewDialog').show();
+                                        toggleGroupNewReview('block');
                                     } else {
-                                        PF('growlError').renderMessage({summary: 'Vous devez vous connecter !', detail: 'Coonectez-vous en tant que soumissionnaire pour évaluer un prestataire.', severity: 0});
-                                    }" type="button" look="success">
-                            </b:commandButton>
-                        </h:panelGrid>
-                        <p:growl id="growl" sticky="false" showDetail="false" life="3000" />
-                        <p:dialog header="Donner votre avis :" modal="true" widgetVar="reviewDialog" resizable="false">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputLabel value="Titre :" />
-                                <p:inputText id="reviewAppreciation" value="#{reviewBean.reviewAppreciation}" required="true" label="Titre" />
+                                        element.style.display = 'block';
+                                        setTimeout(function() {
+                                            element.style.display = 'none';
+                                        }, 3000);
+                                    }
+                                    return false;" update="@form" />
+                            </b:column>
+                            <b:column span="9">
+                                <h:outputLabel id="messageError" styleClass="labelErrorMessage" style="display: none;" value="Connectez-vous en tant que soumissionnaire pour évaluer un prestataire." />
+                                <h:outputLabel id="messageSuccess" styleClass="labelSuccessMessage" style="display: none;" value="Avis soumis ! Un modérateur va se charger de vérifier sa validité." />
+                            </b:column>
 
-                                <h:outputLabel value="Description :" />
-                                <p:inputTextarea id="reviewContent" rows="6" cols="33" value="#{reviewBean.reviewContent}" required="true" label="Description" />
+                        </b:row>
+                    </b:container>
 
-                                <h:outputLabel value="Note moyenne :" />
-                                <p:rating id="reviewRate" value="#{reviewBean.reviewRating}" required="true" />
+                    <b:panel id="panelNewReview" styleClass="panelNewReview">
+                        <b:row styleClass="show-grid">
+                            <h:outputLabel value="Donner votre avis" />
+                        </b:row>
+                        <b:row styleClass="show-grid">
+                            <b:column span="5">
+                                <b:row styleClass="show-grid">
+                                    <h:outputLabel value="Titre :" />
+                                    <b:inputText id="inputTitre" value="#{reviewBean.reviewAppreciation}" required="true" label="Titre" />
+                                    <b:message id="messageTitreErr" for="inputTitre"/>
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <br/>
+                                    <b id="starsTxt2" style="float:left;">Note moyenne : </b> 
+                                    <p:rating id="stars2" value="#{reviewBean.reviewRating}" required="true" stars="5" readonly="false" />
+                                </b:row>
+                                <b:row styleClass="show-grid">
+                                    <b:commandButton value="Annuler" styleClass="commandButtonMessage" ajax="true" look="danger" onclick="toggleGroupNewReview('none');
+                                            return false;" />
+                                    <b:commandButton value="Soumettre l'avis" styleClass="commandButtonMessage" ajax="true" look="success" actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
+                                                     oncomplete="if(validationFailed) { 
+                                                        toggleGroupNewReview('block'); 
+                                                     } else {
+                                                        var element = document.getElementById('formNewReview:messageSuccess');
+                                                        element.style.display = 'block';
+                                                        setTimeout(function() {
+                                                            element.style.display = 'none';
+                                                        }, 5000);
+                                                     } return false;" style="margin-left: 10px;" /> 
+                                </b:row>
+                            </b:column>
+                            <b:column span="7">
+                                <h:outputLabel value="Commentaire :" />
+                                <b:inputTextarea id="inputComment" required="true" placeholder="Saisissez votre message."
+                                                 value="#{reviewBean.reviewContent}" label="Commentaire">
+                                </b:inputTextarea>
+                                <b:message id="messageCommentErr" for="inputComment" />
+                                <b:fetchBeanInfos />
+                            </b:column>
+                        </b:row>
+                    </b:panel>
 
-                                <f:facet name="footer">
-                                    <p:commandButton value="Soumettre l'avis" update="growl"  actionListener="#{reviewBean.addReview(contractorInformationsBean.id)}" 
-                                                     oncomplete="handleReviewRequest(xhr, status, args)" />
-                                </f:facet>  
-                            </h:panelGrid>
-                        </p:dialog>
-                    </o:form>
-                </div>
+                </h:form>
+
+                <!-- REVIEW'S LIST -->
                 <div id="divReviewsContractorInformations">
 
                     <p:dataGrid var="review" value="#{contractorInformationsBean.reviews}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="6,12,16">
+                                rowsPerPageTemplate="6,12,16" rendered="#{contractorInformationsBean.reviews.size() > 0}">
 
                         <b:panel collapsible="false" styleClass="panelReview">
                             <f:facet name="heading">
@@ -170,6 +217,7 @@ and open the template in the editor.
                                     <h:outputText styleClass="outputTextSubTitle" value="par"/>
                                     <a class="aTendererLink" href="/Oops-web/views/tendererInformations.xhtml?id=#{review.tenderer.id}">#{review.tenderer.login}</a>
                                     <h:outputText styleClass="outputTextSubTitle" value="le #{review.date}"/>
+                                    <a class="aTendererLink" href="/Oops-web/views/tendererInformations.xhtml?id=#{review.tenderer.id}"><h:graphicImage value="#{review.tenderer.avatar}" height="25px" styleClass="imageTendererMini" /></a>
                                 </b:row>
                             </f:facet>
                             <b:container fluid="true">

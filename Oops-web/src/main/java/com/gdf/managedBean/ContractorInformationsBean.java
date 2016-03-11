@@ -45,9 +45,32 @@ public class ContractorInformationsBean implements Serializable {
      * Initialize Contractor informations
      */
     public void init() {
+        
         this.contractor = this.searchBean.searchContractorById(id);
         this.reviews = this.searchBean.searchAcceptedContratorReviews(this.id);
+        
     }
+    
+    /**
+     * Return well formed price
+     * @param price selected Contractor price
+     * @return N.C. if no price exist, or Contractor price
+     */
+    public String getWellPrice(Double price) {
+        
+        if (price.equals(0.0)) {
+            
+            return "N.C.";
+            
+        } else {
+            
+            return price + " €";
+            
+        }
+        
+    }
+    
+    // GETTER/SETTER
     
     /**
      * Set the id of the Contrator to search

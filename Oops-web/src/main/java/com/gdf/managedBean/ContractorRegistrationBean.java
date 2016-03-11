@@ -71,9 +71,8 @@ public class ContractorRegistrationBean implements Serializable {
         contractor = new Contractor();
         contractor.setAddress(new Address());
         contractor.setLegalInformation(new LegalInformation());
-
+        contractor.getAddress().setCountry("France");
         code = false;
-
         legalForms = pdb.getLegalForms();
     }
 

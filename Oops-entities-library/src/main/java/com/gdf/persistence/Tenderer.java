@@ -91,7 +91,13 @@ public class Tenderer implements Serializable {
         this.password = this.encryptPassword(password);
         this.firstname = firstname;
         this.lastname = lastname;
-        this.avatar = avatar;
+        // Default image
+        this.avatar = "/resources/default/img/Tenderer.png";
+        if (avatar != null) {
+            if (!avatar.equals("")) {
+                this.avatar = avatar;
+            }
+        }
         this.phone = phone;
         this.registrationDate = registrationDate;
     }
