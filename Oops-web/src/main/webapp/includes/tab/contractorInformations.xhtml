@@ -14,23 +14,21 @@
     xmlns:b="http://bootsfaces.net/ui">
 
     <script type="text/javascript">
-        function handleMdpModification(xhr, status, args) {
+        function handleInfosModification(xhr, status, args) {
             if (args.validationFailed) {
-                PF('mdpDialog').jq.effect("shake", {times: 5}, 100);
-            }
-            else {
-                PF('mdpDialog').hide();
-                PF('growlError').renderMessage({summary: 'Succès!', detail: 'Votre mot de passe a été changé !', severity: 'info'});
-            }
-        }
 
-        function handleModification(xhr, status, args) {
-            if (args.validationFailed) {
-                PF('modifyDialog').jq.effect("shake", {times: 5}, 100);
+            } else {
+                $('.modifInfosModalPseudoClass').modal('hide');
+                PF('growl').renderMessage({summary: 'Succès!', detail: 'Vos informations ont été modifiées !', severity: 'info'});
             }
-            else {
-                PF('modifyDialog').hide();
-                PF('growlError').renderMessage({summary: 'Succès!', detail: 'Vos informations ont été modifiées !', severity: 'info'});
+
+            function handlePasswordModification(xhr, status, args) {
+                if (args.validationFailed) {
+
+                } else {
+                    $('.modifPasswordModalPseudoClass').modal('hide');
+                    PF('growl').renderMessage({summary: 'Succès!', detail: 'Votre mot de passe a été changé !', severity: 'info'});
+                }
             }
         }
 
@@ -40,9 +38,9 @@
 
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Informations personnelles du représentant :" /> 
 
-        <o:form id="infoForm" includeViewParams="true">
+        <p:growl widgetVar="growl" sticky="false" showDetail="true" life="3000" />
 
-            <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
+        <h:form id="infoForm">      
 
             <b:container fluid="true" style="margin-top: 20px;">
                 <b:row styleClass="show-grid">
@@ -54,25 +52,29 @@
                         <b:row styleClass="rowTendererField"><b>Téléphone : </b><h:outputText value="#{contractorEditBean.contractor.phone}"/></b:row>
                         <b:row styleClass="rowTendererField">
 
-                            <p:commandButton id="buttonModify" class="searchCommandButton" styleClass="buttonBackRegistration" value="Modifier" onclick="PF('modifyDialog').show();">
-                                <p:ajax update="tabViewContractor:formModify:modifiedLogin"/>
-                                <p:ajax update="tabViewContractor:formModify:modifiedFirstName"/>
-                                <p:ajax update="tabViewContractor:formModify:modifiedLastName"/>
-                                <p:ajax update="tabViewContractor:formModify:modifiedEmail"/>
-                                <p:ajax update="tabViewContractor:formModify:modifiedPhoneNumber"/>
-                                <p:ajax update="tabViewContractor:formModify:modifiedEmail"/>
-                                <p:ajax update="tabViewContractor:formModify:loginMessage"/>
-                                <p:ajax update="tabViewContractor:formModify:phoneMessage"/>
-                                <p:ajax update="tabViewContractor:formModify:emailMessage"/>
-                                <p:ajax update="tabViewContractor:formModify:lastNameMessage"/>
-                                <p:ajax update="tabViewContractor:formModify:firstNameMessage"/>
+                            <p:commandButton id="buttonModify" class="searchCommandButton" styleClass="buttonBackRegistration"
+                                             value="Modifier" onclick="$('.modifInfosModalPseudoClass').modal('show');">
+                                <p:ajax update="tabViewContractor:modalForm:contractorLogin"/>
+                                <p:ajax update="tabViewContractor:modalForm:contractorFirstname"/>
+                                <p:ajax update="tabViewContractor:modalForm:contractorLastname"/>
+                                <p:ajax update="tabViewContractor:modalForm:contractorMail"/>
+                                <p:ajax update="tabViewContractor:modalForm:contractorPhoneNumber"/>
+                                <p:ajax update="tabViewContractor:modalForm:contractorLoginMessage"/>
+                                <p:ajax update="tabViewContractor:modalForm:contractorFirstnameMessage"/>
+                                <p:ajax update="tabViewContractor:modalForm:contractorLastnameMessage"/>                                
+                                <p:ajax update="tabViewContractor:modalForm:contractorMailMessage"/>
+                                <p:ajax update="tabViewContractor:modalForm:contractorPhoneNumberMessage"/>
                             </p:commandButton>
 
-                            <p:commandButton class="searchCommandButton" id="buttonModifyMdp" styleClass="buttonBackRegistration" value="Modifier mon mot de passe" onclick="PF('mdpDialog').show();">
-                                <p:ajax update="tabViewContractor:formModifyMdp:confirmationPassword" resetValues="true"/>
-                                <p:ajax update="tabViewContractor:formModifyMdp:password" resetValues="true"/>
+                            <p:commandButton class="searchCommandButton" id="buttonModifyPassword" 
+                                             styleClass="buttonBackRegistration" value="Modifier mon mot de passe" 
+                                             onclick="$('.modifPasswordModalPseudoClass').modal('show');">
+                                <p:ajax update="tabViewContractor:modalFormPassword:contractorConfirmPassword" resetValues="true"/>
+                                <p:ajax update="tabViewContractor:modalFormPassword:contractorPassword" resetValues="true"/>
+                                <p:ajax update="tabViewContractor:modalFormPassword:contractorPasswordMessage"/>
+                                <p:ajax update="tabViewContractor:modalFormPassword:contractorConfirmPasswordMessage"/>
                             </p:commandButton>
-                            
+
                             <b:button look="link" value="Voir la page de l'entreprise" style="margin-top: 20px;" outcome="/views/contractorInformations.xhtml?id=#{contractorEditBean.contractor.id}" />
 
                         </b:row>
@@ -80,103 +82,99 @@
                 </b:row>
             </b:container>
 
-        </o:form>
+        </h:form>
 
-        <!-- Edit Dialog -->
-        <o:form id="formModify">
+        <b:modal id="modifInfosModal" title="Modification des informations personelles" styleClass="modifInfosModalPseudoClass"
+                 closable="false" backdrop="false">          
 
-            <p:dialog header="Modification informations personelles :" modal="true" widgetVar="modifyDialog" resizable="false">             
+            <h:form id="modalForm"> 
 
                 <h:panelGroup id="infoc">
 
-                    <p>       
-                        <h:outputLabel for="modifiedLogin" class="labelModificationForm"> Login: </h:outputLabel>
-                        <p:inputText   id="modifiedLogin" value="#{contractorEditBean.contractor.login}">
-                            <f:ajax  event="blur" render="loginMessage"/>
-                            <f:validator validatorId="com.gdf.loginAlreadyExistForModificationValidator"/>
-                        </p:inputText>
-                        <p:message id="loginMessage" for="modifiedLogin"/>
-                    </p>
+                    <b:inputText id="contractorLogin" label="Login" placeholder="Entrez votre login" renderLabel="true" 
+                                 value="#{contractorEditBean.contractor.login}" maxlength="15">
+                        <f:facet name="prepend">
+                            <b:icon name="user" />
+                        </f:facet>
+                        <f:validator validatorId="com.gdf.loginAlreadyExistForModificationValidator" />
+                    </b:inputText>
+                    <b:message id="contractorLoginMessage" for="contractorLogin" />
 
-                    <p>
-                        <h:outputLabel for="modifiedFirstName" class="labelModificationForm"> Prénom: </h:outputLabel>
-                        <p:inputText  id="modifiedFirstName" value="#{contractorEditBean.contractor.representatorFirstname}">
-                            <f:ajax  event="blur" render="firstNameMessage"/>
-                        </p:inputText>
-                        <p:message id="firstNameMessage" for="modifiedFirstName"/>
-                    </p>
+                    <b:inputText id="contractorFirstname" label="Prénom" placeholder="Entrez le prénom du représentant" 
+                                 renderLabel="true" value="#{contractorEditBean.contractor.representatorFirstname}"
+                                 maxlength="15">
+                    </b:inputText>
+                    <b:message id="contractorFirstnameMessage" for="contractorFirstname" />
 
-                    <p>
-                        <h:outputLabel for="modifiedLastName" class="labelModificationForm"> Nom: </h:outputLabel>
-                        <p:inputText  id="modifiedLastName" value="#{contractorEditBean.contractor.representatorLastname}">
-                            <f:ajax  event="blur" render="lastNameMessage"/>
-                        </p:inputText>
-                        <p:message id="lastNameMessage" for="modifiedLastName"/>
-                    </p>
+                    <b:inputText id="contractorLastname" label="Nom" placeholder="Entrez le nom du représentant" 
+                                 renderLabel="true" value="#{contractorEditBean.contractor.representatorLastname}"
+                                 maxlength="15">
+                    </b:inputText>
+                    <b:message id="contractorLastnameMessage" for="contractorLastname" />
 
-                    <p>
-                        <h:outputLabel for="modifiedEmail" class="labelModificationForm"> Email : </h:outputLabel>
-                        <p:inputText  id="modifiedEmail" value="#{contractorEditBean.contractor.email}">
-                            <f:ajax  event="blur" render="emailMessage"/>
-                            <f:validator validatorId="com.gdf.mailFormatValidator"/>
-                            <f:validator validatorId="com.gdf.emailAlreadyExistForModificationValidator"/>
-                        </p:inputText>
-                        <p:message id="emailMessage" for="modifiedEmail"/>
+                    <b:inputText id="contractorMail" label="Adresse mail" placeholder="Entrez votre adresse mail" renderLabel="true" value="#{contractorEditBean.contractor.email}" >
+                        <f:facet name="prepend">
+                            <h:outputText value="@" />
+                        </f:facet>
+                        <f:validator validatorId="com.gdf.mailFormatValidator" />
+                        <f:validator validatorId="com.gdf.emailAlreadyExistForModificationValidator" /> 
+                    </b:inputText>
+                    <b:message id="contractorMailMessage" for="contractorMail" />
 
-                    </p>
+                    <b:inputText id="contractorPhoneNumber" label="Téléphone" placeholder="Entrez votre numéro de téléphone" 
+                                 renderLabel="true" value="#{contractorEditBean.contractor.phone}" maxlength="10">
+                        <f:facet name="prepend">
+                            <b:icon name="earphone" />
+                        </f:facet>
+                        <f:validator validatorId="com.gdf.phoneFormatValidator" /> 
+                    </b:inputText>
+                    <b:message id="contractorPhoneNumberMessage" for="contractorPhoneNumber" />
 
-                    <p>
-                        <h:outputLabel for="modifiedPhoneNumber" class="labelModificationForm"> Phone : </h:outputLabel>
-                        <p:inputText  id="modifiedPhoneNumber" value="#{contractorEditBean.contractor.phone}">
-                            <f:validator validatorId="com.gdf.phoneFormatValidator"/>
-                            <f:ajax  event="blur" render="phoneMessage"/>
-                        </p:inputText>
-                        <p:message id="phoneMessage" for="modifiedPhoneNumber"/> 
-                    </p>
+                    <div class="dialogFooter" >
+                        <p:commandButton update="@form tabViewContractor:infoForm" styleClass="buttonAskReview"
+                                         value="Modifier" actionListener="#{contractorEditBean.update()}"                                                          
+                                         oncomplete="handleInfosModification(xhr, status, args)"/> 
+                        <p:commandButton  value="Annuler" styleClass="buttonAskReview"
+                                          onclick="$('.modifInfosModalPseudoClass').modal('hide');"
+                                          actionListener="#{contractorEditBean.undo()}"/> 
+                    </div>
 
-                    <p:commandButton value="Modifier" update="tabViewContractor:infoForm" actionListener="#{contractorEditBean.update()}" 
-                                     oncomplete="handleModification(xhr, status, args)" />
                 </h:panelGroup>
+            </h:form>
+        </b:modal>
 
-                <h:form>
-                    <p:commandButton class="searchCommandButton"  value="Annuler" actionListener="#{contractorEditBean.undo()}" oncomplete="PF('modifyDialog').hide();"></p:commandButton>  
-                </h:form> 
+        <b:modal id="modifPasswordModal" title="Modification du mot de passe" styleClass="modifPasswordModalPseudoClass" 
+                 closable="false" backdrop="false">    
 
-            </p:dialog>
+            <h:form id="modalFormPassword"> 
 
-        </o:form>
+                <b:inputSecret id="contractorPassword" label="Mot de passe" placeholder="Entrez un nouveau mot de passe" renderLabel="true" value="#{contractorEditBean.password}">
+                    <f:facet name="prepend">
+                        <b:icon name="lock" />
+                    </f:facet>
+                    <f:validator validatorId="com.gdf.passwordConfirmationValidator" />
+                    <f:attribute name="confirm" value="#{confirmPassword.submittedValue}" />
+                </b:inputSecret>
+                <b:message id="contractorPasswordMessage" for="contractorPassword" />
 
-        <!-- Password Dialog -->
-        <o:form id="formModifyMdp">
+                <b:inputSecret id="contractorConfirmPassword" label="Confirmer le mot de passe" placeholder="Entrez une confirmation de mot de passe" 
+                               renderLabel="true" value="#{contractorEditBean.passwordConfirm}" binding="#{confirmPassword}">
+                    <f:facet name="prepend">
+                        <b:icon name="lock" />
+                    </f:facet>
+                </b:inputSecret>
+                <b:message id="contractorConfirmPasswordMessage" for="contractorConfirmPassword" /> 
 
-            <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
+                <div class="dialogFooter" >
+                    <p:commandButton styleClass="buttonAskReview" update="@form"
+                                     value="Modifier" actionListener="#{contractorEditBean.updatePassword()}"                                                          
+                                     oncomplete="handlePasswordModification(xhr, status, args)" /> 
+                    <p:commandButton  value="Annuler" styleClass="buttonAskReview"
+                                      onclick="$('.modifPasswordModalPseudoClass').modal('hide');"/> 
+                </div>
 
-            <p:dialog header="Modification du Mot de passe:" modal="true" widgetVar="mdpDialog" resizable="false">   
-                <p>
-                    <h:outputLabel value ="" for="password" class="labelModificationForm" >Mot de passe</h:outputLabel>
-                    <h:inputSecret id="password" value="#{contractorEditBean.contractor.password}" size="20" maxlength="20" binding="#{composantMotDePasse}" >
-                        <f:ajax event="blur" execute="password confirmationPassword" render="passwordMessage confirmationPasswordMessage" />
-                    </h:inputSecret>  
-                    <p:message id="passwordMessage" for="password"/>
-                </p>
-
-                <p>
-                    <h:outputLabel for="confirmationPassword" class="labelModificationForm">Confirmation du mot de passe</h:outputLabel>
-                    <h:inputSecret id="confirmationPassword" value="#{contractorEditBean.contractor.password}" size="20" maxlength="20">
-                        <f:validator validatorId="com.gdf.passwordConfirmationValidator" />
-                        <f:attribute name="composantMotDePasse" value="#{composantMotDePasse}" />
-                        <f:ajax event="blur" execute="password confirmationPassword" render="passwordMessage confirmationPasswordMessage" /> 
-                    </h:inputSecret> 
-                    <p:message id="confirmationPasswordMessage" for="confirmationPassword"/>
-                </p>
-
-                <p:commandButton value="Modifier"  actionListener="#{contractorEditBean.update()}" 
-                                 oncomplete="handleMdpModification(xhr, status, args)" />
-                <p:commandButton value="Annuler" oncomplete="PF('mdpDialog').hide();" />
-
-            </p:dialog>      
-        </o:form>
-
+            </h:form>
+        </b:modal>      
     </div>
 
 </ui:composition>

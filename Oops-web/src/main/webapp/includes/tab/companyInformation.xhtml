@@ -14,10 +14,10 @@
     <script type="text/javascript">
         function handleModifCompanyInfosRequest1(xhr, status, args) {
             if (args.validationFailed) {
-                PF('modifDialog1').jq.effect("shake", {times: 5}, 100);
+
             }
             else {
-                PF('modifDialog1').hide();
+                $('.modifModal1PseudoClass').modal('hide');
                 PF('modifOKGrowl').renderMessage({summary: 'Modification effectuée !',
                     detail: 'Les informations de votre entreprise ont été mis à jour !',
                     severity: 'info'});
@@ -25,10 +25,10 @@
         }
         function handleModifCompanyInfosRequest2(xhr, status, args) {
             if (args.validationFailed) {
-                PF('modifDialog2').jq.effect("shake", {times: 5}, 100);
+
             }
             else {
-                PF('modifDialog2').hide();
+                $('.modifModal2PseudoClass').modal('hide');
                 PF('modifOKGrowl').renderMessage({summary: 'Modification effectuée !',
                     detail: 'Les informations de votre entreprise ont été mis à jour !',
                     severity: 'info'});
@@ -36,10 +36,10 @@
         }
         function handleModifCompanyInfosRequest3(xhr, status, args) {
             if (args.validationFailed) {
-                PF('modifDialog3').jq.effect("shake", {times: 5}, 100);
+
             }
             else {
-                PF('modifDialog3').hide();
+                $('.modifModal3PseudoClass').modal('hide');
                 PF('modifOKGrowl').renderMessage({summary: 'Modification effectuée !',
                     detail: 'Les informations de votre entreprise ont été mis à jour !',
                     severity: 'info'});
@@ -54,7 +54,7 @@
         <p:growl widgetVar="modifOKGrowl" sticky="false" showDetail="true" life="3000" />
 
         <!-- PRESENTATION -->
-        <o:form id="viewForm1" includeViewParams="true" style="margin-top: 20px;">
+        <h:form id="viewForm1" style="margin-top: 20px;">
             <b:panel look="primary" styleClass="panelAccordion" collapsible="true">
                 <f:facet name="heading">
                     <h:outputText styleClass="panelTitleAccordion" value="Présentation"/>
@@ -70,7 +70,8 @@
                             <h:outputText style="font-size: 16px;" value="#{contractorEditBean.contractor.description}"/>
                         </b:row>
                         <b:row styleClass="show-grid">
-                            <p:commandButton value="Modifier" styleClass="buttonBackRegistration" onclick="PF('modifDialog1').show();">
+                            <p:commandButton value="Modifier" styleClass="buttonBackRegistration" 
+                                             onclick="$('.modifModal1PseudoClass').modal('show');">
                                 <p:ajax update="tabViewContractor:dialogForm1:contractorLogo"/>
                                 <p:ajax update="tabViewContractor:dialogForm1:logoMessage"/>
                                 <p:ajax update="tabViewContractor:dialogForm1:contractorDescription"/>
@@ -80,47 +81,40 @@
                     </b:column>
                 </b:row>
             </b:panel>
-        </o:form>
+        </h:form>
 
-        <!-- PRESENTATION DIALOG -->
-        <o:form id="dialogForm1" includeViewParams="true">
-            <p:dialog header="Modification presentation"  modal="true" widgetVar="modifDialog1" resizable="false">
+        <b:modal id="modifModal1" title="Modification de la presentation" styleClass="modifModal1PseudoClass"
+                 closable="false" backdrop="false">  
+            <h:form id="dialogForm1">
 
                 <h:panelGroup id="dialogPanel">
 
-                    <!-- <p:message /> doesn't work on this dialog -->
-                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                    <b:inputText id="contractorLogo" size="70" value="#{contractorEditBean.contractor.logo}"
+                                 label="URL du logo" placeholder="Entrez l'URL du logo" renderLabel="true">
+                        <f:validator validatorId="com.gdf.urlLogoValidator"/>
+                    </b:inputText>
+                    <b:message id="logoMessage" for="contractorLogo" />
 
-                    <p>
-                        <h:outputLabel for="contractorLogo" value="URL du logo :" class="labelModificationForm"/>
-                        <p:inputText id="contractorLogo" size="70" value="#{contractorEditBean.contractor.logo}">
-                            <f:validator validatorId="com.gdf.urlLogoValidator"/>
-                        </p:inputText>
-                        <p:message id="logoMessage" for="contractorLogo" />
-                    </p>
-                    <p>
-                        <h:outputLabel for="contractorDescription" value="Description :" class="labelModificationForm"/>
-                        <p:inputTextarea id="contractorDescription"  value="#{contractorEditBean.contractor.description}"
-                                         rows="7" cols="70" placeholder="Decrivez en quelques mots votre entreprise">
-                        </p:inputTextarea>
-                        <p:message id="descriptionMessage" for="contractorDescription" />
-                    </p>
+                    <b:inputTextarea id="contractorDescription"  value="#{contractorEditBean.contractor.description}"
+                                     rows="7" placeholder="Decrivez en quelques mots votre entreprise" label="Description" renderLabel="true">
+                    </b:inputTextarea>
+                    <b:message id="descriptionMessage" for="contractorDescription" />
 
                     <div class="dialogFooter" >
-                        <p:commandButton  id="updateButton" value="Enregistrer" update="tabViewContractor:viewForm1"
+                        <p:commandButton  id="updateButton" styleClass="buttonAskReview" value="Enregistrer" update="@form tabViewContractor:viewForm1"
                                           actionListener="#{contractorEditBean.update()}"
                                           oncomplete="handleModifCompanyInfosRequest1(xhr, status, args)" />
 
-                        <p:commandButton  value="Annuler" id="cancelButton"
+                        <p:commandButton  value="Annuler" styleClass="buttonAskReview" id="cancelButton"
                                           actionListener="#{contractorEditBean.undo()}"
-                                          onclick="PF('modifDialog1').hide();"/>
+                                          onclick="$('.modifModal1PseudoClass').modal('hide');"/>
                     </div>
                 </h:panelGroup>
-            </p:dialog>
-        </o:form>
+            </h:form>
+        </b:modal>
 
         <!-- LEGAL FORM -->
-        <o:form id="viewForm2" includeViewParams="true">
+        <h:form id="viewForm2">
             <b:panel look="primary" styleClass="panelAccordion" collapsible="true" collapsed="true">
                 <f:facet name="heading">
                     <h:outputText styleClass="panelTitleAccordion" value="Informations juridiques"/>
@@ -143,50 +137,54 @@
                 <b:row styleClass="show-grid">
                     <b:column span="1"></b:column>
                     <b:column span="11">
-                        <p:commandButton id="openUpdateDialogButton" styleClass="buttonBackRegistration" value="Modifier" onclick="PF('modifDialog2').show();">
-                            <p:ajax update="tabViewContractor:dialogForm2:socialReasonIT"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:legalFormSOM"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:turnoverSOM"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:nbEmployeesSOM"/> 
-                            <p:ajax update="tabViewContractor:dialogForm2:sirenIT"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:siretIT"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:rcsIT"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:insurranceIT"/>
-                            <p:ajax update="tabViewContractor:dialogForm2:socialReasonMessage"/>
+                        <p:commandButton id="openUpdateDialogButton" styleClass="buttonBackRegistration" 
+                                         value="Modifier" onclick="$('.modifModal2PseudoClass').modal('show');">
+                            <p:ajax update="tabViewContractor:dialogForm2:contractorSocialReason"/>
+                            <p:ajax update="tabViewContractor:dialogForm2:contractorSocialReasonMessage"/>
+                            <p:ajax update="tabViewContractor:dialogForm2:contractorLegalForm"/>
+                            <p:ajax update="tabViewContractor:dialogForm2:contractorNbEmployeesPG"/>
+                            <p:ajax update="tabViewContractor:dialogForm2:contractorTurnover"/>
+                            <p:ajax update="tabViewContractor:dialogForm2:contractorSiren"/>
                             <p:ajax update="tabViewContractor:dialogForm2:sirenMessage"/>
+                            <p:ajax update="tabViewContractor:dialogForm2:contractorSiret"/>
                             <p:ajax update="tabViewContractor:dialogForm2:siretMessage"/>
+                            <p:ajax update="tabViewContractor:dialogForm2:contractorRcs"/>
                             <p:ajax update="tabViewContractor:dialogForm2:rcsMessage"/>
+                            <p:ajax update="tabViewContractor:dialogForm2:contractorInsurrance"/>
                             <p:ajax update="tabViewContractor:dialogForm2:insurranceMessage"/>
                         </p:commandButton>
                     </b:column>
                 </b:row>
             </b:panel>
-        </o:form>
+        </h:form>
 
         <!-- LEGAL FORM DIALOG -->
-        <o:form id="dialogForm2" includeViewParams="true">
+        <b:modal id="modifModal2" title="Modification des informations légales" styleClass="modifModal2PseudoClass"
+                 closable="false" backdrop="false">  
+            <h:form id="dialogForm2">
 
-            <p:dialog header="Modification informations légales"  modal="true" widgetVar="modifDialog2" resizable="false">
 
                 <h:panelGroup id="dialogPanel">
-                    <p>
-                        <h:outputLabel for="socialReasonIT" value="Raison sociale :" class="labelModificationForm"/>
-                        <p:inputText id="socialReasonIT" value="#{contractorEditBean.contractor.socialReason}" >
-                            <f:ajax  event="blur" render="socialReasonMessage"/>
-                        </p:inputText>
-                        <p:message id="socialReasonMessage" for="socialReasonIT" />
-                    </p>
-                    <p>
-                        <h:outputLabel for="legalFormSOM" value="Forme juridique :" class="labelModificationForm"/>
-                        <p:selectOneMenu id="legalFormSOM" value="#{contractorEditBean.contractor.legalForm}" >
-                            <f:selectItems value="#{contractorEditBean.legalForms}" />
-                            <p:ajax update="tabViewContractor:dialogForm2:dialogPanel"/>
-                        </p:selectOneMenu>
-                    </p>
-                    <p>
-                        <h:outputLabel id="nbEmployeesOL" for="nbEmployeesSOM" value="Nombre d'employés :" 
-                                       rendered="#{contractorEditBean.isATeamCompanySelected()}" class="labelModificationForm"/>
-                        <p:selectOneMenu id="nbEmployeesSOM" value="#{contractorEditBean.contractor.nbEmployees}"
+
+                    <b:inputText id="contractorSocialReason" label="Raison sociale" maxlength="15"
+                                 placeholder="Entrez la raison sociale" renderLabel="true" value="#{contractorEditBean.contractor.socialReason}">
+                        <f:validator validatorId="com.gdf.socialReasonAlreadyExistValidator" />
+                    </b:inputText>
+                    <b:message id="contractorSocialReasonMessage" for="contractorSocialReason" />
+
+                    <h:outputLabel value="Forme juridique" />
+                    <b:selectOneMenu id="contractorLegalForm" 
+                                     value="#{contractorEditBean.contractor.legalForm}" >
+                        <f:selectItems value="#{contractorEditBean.legalForms}" />
+                        <!--This will execute the ajax update without all fields being filled-->  
+                        <f:ajax event="change" execute="@none" 
+                                render="tabViewContractor:dialogForm2:contractorNbEmployeesPG"/>
+                    </b:selectOneMenu>
+
+                    <h:outputLabel value="Nombre d'employés" rendered="#{contractorEditBean.isATeamCompanySelected()}" />
+                    <h:panelGroup id="contractorNbEmployeesPG">
+                        <b:selectOneMenu id="contractorNbEmployees"
+                                         value="#{contractorEditBean.contractor.nbEmployees}"
                                          rendered="#{contractorEditBean.isATeamCompanySelected()}">
                             <f:selectItem itemLabel="> 1" itemValue="1" />
                             <f:selectItem itemLabel="> 5" itemValue="5" />
@@ -196,69 +194,64 @@
                             <f:selectItem itemLabel="> 500" itemValue="500" />
                             <f:selectItem itemLabel="> 1K" itemValue="1000" />
                             <f:selectItem itemLabel="> 5K" itemValue="5000" />
-                        </p:selectOneMenu>
-                    </p>
-                    <p>
-                        <h:outputLabel for="turnoverSOM" value="Chiffre d'affaire :" class="labelModificationForm"/>
-                        <p:selectOneMenu id="turnoverSOM" value="#{contractorEditBean.contractor.turnover}">
-                            <f:selectItem itemLabel="> 500 €" itemValue="500" />
-                            <f:selectItem itemLabel="> 1K €" itemValue="1000" />
-                            <f:selectItem itemLabel="> 5K €" itemValue="5000" />
-                            <f:selectItem itemLabel="> 10K €" itemValue="10000" />
-                            <f:selectItem itemLabel="> 50K €" itemValue="50000" />
-                            <f:selectItem itemLabel="> 100K €" itemValue="100000" />
-                            <f:selectItem itemLabel="> 500K €" itemValue="500000" />
-                            <f:selectItem itemLabel="> 1M €" itemValue="1000000" />
-                        </p:selectOneMenu>
-                    </p>
-                    <p>
-                        <h:outputLabel for="sirenIT" value="N° SIREN : " class="labelModificationForm"/>
-                        <p:inputText  id="sirenIT"  value="#{contractorEditBean.contractor.legalInformation.siren}" size="9" 
-                                      maxlength="9">
-                            <f:ajax  event="blur" render="sirenMessage"/>
-                        </p:inputText>
-                        <p:message id="sirenMessage" for="sirenIT" />
-                    </p>
-                    <p>
-                        <h:outputLabel for="siretIT" value="N° SIRET : " class="labelModificationForm"/>
-                        <p:inputText  id="siretIT"  value="#{contractorEditBean.contractor.legalInformation.siret}" size="14" 
-                                      maxlength="14">
-                            <f:ajax  event="blur" render="siretMessage"/>     
-                        </p:inputText>
-                        <p:message id="siretMessage" for="siretIT" />
-                    </p>
-                    <p>
-                        <h:outputLabel for="rcsIT" value="N° RCS :" class="labelModificationForm"/>
-                        <p:inputText  id="rcsIT"  value="#{contractorEditBean.contractor.legalInformation.rcs}"
-                                      maxlength="20">
-                            <f:ajax  event="blur" render="rcsMessage"/>
-                        </p:inputText>
-                        <p:message id="rcsMessage" for="rcsIT" />
-                    </p>
-                    <p>
-                        <h:outputLabel for="insurranceIT" value="Assurance :" class="labelModificationForm"/>
-                        <p:inputText  id="insurranceIT"  value="#{contractorEditBean.contractor.legalInformation.insurrance}">
-                            <f:ajax  event="blur" render="insurranceMessage"/>
-                        </p:inputText>
-                        <p:message id="insurranceMessage" for="insurranceIT" />
-                    </p>
+                        </b:selectOneMenu>
+                    </h:panelGroup>
+
+                    <h:outputLabel value="Chiffre d'affaire" />
+                    <b:selectOneMenu id="contractorTurnover" value="#{contractorEditBean.contractor.turnover}">
+                        <f:selectItem itemLabel="> 500 €" itemValue="500" />
+                        <f:selectItem itemLabel="> 1K €" itemValue="1000" />
+                        <f:selectItem itemLabel="> 5K €" itemValue="5000" />
+                        <f:selectItem itemLabel="> 10K €" itemValue="10000" />
+                        <f:selectItem itemLabel="> 50K €" itemValue="50000" />
+                        <f:selectItem itemLabel="> 100K €" itemValue="100000" />
+                        <f:selectItem itemLabel="> 500K €" itemValue="500000" />
+                        <f:selectItem itemLabel="> 1M €" itemValue="1000000" />
+                    </b:selectOneMenu>
+
+                    <b:inputText  id="contractorSiren"  label="N° SIREN" placeholder="Entrez le n° SIREN" 
+                                  renderLabel="true" value="#{contractorEditBean.contractor.legalInformation.siren}" size="9" 
+                                  maxlength="9">
+                        <f:validator validatorId="com.gdf.sirenAlreadyExistValidator"/>
+                    </b:inputText>
+                    <b:message id="sirenMessage" for="contractorSiren" />
+
+                    <b:inputText  id="contractorSiret"  label="N° SIRET" placeholder="Entrez le n° SIRET" 
+                                  renderLabel="true" value="#{contractorEditBean.contractor.legalInformation.siret}" size="14" 
+                                  maxlength="14">    
+                        <f:validator validatorId="com.gdf.siretAlreadyExistValidator"/>
+                    </b:inputText>
+                    <b:message id="siretMessage" for="contractorSiret" />
+
+                    <b:inputText  id="contractorRcs"  label="N° RCS" placeholder="Entrez le n° RCS" 
+                                  renderLabel="true" value="#{contractorEditBean.contractor.legalInformation.rcs}"
+                                  maxlength="20">
+                        <f:validator validatorId="com.gdf.rcsAlreadyExistValidator"/>
+                    </b:inputText>
+                    <b:message id="rcsMessage" for="contractorRcs" />
+
+                    <b:inputText  id="contractorInsurrance"  label="Assurance" maxlength="15"
+                                  placeholder="Entrez votre assurance" 
+                                  renderLabel="true" value="#{contractorEditBean.contractor.legalInformation.insurrance}">
+                    </b:inputText>
+                    <b:message id="insurranceMessage" for="contractorInsurrance" />
 
                     <div class="dialogFooter" >
-                        <p:commandButton  id="updateButton" value="Enregistrer" update="tabViewContractor:viewForm2"
+                        <p:commandButton  id="updateButton" styleClass="buttonAskReview" value="Enregistrer" update="@form tabViewContractor:viewForm2"
                                           actionListener="#{contractorEditBean.update()}"
                                           oncomplete="handleModifCompanyInfosRequest2(xhr, status, args)" />
 
-                        <p:commandButton  value="Annuler" id="cancelButton"
+                        <p:commandButton  value="Annuler" styleClass="buttonAskReview" id="cancelButton"
                                           actionListener="#{contractorEditBean.undo()}"
-                                          onclick="PF('modifDialog2').hide();"/>
+                                          onclick="$('.modifModal2PseudoClass').modal('hide');"/>
                     </div>
 
                 </h:panelGroup>
-            </p:dialog>
-        </o:form>
+            </h:form>
+        </b:modal>
 
         <!-- ADDRESS -->
-        <o:form id="viewForm3" includeViewParams="true">
+        <h:form id="viewForm3">
             <b:panel look="primary" styleClass="panelAccordion" collapsible="true" collapsed="true">
                 <f:facet name="heading">
                     <h:outputText styleClass="panelTitleAccordion" value="Adresse"/>
@@ -277,7 +270,8 @@
                 <b:row styleClass="show-grid">
                     <b:column span="1"></b:column>
                     <b:column span="11">
-                        <p:commandButton value="Modifier" styleClass="buttonBackRegistration" onclick="PF('modifDialog3').show();">
+                        <p:commandButton value="Modifier" styleClass="buttonBackRegistration" 
+                                         onclick="$('.modifModal3PseudoClass').modal('show');">
                             <p:ajax update="tabViewContractor:dialogForm3:listCountries"/>
                             <p:ajax update="tabViewContractor:dialogForm3:contractorZipCode"/>
                             <p:ajax update="tabViewContractor:dialogForm3:zipCodeMessage"/>
@@ -296,108 +290,95 @@
                     </b:column>
                 </b:row>
             </b:panel>
-        </o:form>
+        </h:form>
 
         <!-- LEGAL FORM ADDRESS -->
-        <o:form id="dialogForm3" includeViewParams="true">
-
-            <p:dialog header="Modification adresse"  modal="true" widgetVar="modifDialog3" resizable="false">
+        <b:modal id="modifModal3" title="Modification de l'adresse" styleClass="modifModal3PseudoClass"
+                 closable="false" backdrop="false"> 
+            <h:form id="dialogForm3">
 
                 <h:panelGroup id="dialogPanel">
 
-                    <h:outputLabel for="listCountries" value="Pays :" class="labelModificationForm"/>
-                    <p:selectOneMenu  id="listCountries"  value="#{contractorEditBean.country}">
+                    <h:outputLabel value="Pays" />
+                    <b:selectOneMenu  id="listCountries"
+                                      value="#{contractorEditBean.country}">
                         <f:selectItems value="#{contractorEditBean.allCountry}"/>
-                        <f:ajax render ="tabViewContractor:dialogForm3:registerContractorFormAdress"/>
-                    </p:selectOneMenu>
-                    <br/> 
+                        <f:ajax event="change" execute="@none" 
+                                render="tabViewContractor:dialogForm3:registerContractorPGAddress"/>
+                    </b:selectOneMenu>
 
-                    <h:panelGroup id="registerContractorFormAdress">
+                    <h:panelGroup id="registerContractorPGAddress">
 
-                        <h:panelGroup rendered="#{contractorEditBean.contractor.address.country != 'France'}">
+                        <h:panelGroup rendered="#{contractorEditBean.country != 'France'}">
 
-                            <br/>
-                            <h:outputLabel for="contractorZipCode" value="Code postal :" class="labelModificationForm" />
-                            <p:inputText id="contractorZipCode" value="#{contractorEditBean.zipCode}" maxlength="6" size="6">
-                            </p:inputText>
-                            <p:message id="zipCodeMessage" for="contractorZipCode" />
-                            <br/>
+                            <b:inputText id="contractorZipCode" label="Code postal" placeholder="Entrez le code postal" renderLabel="true" value="#{contractorEditBean.zipCode}" maxlength="6" size="6">
+                            </b:inputText>
+                            <b:message id="zipCodeMessage" for="contractorZipCode" />
 
+                            <b:inputText id="contractorTown" placeholder="Entrez la ville" label="Ville" maxlength="10"
+                                         renderLabel="true" value="#{contractorEditBean.contractor.address.town}"/>
+                            <b:message id="townMessage" for="contractorTown" /> 
 
-                            <h:outputLabel for="contractorTown" value="Town :" class="labelModificationForm" />
-                            <p:inputText id="contractorTown" value="#{contractorEditBean.contractor.address.town}">
-                            </p:inputText>
-                            <p:message id="townMessage" for="contractorTown" />
-                            <br/>
+                            <b:inputText id="contractorStreetNumber" placeholder="Entrez le numéro de la rue" label="N°" renderLabel="true" value="#{contractorEditBean.contractor.address.streetNumber}" size="5" maxlength="5">
+                            </b:inputText>
+                            <b:message id="streetNumberMessage" for="contractorStreetNumber" />
 
-                            <h:outputLabel for="contractorStreetNumber" value="N° :" class="labelModificationForm"/>
-                            <p:inputText id="contractorStreetNumber" placeholder="Numéro de la rue" value="#{contractorEditBean.contractor.address.streetNumber}" size="5" maxlength="5">
-                            </p:inputText>
-                            <p:message id="streetNumberMessage" for="contractorStreetNumber" />
-                            <br/>
-
-                            <h:outputLabel for="contractorStreet" value="Rue :" class="labelModificationForm"/>
-                            <p:inputText placeholder="Nom de la rue" id="contractorStreet" value="#{contractorEditBean.contractor.address.street}">
-                            </p:inputText>
-                            <p:message id="streetMessage" for="contractorStreet" />
-                            <br/>
+                            <b:inputText id="contractorStreet" placeholder="Entrez le nom de la rue" maxlength="30"
+                                         label="Rue" renderLabel="true" value="#{contractorEditBean.contractor.address.street}">
+                            </b:inputText>
+                            <b:message id="streetMessage" for="contractorStreet" />
 
                         </h:panelGroup>
 
-                        <h:panelGroup rendered="#{contractorEditBean.contractor.address.country == 'France'}">
+                        <h:panelGroup rendered="#{contractorEditBean.country == 'France'}">
 
-                            <br/>
-                            <h:outputLabel for="zipCode" value="Code postal :" class="labelModificationForm"/>
-                            <p:inputText  id="zipCode" value="#{contractorEditBean.zipCode}" size="5" maxlength="5">
-                                <f:ajax render="tabViewContractor:dialogForm3:registerContractorFormAdress" event="keyup" delay="1500"/>
-                                <f:validator validatorId="com.gdf.zipValidator"/>
-                            </p:inputText>
-                            <p:message id="zipCodeMessageFr" for="zipCode" />
-                            <br/>
+                            <div class="form-group">
+                                <label for="zipCode">Code postal</label>
+                                <h:inputText  class="form-control" id="zipCode" label="Code postal" value="#{contractorEditBean.zipCode}" size="5" maxlength="5">                                          
+                                    <f:ajax event="keyup" delay="1500" render="tabViewContractor:dialogForm3:registerContractorPGAddress"/>
+                                    <f:validator validatorId="com.gdf.zipValidator"/>
+                                </h:inputText>
+                            </div>
+                            <b:message id="zipCodeMessageFr" for="zipCode" />
 
-                            <h:outputLabel for="contractorRegionFr" value="Region :" class="labelModificationForm"/>
-                            <h:outputText id="contractorRegionFr" value="#{contractorEditBean.contractor.address.region}"/>
-                            <p:message id="regionMessageFr" for="contractorRegionFr" />
-                            <br/>
+                            <h:panelGroup rendered="#{contractorEditBean.isCode()}">                                      
 
-                            <h:outputLabel for="contractorTownFr" value="Ville :" class="labelModificationForm"/>
-                            <p:selectOneMenu id="contractorTownFr"   value="#{contractorEditBean.contractor.address.town}">
-                                <f:selectItems   value="#{contractorEditBean.allTown}"/>
-                            </p:selectOneMenu>
-                            <p:message id="townMessageFr" for="contractorTownFr" />
-                            <br/>   
+                                <b:selectOneMenu id="contractorTownFr"   label="Ville (#{contractorEditBean.contractor.address.region})" renderLabel="true"
+                                                 value="#{contractorEditBean.contractor.address.town}">
+                                    <f:selectItems   value="#{contractorEditBean.allTown}"/>
+                                </b:selectOneMenu>
+                                <b:message id="townMessageFr" for="contractorTownFr" />  
 
-                            <h:outputLabel for="contractorStreetNumberFr" value="N° :" class="labelModificationForm"/>
-                            <p:inputText id="contractorStreetNumberFr" placeholder="Numéro de la rue" value="#{contractorEditBean.contractor.address.streetNumber}" size ="5" maxlength="5">
-                            </p:inputText>
-                            <p:message id="streetNumberMessageFr" for="contractorStreetNumberFr" />
-                            <br/>
+                                <b:inputText id="contractorStreetNumberFr" placeholder="Entrez le numéro de la rue" label="N°" renderLabel="true" value="#{contractorEditBean.contractor.address.streetNumber}" size ="5" maxlength="5">
+                                </b:inputText>
+                                <b:message id="streetNumberMessageFr" for="contractorStreetNumberFr" />
 
-                            <h:outputLabel for="contractorStreet" value="Rue :" class="labelModificationForm"/>
-                            <p:inputText id="contractorStreetFr" placeholder="Nom de la rue" value="#{contractorEditBean.contractor.address.street}">
-                            </p:inputText>
-                            <p:message id="streetMessageFr" for="contractorStreetFr" />
-                            <br/>
+                                <b:inputText id="contractorStreetFr" placeholder="Entrez le nom de la rue" maxlength="30"
+                                             label="Rue" renderLabel="true" value="#{contractorEditBean.contractor.address.street}">
+                                </b:inputText>
+                                <b:message id="streetMessageFr" for="contractorStreetFr" />
+
+                            </h:panelGroup>
 
                         </h:panelGroup>
+
                     </h:panelGroup>
 
+
                     <div class="dialogFooter" >
-                        <p:commandButton  id="updateButton" value="Enregistrer" update="tabViewContractor:viewForm3"
+                        <p:commandButton  id="updateButton" styleClass="buttonAskReview" value="Enregistrer" update="@form tabViewContractor:viewForm3"
                                           actionListener="#{contractorEditBean.update()}"
                                           oncomplete="handleModifCompanyInfosRequest3(xhr, status, args)" />
 
-                        <p:commandButton  value="Annuler" id="cancelButton"
+                        <p:commandButton  value="Annuler" styleClass="buttonAskReview" id="cancelButton"
                                           actionListener="#{contractorEditBean.undo()}"
-                                          oncomplete="PF('modifDialog3').hide();"/>
+                                          onclick="$('.modifModal3PseudoClass').modal('hide');"/>
 
                     </div>
 
                 </h:panelGroup>
-
-            </p:dialog>
-        </o:form>
-
+            </h:form>
+        </b:modal>
     </div>
 
 </ui:composition>

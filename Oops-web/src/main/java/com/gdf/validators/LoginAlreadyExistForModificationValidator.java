@@ -32,7 +32,6 @@ import javax.faces.validator.ValidatorException;
 public class LoginAlreadyExistForModificationValidator implements Validator {
 
     private static final String LOGIN_ALREADY_USED = "Ce login est déjà utilisé !";
-    private static final String LOGIN_NULL ="Veuillez indiquer un login !";
 
     @EJB
     SearchBean sb;
@@ -47,10 +46,6 @@ public class LoginAlreadyExistForModificationValidator implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         
         String newLogin = (String)value;
-        
-        if(newLogin == null){
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, LOGIN_NULL, null));
-        }
 
         long id = SessionBean.getUserId();
         String cat = SessionBean.getUserCategory();

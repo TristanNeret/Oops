@@ -76,7 +76,7 @@ and open the template in the editor.
                         <h:form id="registerTendererForm">
 
                             <b:inputText id="registerLogin" label="Login" renderLabel="true" value="#{tendererRegistrationBean.tenderer.login}"
-                                         placeholder="Entrez votre login">
+                                         placeholder="Entrez votre login" maxlength="15">
                                 <f:facet name="prepend">
                                     <b:icon name="user" />
                                 </f:facet>
@@ -105,12 +105,12 @@ and open the template in the editor.
 
 
                             <b:inputText id="registerFirstname" label="Prénom" renderLabel="true" value="#{tendererRegistrationBean.tenderer.firstname}"
-                                         placeholder="Entrez votre prénom">
+                                         placeholder="Entrez votre prénom" maxlength="15">
                             </b:inputText>
                             <b:message id="firstnameMessage" for="registerFirstname" />
 
                             <b:inputText id="registerLastname" label="Nom" renderLabel="true" value="#{tendererRegistrationBean.tenderer.lastname}"
-                                         placeholder="Entrez votre nom">
+                                         placeholder="Entrez votre nom" maxlength="15">
                             </b:inputText>
                             <b:message id="lastnameMessage" for="registerLastname" />
 
@@ -125,7 +125,7 @@ and open the template in the editor.
                             <b:message id="mailMessage" for="registerMail" />
 
                             <b:inputText id="registerPhoneNumber" label="Téléphone" renderLabel="true" value="#{tendererRegistrationBean.tenderer.phone}"
-                                         placeholder="Facultatif">
+                                         placeholder="Facultatif" maxlength="10">
                                 <f:facet name="prepend">
                                     <b:icon name="earphone" />
                                 </f:facet>

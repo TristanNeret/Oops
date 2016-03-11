@@ -18,6 +18,8 @@ import javax.ejb.EJB;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * ContractorEditBean
@@ -32,7 +34,6 @@ public class ContractorEditBean implements Serializable {
 
     private List<SelectItem> legalForms;
 
-
     @EJB
     private PopulateDB pdb;
     private List<SelectItem> allCountry;
@@ -44,9 +45,16 @@ public class ContractorEditBean implements Serializable {
     @EJB
     ContractorManagerBean cm;
 
+    @NotNull(message = "Veuillez saisir un mot de passe !")
+    @Size(min = 5, message = "Le mot de passe doit contenir au moins 6 caractères !")
+    private String password;
+
+    @NotNull(message = "Veuillez saisir une confirmation de mot de passe !")
+    private String passwordConfirm;
+
     @PostConstruct
     public void init() {
-        
+
         this.contractor = sb.searchContractorById(SessionBean.getUserId());
 
         legalForms = pdb.getLegalForms();
@@ -84,6 +92,14 @@ public class ContractorEditBean implements Serializable {
         }
 
         cm.update(contractor);
+    }
+
+    public void updatePassword() {
+        contractor.setPassword(password);
+        cm.update(contractor);
+        // reset
+        password = "";
+        passwordConfirm = "";
     }
 
     public boolean isLogo() {
@@ -138,14 +154,31 @@ public class ContractorEditBean implements Serializable {
 
         List<SelectItem> li = new ArrayList<>();
 
-        if(ltowns != null){
-        
+        if (ltowns != null) {
+
             for (String town : ltowns) {
                 li.add(new SelectItem(town));
             }
-        
-        }    
+
+        }
 
         return li;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
 }
