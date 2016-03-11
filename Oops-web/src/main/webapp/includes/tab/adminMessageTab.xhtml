@@ -18,10 +18,10 @@ and open the template in the editor.
     <script type="text/javascript">
         function handleSendMessage(xhr, status, args) {
             if (args.validationFailed) {
-                PF('sendMsgDialog').jq.effect("shake", {times: 5}, 100);
+
             }
             else {
-                PF('sendMsgDialog').hide();
+                $('.sendMsgModalPseudoClass').modal('hide');
                 PF('growlError').renderMessage({summary: 'Succès!', detail: 'Votre message a été envoyé !', severity: 'info'});
             }
         }
@@ -40,11 +40,11 @@ and open the template in the editor.
             <b:container fluid="true">
                 <b:row styleClass="show-grid">
                     <b:column span="3">
-                            <p:autoComplete class="autocompleteInput" placeholder="Mots-clés" id="queryInputText" value="#{adminSearchBean.keyWord}" completeMethod="#{adminSearchBean.completeQuery}" >
-                                <f:facet name="prepend">
-                                    <b:icon name="user" />
-                                </f:facet>
-                            </p:autoComplete>
+                        <p:autoComplete class="autocompleteInput" placeholder="Mots-clés" id="queryInputText" value="#{adminSearchBean.keyWord}" completeMethod="#{adminSearchBean.completeQuery}" >
+                            <f:facet name="prepend">
+                                <b:icon name="user" />
+                            </f:facet>
+                        </p:autoComplete>
                     </b:column>
                     <b:column span="3">
                         <b:selectOneMenu value="#{adminSearchBean.type}" id="typeID" required="true">
@@ -56,9 +56,9 @@ and open the template in the editor.
                     <b:column span="6">
 
                         <b:commandButton value="Recherche" ajax="true" look="primary" actionListener="#{adminSearchBean.search()}" oncomplete="toggleGroupMessage('none'); return false;" update="@(.resultResearch)">
-                              <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                         </b:commandButton>      
-                       
+
                         <b:commandButton value="Envoyer un message groupé" ajax="true" look="success" onclick="toggleGroupMessage('block');
                                          #{adminSearchBean.setSuccess(false)} return false;" style="margin-left: 15px;"/>
 
@@ -141,7 +141,7 @@ and open the template in the editor.
                             <b:column span="6">
                                 <h:form>
                                     <p:commandButton styleClass="buttonBackRegistration" style="float: right; margin-top: 0px !important;" actionListener="#{adminSearchBean.setContractorSelected(contractor)}"
-                                                     onclick="PF('sendMsgDialog').show();"
+                                                     onclick="$('.sendMsgModalPseudoClass').modal('show');"
                                                      update="tabViewAdmin:sendMsgDialogForm:dialogPanel"
                                                      value="Envoyer un message"/> 
                                 </h:form>
@@ -184,7 +184,8 @@ and open the template in the editor.
                             </b:column>
                             <h:form>
                                 <p:commandButton id="firstButtonSoum" actionListener="#{adminSearchBean.setTendererSelected(tend)}"
-                                                 onclick="PF('sendMsgDialog').show();" style="float: right;"
+                                                 onclick=" $('.sendMsgModalPseudoClass').modal('show');"
+                                                 style="float: right;"
                                                  update="tabViewAdmin:sendMsgDialogForm:dialogPanel"
                                                  value="Envoyer un message" styleClass="buttonBackRegistration" />
                             </h:form>
@@ -199,14 +200,15 @@ and open the template in the editor.
         <p:growl widgetVar="growlError" sticky="false" showDetail="true" life="3000" />
 
         <!-- Popup message -->
-        <o:form id="sendMsgDialogForm" includeViewParams="true">
-            <p:dialog header="Envoyer un message" modal="true" widgetVar="sendMsgDialog" resizable="false" style="min-width: 480px;">
+        <b:modal id="sendMsgModal" title="Envoyer un message" styleClass="sendMsgModalPseudoClass"
+                 closable="false" backdrop="false"> 
+            <h:form id="sendMsgDialogForm">
 
                 <p:outputPanel id="dialogPanel">
 
                     <c:choose>
                         <c:when test="#{adminSearchBean.type == 'cont'}">    
-                            <b><h:outputText value="Prestataire : " style="width: 100%;"/></b>
+                            <b><h:outputText value="Prestataire : "/></b>
                             <h:outputText id="contractorName" 
                                           value="#{adminSearchBean.contractorSelected.login} 
                                           (#{adminSearchBean.contractorSelected.representatorLastname} 
@@ -214,7 +216,7 @@ and open the template in the editor.
                                           style="width: 100%;"/>
                         </c:when>
                         <c:otherwise>
-                            <b><h:outputText value="Soumissionnaire : " style="width: 100%;"/></b>
+                            <b><h:outputText value="Soumissionnaire : "/></b>
                             <h:outputText id="soumiName" value="#{adminSearchBean.tendererSelected.login} 
                                           (#{adminSearchBean.tendererSelected.lastname} 
                                           #{adminSearchBean.tendererSelected.firstname})" 
@@ -222,24 +224,27 @@ and open the template in the editor.
                         </c:otherwise>
                     </c:choose>   
                     <br/>
-                    <h:outputLabel id="Message" value="Message :" />
-                    <p:inputTextarea id="messageOut" placeholder="Tapez ici votre message."
-                                     rows="6" cols="33" style="width: 100%;" value="#{adminSearchBean.message}"  
-                                     required ="true" label="Message">
+                    <b:inputTextarea id="messageOut" placeholder="Entrez votre message"
+                                     rows="6" value="#{adminSearchBean.message}"  
+                                     label="Message" renderLabel="true">
                         <f:validator validatorId="com.gdf.noBlankSpaceValidator" binding="#{noBlankSpaceValidator}" />
                         <f:ajax  event="blur" render="msgError"/>
-                    </p:inputTextarea>
-                    <p:message id="msgError" for="messageOut"/>
+                    </b:inputTextarea>
+                    <b:message id="msgError" for="messageOut"/>
 
                     <div class="dialogFooter" >
-                        <p:commandButton id="cancelButtonDialogValidate" value="Annuler" styleClass="buttonCancel" oncomplete="PF('sendMsgDialog').hide();" />
-                        <p:commandButton id="sendButtonDialogValidate" value="Envoyer" styleClass="buttonRegistration" action="#{adminSearchBean.sendMessage()}"
-                                         update="tabViewAdmin:sendMsgDialogForm:msgError" oncomplete="handleSendMessage(xhr, status, args)"/> 
+                        <p:commandButton id="sendButtonDialogValidate" value="Envoyer" styleClass="buttonAskReview"
+                                         action="#{adminSearchBean.sendMessage()}"
+                                         update="tabViewAdmin:sendMsgDialogForm" 
+                                         oncomplete="handleSendMessage(xhr, status, args)"/> 
+                        <p:commandButton id="cancelButtonDialogValidate" 
+                                         value="Annuler" styleClass="buttonCancel"
+                                         onclick="$('.sendMsgModalPseudoClass').modal('hide');"/>
+
                     </div> 
                 </p:outputPanel>
-
-            </p:dialog>
-        </o:form>
+            </h:form>
+        </b:modal>
 
     </div>
 
