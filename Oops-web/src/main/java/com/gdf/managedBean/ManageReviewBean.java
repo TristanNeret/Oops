@@ -120,6 +120,21 @@ public class ManageReviewBean implements Serializable {
 
     }
     
+    /**
+     * Return a short version of the Review description
+     * @param review description of the Review
+     * @return short version of the Review description
+     */
+    public String getShortReviewDescription(String review) {
+        
+        if (review.length() > 58) { 
+            return review.substring(0, 55) + "...";
+        }
+        
+        return review;
+        
+    }
+    
     // GETTER/SETTER
 
     public List getReviewList() {
