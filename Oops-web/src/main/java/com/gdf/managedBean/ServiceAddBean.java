@@ -23,6 +23,7 @@ import javax.inject.Named;
 
 /**
  * ServiceAddBean
+ *
  * @author bibo
  */
 @Named(value = "serviceAddBean")
@@ -31,19 +32,18 @@ public class ServiceAddBean implements Serializable {
 
     @EJB
     private SearchBean searchBean;
-    
+
     @EJB
     private RegistrationBean rb;
-    
-    private String title;
-    private String description;
+
+    private Service newService;
     private long idCategory;
     private Double price;
     private Contractor contractor;
     private List<Category> categories;
     private Service editService;
     private boolean success;
-    
+
     @PostConstruct
     public void init() {
 
@@ -51,99 +51,91 @@ public class ServiceAddBean implements Serializable {
         categories = new ArrayList<>();
         this.setCategories(searchBean.getCategories());
         
-        this.setTitle("");
-        this.setDescription("");
+        this.newService = new Service();
         this.setPrice(0.0);
         this.success = false;
-        
+
     }
-    
+
     /**
-     * Test if the Contractor has Services 
-     * @return True if the Contractor has Service, or False 
+     * Test if the Contractor has Services
+     *
+     * @return True if the Contractor has Service, or False
      */
     public boolean areServices() {
-        
+
         return !this.contractor.getServices().isEmpty();
-    
+
     }
-    
+
     /**
      * Add a new Service
      */
-    public void addService(){
+    public void addService() {
 
-        Service service = new Service();
-        service.setTitle(getTitle());
-        service.setDescription(getDescription());
         if (this.getPrice() != null) {
-            service.setPrice(getPrice());
+            newService.setPrice(getPrice());
         }
-        service.setCategory(this.searchBean.searchCategoryById(this.idCategory));
-        contractor.addService(service);
+        newService.setCategory(this.searchBean.searchCategoryById(this.idCategory));
+        contractor.addService(newService);
         rb.update(contractor);
-        
+
         this.init();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre prestation a été ajoutée avec succès !", ""));
         this.success = true;
-        
+
+        //reset
+        this.newService = new Service();
     }
-    
+
     /**
      * Delete a Contractor's Service
+     *
      * @param service Service to Remove
      */
-    public void deleteService(Service service){
-        
+    public void deleteService(Service service) {
+
         contractor.removeService(service);
         rb.update(contractor);
         this.init();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre prestation a été supprimé avec succès !", ""));
- 
+
     }
-    
+
     /**
      * Uppdate a Contractor's Service
      */
-    public void updateService(){
-        
+    public void updateService() {
+
         rb.update(this.editService);
         this.init();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Votre prestation a été modifiée avec succès !", ""));
-    
+
     }
-    
+
     // GETTER/SETTER
-    
     public boolean isSuccess() {
         return success;
     }
 
-    public void setSuccess(boolean success) {    
+    public void setSuccess(boolean success) {
         this.success = success;
     }
 
     public List<Category> getCategories() {
         return categories;
     }
+
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
 
-    public String getTitle() {
-        return title;
+    public Service getNewService() {
+        return newService;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNewService(Service newService) {
+        this.newService = newService;
     }
 
     public Double getPrice() {
@@ -177,5 +169,4 @@ public class ServiceAddBean implements Serializable {
     public void setEditService(Service editService) {
         this.editService = editService;
     }
-    
 }

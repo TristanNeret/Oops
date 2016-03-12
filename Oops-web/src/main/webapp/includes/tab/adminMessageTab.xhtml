@@ -142,7 +142,7 @@ and open the template in the editor.
                                 <h:form>
                                     <p:commandButton styleClass="buttonBackRegistration" style="float: right; margin-top: 0px !important;" actionListener="#{adminSearchBean.setContractorSelected(contractor)}"
                                                      onclick="$('.sendMsgModalPseudoClass').modal('show');"
-                                                     update="tabViewAdmin:sendMsgDialogForm:dialogPanel"
+                                                     update="tabViewAdmin:sendMsgDialogForm"
                                                      value="Envoyer un message"/> 
                                 </h:form>
                             </b:column>
@@ -238,7 +238,7 @@ and open the template in the editor.
                                          update="tabViewAdmin:sendMsgDialogForm" 
                                          oncomplete="handleSendMessage(xhr, status, args)"/> 
                         <p:commandButton id="cancelButtonDialogValidate" 
-                                         value="Annuler" styleClass="buttonCancel"
+                                         value="Annuler" styleClass="buttonAskReview"
                                          onclick="$('.sendMsgModalPseudoClass').modal('hide');"/>
 
                     </div> 

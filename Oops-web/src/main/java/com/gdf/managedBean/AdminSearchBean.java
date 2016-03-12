@@ -19,6 +19,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * AdminSearchBean
@@ -29,6 +31,8 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 public class AdminSearchBean implements Serializable {
 
+    @NotNull(message = "Veuillez saisir un message !")
+    @Size(min = 10, message = "Le message doit contenir au moins 10 caractères !")
     private String message;
     private String keyWord;
     private String type;

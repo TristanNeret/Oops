@@ -19,6 +19,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * TendererReviewBean
@@ -33,7 +35,11 @@ public class TendererReviewBean implements Serializable {
     
     // Edit Review
     private Review editReview;
+    @NotNull(message = "Veuillez saisir un titre !")
+    @Size(min = 3, message = "Le titre doit contenir au moins 3 caractères !")
     private String editReviewAppreciation;
+    @NotNull(message = "Veuillez saisir une description !")
+    @Size(min = 10, message = "La description doit contenir au moins 10 caractères !")
     private String editReviewContent;
     private int editReviewRating;
     

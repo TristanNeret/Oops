@@ -29,11 +29,13 @@ public class Service implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull(message = "Veuillez saisir un nom !")
+    @NotNull(message = "Veuillez saisir un titre !")
+    @Size(min = 5, message = "Le titre doit contenir au moins 5 caractères !")
     private String title;
     
     @Lob
     @NotNull(message = "Veuillez saisir une description !")
+    @Size(min = 15, message = "La description doit contenir au moins 15 caractères !")
     private String description;
 
     private double price;

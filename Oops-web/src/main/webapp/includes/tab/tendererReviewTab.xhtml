@@ -91,13 +91,15 @@ and open the template in the editor.
                 <b:modal id="modifServiceModal" title="Modifier votre avis" styleClass="modifServiceModalPseudoClass"
                          closable="false" backdrop="false">
                     <h:form id="modifServiceForm">
-                        <b:inputText label="Titre" renderLabel="true" placeholder="Entrez un titre"
+                        <b:inputText  label="Titre" renderLabel="true" placeholder="Entrez un titre"
                                      id="reviewAppreciation" value="#{tendererReviewBean.editReviewAppreciation}" />
-
-                        <b:inputTextarea  label="Description" renderLabel="true" id="reviewContent" 
+                        <b:message id="reviewAppreciationMessage" for="reviewAppreciation"/>
+                        
+                        <b:inputTextarea label="Description" renderLabel="true" id="reviewContent" 
                                           rows="6" value="#{tendererReviewBean.editReviewContent}" 
                                           placeholder="Entrez une description" />
-
+                        <b:message id="reviewContentMessage" for="reviewContent"/>
+                        
                         <h:outputLabel value="Note moyenne" />
                         <p:rating id="reviewRate" value="#{tendererReviewBean.editReviewRating}" required="true" />
 
