@@ -25,12 +25,14 @@
 
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Mes prestations" />
 
+        <p:growl id="growlServiceContractorList" rendered="#{serviceAddBean.success}" sticky="false" showDetail="false" life="3000" />
+        
         <b:container fluid="true" style="margin-top: 20px;">
 
             <!-- CONTRACTOR'S SERVICES -->
             <b:column span="7">
                 <h:form id="formService">  
-                    <p:growl id="growlServiceContractorList" rendered="#{serviceAddBean.success}" sticky="false" showDetail="false" life="3000" />
+                    
                     <p:dataGrid var="service" value="#{serviceAddBean.contractor.services}" columns="1" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 rowsPerPageTemplate="6,12,16">
@@ -89,9 +91,12 @@
                                      label="Tarif" renderLabel="true" placeholder="Entrez un tarif"/>
 
                         <div class="dialogFooter" >
-                            <p:commandButton id="editButtonDialogValidate" value="Enregistrer" action="#{serviceAddBean.updateService()}" 
-                                             oncomplete="handleReviewRequest(xhr, status, args);" update="@form tabViewContractor:formService" styleClass="buttonAskReview" />
-                            <p:commandButton id="cancelButtonDialogValidate" value="Annuler" onclick="$('.modifServiceModalPseudoClass').modal('hide');" 
+                            <p:commandButton id="editButtonDialogValidate" value="Enregistrer" 
+                                             action="#{serviceAddBean.updateService()}" 
+                                             oncomplete="handleReviewRequest(xhr, status, args)" 
+                                             update="@form tabViewContractor:formService" styleClass="buttonAskReview" />
+                            <p:commandButton id="cancelButtonDialogValidate" value="Annuler" 
+                                             onclick="$('.modifServiceModalPseudoClass').modal('hide');" 
                                              styleClass="buttonAskReview"/>
                         </div>
 

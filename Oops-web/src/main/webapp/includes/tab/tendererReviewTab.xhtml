@@ -27,7 +27,7 @@ and open the template in the editor.
 
     <div class="container">
 
-        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste de vos avis soumis :" rendered="#{tendererReviewBean.areReviews()}" />
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste de vos avis soumis" rendered="#{tendererReviewBean.areReviews()}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Vous n'avez pas encore soumis d'avis." rendered="#{!tendererReviewBean.areReviews()}" /> 
 
         <p:panel id="reviewsList">

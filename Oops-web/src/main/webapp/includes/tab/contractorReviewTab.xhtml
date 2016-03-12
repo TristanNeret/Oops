@@ -16,7 +16,7 @@ and open the template in the editor.
 
     <div class="container">
 
-        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis des utilisateurs :" rendered="#{contractorReviewBean.areReviews()}" />
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis des utilisateurs" rendered="#{contractorReviewBean.areReviews()}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Il n'y a encore aucun avis vous concernant." rendered="#{!contractorReviewBean.areReviews()}" /> 
 
         <p:dataGrid var="review" value="#{contractorReviewBean.reviews}" columns="1" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
