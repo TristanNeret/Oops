@@ -117,10 +117,10 @@ and open the template in the editor.
                                          label="Message" renderLabel="true" />
 
                         <div class="dialogFooter" >
-                            <p:commandButton id="sendAskReviewBtn" update="@form askReviewForm" styleClass="buttonAskReview"
+                            <p:commandButton id="sendAskReviewBtn" update="@form askReviewForm" styleClass="popupValidateButton"
                                              value="Envoyer" actionListener="#{tendererSearchBean.askReview()}"                                                          
                                              oncomplete="handleRequest(xhr, status, args)" /> 
-                            <p:commandButton id="cancelBtn" value="Annuler" styleClass="buttonAskReview"
+                            <p:commandButton id="cancelBtn" value="Annuler" styleClass="popupCancelButton"
                                              onclick="$('.askReviewModalPseudoClass').modal('hide');" /> 
                         </div>
 

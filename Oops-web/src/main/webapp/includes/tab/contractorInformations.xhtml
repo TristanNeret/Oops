@@ -21,14 +21,13 @@
                 $('.modifInfosModalPseudoClass').modal('hide');
                 PF('growl').renderMessage({summary: 'Succès!', detail: 'Vos informations ont été modifiées !', severity: 'info'});
             }
+        }
+        function handlePasswordModification(xhr, status, args) {
+            if (args.validationFailed) {
 
-            function handlePasswordModification(xhr, status, args) {
-                if (args.validationFailed) {
-
-                } else {
-                    $('.modifPasswordModalPseudoClass').modal('hide');
-                    PF('growl').renderMessage({summary: 'Succès!', detail: 'Votre mot de passe a été changé !', severity: 'info'});
-                }
+            } else {
+                $('.modifPasswordModalPseudoClass').modal('hide');
+                PF('growl').renderMessage({summary: 'Succès!', detail: 'Votre mot de passe a été changé !', severity: 'info'});
             }
         }
     </script>
@@ -116,10 +115,10 @@
                     <b:message id="contractorPhoneNumberMessage" for="contractorPhoneNumber" />
 
                     <div class="dialogFooter" >
-                        <p:commandButton update="@form tabViewContractor:infoForm" styleClass="buttonAskReview"
+                        <p:commandButton update="@form tabViewContractor:infoForm" styleClass="popupValidateButton"
                                          value="Enregistrer" actionListener="#{contractorEditBean.update()}"                                                          
                                          oncomplete="handleInfosModification(xhr, status, args)"/> 
-                        <p:commandButton  value="Annuler" styleClass="buttonAskReview"
+                        <p:commandButton  value="Annuler" styleClass="popupCancelButton"
                                           onclick="$('.modifInfosModalPseudoClass').modal('hide');"
                                           actionListener="#{contractorEditBean.undo()}"/> 
                     </div>
@@ -151,10 +150,10 @@
                 <b:message id="contractorConfirmPasswordMessage" for="contractorConfirmPassword" /> 
 
                 <div class="dialogFooter" >
-                    <p:commandButton styleClass="buttonAskReview" update="@form"
+                    <p:commandButton styleClass="popupValidateButton" update="@form"
                                      value="Enregistrer" actionListener="#{contractorEditBean.updatePassword()}"                                                          
                                      oncomplete="handlePasswordModification(xhr, status, args)" /> 
-                    <p:commandButton  value="Annuler" styleClass="buttonAskReview"
+                    <p:commandButton  value="Annuler" styleClass="popupCancelButton"
                                       onclick="$('.modifPasswordModalPseudoClass').modal('hide');"/> 
                 </div>
 

@@ -233,12 +233,12 @@ and open the template in the editor.
                     <b:message id="msgError" for="messageOut"/>
 
                     <div class="dialogFooter" >
-                        <p:commandButton id="sendButtonDialogValidate" value="Envoyer" styleClass="buttonAskReview"
+                        <p:commandButton id="sendButtonDialogValidate" value="Envoyer" styleClass="popupValidateButton"
                                          action="#{adminSearchBean.sendMessage()}"
                                          update="tabViewAdmin:sendMsgDialogForm" 
                                          oncomplete="handleSendMessage(xhr, status, args)"/> 
                         <p:commandButton id="cancelButtonDialogValidate" 
-                                         value="Annuler" styleClass="buttonAskReview"
+                                         value="Annuler" styleClass="popupCancelButton"
                                          onclick="$('.sendMsgModalPseudoClass').modal('hide');"/>
 
                     </div> 
