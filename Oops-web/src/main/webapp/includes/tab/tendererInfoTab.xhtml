@@ -23,14 +23,13 @@ and open the template in the editor.
                 $('.modifInfosModalPseudoClass').modal('hide');
                 PF('growl').renderMessage({summary: 'Succès!', detail: 'Vos informations ont été modifiées !', severity: 'info'});
             }
+        }
+        function handlePasswordModification(xhr, status, args) {
+            if (args.validationFailed) {
 
-            function handlePasswordModification(xhr, status, args) {
-                if (args.validationFailed) {
-
-                } else {
-                    $('.modifPasswordModalPseudoClass').modal('hide');
-                    PF('growl').renderMessage({summary: 'Succès!', detail: 'Votre mot de passe a été changé !', severity: 'info'});
-                }
+            } else {
+                $('.modifPasswordModalPseudoClass').modal('hide');
+                PF('growl').renderMessage({summary: 'Succès!', detail: 'Votre mot de passe a été changé !', severity: 'info'});
             }
         }
     </script>
@@ -126,10 +125,10 @@ and open the template in the editor.
 
                 <div class="dialogFooter" >
                     <p:commandButton id="enregistrer" value="Enregistrer" action="#{tendererEditBean.update()}" 
-                                     styleClass="buttonAskReview"
+                                     styleClass="popupValidateButton"
                                      oncomplete="handleInfosModification(xhr, status, args)"
                                      update="@form :tabViewTenderer:infoForm" />
-                    <p:commandButton value="Annuler" styleClass="buttonAskReview" 
+                    <p:commandButton value="Annuler" styleClass="popupCancelButton" 
                                      onclick=" $('.modifInfosModalPseudoClass').modal('hide');" />
                 </div> 
             </h:form>
@@ -159,10 +158,10 @@ and open the template in the editor.
                 <b:message id="confirmPasswordMessage" for="registerConfirmPassword" />
 
                 <div class="dialogFooter" >
-                    <p:commandButton styleClass="buttonAskReview" update="@form"
+                    <p:commandButton styleClass="popupValidateButton" update="@form"
                                      value="Modifier" actionListener="#{tendererEditBean.updatePassword()}"                                                          
                                      oncomplete="handlePasswordModification(xhr, status, args)" /> 
-                    <p:commandButton  value="Annuler" styleClass="buttonAskReview"
+                    <p:commandButton  value="Annuler" styleClass="popupCancelButton"
                                       onclick="$('.modifPasswordModalPseudoClass').modal('hide');"/> 
                 </div>
             </h:form>

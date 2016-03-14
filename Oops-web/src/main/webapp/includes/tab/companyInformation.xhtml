@@ -97,11 +97,11 @@
                     <b:message id="descriptionMessage" for="contractorDescription" />
 
                     <div class="dialogFooter" >
-                        <p:commandButton  id="updateButton" styleClass="buttonAskReview" value="Enregistrer" update="@form tabViewContractor:viewForm1"
+                        <p:commandButton  id="updateButton" styleClass="popupValidateButton" value="Enregistrer" update="@form tabViewContractor:viewForm1"
                                           actionListener="#{contractorEditBean.update()}"
                                           oncomplete="handleModifCompanyInfosRequest1(xhr, status, args)" />
 
-                        <p:commandButton  value="Annuler" styleClass="buttonAskReview" id="cancelButton"
+                        <p:commandButton  value="Annuler" styleClass="popupCancelButton" id="cancelButton"
                                           actionListener="#{contractorEditBean.undo()}"
                                           onclick="$('.modifModal1PseudoClass').modal('hide');"/>
                     </div>
@@ -163,9 +163,9 @@
                         <f:ajax event="change" execute="@none" 
                                 render="tabViewContractor:dialogForm2:contractorNbEmployeesPG"/>
                     </b:selectOneMenu>
-
-                    <h:outputLabel value="Nombre d'employés" rendered="#{contractorEditBean.isATeamCompanySelected()}" />
+                    
                     <h:panelGroup id="contractorNbEmployeesPG">
+                        <h:outputLabel value="Nombre d'employés" rendered="#{contractorEditBean.isATeamCompanySelected()}"/>
                         <b:selectOneMenu id="contractorNbEmployees"
                                          value="#{contractorEditBean.contractor.nbEmployees}"
                                          rendered="#{contractorEditBean.isATeamCompanySelected()}">
@@ -220,11 +220,11 @@
                     <b:message id="insurranceMessage" for="contractorInsurrance" />
 
                     <div class="dialogFooter" >
-                        <p:commandButton  id="updateButton" styleClass="buttonAskReview" value="Enregistrer" update="@form tabViewContractor:viewForm2"
+                        <p:commandButton  id="updateButton" styleClass="popupValidateButton" value="Enregistrer" update="@form tabViewContractor:viewForm2"
                                           actionListener="#{contractorEditBean.update()}"
                                           oncomplete="handleModifCompanyInfosRequest2(xhr, status, args)" />
 
-                        <p:commandButton  value="Annuler" styleClass="buttonAskReview" id="cancelButton"
+                        <p:commandButton  value="Annuler" styleClass="popupCancelButton" id="cancelButton"
                                           actionListener="#{contractorEditBean.undo()}"
                                           onclick="$('.modifModal2PseudoClass').modal('hide');"/>
                     </div>
@@ -335,11 +335,11 @@
 
 
                     <div class="dialogFooter" >
-                        <p:commandButton  id="updateButton" styleClass="buttonAskReview" value="Enregistrer" update="@form tabViewContractor:viewForm3"
+                        <p:commandButton  id="updateButton" styleClass="popupValidateButton" value="Enregistrer" update="@form tabViewContractor:viewForm3"
                                           actionListener="#{contractorEditBean.update()}"
                                           oncomplete="handleModifCompanyInfosRequest3(xhr, status, args)" />
 
-                        <p:commandButton  value="Annuler" styleClass="buttonAskReview" id="cancelButton"
+                        <p:commandButton  value="Annuler" styleClass="popupCancelButton" id="cancelButton"
                                           actionListener="#{contractorEditBean.undo()}"
                                           onclick="$('.modifModal3PseudoClass').modal('hide');"/>
 

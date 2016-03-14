@@ -52,12 +52,18 @@ public class ContractorEditBean implements Serializable {
     @NotNull(message = "Veuillez saisir une confirmation de mot de passe !")
     private String passwordConfirm;
 
+    @NotNull(message = "Veuillez saisir un code postal !")
+    @Size(min = 5, max = 5, message = "Le code postal doit contenir 5 chiffres !")
+    private String zipCode;
+    private boolean code;
+
     @PostConstruct
     public void init() {
 
         this.contractor = sb.searchContractorById(SessionBean.getUserId());
-
-        legalForms = pdb.getLegalForms();
+        this.zipCode = ""+contractor.getAddress().getZipCode();
+        this.code = false;
+        this.legalForms = pdb.getLegalForms();
 
     }
 
@@ -72,7 +78,7 @@ public class ContractorEditBean implements Serializable {
      * Contractor setters and getters
      */
     public Contractor getContractor() {
-        return contractor;
+        return this.contractor;
     }
 
     public void setContractor(Contractor contractor) {
@@ -80,9 +86,7 @@ public class ContractorEditBean implements Serializable {
     }
 
     public void undo() {
-        System.out.println("entre");
         this.contractor = sb.searchContractorById(SessionBean.getUserId());
-        //contractor = cm.undo(contractor);
     }
 
     public void update() {
@@ -95,11 +99,11 @@ public class ContractorEditBean implements Serializable {
     }
 
     public void updatePassword() {
-        contractor.setPassword(password);
-        cm.update(contractor);
+        this.contractor.setPassword(password);
+        this.cm.update(contractor);
         // reset
-        password = "";
-        passwordConfirm = "";
+        this.password = "";
+        this.passwordConfirm = "";
     }
 
     public boolean isLogo() {
@@ -107,22 +111,24 @@ public class ContractorEditBean implements Serializable {
     }
 
     public List<SelectItem> getLegalForms() {
-        return legalForms;
+        return this.legalForms;
     }
 
     public boolean isATeamCompanySelected() {
-        return pdb.isATeamCompany(contractor.getLegalForm());
+        return this.pdb.isATeamCompany(contractor.getLegalForm());
     }
 
-    public void setZipCode(int zipCode) {
-        this.contractor.getAddress().setZipCode(zipCode);
-        this.contractor.getAddress().setRegion(pdb.getRegion(Integer.toString(zipCode)));
+     public void setZipCode(String zipCode) {
+        this.code = true;
+        this.zipCode = zipCode;
+        this.contractor.getAddress().setZipCode(Integer.parseInt(zipCode));
+        this.contractor.getAddress().setRegion(pdb.getRegion(zipCode));
     }
 
-    public int getZipCode() {
-        return this.contractor.getAddress().getZipCode();
+    public String getZipCode() {
+        return this.zipCode;
     }
-
+    
     public void setCountry(String country) {
         this.contractor.getAddress().setCountry(country);
     }
@@ -166,7 +172,7 @@ public class ContractorEditBean implements Serializable {
     }
 
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setPassword(String password) {
@@ -174,11 +180,14 @@ public class ContractorEditBean implements Serializable {
     }
 
     public String getPasswordConfirm() {
-        return passwordConfirm;
+        return this.passwordConfirm;
     }
 
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
     }
 
+    public boolean isCode() {
+        return code;
+    }
 }

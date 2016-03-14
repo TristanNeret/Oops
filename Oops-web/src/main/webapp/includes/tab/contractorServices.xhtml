@@ -16,7 +16,6 @@
                 $('.modifServiceModalPseudoClass').modal('show');
             } else {
                 $('.modifServiceModalPseudoClass').modal('hide');
-                PF('growlServiceContractorList').renderMessage({summary: 'Modification effectuée !', detail: 'La prestation a été mise a jour !', severity: 'info'});
             }
         }
     </script>
@@ -94,10 +93,10 @@
                             <p:commandButton id="editButtonDialogValidate" value="Enregistrer" 
                                              action="#{serviceAddBean.updateService()}" 
                                              oncomplete="handleReviewRequest(xhr, status, args)" 
-                                             update="@form tabViewContractor:formService" styleClass="buttonAskReview" />
+                                             update="@form tabViewContractor:formService" styleClass="popupValidateButton" />
                             <p:commandButton id="cancelButtonDialogValidate" value="Annuler" 
                                              onclick="$('.modifServiceModalPseudoClass').modal('hide');" 
-                                             styleClass="buttonAskReview"/>
+                                             styleClass="popupCancelButton"/>
                         </div>
 
                     </h:form>

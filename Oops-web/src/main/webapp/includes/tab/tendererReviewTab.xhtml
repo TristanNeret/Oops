@@ -107,8 +107,8 @@ and open the template in the editor.
                             <p:commandButton id="editButtonDialogValidate" value="Enregistrer" 
                                              action="#{tendererReviewBean.editReview()}" 
                                              oncomplete="handleReviewRequest(xhr, status, args)" 
-                                             update="@form tabViewTenderer:formComment" styleClass="buttonAskReview"/>
-                            <p:commandButton id="cancelButtonDialogValidate" value="Annuler" styleClass="buttonAskReview"
+                                             update="@form tabViewTenderer:formComment" styleClass="popupValidateButton"/>
+                            <p:commandButton id="cancelButtonDialogValidate" value="Annuler" styleClass="popupCancelButton"
                                              onclick="$('.modifServiceModalPseudoClass').modal('hide');" />
                         </div> 
 
