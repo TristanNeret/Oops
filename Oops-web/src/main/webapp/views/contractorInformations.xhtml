@@ -135,13 +135,13 @@ and open the template in the editor.
                 <p:panel id="panelPortfolio">
                     <h2 style="margin-left: -10px; margin-top: -10px;">Portfolio</h2>
                     <h:outputLabel value="Il n'y a encore aucune photo pour ce prestataire." style="margin-left: -8px; margin-bottom: 20px;" rendered="#{contractorInformationsBean.contractor.images.size() == 0}" />
+                    <p:panel id="panelLoading" styleClass="panelLoading" rendered="#{contractorInformationsBean.contractor.images.size() > 0}">
+                        <b:image value="/resources/default/img/ajax-loader.gif" name="Loading" />
+                    </p:panel>
                     <p:contentFlow value="#{contractorInformationsBean.contractor.images}" var="image" rendered="#{contractorInformationsBean.contractor.images.size() > 0}">
                         <p:graphicImage onclick="/" url="/images/#{image.id}" styleClass="content" />
                         <div class="caption">#{image.description}</div>
                     </p:contentFlow>
-                </p:panel>
-                <p:panel id="panelLoading" style="text-align:center;">
-                    <b:image value="/resources/default/img/ajax-loader.gif" name="Loading" />
                 </p:panel>
 
                 <!-- GIVE A REVIEW --> 

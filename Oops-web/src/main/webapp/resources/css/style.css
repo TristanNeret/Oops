@@ -1531,6 +1531,12 @@ button.ui-fileupload-cancel.ui-button.ui-widget.ui-state-default.ui-corner-all.u
     margin-left: 10px !important;
 }
 
+.panelLoading {
+    text-align:center; 
+    margin-top: 10px; 
+    margin-bottom: 30px;
+}
+
 /*****************************************************************************/
 /********************************* DIALOG ************************************/
 /*****************************************************************************/
