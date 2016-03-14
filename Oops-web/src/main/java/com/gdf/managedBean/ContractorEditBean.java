@@ -54,11 +54,8 @@ public class ContractorEditBean implements Serializable {
 
     @PostConstruct
     public void init() {
-
         this.contractor = sb.searchContractorById(SessionBean.getUserId());
-
         legalForms = pdb.getLegalForms();
-
     }
 
     /**
@@ -79,12 +76,18 @@ public class ContractorEditBean implements Serializable {
         this.contractor = contractor;
     }
 
+    
+    /**
+     * Reset contractor's data 
+     */
     public void undo() {
-        System.out.println("entre");
         this.contractor = sb.searchContractorById(SessionBean.getUserId());
         //contractor = cm.undo(contractor);
     }
 
+    /**
+     * Update a contractor
+    */
     public void update() {
 
         if ((!isATeamCompanySelected()) && (contractor.getNbEmployees() > 0)) {
@@ -94,6 +97,9 @@ public class ContractorEditBean implements Serializable {
         cm.update(contractor);
     }
 
+    /**
+     * Update the password of a contractor 
+     */
     public void updatePassword() {
         contractor.setPassword(password);
         cm.update(contractor);
@@ -102,6 +108,10 @@ public class ContractorEditBean implements Serializable {
         passwordConfirm = "";
     }
 
+    /**
+     * Test if the contractor has a logo
+     * @return true is the contractor has a logo  
+     */
     public boolean isLogo() {
         return this.contractor.getLogo() != null && !this.contractor.getLogo().equals("");
     }
@@ -131,6 +141,11 @@ public class ContractorEditBean implements Serializable {
         return this.contractor.getAddress().getCountry();
     }
 
+    
+    /**
+     * Return the list of all countries of the world  
+     * @return List of countries  
+     */
     public List<SelectItem> getAllCountry() {
         List<String> lcountries = pdb.getAllCountries();
 
@@ -149,6 +164,11 @@ public class ContractorEditBean implements Serializable {
         this.allCountry = allCountry;
     }
 
+    
+    /**
+     * Return a town list who correspond to a contractor's zip code 
+     * @return List<SelectItem> 
+     */
     public List<SelectItem> getAllTown() {
         List<String> ltowns = pdb.getAllTown(Integer.toString(this.contractor.getAddress().getZipCode()));
 
@@ -159,9 +179,7 @@ public class ContractorEditBean implements Serializable {
             for (String town : ltowns) {
                 li.add(new SelectItem(town));
             }
-
         }
-
         return li;
     }
 

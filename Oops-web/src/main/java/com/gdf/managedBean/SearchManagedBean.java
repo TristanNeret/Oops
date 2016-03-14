@@ -94,13 +94,11 @@ public class SearchManagedBean implements Serializable {
     
     @PostConstruct
     public void setup() {
-        
         region = null;
         this.type = "cont";
         this.order = "ALPHABETICAL";
         this.listC = sb.getAllCategory();
         this.reviewsToShow = this.sb.getThreeReviewsToShow();
-  
     }
     
     /**
@@ -179,6 +177,11 @@ public class SearchManagedBean implements Serializable {
         this.reviewsToShow = reviewsToShow;
     }
 
+    
+    /**
+     * Retrieve the list of countries from all contractors (More precisely from the adresses of contractors)
+     * @return List<SelectItem> of countries
+     */
     public List<SelectItem> getAllCountry() {
         List<SelectItem> li = new ArrayList<>();
         List<String> listCountry = sb.getAllCountry();
@@ -189,6 +192,11 @@ public class SearchManagedBean implements Serializable {
         return li;
     }
 
+    
+     /**
+     * Retrieve the list of states from all contractors (For France)
+     * @return List<SelectItem> of states 
+     */
     public List<SelectItem> getAllRegions() {
         List<String> listR = sb.getAllStates();
         List<SelectItem> li = new ArrayList<>();
@@ -209,6 +217,11 @@ public class SearchManagedBean implements Serializable {
         this.allCountry = allCountry;
     }
 
+    
+     /**
+     * Retrieve the list of categories 
+     * @return List<SelectItem> of categories
+     */
     public List<SelectItem> getAllCategory() {
         List<SelectItem> li = new ArrayList<>();
         
@@ -272,6 +285,12 @@ public class SearchManagedBean implements Serializable {
         }        
     }
     
+      
+    /**
+     * Return a list of contractor's or tenderer's name (auto-completion)
+     * @param query the word typing by the user
+     * @return List of contractor's or tenderer's name
+     */
     public List<String> completeQuery(String query) {
        
         List<String> results;
@@ -283,7 +302,10 @@ public class SearchManagedBean implements Serializable {
         }
         return results;   
     }
-    
+
+    /**
+     * This method is called when the user changes the search criteria
+     */
     public void valueChangeMethod(){
 	search();
     }

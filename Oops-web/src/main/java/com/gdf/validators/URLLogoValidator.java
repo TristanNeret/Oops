@@ -15,7 +15,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
+ * Test if the logo's format is correct
  * @author aziz
  */
 @ManagedBean

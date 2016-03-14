@@ -17,7 +17,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
+ * Test if the Siret already exist
  * @author aziz
  */
 @ManagedBean

@@ -79,6 +79,12 @@ public class AdminSearchBean implements Serializable {
         
     }
 
+    
+    /**
+     * Return list of contractor's or tenderer's name (auto-completion)
+     * @param query the word typing by the user
+     * @return List of contractor's or tenderer's name
+     */
     public List<String> completeQuery(String query) {
 
         List<String> results;
@@ -95,10 +101,13 @@ public class AdminSearchBean implements Serializable {
         } else {
             results = sb.findContractorBeginBy(query);
         }
-        return results;
-        
+        return results; 
     }
 
+    
+    /**
+    * Search contractors or tenderers who match the request of the User
+    */
     public void search() {
 
         if (type != null) {
@@ -113,11 +122,13 @@ public class AdminSearchBean implements Serializable {
             }
         
         }
-
         message = "";
-        
     }
 
+    
+    /**
+     * Send a message to a contractor or a tenderer
+     */
     public void sendMessage() {
 
         if (type.equals("tend")) {
@@ -133,6 +144,10 @@ public class AdminSearchBean implements Serializable {
         
     }
 
+    
+    /**
+     * Send a message to a group of persons (tenderer,contractor, or both)
+     */
     public void sendGroupMessage() {
 
         switch (this.targetGroup) {

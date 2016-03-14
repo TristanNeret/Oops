@@ -63,9 +63,7 @@ public class ServiceAddBean implements Serializable {
      * @return True if the Contractor has Service, or False
      */
     public boolean areServices() {
-
         return !this.contractor.getServices().isEmpty();
-
     }
 
     /**

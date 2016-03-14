@@ -17,7 +17,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
+ * Test if the email's format is correct
  * @author bibo
  */
 @ManagedBean

@@ -19,7 +19,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
+ * Test if Rcs already exist for the modification
  * @author aziz
  */
 @ManagedBean

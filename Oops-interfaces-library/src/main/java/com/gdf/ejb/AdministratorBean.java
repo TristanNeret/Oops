@@ -28,14 +28,28 @@ public interface AdministratorBean {
      * Manage the Review as Moderator decided and send a Notification to the
      * Tenderer who wrote it 
      * @param reviewId id of the Review managed by the Moderator
-     * @param moderatorId od of the Moderator who manage the Review
+     * @param moderatorId id of the Moderator who manage the Review
      * @param reviewState new state for the Review
      * @param content optional content for the Tenderer who wrote the Review
      */
     public void manageReview(long reviewId, long moderatorId, ReviewState reviewState, String content);
 
+    
+    /**
+     * Send a message from the Moderator to a Tenderer
+     * @param moderatorID id of the Moderator who send the notification
+     * @param tendererSelected id of the tenderer who receive the notification 
+     * @param message message content
+     */
     public void sendMessageNotificationToTenderer(long moderatorID, Tenderer tendererSelected, String message);
 
+    
+    /**
+     * Send a message from the Moderator to a Contractor
+     * @param moderatorID  id of the Moderator who send the notification
+     * @param contractorSelected id of the contractor who receive the notification 
+     * @param message message content
+     */
     public void sendMessageNotificationToContractor(long moderatorID, Contractor contractorSelected, String message);
     
 }
