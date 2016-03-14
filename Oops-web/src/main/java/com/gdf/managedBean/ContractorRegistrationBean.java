@@ -76,6 +76,10 @@ public class ContractorRegistrationBean implements Serializable {
         legalForms = pdb.getLegalForms();
     }
 
+    
+    /**
+     * Registration of a new contractor 
+     */
     public void register() {
         contractor.setPassword(password);
         Long id = this.rb.register(this.contractor);
@@ -134,6 +138,10 @@ public class ContractorRegistrationBean implements Serializable {
         return this.contractor.getAddress().getCountry();
     }
 
+    /**
+     * Return the list of all countries of the world  
+     * @return List of countries  
+     */
     public List<SelectItem> getAllCountry() {
         List<String> lcountries = pdb.getAllCountries();
 
@@ -148,6 +156,10 @@ public class ContractorRegistrationBean implements Serializable {
         return li;
     }
 
+     /**
+     * Return a town list who correspond to a contractor's zip code 
+     * @return List<SelectItem> of towns
+     */
     public List<SelectItem> getAllTown() {
             
         List<String> ltowns = pdb.getAllTown(Integer.toString(this.contractor.getAddress().getZipCode()));

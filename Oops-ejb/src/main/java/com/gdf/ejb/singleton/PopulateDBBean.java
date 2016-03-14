@@ -65,12 +65,13 @@ public class PopulateDBBean implements PopulateDB {
      * Populate the database for the selenium tests
      */
     public PopulateDBBean() {
-        
-        this.allCountries = new ArrayList();
-        
+        this.allCountries = new ArrayList();        
     }
     
      
+    /**
+     * Populate the database
+     */
     @PostConstruct
     private void populateDatabase(){
         
@@ -496,9 +497,9 @@ public class PopulateDBBean implements PopulateDB {
         contractor.getImages().add(pimage77);
         em.persist(contractor);
         
-        contractor = new Contractor("JonnyAnnimation", "contact@jonnyannimation.com", "password", "JonnyAnnimation",
+        contractor = new Contractor("JonnyAnimation", "contact@jonnyanimation.com", "password", "JonnyAnimation",
         "SA", "​Vous préparez votre mariage sur le secteur de Brest , de Quimper, la fête de votre association dans le Finistère 29, la Soirée dansante de votre comité d'entrepri​se, un départ en retraite, le bal de votre comité des fêtes, ou bien une Soirée Karaoké ?", 
-        "3937937820", "https://upload.wikimedia.org/wikipedia/fr/thumb/a/aa/Jt-logo-current.jpg/220px-Jt-logo-current.jpg", "JonnyAnnimation", "Representant", 100000, 100, 0,
+        "3937937820", "https://upload.wikimedia.org/wikipedia/fr/thumb/a/aa/Jt-logo-current.jpg/220px-Jt-logo-current.jpg", "JonnyAnimation", "Representant", 100000, 100, 0,
         new Address(1, "Rue de Vern", 35000 , "Renne", "France","Bretagne"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         service = new Service("Sculture sur ballons", "La sculpture sur ballons est l´animation idéale pour les enfants durant le vin d'honneur d´un mariage"
         , 100.0, contractor, category);
@@ -633,6 +634,11 @@ public class PopulateDBBean implements PopulateDB {
         
     }
     
+    /**
+     * Return the region who match with the zip code 
+     * @param code zip cpde
+     * @return the region
+     */
     @Override
     public String getRegion(String code) {
 
@@ -666,7 +672,7 @@ public class PopulateDBBean implements PopulateDB {
         return region;
         
     }
-    
+ 
     private final SelectItem[] nonTeamCompanies = new SelectItem[] {
         
         new SelectItem("Auto-entrepreneur", "Auto-entrepreneur"),

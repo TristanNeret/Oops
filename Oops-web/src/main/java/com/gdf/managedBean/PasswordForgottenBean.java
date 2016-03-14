@@ -87,13 +87,15 @@ public class PasswordForgottenBean implements Serializable {
     public void passwordForgotten() {
 
         if (requestID == null) {
-
             // send request
             ab.passwordForgotten(email);
             message = "Un lien pour réinitialiser votre mot de passe vient de vous être envoyé !";
         }
     }
 
+    /**
+     * Change a contractor or a tenderer password 
+     */
     public void setNewPassword() {
 
         if (tenderer != null) {

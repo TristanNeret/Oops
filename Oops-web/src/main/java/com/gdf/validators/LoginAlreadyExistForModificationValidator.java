@@ -22,7 +22,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- * Test if a login is already used by another user
+ * Test if a login is already used by another user for the modification
  *
  * @author Tristan
  */

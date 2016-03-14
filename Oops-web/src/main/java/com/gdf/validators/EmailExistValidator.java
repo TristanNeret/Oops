@@ -12,7 +12,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
+ * Test if an email is already used by another user 
  * @author aziz
  */
 @ManagedBean

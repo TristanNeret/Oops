@@ -17,7 +17,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
+ * Test if the social reason already exist
  * @author aziz
  */
 @ManagedBean

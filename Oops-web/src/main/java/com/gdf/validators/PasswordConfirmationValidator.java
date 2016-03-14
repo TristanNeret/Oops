@@ -14,7 +14,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
+ * Test is both password match
  * @author nicolas
  */
 @FacesValidator("com.gdf.passwordConfirmationValidator")

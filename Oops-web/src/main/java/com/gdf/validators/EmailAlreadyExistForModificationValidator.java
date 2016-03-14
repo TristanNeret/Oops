@@ -15,7 +15,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- * Test if a email is already used by another user
+ * Test if an email is already used by another user for the modification
  * @author Nicolas
  */
 @ManagedBean

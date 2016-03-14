@@ -10,7 +10,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
+ * Test if the zip code is correct
  * @author bibo
  */
 @FacesValidator("com.gdf.zipValidator")

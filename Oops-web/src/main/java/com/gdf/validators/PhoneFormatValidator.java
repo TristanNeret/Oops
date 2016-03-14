@@ -8,7 +8,7 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**
- *
+ * Test if the phone format is correct
  * @author bibo
  */
 @FacesValidator("com.gdf.phoneFormatValidator")
