@@ -16,109 +16,158 @@ and open the template in the editor.
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <script type="text/javascript">
-        function handleUpdateRequest(xhr, status, args) {
+        function handleInfosModification(xhr, status, args) {
             if (args.validationFailed) {
-                //PF('infoDialog').jq.effect("shake", {times: 5}, 100);
-                PF('infoDialog').show();
+
+            } else {
+                $('.modifInfosModalPseudoClass').modal('hide');
+                PF('growl').renderMessage({summary: 'Succès!', detail: 'Vos informations ont été modifiées !', severity: 'info'});
             }
-            else {
-                PF('infoDialog').hide();
-                PF('updateGrowl').renderMessage({summary: 'Modifications enregistrées !', severity: 'info'});
+
+            function handlePasswordModification(xhr, status, args) {
+                if (args.validationFailed) {
+
+                } else {
+                    $('.modifPasswordModalPseudoClass').modal('hide');
+                    PF('growl').renderMessage({summary: 'Succès!', detail: 'Votre mot de passe a été changé !', severity: 'info'});
+                }
             }
         }
-
     </script>
 
     <div class="container">
 
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Mes informations personnelles" /> 
 
-        <o:form id="infoForm" includeViewParams="true">
+        <p:growl id="updateGrowl" widgetVar="growl" sticky="false" showDetail="false" life="3000" />
+
+        <h:form id="infoForm">
 
             <b:container fluid="true" style="margin-top: 20px;">
                 <b:row styleClass="show-grid">
                     <b:column span="2">
-                        <h:graphicImage value="#{tendererInfoMngBean.tenderer.avatar}" height="150px" rendered="#{tendererInfoMngBean.isAvatar()}" />
-                        <h:outputLabel value="Aucune image" rendered="#{!tendererInfoMngBean.isAvatar()}" />
+                        <h:graphicImage value="#{tendererEditBean.tenderer.avatar}" height="150px" rendered="#{tendererEditBean.isAvatar()}" />
+                        <h:outputLabel value="Aucune image" rendered="#{!tendererEditBean.isAvatar()}" />
                     </b:column>
                     <b:column span="10" styleClass="columnTendererField">
-                        <b:row styleClass="rowTendererField"><b>Login : </b><h:outputText value="#{tendererInfoMngBean.tenderer.login}"/></b:row>
-                        <b:row styleClass="rowTendererField"><b>Prénom : </b><h:outputText value="#{tendererInfoMngBean.tenderer.firstname}"/></b:row>
-                        <b:row styleClass="rowTendererField"><b>Nom : </b><h:outputText value="#{tendererInfoMngBean.tenderer.lastname}"/></b:row>
-                        <b:row styleClass="rowTendererField"><b>E-mail : </b><h:outputText value="#{tendererInfoMngBean.tenderer.email}"/></b:row>
-                        <b:row styleClass="rowTendererField"><b>Téléphone : </b><h:outputText value="#{tendererInfoMngBean.tenderer.phone}"/></b:row>
-                        <b:row styleClass="rowTendererField"><b>Inscrit depuis le : </b><h:outputText value="#{tendererInfoMngBean.tenderer.registrationDate}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Login : </b><h:outputText value="#{tendererEditBean.tenderer.login}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Prénom : </b><h:outputText value="#{tendererEditBean.tenderer.firstname}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Nom : </b><h:outputText value="#{tendererEditBean.tenderer.lastname}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>E-mail : </b><h:outputText value="#{tendererEditBean.tenderer.email}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Téléphone : </b><h:outputText value="#{tendererEditBean.tenderer.phone}"/></b:row>
+                        <b:row styleClass="rowTendererField"><b>Inscrit depuis le : </b><h:outputText value="#{tendererEditBean.tenderer.registrationDate}"/></b:row>
                         <b:row styleClass="rowTendererField">
-                            <b:commandButton id="modifier" value="Modifier" look="primary" styleClass="commandButtonEditTenderer" update="dialogEditInfo" oncomplete="PF('infoDialog').show();" />
-                            <b:button look="link" value="Voir la page de mon profil" outcome="/views/tendererInformations?id=#{tendererInfoMngBean.tenderer.id}" style="margin-top: 20px" />
+                            <p:commandButton id="modifier" value="Modifier" styleClass="buttonBackRegistration"
+                                             onclick="$('.modifInfosModalPseudoClass').modal('show');" 
+                                             update="tabViewTenderer:modalForm"/>
+                            <p:commandButton class="searchCommandButton" id="buttonModifyPassword" 
+                                             value="Modifier mon mot de passe" styleClass="buttonBackRegistration"
+                                             onclick="$('.modifPasswordModalPseudoClass').modal('show');"
+                                             update="tabViewTenderer:modalFormPassword"/>
+                            <b:button look="link" value="Voir la page de mon profil" outcome="/views/tendererInformations?id=#{tendererEditBean.tenderer.id}" style="margin-top: 20px" />
                         </b:row>
                     </b:column>
                 </b:row>
             </b:container>
+        </h:form>
 
-            <!-- Dialog view to edit a Tenderer -->
-            <p:growl id="updateGrowl" widgetVar="updateGrowl" sticky="false" showDetail="false" life="3000" />
-            <p:dialog id="dialogEditInfo" header="Modifier mes informations :" modal="true" widgetVar="infoDialog" dynamic="true" resizable="false">
+        <!-- Dialog view to edit a Tenderer -->
+        <b:modal id="modifInfosModal" title="Modification des informations personelles" styleClass="modifInfosModalPseudoClass"
+                 closable="false" backdrop="false">          
 
-                <h:panelGrid columns="3" cellpadding="6">
+            <h:form id="modalForm"> 
 
-                    <h:outputLabel value="Avatar :" />
-                    <p:inputText id="avatar" value="#{tendererInfoMngBean.tenderer.avatar}">
-                           <f:validator validatorId="com.gdf.urlLogoValidator"/>
-                    </p:inputText>       
-                    <p:message id="avatarMessage" for="avatar"/>
+                <b:inputText id="registerLogin" label="Login" renderLabel="true" value="#{tendererEditBean.tenderer.login}"
+                             placeholder="Entrez votre login" maxlength="15">
+                    <f:facet name="prepend">
+                        <b:icon name="user" />
+                    </f:facet>
+                    <f:validator validatorId="com.gdf.loginAlreadyExistForModificationValidator" /> 
+                </b:inputText>
+                <b:message id="loginMessage" for="registerLogin" />
 
-                    
-                    <h:outputLabel value="Login :" />
-                    <p:inputText id="login" value="#{tendererInfoMngBean.tenderer.login}">
-                        <f:validator validatorId="com.gdf.loginAlreadyExistForModificationValidator"/>
-                    </p:inputText>
-                    <p:message id="loginMessage" for="login"/>
+                <b:inputText id="registerFirstname" label="Prénom" renderLabel="true" value="#{tendererEditBean.tenderer.firstname}"
+                             placeholder="Entrez votre prénom" maxlength="15">
+                </b:inputText>
+                <b:message id="firstnameMessage" for="registerFirstname" />
 
-                    <h:outputLabel value="Prénom :" />
-                    <p:inputText id="firstname" value="#{tendererInfoMngBean.tenderer.firstname}" required="true" label="Prénom">
-                        <f:validator validatorId="com.gdf.noBlankSpaceValidator" binding="#{noBlankSpaceValidator}" />
-                    </p:inputText>
-                    <p:message id="firstnameMessage" for="firstname"/>
+                <b:inputText id="registerLastname" label="Nom" renderLabel="true" value="#{tendererEditBean.tenderer.lastname}"
+                             placeholder="Entrez votre nom" maxlength="15">
+                </b:inputText>
+                <b:message id="lastnameMessage" for="registerLastname" />
 
-                    <h:outputLabel value="Nom :" />
-                    <p:inputText id="lastname" value="#{tendererInfoMngBean.tenderer.lastname}" required="true" label="Nom">
-                        <f:validator validatorId="com.gdf.noBlankSpaceValidator" binding="#{noBlankSpaceValidator}" />
-                    </p:inputText>
-                    <p:message id="lastnameMessage" for="lastname"/>
+                <b:inputText id="registerMail" label="Adresse email" renderLabel="true" value="#{tendererEditBean.tenderer.email}"
+                             placeholder="Entrez votre adresse email">
+                    <f:facet name="prepend">
+                        <h:outputText value="@" />
+                    </f:facet>
+                    <f:validator validatorId="com.gdf.mailFormatValidator" />
+                    <f:validator validatorId="com.gdf.emailAlreadyExistForModificationValidator" />
+                </b:inputText>
+                <b:message id="mailMessage" for="registerMail" />
 
-                    <h:outputLabel value="E-mail :" />
-                    <p:inputText id="email" value="#{tendererInfoMngBean.tenderer.email}" required="true" label="E-mail">
-                        <f:validator validatorId="com.gdf.mailFormatValidator" binding="#{mailFormatValidator}" />
-                        <f:validator validatorId="com.gdf.emailAlreadyExistForModificationValidator"/>                 
-                    </p:inputText>
-                    <p:message id="emailMessage" for="email"/>
+                <b:inputText id="registerPhoneNumber" label="Téléphone" renderLabel="true" value="#{tendererEditBean.tenderer.phone}"
+                             placeholder="Facultatif" maxlength="10">
+                    <f:facet name="prepend">
+                        <b:icon name="earphone" />
+                    </f:facet>
+                    <f:validator validatorId="com.gdf.phoneFormatValidator" /> 
+                </b:inputText>
+                <b:message id="phoneNumberMessage" for="registerPhoneNumber" />
 
-                    <h:outputLabel value="Téléphone :" />
-                    <p:inputText id="phone" value="#{tendererInfoMngBean.tenderer.phone}" required="true">
-                        <f:validator validatorId="com.gdf.phoneFormatValidator"/>
-                    </p:inputText>
-                    <p:message id="phoneMessage" for="phone"/>
+                <b:inputText id="registerAvatar" label="URL de l'avatar" renderLabel="true" value="#{tendererEditBean.tenderer.avatar}"
+                             placeholder="Facultatif">
+                    <f:facet name="prepend">
+                        <b:icon name="picture" />
+                    </f:facet>
+                    <f:validator validatorId="com.gdf.urlLogoValidator"/>
+                </b:inputText>
+                <b:message id="avatarMessage" for="registerAvatar" />
 
+                <div class="dialogFooter" >
+                    <p:commandButton id="enregistrer" value="Enregistrer" action="#{tendererEditBean.update()}" 
+                                     styleClass="buttonAskReview"
+                                     oncomplete="handleInfosModification(xhr, status, args)"
+                                     update="@form :tabViewTenderer:infoForm" />
+                    <p:commandButton value="Annuler" styleClass="buttonAskReview" 
+                                     onclick=" $('.modifInfosModalPseudoClass').modal('hide');" />
+                </div> 
+            </h:form>
+        </b:modal>
 
-                    <h:outputLabel value="Mot de passe :" />
-                    <p:password id="password" value="#{tendererInfoMngBean.password}" match="passconfirm" feedback="true" placeholder="Laissez vide pour ne pas modifier" validatorMessage="Problème de mot de passe." />
-                    <p:message id="passwordMessage" for="password"/>
-                    
-                    <h:outputLabel value="Confirmez le mot de passe :" />
-                    <p:password id="passconfirm" value="#{tendererInfoMngBean.passConfirm}" feedback="true" placeholder="Laissez vide pour ne pas modifier" />
-                    <p:message id="passconfirmMessage" for="passconfirm"/>
-                    
-                    <f:facet name="footer">
-                        <p:commandButton id="enregistrer" value="Enregistrer" action="#{tendererInfoMngBean.update()}" 
-                                         oncomplete="handleUpdateRequest(xhr, status, args)" update="updateGrowl :tabViewTenderer:infoForm" />
-                        <p:commandButton value="Annuler" oncomplete="PF('infoDialog').hide();" />
-                    </f:facet>  
+        <b:modal id="modifPasswordModal" title="Modification du mot de passe" styleClass="modifPasswordModalPseudoClass" 
+                 closable="false" backdrop="false">    
 
-                </h:panelGrid>
+            <h:form id="modalFormPassword"> 
+                <b:inputSecret id="registerPassword" label="Mot de passe" renderLabel="true" value="#{tendererEditBean.password}"
+                               placeholder="Entrez un mot de passe">
+                    <f:facet name="prepend">
+                        <b:icon name="lock" />
+                    </f:facet>                
+                    <f:validator validatorId="com.gdf.passwordConfirmationValidator" />
+                    <f:attribute name="confirm" value="#{confirmPassword.submittedValue}" />
+                </b:inputSecret>
+                <b:message id="passwordMessage" for="registerPassword" />
 
-            </p:dialog>
-        </o:form>
+                <b:inputSecret id="registerConfirmPassword" label="Confirmer le mot de passe" renderLabel="true" 
+                               value="#{tendererEditBean.passwordConfirm}"
+                               placeholder="Entrez une confirmation de mot de passe" binding="#{confirmPassword}">
+                    <f:facet name="prepend">
+                        <b:icon name="lock" />
+                    </f:facet>
+                </b:inputSecret>
+                <b:message id="confirmPasswordMessage" for="registerConfirmPassword" />
+
+                <div class="dialogFooter" >
+                    <p:commandButton styleClass="buttonAskReview" update="@form"
+                                     value="Modifier" actionListener="#{tendererEditBean.updatePassword()}"                                                          
+                                     oncomplete="handlePasswordModification(xhr, status, args)" /> 
+                    <p:commandButton  value="Annuler" styleClass="buttonAskReview"
+                                      onclick="$('.modifPasswordModalPseudoClass').modal('hide');"/> 
+                </div>
+            </h:form>
+        </b:modal>
+
     </div>
 
 </ui:composition>

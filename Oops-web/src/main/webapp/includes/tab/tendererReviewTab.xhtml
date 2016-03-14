@@ -14,9 +14,20 @@ and open the template in the editor.
     xmlns:b="http://bootsfaces.net/ui"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
+    <script type="text/javascript">
+        function handleReviewRequest(xhr, status, args) {
+            if (args.validationFailed) {
+
+            }
+            else {
+                $('.modifServiceModalPseudoClass').modal('hide');
+            }
+        }
+    </script>
+
     <div class="container">
 
-        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste de vos avis soumis :" rendered="#{tendererReviewBean.areReviews()}" />
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste de vos avis soumis" rendered="#{tendererReviewBean.areReviews()}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Vous n'avez pas encore soumis d'avis." rendered="#{!tendererReviewBean.areReviews()}" /> 
 
         <p:panel id="reviewsList">
@@ -28,27 +39,7 @@ and open the template in the editor.
                                 rowsPerPageTemplate="6,12,16">
 
                         <!-- REVIEW -->
-                        <b:container fluid="true">
-
-                            <!-- Dialog view to edit Review -->
-                            <p:dialog id="dialogEditReview" header="Modifier votre avis :" dynamic="true" modal="true" widgetVar="reviewDialog" resizable="false">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                    <h:outputLabel value="Titre :" />
-                                    <p:inputText id="reviewAppreciation" value="#{tendererReviewBean.editReviewAppreciation}" required="true" label="Titre" />
-
-                                    <h:outputLabel value="Description :" />
-                                    <p:inputTextarea id="reviewContent" rows="6" cols="33" value="#{tendererReviewBean.editReviewContent}" required="true" label="Description" />
-
-                                    <h:outputLabel value="Note moyenne :" />
-                                    <p:rating id="reviewRate" value="#{tendererReviewBean.editReviewRating}" required="true" />
-
-                                    <f:facet name="footer">
-                                        <p:commandButton id="editButtonDialogValidate" value="Soumettre l'avis modifié" action="#{tendererReviewBean.editReview()}" 
-                                                         oncomplete="PF('reviewDialog').hide();" update="@form" />
-                                        <p:commandButton id="cancelButtonDialogValidate" value="Annuler" oncomplete="PF('reviewDialog').hide();" />
-                                    </f:facet>  
-                                </h:panelGrid>
-                            </p:dialog>
+                        <b:container fluid="true">                  
 
                             <!-- Review informations -->
                             <b:row styleClass="show-grid">
@@ -84,7 +75,7 @@ and open the template in the editor.
                                 <p:commandButton id="deleteButton" style="float: right; margin-top: 0px !important;" styleClass="buttonCancel" value="Supprimer" action="#{tendererReviewBean.removeReview(review)}" update="growlReviewTenderer reviews">
                                     <p:confirm header="Confirmation" message="Êtes-vous sûr de vouloir supprimer cet avis ?" icon="ui-icon-alert" />
                                 </p:commandButton>
-                                <p:commandButton id="editButton" style="float: right; margin-top: 0px !important;" styleClass="buttonBackRegistration" value="Modifier" action="#{tendererReviewBean.setEditReview(review)}" update="dialogEditReview" oncomplete="PF('reviewDialog').show();" />
+                                <p:commandButton id="editButton" style="float: right; margin-top: 0px !important;" styleClass="buttonBackRegistration" value="Modifier" action="#{tendererReviewBean.setEditReview(review)}" update="tabViewTenderer:modifServiceForm" onclick="$('.modifServiceModalPseudoClass').modal('show');" />
                                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                     <p:commandButton id="confirmButtonDialogValidate" value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                                     <p:commandButton id="confirmButtonDialogUnvalidate" value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
@@ -95,6 +86,35 @@ and open the template in the editor.
 
                     </p:dataGrid>
                 </h:form>
+
+                <!-- Dialog view to edit Review -->
+                <b:modal id="modifServiceModal" title="Modifier votre avis" styleClass="modifServiceModalPseudoClass"
+                         closable="false" backdrop="false">
+                    <h:form id="modifServiceForm">
+                        <b:inputText  label="Titre" renderLabel="true" placeholder="Entrez un titre"
+                                     id="reviewAppreciation" value="#{tendererReviewBean.editReviewAppreciation}" />
+                        <b:message id="reviewAppreciationMessage" for="reviewAppreciation"/>
+                        
+                        <b:inputTextarea label="Description" renderLabel="true" id="reviewContent" 
+                                          rows="6" value="#{tendererReviewBean.editReviewContent}" 
+                                          placeholder="Entrez une description" />
+                        <b:message id="reviewContentMessage" for="reviewContent"/>
+                        
+                        <h:outputLabel value="Note moyenne" />
+                        <p:rating id="reviewRate" value="#{tendererReviewBean.editReviewRating}" required="true" />
+
+                        <div class="dialogFooter" >
+                            <p:commandButton id="editButtonDialogValidate" value="Enregistrer" 
+                                             action="#{tendererReviewBean.editReview()}" 
+                                             oncomplete="handleReviewRequest(xhr, status, args)" 
+                                             update="@form tabViewTenderer:formComment" styleClass="buttonAskReview"/>
+                            <p:commandButton id="cancelButtonDialogValidate" value="Annuler" styleClass="buttonAskReview"
+                                             onclick="$('.modifServiceModalPseudoClass').modal('hide');" />
+                        </div> 
+
+                    </h:form>
+                </b:modal>
+
             </div>
         </p:panel>
     </div>

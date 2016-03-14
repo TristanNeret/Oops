@@ -20,61 +20,61 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * TendererInfoMngBeanTest
+ * TendererEditBeanTest
  * @author chris
  */
-public class TendererInfoMngBeanTest {
+public class TendererEditBeanTest {
     
-//    private static WebDriver driver;
-//    private static String baseUrl;
-//    
-//    public TendererInfoMngBeanTest() {
-//        
-//    }
-//    
-//    @BeforeClass
-//    public static void setUpClass() {
-//        
-//        driver = new FirefoxDriver();
-//        baseUrl = "http://localhost:8080/Oops-web/views/tendererManagement.xhtml";
-//        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-//        
-//    }
-//    
-//    @AfterClass
-//    public static void tearDownClass() {
-//        
-//        driver.close();
-//        
-//    }
-//    
-//    @Before
-//    public void setUp() {
-//        
-//        driver.get(baseUrl); 
-//        
-//        // Go to write Tab
-//        boolean test = true;
-//        int i = 1;
-//        while (test) {
-//            WebElement linkElement = driver.findElement(By.xpath("//ul/li[" + i + "]/a"));
-//            if (linkElement.getText().equals("Mon compte")) {
-//                linkElement.click();
-//                test = false;
-//            }
-//            i++;
-//        }
-//        
-//    }
-//    
-//    @After
-//    public void tearDown() {
-//        
-//    }
-//
-//    /**
-//     * Test of update method, of class TendererInfoMngBean.
-//     */
+    private static WebDriver driver;
+    private static String baseUrl;
+    
+    public TendererEditBeanTest() {
+        
+    }
+    
+    @BeforeClass
+    public static void setUpClass() {
+        
+        driver = new FirefoxDriver();
+        baseUrl = "http://localhost:8080/Oops-web/views/tendererManagement.xhtml";
+        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+        
+        driver.close();
+        
+    }
+    
+    @Before
+    public void setUp() {
+        
+        driver.get(baseUrl); 
+        
+        // Go to write Tab
+        boolean test = true;
+        int i = 1;
+        while (test) {
+            WebElement linkElement = driver.findElement(By.xpath("//ul/li[" + i + "]/a"));
+            if (linkElement.getText().equals("Mon compte")) {
+                linkElement.click();
+                test = false;
+            }
+            i++;
+        }
+        
+    }
+    
+    @After
+    public void tearDown() {
+        
+    }
+
+    /**
+     * Test of update method, of class TendererInfoMngBean.
+     */
     @Test
     public void testUpdateSuccess() {
 //        

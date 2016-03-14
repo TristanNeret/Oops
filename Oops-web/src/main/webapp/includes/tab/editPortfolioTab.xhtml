@@ -17,7 +17,7 @@ and open the template in the editor.
 
     <div class="container">
 
-        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Images du Portfolio :" rendered="#{portfolioManagementBean.images.size() > 0}" />
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Images du Portfolio" rendered="#{portfolioManagementBean.images.size() > 0}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Vous n'avez pas encore d'images de vos prestations." rendered="#{portfolioManagementBean.images.size() == 0}" /> 
 
         <h:form id="formNewImage" enctype="multipart/form-data">

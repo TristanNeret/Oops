@@ -14,15 +14,22 @@ and open the template in the editor.
       xmlns:o="http://omnifaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <script type="text/javascript">
+        function handleRequest(xhr, status, args) {
+            if (args.validationFailed) {
+
+            } else {
+                $('.askReviewModalPseudoClass').modal('hide');
+                PF('askReviewGrowl').renderMessage({summary: 'Demande d\'avis envoyée !',
+                    detail: 'La demande d\'avis à été envoyée', severity: 'info'});
+            }
+        }
+    </script>
+
     <h:head>
         <title>Soumissionnaires</title>
         <h:outputStylesheet library="css" name="style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <script type="text/javascript">
-            function handleAskReviewRequest(xhr, status, args) {
-                PF('askReviewDialog').hide();
-            }
-        </script>
 
     </h:head>
 
@@ -48,7 +55,7 @@ and open the template in the editor.
 
             <p:growl widgetVar="askReviewGrowl" sticky="false" showDetail="true" life="3000" />
 
-            <o:form id="askReviewForm" includeViewParams="true">
+            <h:form id="askReviewForm">
 
                 <p:dataGrid var="tend" value="#{searchManagedBean.ltd}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -79,11 +86,11 @@ and open the template in the editor.
                                     <b:button look="primary" value="Voir #{tend.login}" outcome="/views/tendererInformations?id=#{tend.id}" 
                                               style="float: right; margin-top: 5px;" />
                                     <p:commandButton id="askReviewBtn" value="Demander un avis" 
+                                                     onclick="$('.askReviewModalPseudoClass').modal('show');"
                                                      styleClass="buttonAskReview"
                                                      rendered="#{tendererSearchBean.display(tend.id)}"
                                                      actionListener="#{tendererSearchBean.setTenderer(tend)}"
-                                                     onclick="PF('askReviewDialog').show();"
-                                                     update="askReviewDialogForm:dialogPanel" style="float: right; margin-top: 5px; margin-right: 10px" /> 
+                                                     update="askReviewModalForm" style="float: right; margin-top: 5px; margin-right: 10px" /> 
                                 </b:column>
                             </b:row>
                         </b:container>
@@ -91,34 +98,36 @@ and open the template in the editor.
 
                 </p:dataGrid>
 
-            </o:form>
+            </h:form>
 
-            <!-- DIALOG BOX FOR ASKING REVIEWS  -->
-            <o:form id="askReviewDialogForm" includeViewParams="true">
 
-                <p:dialog header="Demander un avis" modal="true" widgetVar="askReviewDialog" resizable="false" style="min-width: 480px;">
-                    <p:outputPanel id="dialogPanel">
+            <b:modal id="askReviewModal" title="Demander un avis" styleClass="askReviewModalPseudoClass"
+                     closable="false" backdrop="false"> 
 
-                        <b><h:outputText value="Soumissionaire : " style="width: 100%;"/></b>
+                <h:form id="askReviewModalForm">
+
+                    <h:panelGroup>
+
+                        <b><h:outputLabel value="Soumissionaire : " style="margin-right: 5px"/></b>
                         <h:outputText value="#{tendererSearchBean.tenderer.login} 
                                       (#{tendererSearchBean.tenderer.firstname} #{tendererSearchBean.tenderer.lastname})" />
-                        <br/>
-                        <b><h:outputLabel value="Message :" style="width: 100%;"/></b>
-                        <p:inputTextarea id="askReviewMsg" value="#{tendererSearchBean.message}" 
-                                         rows="6" cols="33" placeholder="Facultatif" style="width: 100%;"/>
+
+                        <b:inputTextarea id="askReviewMsg" value="#{tendererSearchBean.message}" 
+                                         rows="6" placeholder="Facultatif"
+                                         label="Message" renderLabel="true" />
 
                         <div class="dialogFooter" >
-                            <p:commandButton id="sendAskReviewBtn" update="askReviewForm" styleClass="buttonAskReview"
+                            <p:commandButton id="sendAskReviewBtn" update="@form askReviewForm" styleClass="buttonAskReview"
                                              value="Envoyer" actionListener="#{tendererSearchBean.askReview()}"                                                          
-                                             oncomplete="handleAskReviewRequest(xhr, status, args)" 
-                                             onclick="PF('askReviewGrowl').renderMessage({summary: 'Demande d\'avis envoyée !',
-                                                         detail: 'La demande d\'avis à été envoyée', severity: 'info'});" /> 
+                                             oncomplete="handleRequest(xhr, status, args)" /> 
+                            <p:commandButton id="cancelBtn" value="Annuler" styleClass="buttonAskReview"
+                                             onclick="$('.askReviewModalPseudoClass').modal('hide');" /> 
                         </div>
 
-                    </p:outputPanel>
-                </p:dialog>
+                    </h:panelGroup>
+                </h:form>
 
-            </o:form>
+            </b:modal>
 
         </div>
 

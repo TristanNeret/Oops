@@ -13,25 +13,26 @@
     <script type="text/javascript">
         function handleReviewRequest(xhr, status, args) {
             if (args.validationFailed) {
-                //PF('prestationDialog').jq.effect("shake", {times: 5}, 100);
-                PF('prestationDialog').show();
-            }
-            else {
-                PF('prestationDialog').hide();
+                $('.modifServiceModalPseudoClass').modal('show');
+            } else {
+                $('.modifServiceModalPseudoClass').modal('hide');
+                PF('growlServiceContractorList').renderMessage({summary: 'Modification effectuée !', detail: 'La prestation a été mise a jour !', severity: 'info'});
             }
         }
     </script>
 
     <div class="container">
 
-        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Liste des services :" />
+        <h:outputLabel styleClass="titlePanelReviewAdmin" value="Mes prestations" />
 
+        <p:growl id="growlServiceContractorList" rendered="#{serviceAddBean.success}" sticky="false" showDetail="false" life="3000" />
+        
         <b:container fluid="true" style="margin-top: 20px;">
 
             <!-- CONTRACTOR'S SERVICES -->
             <b:column span="7">
                 <h:form id="formService">  
-                    <p:growl id="growlServiceContractorList" rendered="#{serviceAddBean.success}" sticky="false" showDetail="false" life="3000" />
+                    
                     <p:dataGrid var="service" value="#{serviceAddBean.contractor.services}" columns="1" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 rowsPerPageTemplate="6,12,16">
@@ -52,8 +53,8 @@
                                         <b:row><b>Tarif : </b> <h:outputText class="textColor-#{service.category.name}" value="#{service.price} €" /></b:row>
                                     </b:column>
                                     <b:column span="6">
-                                        <p:commandButton id="updateCommandButton" style="float: right; margin-top: 0px !important;" value="Modifier" action="#{serviceAddBean.setEditService(service)}" styleClass="buttonBackRegistration" update="tabViewContractor:formService:prestationDialog" oncomplete="PF('prestationDialog').show();"/>
-                                        <p:commandButton id="deleteCommandButton" style="float: right; margin-top: 0px !important;" value="Supprimer" action="#{serviceAddBean.deleteService(service)}" styleClass="buttonCancel" update="tabViewContractor:formService:growlServiceContractorList @form">
+                                        <p:commandButton id="updateCommandButton" style="float: right; margin-top: 0px !important;" value="Modifier" action="#{serviceAddBean.setEditService(service)}" styleClass="buttonBackRegistration" update="tabViewContractor:modifServiceForm" onclick="$('.modifServiceModalPseudoClass').modal('show');"/>
+                                        <p:commandButton id="deleteCommandButton" style="float: right; margin-top: 0px !important;" value="Supprimer" action="#{serviceAddBean.deleteService(service)}" styleClass="buttonCancel" update="@form">
                                             <p:confirm header="Confirmation" message="Êtes-vous sûr de vouloir supprimer cette prestation ?" icon="ui-icon-alert" />
                                         </p:commandButton>
 
@@ -67,31 +68,42 @@
                         </b:panel>
 
                     </p:dataGrid>
-
-                    <!-- EDIT DIALOG -->
-                    <p:dialog id="prestationDialog" header="Modifier votre prestation :" modal="true" resizable="false" widgetVar="prestationDialog" dynamic="true">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputLabel value="Titre :" />
-                            <p:inputText id="serviceTitle" value="#{serviceAddBean.editService.title}" style="width: 100%;" required="true" label="Titre de la prestation" />
-
-                            <h:outputLabel value="Description :" />
-                            <p:inputTextarea id="serviceDescription" rows="6" cols="33" style="width: 100%;" value="#{serviceAddBean.editService.description}" required="true" label="Description" />
-
-                            <h:outputLabel value="Catégorie :" />
-                            <h:outputLabel value="#{serviceAddBean.editService.category.name}" />
-
-                            <h:outputLabel value="Tarif :" />
-                            <p:inputText id="servicePrice" value="#{serviceAddBean.editService.price}" style="width: 100%;" label="Tarif" />
-
-                            <f:facet name="footer">
-                                <p:commandButton id="editButtonDialogValidate" value="Modifier" action="#{serviceAddBean.updateService()}" 
-                                                 oncomplete="handleReviewRequest(xhr, status, args);" update="@form" />
-                                <p:commandButton id="cancelButtonDialogValidate" value="Annuler" oncomplete="PF('prestationDialog').hide();" />
-                            </f:facet>  
-                        </h:panelGrid>
-                    </p:dialog>
-
                 </h:form>
+
+                <!-- EDIT DIALOG -->
+                <b:modal id="modifServiceModal" title="Modifier votre prestation" styleClass="modifServiceModalPseudoClass"
+                         closable="false" backdrop="false"> 
+                    <h:form id="modifServiceForm">
+
+                        <b:inputText id="serviceTitle" value="#{serviceAddBean.editService.title}" 
+                                     label="Titre" renderLabel="true" placeholder="Entrez le titre de la prestation"/>
+                        <b:message id="serviceTitleMessage" for="serviceTitle" />
+
+                        <b:inputTextarea id="serviceDescription" rows="6" 
+                                         value="#{serviceAddBean.editService.description}" 
+                                         label="Description" renderLabel="true" placeholder="Entrez une description"/>
+                        <b:message id="serviceDescriptionMessage" for="serviceDescription" />
+                        
+                        <h:outputLabel value="Catégorie :" />
+                        <h:outputLabel value="#{serviceAddBean.editService.category.name}" />
+
+                        <b:inputText id="servicePrice" value="#{serviceAddBean.editService.price}" 
+                                     label="Tarif" renderLabel="true" placeholder="Entrez un tarif"/>
+
+                        <div class="dialogFooter" >
+                            <p:commandButton id="editButtonDialogValidate" value="Enregistrer" 
+                                             action="#{serviceAddBean.updateService()}" 
+                                             oncomplete="handleReviewRequest(xhr, status, args)" 
+                                             update="@form tabViewContractor:formService" styleClass="buttonAskReview" />
+                            <p:commandButton id="cancelButtonDialogValidate" value="Annuler" 
+                                             onclick="$('.modifServiceModalPseudoClass').modal('hide');" 
+                                             styleClass="buttonAskReview"/>
+                        </div>
+
+                    </h:form>
+
+                </b:modal>
+
             </b:column>
 
             <b:column span="1"></b:column>
@@ -100,15 +112,17 @@
             <b:column span="4">
                 <h:form id="formNewService">   
                     <p:growl id="growlNewServiceContractor" rendered="#{serviceAddBean.success}" widgetVar="growlNewServiceContractor" sticky="false" showDetail="false" life="3000" />
-                    <h:outputLabel styleClass="titlePanelReviewAdmin" style="margin-left: -15px;" value="Ajouter un service" />
+                    <h:outputLabel styleClass="titlePanelReviewAdmin" style="margin-left: -15px;" value="Ajouter une prestation" />
                     <b:row>
-                        <b>Nom de la prestation</b><br/>
-                        <b:inputText id="title" value="#{serviceAddBean.title}" required="true" label="Titre" size="40"/>
+                        <b>Nom</b><br/>
+                        <b:inputText id="title" value="#{serviceAddBean.newService.title}" label="Titre" size="40" 
+                                     placeholder="Entrez le nom de la prestation"/>
                         <b:message id="messageErrTitle" for="title"/>
                     </b:row>
                     <b:row>
                         <b>Description </b><br/>
-                        <b:inputTextarea id="description" value="#{serviceAddBean.description}" rows="6" required="true" label="Description"/>
+                        <b:inputTextarea id="description" value="#{serviceAddBean.newService.description}" rows="6" label="Description"
+                                         placeholder="Entrez une description"/>
                         <b:message id="messageErrDescription" for="description"/>
                     </b:row>
                     <b:row>
@@ -128,7 +142,7 @@
                     </b:row>
                     <p:commandButton id="addButton" action="#{serviceAddBean.addService()}" styleClass="buttonRegistration" 
                                      value="Ajouter" style="float: right;" oncomplete="#{serviceAddBean.setSuccess(false)} return false;" 
-                                     update="growlNewServiceContractor @form tabViewContractor:formService" />
+                                     update="@form tabViewContractor:formService" />
                 </h:form>
             </b:column>
 

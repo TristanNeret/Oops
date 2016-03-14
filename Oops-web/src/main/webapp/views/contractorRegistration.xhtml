@@ -97,7 +97,9 @@ and open the template in the editor.
 
                         <h:form id="registerContractorFormAccountInfos">
 
-                            <b:inputText id="contractorLogin" label="Login" placeholder="Entrez votre login" renderLabel="true" value="#{contractorRegistrationBean.contractor.login}">
+                            <b:inputText id="contractorLogin" label="Login" placeholder="Entrez votre login" 
+                                         renderLabel="true" value="#{contractorRegistrationBean.contractor.login}"
+                                         maxlength="15">
                                 <f:facet name="prepend">
                                     <b:icon name="user" />
                                 </f:facet>
@@ -122,15 +124,17 @@ and open the template in the editor.
                             </b:inputSecret>
                             <b:message id="contractorConfirmPasswordMessage" for="contractorConfirmPassword" />
 
-                            <b:inputText id="contractorFirstname" label="Prénom" placeholder="Entrez le prénom du représentant" renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorFirstname}">
+                            <b:inputText id="contractorFirstname" label="Prénom" placeholder="Entrez le prénom du représentant" maxlength="15"
+                                         renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorFirstname}">
                             </b:inputText>
                             <b:message id="contractorFirstnameMessage" for="contractorFirstname" />
 
-                            <b:inputText id="contractorLastname" label="Nom" placeholder="Entrez le nom du représentant" renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorLastname}">
+                            <b:inputText id="contractorLastname" label="Nom" placeholder="Entrez le nom du représentant" maxlength="15"
+                                         renderLabel="true" value="#{contractorRegistrationBean.contractor.representatorLastname}">
                             </b:inputText>
                             <b:message id="contractorLastnameMessage" for="contractorLastname" />
 
-                            <b:inputText id="contractorMail" label="Adresse mail" placeholder="Entrez votre adresse mail" renderLabel="true" value="#{contractorRegistrationBean.contractor.email}" >
+                            <b:inputText id="contractorMail" label="Adresse email" placeholder="Entrez votre adresse email" renderLabel="true" value="#{contractorRegistrationBean.contractor.email}" >
                                 <f:facet name="prepend">
                                     <h:outputText value="@" />
                                 </f:facet>
@@ -139,7 +143,9 @@ and open the template in the editor.
                             </b:inputText>
                             <b:message id="contractorMailMessage" for="contractorMail" />
 
-                            <b:inputText id="contractorPhoneNumber" label="Téléphone" placeholder="Entrez votre numéro de téléphone" renderLabel="true" value="#{contractorRegistrationBean.contractor.phone}">
+                            <b:inputText id="contractorPhoneNumber" label="Téléphone" placeholder="Entrez votre numéro de téléphone" 
+                                         renderLabel="true" value="#{contractorRegistrationBean.contractor.phone}"
+                                         maxlength="10">
                                 <f:facet name="prepend">
                                     <b:icon name="earphone" />
                                 </f:facet>
@@ -201,7 +207,8 @@ and open the template in the editor.
                         <h:form id="registerContractorFormLegalInfos">
 
 
-                            <b:inputText id="contractorSocialReason" label="Raison sociale" placeholder="Entrez la raison sociale" renderLabel="true" value="#{contractorRegistrationBean.contractor.socialReason}">
+                            <b:inputText id="contractorSocialReason" label="Raison sociale" maxlength="15"
+                                         placeholder="Entrez la raison sociale" renderLabel="true" value="#{contractorRegistrationBean.contractor.socialReason}">
                                 <f:validator validatorId="com.gdf.socialReasonAlreadyExistValidator" />
                             </b:inputText>
                             <b:message id="contractorSocialReasonMessage" for="contractorSocialReason" />
@@ -262,7 +269,8 @@ and open the template in the editor.
                             </b:inputText>
                             <b:message id="rcsMessage" for="contractorRcs" />
 
-                            <b:inputText  id="contractorInsurrance"  label="Assurance" placeholder="Entrez votre assurance" 
+                            <b:inputText  id="contractorInsurrance"  label="Assurance" maxlength="15"
+                                          placeholder="Entrez votre assurance" 
                                           renderLabel="true" value="#{contractorRegistrationBean.contractor.legalInformation.insurrance}">
                             </b:inputText>
                             <b:message id="insurranceMessage" for="contractorInsurrance" />
@@ -286,8 +294,6 @@ and open the template in the editor.
 
                         <h:form id="registerContractorFormAddress">
 
-                            <h:panelGroup id="infoFrance"/> 
-
                             <b:selectOneMenu  id="listCountries" label="Pays" renderLabel="true" 
                                               value="#{contractorRegistrationBean.country}">
                                 <f:selectItems value="#{contractorRegistrationBean.allCountry}"/>
@@ -303,14 +309,16 @@ and open the template in the editor.
                                     </b:inputText>
                                     <b:message id="zipCodeMessage" for="contractorZipCode" />
 
-                                    <b:inputText id="contractorTown" placeholder="Entrez la ville" label="Ville" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.town}"/>
+                                    <b:inputText id="contractorTown" placeholder="Entrez la ville" label="Ville" maxlength="10"
+                                                 renderLabel="true" value="#{contractorRegistrationBean.contractor.address.town}"/>
                                     <b:message id="townMessage" for="contractorTown" /> 
 
                                     <b:inputText id="contractorStreetNumber" placeholder="Entrez le numéro de la rue" label="N°" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.streetNumber}" size="5" maxlength="5">
                                     </b:inputText>
                                     <b:message id="streetNumberMessage" for="contractorStreetNumber" />
 
-                                    <b:inputText id="contractorStreet" placeholder="Entrez le nom de la rue" label="Rue" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.street}">
+                                    <b:inputText id="contractorStreet" placeholder="Entrez le nom de la rue" maxlength="30"
+                                                 label="Rue" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.street}">
                                     </b:inputText>
                                     <b:message id="streetMessage" for="contractorStreet" />
 
@@ -339,7 +347,8 @@ and open the template in the editor.
                                         </b:inputText>
                                         <b:message id="streetNumberMessageFr" for="contractorStreetNumberFr" />
 
-                                        <b:inputText id="contractorStreetFr" placeholder="Entrez le nom de la rue" label="Rue" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.street}">
+                                        <b:inputText id="contractorStreetFr" placeholder="Entrez le nom de la rue" maxlength="30"
+                                                     label="Rue" renderLabel="true" value="#{contractorRegistrationBean.contractor.address.street}">
                                         </b:inputText>
                                         <b:message id="streetMessageFr" for="contractorStreetFr" />
 

@@ -14,28 +14,30 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * TendererInfoMngBean
+ * TendererEditBean
  * @author hamou
  */
 @Named
 @ViewScoped
-public class TendererInfoMngBean implements Serializable {
+public class TendererEditBean implements Serializable {
 
     @EJB
     TendererManagerBean tmb;
 
     private Tenderer tenderer;
     
-    @Size(min = 8, max = 20, message = "Le mot de passe doit contenir entre 8 et 20 caractères.")
+    @NotNull(message = "Veuillez saisir un de mot de passe !")
+    @Size(min = 6, message = "Le mot de passe doit contenir au moins 6 caractères !")
     private String password;
-    private String passConfirm;
 
-    public TendererInfoMngBean() {
-        
-        tenderer = null;
+    @NotNull(message = "Veuillez saisir une confirmation de mot de passe !")
+    private String passwordConfirm;
+
+    public TendererEditBean() {     
         
     }
 
@@ -63,11 +65,16 @@ public class TendererInfoMngBean implements Serializable {
     /**
      * Update the informations of the tenderer
      */
-    public void update(){
-        if(password != null){
-            this.tenderer.setPassword(password);
-        }     
+    public void update(){     
         this.tenderer = tmb.update(this.tenderer);
+    }
+    
+    public void updatePassword() {
+        tenderer.setPassword(password);
+        tmb.update(tenderer);
+        // reset
+        password = "";
+        passwordConfirm = "";
     }
     
     // GETTER / SETTER
@@ -88,12 +95,11 @@ public class TendererInfoMngBean implements Serializable {
         this.password = password;
     }
 
-    public String getPassConfirm() {
-        return passConfirm;
+    public String getPasswordConfirm() {
+        return passwordConfirm;
     }
 
-    public void setPassConfirm(String passConfirm) {
-        this.passConfirm = passConfirm;
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
-
 }

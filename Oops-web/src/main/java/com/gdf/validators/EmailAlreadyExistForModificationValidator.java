@@ -38,7 +38,7 @@ public class EmailAlreadyExistForModificationValidator implements Validator {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         
-        String newEmail = (String)value;
+        String newEmail = (String)value;     
         
         if(newEmail == null){
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, EMAIL_NULL, null));

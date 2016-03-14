@@ -31,10 +31,14 @@ and open the template in the editor.
                 var element = document.getElementById('formNewReview:panelNewReview');
                 element.style.display = visible;
             }
+            function hideLoadingIndicator() {
+                var element = document.getElementById('panelLoading');
+                element.style.display = 'none';
+            }
         </script>
     </h:head>
 
-    <h:body>
+    <h:body onload="hideLoadingIndicator()">
 
         <f:metadata>
             <o:viewParam name ="id" value="#{contractorInformationsBean.id}" />
@@ -135,6 +139,9 @@ and open the template in the editor.
                         <p:graphicImage onclick="/" url="/images/#{image.id}" styleClass="content" />
                         <div class="caption">#{image.description}</div>
                     </p:contentFlow>
+                </p:panel>
+                <p:panel id="panelLoading" style="text-align:center;">
+                    <b:image value="/resources/default/img/ajax-loader.gif" name="Loading" />
                 </p:panel>
 
                 <!-- GIVE A REVIEW --> 
