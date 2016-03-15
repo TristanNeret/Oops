@@ -49,7 +49,7 @@
                                 <b:row styleClass="show-grid" style="margin-top: 10px;">
                                     <b:column span="6">
                                         <b:row><b>Catégorie : </b> <h:outputText class="textColor-#{service.category.name}" value="#{service.category.name}" /></b:row>
-                                        <b:row><b>Tarif : </b> <h:outputText class="textColor-#{service.category.name}" value="#{service.price} €" /></b:row>
+                                        <b:row><b>Tarif horaire : </b> <h:outputText class="textColor-#{service.category.name}" value="#{service.price} €" /></b:row>
                                     </b:column>
                                     <b:column span="6">
                                         <p:commandButton id="updateCommandButton" style="float: right; margin-top: 0px !important;" value="Modifier" action="#{serviceAddBean.setEditService(service)}" styleClass="buttonBackRegistration" update="tabViewContractor:modifServiceForm" onclick="$('.modifServiceModalPseudoClass').modal('show');"/>

@@ -122,7 +122,7 @@ and open the template in the editor.
                                     <h:outputText value="#{service.description}"/>
                                 </b:row>
                                 <b:row styleClass="show-grid">
-                                    <b>Tarif horraire : <h:outputText class="textColor-#{service.category.name}" value="#{contractorInformationsBean.getWellPrice(service.price)}" /></b>
+                                    <b>Tarif horaire : <h:outputText class="textColor-#{service.category.name}" value="#{contractorInformationsBean.getWellPrice(service.price)}" /></b>
                                 </b:row>
                             </b:container>
                         </b:panel>
@@ -134,7 +134,7 @@ and open the template in the editor.
                 <!-- PORTFOLIO -->
                 <p:panel id="panelPortfolio">
                     <h2 style="margin-left: -10px; margin-top: -10px;">Portfolio</h2>
-                    <h:outputLabel value="Il n'y a encore aucune photo pour ce prestataire." style="margin-left: -8px; margin-bottom: 20px;" rendered="#{contractorInformationsBean.contractor.images.size() == 0}" />
+                    <h:outputLabel value="Il n'y a encore aucune photo pour ce prestataire." styleClass="labelEmptyPortfolio" rendered="#{contractorInformationsBean.contractor.images.size() == 0}" />
                     <p:panel id="panelLoading" styleClass="panelLoading" rendered="#{contractorInformationsBean.contractor.images.size() > 0}">
                         <b:image value="/resources/default/img/ajax-loader.gif" name="Loading" />
                     </p:panel>

@@ -522,6 +522,13 @@ form#reviewForm {
     border-radius: 8px;
 }
 
+.labelEmptyPortfolio {
+    margin-left: -8px; 
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
 /*****************************************************************************/
 /***************************** SERVICE MANAGER********************************/
 /*****************************************************************************/
@@ -1725,8 +1732,6 @@ footer.footer {
     -webkit-appearance: none;
 }
 
-
-
 /*****************************************************************************/
 /*************************** Auto-Completion ***************************/
 /*****************************************************************************/
@@ -1783,6 +1788,10 @@ footer.footer {
 
 .autocompleteInput .ui-state-default {
     border: none !important;
+    background-color: white !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
 }
 
 .autocompleteInput .ui-inputfield {

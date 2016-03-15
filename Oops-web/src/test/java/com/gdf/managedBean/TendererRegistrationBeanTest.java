@@ -57,16 +57,19 @@ public class TendererRegistrationBeanTest {
     public void registration() {
         // Preparation
         driver.get(baseUrl); 
+ 
+
+        inputLogin = driver.findElement(By.xpath("//input[contains(@id,'registerTendererForm:registerLogin')]"));
+        inputPassword = driver.findElement(By.xpath("//input[contains(@id,'registerTendererForm:registerPassword')]"));
+        inputConfirmPassword = driver.findElement(By.xpath("//input[contains(@id,'registerTendererForm:registerConfirmPassword')]"));
+        inputMail = driver.findElement(By.xpath("//input[contains(@id,'registerTendererForm:registerMail')]"));
+        inputFirstname = driver.findElement(By.xpath("//input[contains(@id,'registerTendererForm:registerFirstname')]"));
+        inputLastName = driver.findElement(By.xpath("//input[contains(@id,'registerTendererForm:registerLastname')]"));
+        inputPhone = driver.findElement(By.xpath("//input[contains(@id,'registerTendererForm:registerPhoneNumber')]"));
+        inputAvatar = driver.findElement(By.xpath("//input[contains(@id,'registerTendererForm:registerAvatar')]"));
         
-        inputLogin = driver.findElement(By.id("registerTendererForm:registerLogin"));
-        inputPassword = driver.findElement(By.id("registerTendererForm:registerPassword"));
-        inputConfirmPassword = driver.findElement(By.id("registerTendererForm:registerConfirmPassword"));
-        inputMail = driver.findElement(By.id("registerTendererForm:registerMail"));
-        inputFirstname = driver.findElement(By.id("registerTendererForm:registerFirstname"));
-        inputLastName = driver.findElement(By.id("registerTendererForm:registerLastname"));
-        registerButton = driver.findElement(By.id("registerTendererForm:tenderRegisterButton"));
-        inputPhone = driver.findElement(By.id("registerTendererForm:registerPhoneNumber"));
-        inputAvatar = driver.findElement(By.id("registerTendererForm:registerAvatar"));
+        registerButton = driver.findElement(By.xpath("//button[contains(@id,'registerTendererForm:tenderRegisterButton')]"));
+
         
         inputLogin.clear();
         inputLogin.sendKeys("SuperTenderer"+new Random().nextInt(1000));
@@ -75,7 +78,7 @@ public class TendererRegistrationBeanTest {
         inputConfirmPassword.clear();
         inputConfirmPassword.sendKeys("password1234");
         inputMail.clear();
-        inputMail.sendKeys("super.tenderer@mail.com");
+        inputMail.sendKeys("super.tenderer@mymail.com");
         inputFirstname.clear();
         inputFirstname.sendKeys("I'm the");
         inputLastName.clear();
@@ -90,7 +93,7 @@ public class TendererRegistrationBeanTest {
          // Test
         WebElement growlTitle = (new WebDriverWait(driver, 10))
         .until(ExpectedConditions.presenceOfElementLocated(By.className("ui-growl-title")));
-        
+                
         // Verification
         assertEquals(growlTitle.getText(), "Inscription réussie !");
     }
