@@ -80,7 +80,7 @@ public interface SearchBean {
      * @param country the country of the contractor
      * @param category the category of service given by the contractor
      * @param order the order used to display the results
-     * @param region
+     * @param region the region where the contractor is localised
      * @return the list of contractors
      */
     public List<Contractor> findContractors(String keyWord,int rating, String country, String category, String order, String region);
@@ -101,6 +101,11 @@ public interface SearchBean {
      */
     public Tenderer searchTendererByLogin(String login);
     
+    /**
+     * Search a Tenderer by email
+     * @param email email of the Tenderer to search
+     * @return the searched Tenderer
+     */
     public Tenderer searchTendererByEmail(String email);
 
     // MODERATOR
@@ -112,6 +117,11 @@ public interface SearchBean {
      */
     public Moderator searchModeratorById(Long id);
     
+    /**
+     * Search a Moderator by his id
+     * @param id id of the Moderator
+     * @return the Moderator identified by the id if any or null if he doesn't exist
+     */
     public Moderator searchModeratorById(long id);
     
     // REVIEW

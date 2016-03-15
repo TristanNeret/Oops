@@ -158,7 +158,7 @@ public class ContractorRegistrationBean implements Serializable {
 
      /**
      * Return a town list who correspond to a contractor's zip code 
-     * @return List<SelectItem> of towns
+     * @return list of all towns
      */
     public List<SelectItem> getAllTown() {
             

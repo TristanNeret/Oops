@@ -180,7 +180,7 @@ public class SearchManagedBean implements Serializable {
     
     /**
      * Retrieve the list of countries from all contractors (More precisely from the adresses of contractors)
-     * @return List<SelectItem> of countries
+     * @return list of all countries
      */
     public List<SelectItem> getAllCountry() {
         List<SelectItem> li = new ArrayList<>();
@@ -195,7 +195,7 @@ public class SearchManagedBean implements Serializable {
     
      /**
      * Retrieve the list of states from all contractors (For France)
-     * @return List<SelectItem> of states 
+     * @return list of all states 
      */
     public List<SelectItem> getAllRegions() {
         List<String> listR = sb.getAllStates();
@@ -220,7 +220,7 @@ public class SearchManagedBean implements Serializable {
     
      /**
      * Retrieve the list of categories 
-     * @return List<SelectItem> of categories
+     * @return list of all categories
      */
     public List<SelectItem> getAllCategory() {
         List<SelectItem> li = new ArrayList<>();

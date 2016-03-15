@@ -27,7 +27,6 @@ import javax.servlet.http.HttpSession;
  *
  * @author Tristan
  */
-//@Named(value = "authentificationBean")
 @ManagedBean
 @SessionScoped
 public class AuthentificationBean implements Serializable {
@@ -128,7 +127,7 @@ public class AuthentificationBean implements Serializable {
     
     /**
      * Go to account user page
-     * @throws java.io.IOException
+     * @throws java.io.IOException exception on URL management
      */
     public void goToAccount() throws IOException {
         
@@ -316,7 +315,7 @@ public class AuthentificationBean implements Serializable {
     /**
      * Logout the user
      *
-     * @return
+     * @return the redirection page
      */
     public String logout() {
 

@@ -36,12 +36,12 @@ public interface PopulateDB {
     
     /**
      * Return a List of type of legal form
-     * @return List<SelectItem> of type of legal forms
+     * @return List of type of legal forms
      */
     public List<SelectItem> getLegalForms();
     
     /**
-     * @param teamCompany
+     * @param teamCompany name of the team company
      * @return true is the compagny is a team compagny
      */
     public boolean isATeamCompany(String teamCompany);

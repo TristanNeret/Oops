@@ -176,7 +176,7 @@ public class ContractorEditBean implements Serializable {
     
     /**
      * Return a town list who correspond to a contractor's zip code 
-     * @return List<SelectItem> 
+     * @return a list of all available town
      */
     public List<SelectItem> getAllTown() {
         List<String> ltowns = pdb.getAllTown(Integer.toString(this.contractor.getAddress().getZipCode()));

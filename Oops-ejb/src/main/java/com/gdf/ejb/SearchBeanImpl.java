@@ -36,13 +36,7 @@ public class SearchBeanImpl implements SearchBean, Serializable {
     EntityManager em;
 
     // CONTRACTOR
-    /**
-     * Search a Contractor by his id
-     *
-     * @param id the id of the Contractor
-     * @return the Contractor identified by the id if any or null if he doesn't
-     * exist
-     */
+
     @Override
     public Contractor searchContractorById(long id) {
 
@@ -57,13 +51,6 @@ public class SearchBeanImpl implements SearchBean, Serializable {
 
     }
 
-    /**
-     * Search a Moderator by his id
-     *
-     * @param id the id of the Moderator
-     * @return the Moderator identified by the id if any or null if he doesn't
-     * exist
-     */
     @Override
     public Moderator searchModeratorById(long id) {
 
@@ -163,13 +150,6 @@ public class SearchBeanImpl implements SearchBean, Serializable {
 
     }
     
-
-    /**
-     * Search contractors using an email
-     *
-     * @param email the email
-     * @return the list of contractors
-     */
     @Override
     public Contractor searchContractorByEmail(String email) {
         
@@ -182,16 +162,6 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         }
     }
 
-    /**
-     * Search contractors by several criteria
-     *
-     * @param keyWord a keyword which could be present on the contractor
-     * informations
-     * @param rating the rating of the contractor
-     * @param country the country of the contractor
-     * @param category the category of service given by the contractor
-     * @return the list of contractors
-     */
     @Override
     public List<Contractor> findContractors(String keyWord, int rating, String country, String category, String order,String region) {
 
@@ -270,14 +240,6 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         }
     }
 
-    /**
-     * Search tenderers by keyword
-     *
-     * @param keyWord a keyword which could be present on the tenderer
-     * informations
-     * @return the tenderer matching with the keyword or all tenderers if
-     * keyword is empty
-     */
     @Override
     public List<Tenderer> findTenderers(String keyWord) {
         if (keyWord == null) {
@@ -287,13 +249,6 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         }
     }
 
-    /**
-     * Search tenderers by keyword
-     *
-     * @param keyWord a keyword which could be present on the tenderer
-     * informations
-     * @return the list of tenderers
-     */
     @Override
     public List<Tenderer> searchTendererByKeyWord(String keyWord) {
         TypedQuery<Tenderer> query;
@@ -302,33 +257,18 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         return query.getResultList();
     }
 
-    /**
-     * Get all the tenderers
-     *
-     * @return all the tenderers
-     */
     @Override
     public List<Tenderer> findAllTenderer() {
         TypedQuery<Tenderer> query = em.createNamedQuery("Tenderer.findAll", Tenderer.class);
         return query.getResultList();
     }
 
-    /**
-     * Get all the tenderers
-     *
-     * @return all the tenderers
-     */
     @Override
     public List<Contractor> findAllContractor() {
         TypedQuery<Contractor> query = em.createNamedQuery("Contractor.findAll", Contractor.class);
         return query.getResultList();
     }
 
-    /**
-     * Get all countries
-     *
-     * @return all countries
-     */
     @Override
     public List<String> getAllCountry() {
         TypedQuery<String> query;
@@ -336,11 +276,6 @@ public class SearchBeanImpl implements SearchBean, Serializable {
         return query.getResultList();
     }
     
-      /**
-     * Get all countries
-     *
-     * @return all countries
-     */
     @Override
     public List<String> getAllStates() {
         TypedQuery<String> query;
@@ -378,6 +313,7 @@ public class SearchBeanImpl implements SearchBean, Serializable {
     }
 
     // TENDERER
+    
     @Override
     public Tenderer searchTendererById(Long id) {
 
@@ -408,6 +344,7 @@ public class SearchBeanImpl implements SearchBean, Serializable {
     }
 
     // MODERATOR
+    
     @Override
     public Moderator searchModeratorById(Long id) {
 
@@ -421,6 +358,7 @@ public class SearchBeanImpl implements SearchBean, Serializable {
     }
 
     // REVIEW
+    
     @Override
     public List<Review> searchWaitingReviews() {
         Query query = em.createNamedQuery("Review.findWaitingReviews");
@@ -458,6 +396,7 @@ public class SearchBeanImpl implements SearchBean, Serializable {
     }
 
     // CATEGORY
+    
     @Override
     public List<String> getAllCategory() {
         TypedQuery<String> query;

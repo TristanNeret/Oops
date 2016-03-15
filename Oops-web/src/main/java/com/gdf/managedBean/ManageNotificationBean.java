@@ -106,7 +106,7 @@ public class ManageNotificationBean implements Serializable {
     /**
      * Go to Notification destination
      *
-     * @param notification
+     * @param notification Notification the user wants to see
      */
     public void clickOnNotification(Notification notification) {
 

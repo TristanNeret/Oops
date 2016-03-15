@@ -49,7 +49,7 @@ public class PortfolioManagementBean implements Serializable {
     
     /**
      * Event on file upload
-     * @param event
+     * @param event upload file event
      */
     public void handleFileUpload(FileUploadEvent event) {
         
