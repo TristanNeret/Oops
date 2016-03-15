@@ -239,15 +239,17 @@ public class AuthentificationBean implements Serializable {
             HttpSession session = SessionBean.getSession();
             session.setAttribute("userID", userId);
             session.setAttribute("userCategory", Moderator.userCategory);
+            
+            return "/views/adminManager.xhtml";
 
         } else {
 
             // Bad Moderator id
             FacesContext.getCurrentInstance().addMessage("growlAuthentification", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login et/ou mot de passe incorrect(s) !", ""));
 
+            return "/";
+            
         }
-
-        return "/views/adminManager.xhtml";
 
     }
 

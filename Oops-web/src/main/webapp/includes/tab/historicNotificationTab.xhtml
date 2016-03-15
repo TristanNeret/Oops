@@ -21,10 +21,10 @@ and open the template in the editor.
 
         <p:panel id="notificationsList" rendered="#{manageNotificationBean.allNotificationsList.size() > 0}">
             <h:form id="formNotification">
-                <p:dataGrid var="notification" value="#{manageNotificationBean.allNotificationsList}" columns="2" layout="grid" rows="10" 
+                <p:dataGrid var="notification" value="#{manageNotificationBean.allNotificationsList}" columns="2" layout="grid" rows="12" 
                             paginator="true" paginatorPosition="bottom" id="reviews"
                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                            rowsPerPageTemplate="6,12,16">
+                            rowsPerPageTemplate="12,16,20">
 
                     <!-- NOTIFICATION -->
                     <b:panel collapsible="false" styleClass="panelNotification">

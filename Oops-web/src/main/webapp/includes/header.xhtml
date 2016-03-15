@@ -40,9 +40,7 @@ and open the template in the editor.
         </h:form>
 
         <!-- CONNECTION -->
-     
         <h:form id="formConnection" styleClass="navbar-form navbar-right" rendered="#{!authentificationBean.tendererConnected and !authentificationBean.contractorConnected and authentificationBean.authentificationVisible}">
-                  
             <p:growl widgetVar="growlAuthentification" sticky="false" showDetail="true" life="3000" />
             <div class="form-group">
                 <b:inputText placeholder="Login" value="#{authentificationBean.userName}" fieldSize="sm" />

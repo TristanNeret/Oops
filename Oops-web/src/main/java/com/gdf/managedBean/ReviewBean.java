@@ -65,6 +65,25 @@ public class ReviewBean {
         
     }
     
+    /**
+     * Test if Contractor's answer is not empty
+     * @param answer Contractor's answer
+     * @return True if the Xontractor's answer exist, or False
+     */
+    public boolean isContractorAnswerNotEmpty(String answer) {
+        
+        if (answer != null) {
+            if (!answer.trim().isEmpty()) {
+                
+                return true;
+                
+            }
+        }
+        
+        return false;
+        
+    }
+    
     // GETTER/SETTER
 
     public String getReviewAppreciation() {

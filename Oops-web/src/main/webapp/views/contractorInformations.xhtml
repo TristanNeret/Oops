@@ -107,8 +107,9 @@ and open the template in the editor.
                 <div id="divPrestations">
                     <h2>Prestations</h2>
 
-                    <p:dataGrid var="service" value="#{contractorInformationsBean.contractor.services}" columns="2" layout="grid" rows="20" paginator="false" paginatorPosition="bottom"
-                                paginatorTemplate=""
+                    <h:outputLabel value="Il n'y a encore aucune information sur les prestations de ce prestataire." style="margin-bottom:30px;" rendered="#{contractorInformationsBean.contractor.services.size() == 0}" />
+                    <p:dataGrid var="service" value="#{contractorInformationsBean.contractor.services}" columns="2" layout="grid" rows="6" paginator="false" paginatorPosition="bottom"
+                                paginatorTemplate="" rendered="#{contractorInformationsBean.contractor.services.size() > 0}"
                                 rowsPerPageTemplate="6,12,16">
 
                         <b:panel collapsible="false" styleClass="panelContractorDescription panelContractorDescription-#{service.category.name}">
@@ -133,7 +134,7 @@ and open the template in the editor.
 
                 <!-- PORTFOLIO -->
                 <p:panel id="panelPortfolio">
-                    <h2 style="margin-left: -10px; margin-top: -10px;">Portfolio</h2>
+                    <h2 style="margin-left: -12px; margin-top: -10px;">Portfolio</h2>
                     <h:outputLabel value="Il n'y a encore aucune photo pour ce prestataire." styleClass="labelEmptyPortfolio" rendered="#{contractorInformationsBean.contractor.images.size() == 0}" />
                     <p:panel id="panelLoading" styleClass="panelLoading" rendered="#{contractorInformationsBean.contractor.images.size() > 0}">
                         <b:image value="/resources/default/img/ajax-loader.gif" name="Loading" />
@@ -223,7 +224,7 @@ and open the template in the editor.
                 <!-- REVIEW'S LIST -->
                 <div id="divReviewsContractorInformations">
 
-                    <p:dataGrid var="review" value="#{contractorInformationsBean.reviews}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+                    <p:dataGrid var="review" value="#{contractorInformationsBean.reviews}" columns="2" layout="grid" rows="6" paginator="true" paginatorPosition="bottom"
                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 rowsPerPageTemplate="6,12,16" rendered="#{contractorInformationsBean.reviews.size() > 0}">
 
@@ -246,12 +247,9 @@ and open the template in the editor.
                                     <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
                                 </b:row>
                                 <b:row styleClass="show-grid">
-                                    <c:if test="#{review.contractorAnswer != null}" >
-                                        <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
-                                    </c:if>
-                                    <c:if test="#{review.contractorAnswer == null}" >
-                                        <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
-                                    </c:if>
+                                    <b>Reponse : </b>
+                                    <h:outputText value="#{review.contractorAnswer}" rendered="#{reviewBean.isContractorAnswerNotEmpty(review.contractorAnswer)}" />
+                                    <h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" rendered="#{!reviewBean.isContractorAnswerNotEmpty(review.contractorAnswer)}" />
                                 </b:row>
                             </b:container>
                         </b:panel>

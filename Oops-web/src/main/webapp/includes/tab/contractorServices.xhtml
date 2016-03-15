@@ -32,9 +32,10 @@
             <b:column span="7">
                 <h:form id="formService">  
                     
-                    <p:dataGrid var="service" value="#{serviceAddBean.contractor.services}" columns="1" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+                    <h:outputLabel value="Vous n'avez pas encore de prestations." rendered="#{serviceAddBean.contractor.services.size() == 0}" />
+                    <p:dataGrid var="service" value="#{serviceAddBean.contractor.services}" columns="1" layout="grid" rows="6" paginator="true" paginatorPosition="bottom"
                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="6,12,16">
+                                rowsPerPageTemplate="6,12,16" rendered="#{serviceAddBean.contractor.services.size() > 0}">
 
                         <b:panel collapsible="false" styleClass="panelContractorDescription  panelContractorDescription-#{service.category.name}">
                             <f:facet name="heading">
@@ -83,11 +84,11 @@
                                          label="Description" renderLabel="true" placeholder="Entrez une description"/>
                         <b:message id="serviceDescriptionMessage" for="serviceDescription" />
                         
-                        <h:outputLabel value="Catégorie :" />
-                        <h:outputLabel value="#{serviceAddBean.editService.category.name}" />
+                        <h:outputLabel value="Catégorie : " />
+                        <h:outputLabel value="#{serviceAddBean.editService.category.name}" style="font-weight: 400; margin-left: 10px;" />
 
                         <b:inputText id="servicePrice" value="#{serviceAddBean.editService.price}" 
-                                     label="Tarif" renderLabel="true" placeholder="Entrez un tarif"/>
+                                     label="Tarif horaire" renderLabel="true" placeholder="Entrez un tarif horaire"/>
 
                         <div class="dialogFooter" >
                             <p:commandButton id="editButtonDialogValidate" value="Enregistrer" 
@@ -131,7 +132,7 @@
                         </b:selectOneMenu>
                     </b:row>
                     <b:row>
-                        <b>Tarif </b><br/>
+                        <b>Tarif horaire </b><br/>
                         <b:inputText id="tarif" value="#{serviceAddBean.price}" placeholder="Facultatif" converterMessage="Vous devez saisir un nombre." label="Tarif">
                             <f:facet name="prepend">
                                 <h:outputText value="€" />

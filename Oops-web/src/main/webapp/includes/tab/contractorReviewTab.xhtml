@@ -19,7 +19,7 @@ and open the template in the editor.
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Avis des utilisateurs" rendered="#{contractorReviewBean.areReviews()}" />
         <h:outputLabel styleClass="titlePanelReviewAdmin" value="Il n'y a encore aucun avis vous concernant." rendered="#{!contractorReviewBean.areReviews()}" /> 
 
-        <p:dataGrid var="review" value="#{contractorReviewBean.reviews}" columns="1" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+        <p:dataGrid var="review" value="#{contractorReviewBean.reviews}" columns="1" layout="grid" rows="6" paginator="true" paginatorPosition="bottom"
                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                     rowsPerPageTemplate="6,12,16" rendered="#{contractorReviewBean.areReviews()}" style="margin-top: 20px;">
 

@@ -30,9 +30,9 @@ and open the template in the editor.
 
         <h:form id="formPortfolio">
             <p:growl widgetVar="growlPortfolio" sticky="false" severity="info" showDetail="false" life="3000" />
-            <p:dataGrid var="image" value="#{portfolioManagementBean.images}" columns="3" layout="grid" rows="6" paginator="true" paginatorPosition="bottom"
+            <p:dataGrid var="image" value="#{portfolioManagementBean.images}" columns="3" layout="grid" rows="9" paginator="true" paginatorPosition="bottom"
                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                        rowsPerPageTemplate="6,12,16" rendered="#{portfolioManagementBean.images.size() > 0}">
+                        rowsPerPageTemplate="9,12,16" rendered="#{portfolioManagementBean.images.size() > 0}">
 
                 <b:panel collapsible="false" styleClass="panelHeaderBootsfaces">
                     <f:facet name="heading">
