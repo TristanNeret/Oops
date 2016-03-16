@@ -264,7 +264,7 @@ public class PopulateDBBean implements PopulateDB {
         contractor.addReview(review1);
         contractor.addReview(review2);
         contractor.addReview(review4);
-        contractor.setRating(contractor.calculRate());
+        contractor.setRating(4);
         PortfolioImage pimage11 = new PortfolioImage(Long.valueOf("50"), image1, "informatique_1.jpg", "Interface moderne");
         em.persist(pimage11);
         PortfolioImage pimage12 = new PortfolioImage(Long.valueOf("50"), image2, "informatique_2.jpg", "Technologies récentes");

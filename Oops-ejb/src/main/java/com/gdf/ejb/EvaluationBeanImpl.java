@@ -181,7 +181,7 @@ public class EvaluationBeanImpl implements EvaluationBean, Serializable {
         n.setTenderer(tenderer);
         String newMessage = message;
         if (newMessage == null) {
-            newMessage = contractor.getLogin() + " de " + contractor.getSocialReason() + " souhaiterait que vous donniez votre avis sur une des ses prestations.";
+            newMessage = contractor.getSocialReason() + " souhaiterait que vous notiez sa prestation.";
         }
         n.setDescription(newMessage);
         em.persist(n);
