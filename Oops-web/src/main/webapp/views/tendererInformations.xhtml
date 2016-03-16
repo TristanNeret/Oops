@@ -114,12 +114,9 @@ and open the template in the editor.
                                     <p:rating id="stars2" style="float: left;" value="#{review.rating}" stars="5" readonly="true" />
                                 </b:row>
                                 <b:row styleClass="show-grid">
-                                    <c:if test="#{review.contractorAnswer != null}" >
-                                        <b>Reponse : </b><h:outputText value="#{review.contractorAnswer}" />
-                                    </c:if>
-                                    <c:if test="#{review.contractorAnswer == null}" >
-                                        <b>Reponse : </b><h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" />
-                                    </c:if>
+                                    <b>Reponse : </b>
+                                    <h:outputText value="#{review.contractorAnswer}" rendered="#{reviewBean.isContractorAnswerNotEmpty(review.contractorAnswer)}" />
+                                    <h:outputText style="font-style: italic;" value="Aucune réponse de la part du prestataire" rendered="#{!reviewBean.isContractorAnswerNotEmpty(review.contractorAnswer)}" />
                                 </b:row>
                             </b:container>
                         </b:panel>

@@ -174,6 +174,7 @@ public class EvaluationBeanImpl implements EvaluationBean, Serializable {
         n.setDate(new java.sql.Date(date.getTime()));
         n.setCategory(TO_TENDERER);
         n.setState(NOT_READ);
+        n.setLink("/views/tendererManagement.xhtml?tabIndex=2");
         Contractor contractor = em.find(Contractor.class, contractorID);
         n.setContractor(contractor);
         Tenderer tenderer = em.find(Tenderer.class, tendererID);
@@ -184,6 +185,11 @@ public class EvaluationBeanImpl implements EvaluationBean, Serializable {
         }
         n.setDescription(newMessage);
         em.persist(n);
+        
+        contractor.addNotification(n);
+        tenderer.addNotification(n);
+        em.merge(contractor);
+        em.merge(tenderer);
         
     }
     
