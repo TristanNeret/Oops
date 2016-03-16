@@ -101,7 +101,7 @@ and open the template in the editor.
 
         <h:panelGrid id="resultResearch" styleClass="resultResearch" style="width: 100%;" >
 
-            <p:dataGrid var="contractor" value="#{adminSearchBean.lc}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+            <p:dataGrid var="contractor" value="#{adminSearchBean.lc}" columns="2" layout="grid" rows="6" paginator="true" paginatorPosition="bottom"
                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="6,12,16" rendered="#{not empty adminSearchBean.lc}">
 
@@ -151,7 +151,7 @@ and open the template in the editor.
             </p:dataGrid>
 
             <!-- Search Tenderer -->
-            <p:dataGrid var="tend" value="#{adminSearchBean.ltd}" columns="2" layout="grid" rows="10" paginator="true" paginatorPosition="bottom"
+            <p:dataGrid var="tend" value="#{adminSearchBean.ltd}" columns="2" layout="grid" rows="6" paginator="true" paginatorPosition="bottom"
                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                         rowsPerPageTemplate="6,12,16" rendered="#{not empty adminSearchBean.ltd}">
 

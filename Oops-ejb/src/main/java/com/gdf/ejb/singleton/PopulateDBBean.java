@@ -403,7 +403,7 @@ public class PopulateDBBean implements PopulateDB {
         contractor = new Contractor("CercleRouge", "contact@lecerclerouge.com", "password", "Le Cercle Rouge",
         "SA", "Au Cercle Rouge, la cuisine maison, revisite la tradition corse. Un de ses produits phare : le veau \"tigre\", venu tout droit de l'exploitation \"Agriculture Biologique\" de Jacques Abbatucci.", 
         "3937937820", "https://les365commandements.files.wordpress.com/2012/03/logo-lecercle.jpg", "Le cercle Rouge", "Representant", 100000, 100, 5,
-        new Address(41, "Rue A.THIERS", 54000, "Marseille", "France","Provence-Alpes-Côte d'Azur"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
+        new Address(41, "Rue A.THIERS", 13001, "Marseille", "France","Provence-Alpes-Côte d'Azur"), new LegalInformation("12345678900987", "123456789", "RCSITC123456789", "AssureTout"));
         service = new Service("Restaurant Corse", "Une carte de tapas originaux et de desserts maison, à déguster dans le patio chauffé toute l'année, comme à l'intérieur, près de la cheminée, l'endroit idéal pour découvrir aussi l'un de nos cocktails exclusifs et notre carte de spiritueux..."
         , 80.0, contractor, category);
         contractor.addService(service);
